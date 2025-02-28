@@ -1,0 +1,39 @@
+{
+  "package" : {
+    "packageId" : "hl7.fhir.core.r4",
+    "version" : "4.0.1",
+    "url" : "http://hl7.org/fhir"
+  },
+  "name" : {
+    "name" : "Bundle",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Bundle",
+    "version" : "4.0.1"
+  },
+  "signature" : {
+    "required" : null
+  },
+  "type" : {
+    "binding" : {
+      "strength" : "required",
+      "valueSet" : "http://hl7.org/fhir/ValueSet/bundle-type|4.0.1"
+    },
+    "required" : null
+  },
+  "total" : {
+    "required" : null
+  },
+  "link" : {
+    "array" : true,
+    "required" : null
+  },
+  "identifier" : {
+    "required" : null
+  },
+  "entry" : {
+    "array" : true,
+    "required" : null
+  },
+  "timestamp" : {
+    "required" : null
+  }
+}

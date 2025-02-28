@@ -1,0 +1,91 @@
+{
+  "multipleBirthBoolean" : {
+    "choiceOf" : "multipleBirth",
+    "required" : null
+  },
+  "package" : {
+    "packageId" : "hl7.fhir.core.r4",
+    "version" : "4.0.1",
+    "url" : "http://hl7.org/fhir"
+  },
+  "address" : {
+    "array" : true,
+    "required" : null
+  },
+  "deceasedDateTime" : {
+    "choiceOf" : "deceased",
+    "required" : null
+  },
+  "managingOrganization" : {
+    "required" : null
+  },
+  "deceasedBoolean" : {
+    "choiceOf" : "deceased",
+    "required" : null
+  },
+  "name" : {
+    "array" : true,
+    "required" : null
+  },
+  "birthDate" : {
+    "required" : null
+  },
+  "multipleBirthInteger" : {
+    "choiceOf" : "multipleBirth",
+    "required" : null
+  },
+  "type" : "resource",
+  "multipleBirth" : {
+    "choices" : [ "multipleBirthBoolean", "multipleBirthInteger" ],
+    "required" : null
+  },
+  "deceased" : {
+    "choices" : [ "deceasedBoolean", "deceasedDateTime" ],
+    "required" : null
+  },
+  "photo" : {
+    "array" : true,
+    "required" : null
+  },
+  "link" : {
+    "array" : true,
+    "required" : null
+  },
+  "active" : {
+    "required" : null
+  },
+  "communication" : {
+    "array" : true,
+    "required" : null
+  },
+  "identifier" : {
+    "array" : true,
+    "required" : null
+  },
+  "telecom" : {
+    "array" : true,
+    "required" : null
+  },
+  "generalPractitioner" : {
+    "array" : true,
+    "required" : null
+  },
+  "gender" : {
+    "binding" : {
+      "strength" : "required",
+      "valueSet" : "http://hl7.org/fhir/ValueSet/administrative-gender|4.0.1"
+    },
+    "required" : null
+  },
+  "maritalStatus" : {
+    "binding" : {
+      "strength" : "extensible",
+      "valueSet" : "http://hl7.org/fhir/ValueSet/marital-status"
+    },
+    "required" : null
+  },
+  "contact" : {
+    "array" : true,
+    "required" : null
+  }
+}

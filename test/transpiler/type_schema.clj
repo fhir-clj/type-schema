@@ -20,13 +20,14 @@
       :else
       [expect-content actual-content])))
 
-(defn type-schema-content [ts-filename]
-  (let [ts-filename (str/replace ts-filename #".fs.json$" ".ts.json")
-        sd          (-> (slurp ts-filename)
+(defn type-schema-content [fs-filename] 
+  (let [ts-filename (str/replace fs-filename #".fs.json$" ".ts.json")
+        sd          (-> (slurp fs-filename)
                         (json/parse-string true))
         ts-json     (-> sd
                         (type-schema/translate)
-                        (json/generate-string {:pretty true}))]
+                        (json/generate-string {:pretty true}))] 
+    (println ts-json)
     (golden-file-content ts-filename ts-json)))
 
 (defmacro golden-test [get-content filename & [as-text]]
@@ -39,5 +40,6 @@
 (deftest structure-definition-test
   (golden-test type-schema-content "test/golden/patient.fs.json")
   (golden-test type-schema-content "test/golden/bundle.fs.json"))
+
 
 (comment)
