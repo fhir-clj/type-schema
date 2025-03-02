@@ -1,68 +1,185 @@
 {
-  "multipleBirthBoolean" : {
-    "choiceOf" : "multipleBirth"
-  },
   "package" : {
-    "packageId" : "hl7.fhir.core.r4",
+    "version" : "4.0.1"
+  },
+  "type" : {
+    "name" : "Patient",
+    "base" : "http://hl7.org/fhir/StructureDefinition/DomainResource",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Patient",
     "version" : "4.0.1",
-    "url" : "http://hl7.org/fhir"
+    "kind" : "resource"
   },
-  "address" : {
-    "array" : true
-  },
-  "deceasedDateTime" : {
-    "choiceOf" : "deceased"
-  },
-  "managingOrganization" : { },
-  "deceasedBoolean" : {
-    "choiceOf" : "deceased"
-  },
-  "name" : {
-    "array" : true
-  },
-  "birthDate" : { },
-  "multipleBirthInteger" : {
-    "choiceOf" : "multipleBirth"
-  },
-  "type" : "resource",
-  "multipleBirth" : {
-    "choices" : [ "multipleBirthBoolean", "multipleBirthInteger" ]
-  },
-  "deceased" : {
-    "choices" : [ "deceasedBoolean", "deceasedDateTime" ]
-  },
-  "photo" : {
-    "array" : true
-  },
-  "link" : {
-    "array" : true
-  },
-  "active" : { },
-  "communication" : {
-    "array" : true
-  },
-  "identifier" : {
-    "array" : true
-  },
-  "telecom" : {
-    "array" : true
-  },
-  "generalPractitioner" : {
-    "array" : true
-  },
-  "gender" : {
-    "binding" : {
-      "strength" : "required",
-      "valueSet" : "http://hl7.org/fhir/ValueSet/administrative-gender|4.0.1"
+  "fields" : {
+    "multipleBirthBoolean" : {
+      "choiceOf" : "multipleBirth",
+      "type" : {
+        "kind" : "primitive-type",
+        "url" : "http://hl7.org/fhir/StructureDefinition/boolean",
+        "name" : "boolean",
+        "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }
+    },
+    "address" : {
+      "array" : true,
+      "type" : {
+        "kind" : "complex-type",
+        "url" : "http://hl7.org/fhir/StructureDefinition/Address",
+        "name" : "Address",
+        "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }
+    },
+    "deceasedDateTime" : {
+      "choiceOf" : "deceased",
+      "type" : {
+        "kind" : "primitive-type",
+        "url" : "http://hl7.org/fhir/StructureDefinition/dateTime",
+        "name" : "dateTime",
+        "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }
+    },
+    "managingOrganization" : {
+      "type" : {
+        "kind" : "complex-type",
+        "url" : "http://hl7.org/fhir/StructureDefinition/Reference",
+        "name" : "Reference",
+        "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }
+    },
+    "deceasedBoolean" : {
+      "choiceOf" : "deceased",
+      "type" : {
+        "kind" : "primitive-type",
+        "url" : "http://hl7.org/fhir/StructureDefinition/boolean",
+        "name" : "boolean",
+        "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }
+    },
+    "name" : {
+      "array" : true,
+      "type" : {
+        "kind" : "complex-type",
+        "url" : "http://hl7.org/fhir/StructureDefinition/HumanName",
+        "name" : "HumanName",
+        "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }
+    },
+    "birthDate" : {
+      "type" : {
+        "kind" : "primitive-type",
+        "url" : "http://hl7.org/fhir/StructureDefinition/date",
+        "name" : "date",
+        "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }
+    },
+    "multipleBirthInteger" : {
+      "choiceOf" : "multipleBirth",
+      "type" : {
+        "kind" : "primitive-type",
+        "url" : "http://hl7.org/fhir/StructureDefinition/integer",
+        "name" : "integer",
+        "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }
+    },
+    "multipleBirth" : {
+      "choices" : [ "multipleBirthBoolean", "multipleBirthInteger" ]
+    },
+    "deceased" : {
+      "choices" : [ "deceasedBoolean", "deceasedDateTime" ]
+    },
+    "photo" : {
+      "array" : true,
+      "type" : {
+        "kind" : "complex-type",
+        "url" : "http://hl7.org/fhir/StructureDefinition/Attachment",
+        "name" : "Attachment",
+        "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }
+    },
+    "link" : {
+      "array" : true,
+      "type" : {
+        "kind" : "nested",
+        "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
+        "name" : "BackboneElement",
+        "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }
+    },
+    "active" : {
+      "type" : {
+        "kind" : "primitive-type",
+        "url" : "http://hl7.org/fhir/StructureDefinition/boolean",
+        "name" : "boolean",
+        "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }
+    },
+    "communication" : {
+      "array" : true,
+      "type" : {
+        "kind" : "nested",
+        "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
+        "name" : "BackboneElement",
+        "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }
+    },
+    "identifier" : {
+      "array" : true,
+      "type" : {
+        "kind" : "complex-type",
+        "url" : "http://hl7.org/fhir/StructureDefinition/Identifier",
+        "name" : "Identifier",
+        "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }
+    },
+    "telecom" : {
+      "array" : true,
+      "type" : {
+        "kind" : "complex-type",
+        "url" : "http://hl7.org/fhir/StructureDefinition/ContactPoint",
+        "name" : "ContactPoint",
+        "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }
+    },
+    "generalPractitioner" : {
+      "array" : true,
+      "type" : {
+        "kind" : "complex-type",
+        "url" : "http://hl7.org/fhir/StructureDefinition/Reference",
+        "name" : "Reference",
+        "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }
+    },
+    "gender" : {
+      "binding" : {
+        "strength" : "required",
+        "valueSet" : "http://hl7.org/fhir/ValueSet/administrative-gender|4.0.1"
+      },
+      "type" : {
+        "kind" : "primitive-type",
+        "url" : "http://hl7.org/fhir/StructureDefinition/code",
+        "name" : "code",
+        "base" : "http://hl7.org/fhir/StructureDefinition/string"
+      }
+    },
+    "maritalStatus" : {
+      "binding" : {
+        "strength" : "extensible",
+        "valueSet" : "http://hl7.org/fhir/ValueSet/marital-status"
+      },
+      "type" : {
+        "kind" : "complex-type",
+        "url" : "http://hl7.org/fhir/StructureDefinition/CodeableConcept",
+        "name" : "CodeableConcept",
+        "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }
+    },
+    "contact" : {
+      "array" : true,
+      "type" : {
+        "kind" : "nested",
+        "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
+        "name" : "BackboneElement",
+        "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }
     }
-  },
-  "maritalStatus" : {
-    "binding" : {
-      "strength" : "extensible",
-      "valueSet" : "http://hl7.org/fhir/ValueSet/marital-status"
-    }
-  },
-  "contact" : {
-    "array" : true
   }
 }

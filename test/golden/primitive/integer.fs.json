@@ -1,0 +1,16 @@
+{
+    "url": "http://hl7.org/fhir/StructureDefinition/integer",
+    "scalar": true,
+    "regex": "-?([0]|([1-9][0-9]*))",
+    "id": "integer",
+    "maxValue": 2147483647,
+    "base": "http://hl7.org/fhir/StructureDefinition/Element",
+    "name": "integer",
+    "kind": "primitive-type",
+    "type": "integer",
+    "version": "4.0.1",
+    "resourceType": "FHIRSchema",
+    "minValue": -2147483648,
+    "derivation": "specialization",
+    "system-type": "http://hl7.org/fhirpath/System.Integer"
+}

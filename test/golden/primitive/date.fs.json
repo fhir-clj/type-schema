@@ -1,0 +1,14 @@
+{
+    "url": "http://hl7.org/fhir/StructureDefinition/date",
+    "scalar": true,
+    "regex": "([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1]))?)?",
+    "id": "date",
+    "base": "http://hl7.org/fhir/StructureDefinition/Element",
+    "name": "date",
+    "kind": "primitive-type",
+    "type": "date",
+    "version": "4.0.1",
+    "resourceType": "FHIRSchema",
+    "derivation": "specialization",
+    "system-type": "http://hl7.org/fhirpath/System.Date"
+}

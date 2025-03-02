@@ -1,0 +1,14 @@
+{
+    "url": "http://hl7.org/fhir/StructureDefinition/code",
+    "scalar": true,
+    "regex": "[^\\s]+(\\s[^\\s]+)*",
+    "id": "code",
+    "base": "http://hl7.org/fhir/StructureDefinition/string",
+    "name": "code",
+    "kind": "primitive-type",
+    "type": "code",
+    "version": "4.0.1",
+    "resourceType": "FHIRSchema",
+    "derivation": "specialization",
+    "system-type": "http://hl7.org/fhirpath/System.String"
+}

@@ -1,0 +1,54 @@
+{
+    "url": "http://hl7.org/fhir/StructureDefinition/ContactPoint",
+    "constraints": {
+        "cpt-2": {
+            "human": "A system is required if a value is provided.",
+            "severity": "error",
+            "expression": "value.empty() or system.exists()"
+        }
+    },
+    "id": "ContactPoint",
+    "base": "http://hl7.org/fhir/StructureDefinition/Element",
+    "name": "ContactPoint",
+    "kind": "complex-type",
+    "type": "ContactPoint",
+    "version": "4.0.1",
+    "resourceType": "FHIRSchema",
+    "elements": {
+        "use": {
+            "type": "code",
+            "scalar": true,
+            "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/contact-point-use"
+            },
+            "summary": true,
+            "modifier": true
+        },
+        "rank": {
+            "type": "positiveInt",
+            "scalar": true,
+            "summary": true
+        },
+        "value": {
+            "type": "string",
+            "scalar": true,
+            "summary": true
+        },
+        "period": {
+            "type": "Period",
+            "scalar": true,
+            "summary": true
+        },
+        "system": {
+            "type": "code",
+            "scalar": true,
+            "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/contact-point-system"
+            },
+            "summary": true
+        }
+    },
+    "derivation": "specialization"
+}
