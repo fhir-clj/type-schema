@@ -1,0 +1,20 @@
+{
+  "description" : "Base StructureDefinition for Element Type: Base definition for all elements in a resource.",
+  "name" : "Element",
+  "abstract" : true,
+  "type" : "Element",
+  "elements" : {
+    "id" : {
+      "short" : "Unique id for inter-element referencing",
+      "type" : "http://hl7.org/fhirpath/System.String",
+      "representation" : [ "xmlAttr" ],
+      "index" : 0
+    }
+  },
+  "extensions" : { },
+  "id" : "Element",
+  "class" : "complex-type",
+  "kind" : "complex-type",
+  "url" : "http://hl7.org/fhir/StructureDefinition/Element",
+  "version" : "4.0.1"
+}

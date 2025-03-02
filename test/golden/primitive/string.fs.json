@@ -1,0 +1,21 @@
+{
+  "description" : "Base StructureDefinition for string Type: A sequence of Unicode characters",
+  "derivation" : "specialization",
+  "name" : "string",
+  "type" : "string",
+  "elements" : {
+    "value" : {
+      "short" : "Primitive value for string",
+      "type" : "http://hl7.org/fhirpath/System.String",
+      "representation" : [ "xmlAttr" ],
+      "maxLength" : 1048576,
+      "index" : 0
+    }
+  },
+  "id" : "string",
+  "class" : "primitive-type",
+  "kind" : "primitive-type",
+  "url" : "http://hl7.org/fhir/StructureDefinition/string",
+  "base" : "http://hl7.org/fhir/StructureDefinition/Element",
+  "version" : "4.0.1"
+}

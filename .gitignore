@@ -3,3 +3,5 @@
 .calva/
 .clj-kondo
 .lsp/
+.resources/packages/*
+.DS_Store

@@ -1,0 +1,20 @@
+{
+  "description" : "Base StructureDefinition for boolean Type: Value of \"true\" or \"false\"",
+  "derivation" : "specialization",
+  "name" : "boolean",
+  "type" : "boolean",
+  "elements" : {
+    "value" : {
+      "representation" : [ "xmlAttr" ],
+      "short" : "Primitive value for boolean",
+      "type" : "http://hl7.org/fhirpath/System.Boolean",
+      "index" : 0
+    }
+  },
+  "id" : "boolean",
+  "class" : "primitive-type",
+  "kind" : "primitive-type",
+  "url" : "http://hl7.org/fhir/StructureDefinition/boolean",
+  "base" : "http://hl7.org/fhir/StructureDefinition/Element",
+  "version" : "4.0.1"
+}

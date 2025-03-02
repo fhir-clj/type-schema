@@ -1,7 +1,6 @@
 {
   "multipleBirthBoolean" : {
-    "choiceOf" : "multipleBirth",
-    "required" : null
+    "choiceOf" : "multipleBirth"
   },
   "package" : {
     "packageId" : "hl7.fhir.core.r4",
@@ -9,83 +8,61 @@
     "url" : "http://hl7.org/fhir"
   },
   "address" : {
-    "array" : true,
-    "required" : null
+    "array" : true
   },
   "deceasedDateTime" : {
-    "choiceOf" : "deceased",
-    "required" : null
+    "choiceOf" : "deceased"
   },
-  "managingOrganization" : {
-    "required" : null
-  },
+  "managingOrganization" : { },
   "deceasedBoolean" : {
-    "choiceOf" : "deceased",
-    "required" : null
+    "choiceOf" : "deceased"
   },
   "name" : {
-    "array" : true,
-    "required" : null
+    "array" : true
   },
-  "birthDate" : {
-    "required" : null
-  },
+  "birthDate" : { },
   "multipleBirthInteger" : {
-    "choiceOf" : "multipleBirth",
-    "required" : null
+    "choiceOf" : "multipleBirth"
   },
   "type" : "resource",
   "multipleBirth" : {
-    "choices" : [ "multipleBirthBoolean", "multipleBirthInteger" ],
-    "required" : null
+    "choices" : [ "multipleBirthBoolean", "multipleBirthInteger" ]
   },
   "deceased" : {
-    "choices" : [ "deceasedBoolean", "deceasedDateTime" ],
-    "required" : null
+    "choices" : [ "deceasedBoolean", "deceasedDateTime" ]
   },
   "photo" : {
-    "array" : true,
-    "required" : null
+    "array" : true
   },
   "link" : {
-    "array" : true,
-    "required" : null
+    "array" : true
   },
-  "active" : {
-    "required" : null
-  },
+  "active" : { },
   "communication" : {
-    "array" : true,
-    "required" : null
+    "array" : true
   },
   "identifier" : {
-    "array" : true,
-    "required" : null
+    "array" : true
   },
   "telecom" : {
-    "array" : true,
-    "required" : null
+    "array" : true
   },
   "generalPractitioner" : {
-    "array" : true,
-    "required" : null
+    "array" : true
   },
   "gender" : {
     "binding" : {
       "strength" : "required",
       "valueSet" : "http://hl7.org/fhir/ValueSet/administrative-gender|4.0.1"
-    },
-    "required" : null
+    }
   },
   "maritalStatus" : {
     "binding" : {
       "strength" : "extensible",
       "valueSet" : "http://hl7.org/fhir/ValueSet/marital-status"
-    },
-    "required" : null
+    }
   },
   "contact" : {
-    "array" : true,
-    "required" : null
+    "array" : true
   }
 }
