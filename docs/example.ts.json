@@ -1,0 +1,40 @@
+{
+  "kind": "resource",
+  "derivation": "specialization",
+  "url": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "name": {
+    "package": "hl7.fhir.core.r4",
+    "name": "Patient",
+    "parent": "http://hl7.org/fhir/StructureDefinition/DomainResource",
+    "type": "resource"
+  },
+  "type": {
+    "package": "hl7.fhir.core.r4",
+    "type": "resource",
+    "name": "Patient",
+    "url": "http://hl7.org/fhir/StructureDefinition/Patient",
+    "parent": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+  },
+  "base": {
+    "package": "hl7.fhir.core.r4",
+    "type": "resource",
+    "name": "DomainResource",
+    "url": "http://hl7.org/fhir/StructureDefinition/DomainResource",
+    "parent": "http://hl7.org/fhir/StructureDefinition/Resource"
+  },
+  "fields": {
+    "name": {
+      "required": true,
+      "array": true,
+      "type": {
+        "package": "hl7.fhir.core.r4",
+        "name": "HumanName",
+        "type": "complex-type",
+        "url": "http://hl7.org/fhir/StructureDefinition/HumanName",
+        "base": "http://hl7.org/fhir/StructureDefinition/Element"
+      }
+    }
+  },
+  "allDependencies": [],
+  "nestedTypes": []
+}

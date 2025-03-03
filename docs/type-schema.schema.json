@@ -1,0 +1,188 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "$id: http://health-samurai.io/schemas/type-schema.schema.json/0.0.0.1",
+  "type": "object",
+  "title": "TypeSchema",
+  "description": "FHIR StructureDefinition & FHIR Schema view for generation SDK resource classes/types.",
+  "properties": {
+    "kind": {
+      "type": "string",
+      "enum": [
+        "resource",
+        "profile",
+        "logical",
+        "complex-type",
+        "primitive-type",
+        "nested",
+        "valueset",
+        "choice",
+        "unknown"
+      ]
+    },
+    "derivation": {
+      "type": "string",
+      "enum": ["constraint", "specialization"]
+    },
+    "name": {
+      "type": "object",
+      "properties": {
+        "package": { "type": "string" },
+        "name": { "type": "string" },
+        "parent": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": [
+            "resource",
+            "profile",
+            "logical",
+            "complex-type",
+            "primitive-type",
+            "nested",
+            "valueset",
+            "choice",
+            "unknown"
+          ]
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^(https?://|urn:)[^\\s]+$"
+        }
+      },
+      "required": ["package", "name"]
+    },
+    "base": {
+      "type": "object",
+      "properties": {
+        "package": { "type": "string" },
+        "name": { "type": "string" },
+        "parent": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": [
+            "resource",
+            "profile",
+            "logical",
+            "complex-type",
+            "primitive-type",
+            "nested",
+            "valueset",
+            "choice",
+            "unknown"
+          ]
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^(https?://|urn:)[^\\s]+$"
+        }
+      }
+    },
+    "fields": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "required": { "type": "boolean" },
+          "array": { "type": "boolean" },
+          "choiceOf": { "type": "string" },
+          "choices": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "type": {
+            "type": "object",
+            "properties": {
+              "package": { "type": "string" },
+              "name": { "type": "string" },
+              "parent": { "type": "string" },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "resource",
+                  "profile",
+                  "logical",
+                  "complex-type",
+                  "primitive-type",
+                  "nested",
+                  "valueset",
+                  "choice",
+                  "unknown"
+                ]
+              },
+              "url": {
+                "type": "string",
+                "pattern": "^(https?://|urn:)[^\\s]+$"
+              }
+            },
+            "required": ["package", "name"]
+          },
+          "binding": {
+            "type": "object",
+            "properties": {
+              "valueSet": {
+                "type": "object",
+                "properties": {
+                  "package": { "type": "string" },
+                  "name": { "type": "string" }
+                },
+                "required": ["package", "name"]
+              },
+              "strength": {
+                "type": "string",
+                "enum": ["required", "extensible", "preferred", "example"]
+              }
+            }
+          }
+        },
+        "required": ["type"]
+      }
+    },
+    "choices": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "required": { "type": "boolean" },
+          "choices": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "allDependencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "package": { "type": "string" },
+          "name": { "type": "string" },
+          "parent": { "type": "string" },
+          "type": {
+            "type": "string",
+            "enum": [
+              "resource",
+              "profile",
+              "logical",
+              "complex-type",
+              "primitive-type",
+              "nested",
+              "valueset",
+              "choice",
+              "unknown"
+            ]
+          },
+          "url": {
+            "type": "string",
+            "pattern": "^(https?://|urn:)[^\\s]+$"
+          }
+        },
+        "required": ["package", "name"]
+      }
+    },
+    "nestedTypes": {
+      "type": "array",
+      "items": { "$ref": "#" }
+    }
+  },
+  "required": ["kind", "name"]
+}
