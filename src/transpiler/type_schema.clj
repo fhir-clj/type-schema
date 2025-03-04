@@ -47,11 +47,9 @@
 
 (defn derive-kind-from-schema [schema]
   (cond (= (:derivation schema) "constraint") "profile"
-        (= (:type schema) "BackboneElement") "nested"
+        ;; (= (:type schema) "BackboneElement") "nested"
         (:choices schema) "choices"
         :else (:kind schema)))
-
-
 
 (defn build-element [element fhir-schema]
   (let [required (some #{name} (:required fhir-schema))
@@ -65,30 +63,41 @@
         (cond-> element-type (assoc-in [:type :name] element-type))
         (cond-> (and element-type (:base element-schema)) (assoc-in [:type :base] (:base element-schema))))))
 
-
+(defn build-backbone-element [element fhir-schema path]
+  (let [required (some #{name} (:required fhir-schema))]
+    (-> (select-keys element [:array])
+        (assoc-in [:type :kind] "nested")
+        (assoc-in [:type :path] path)
+        (cond-> required (assoc-in [:required] required)))))
 
 (defn get-base-info [fhir-schema]
   (-> {:package {:version (:version fhir-schema)}}
       (assoc-in [:type] (select-keys fhir-schema (filter fhir-schema [:name :base :url :version])))
       (assoc-in [:type :kind] (derive-kind-from-schema fhir-schema))))
 
-;; TODO: fhir-schema should  be changed to basic IG information and be a global variable?
-(defn iterate-over-elements [fhir-schema elements]
-  (reduce (fn [acc [name element]]
-            (assoc acc name (build-element element fhir-schema))) {} elements))
-
-;; TODO: fhir-schema should  be changed to basic IG information and be a global variable?
-(defn iterate-over-backbone-element [fhir-schema elements]
-  (reduce (fn [acc [_ element]]
+(defn iterate-over-elements [fhir-schema elements path]
+  (reduce (fn [acc [key element]]
             (if (= (:type element) "BackboneElement")
-              (let [fields (iterate-over-elements fhir-schema (:elements element))]
-                (concat acc [fields] (iterate-over-backbone-element fhir-schema (:elements element)))) acc)) [] elements))
+              (assoc acc key (build-backbone-element element fhir-schema (concat path [key])))
+              (assoc acc key (build-element element fhir-schema)))) {} elements))
+
+(defn iterate-over-backbone-element [fhir-schema elements parent-path]
+  (reduce (fn [acc [key element]]
+            (if (= (:type element) "BackboneElement")
+              (let [path (concat parent-path [(name key)])
+                    fields (iterate-over-elements fhir-schema (:elements element) path)]
+                (concat acc
+                        [{:path path :schema {:type (build-element element fhir-schema) :fields fields}}]
+                        (iterate-over-backbone-element fhir-schema (:elements element) path))) acc)) [] elements))
 
 (defn translate [fhir-schema]
   (let [base-info (get-base-info fhir-schema)
         elements (get-in fhir-schema [:elements])
-        transformed-elements (iterate-over-elements fhir-schema elements)
-        transformed-backbone-elements (iterate-over-backbone-element fhir-schema elements)]
+        transformed-elements (iterate-over-elements fhir-schema elements [])
+        transformed-backbone-elements (iterate-over-backbone-element fhir-schema elements [])]
+
+    #_(doseq [element transformed-backbone-elements]
+        (println element))
 
     (merge base-info {:fields transformed-elements
                       :nestedTypes (vec transformed-backbone-elements)})))
