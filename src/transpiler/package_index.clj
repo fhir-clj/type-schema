@@ -1,30 +1,30 @@
 (ns transpiler.package-index
   (:require [clojure.java.io :as io]
-            [cheshire.core :as json]))
+            [cheshire.core :as json])
+  (:import [java.util.zip GZIPInputStream]))
 
-(defn load-json-file [file]
-  (-> (slurp file)
-      (json/parse-string true)))
-
-(defn load-directory [dir]
-  (->> (io/file dir)
-       file-seq
-       (filter #(.isFile %))
-       (filter #(.endsWith (.getName %) ".json"))
-       (map (fn [f] [(.getName f) (load-json-file f)]))
-       (into {})))
+(defn load-json-ndjson-file [file]
+  (with-open [reader (io/reader (-> file io/input-stream GZIPInputStream.))]
+    (->> (line-seq reader)
+         (filter seq)
+         (map #(json/parse-string % true))
+         (filter #(= "FHIRSchema" (:resourceType %)))
+         (doall))))
 
 (defn load-merge-schemas []
-  (let [complex (load-directory "test/golden/complex")
-        primitive (load-directory "test/golden/primitive")]
-    (->> (merge complex primitive)
-         (reduce (fn [acc [_ schema]]
-                   (assoc acc (:url schema) schema)) {}))))
+  (let [packages-dir (io/file "resources/packages")]
+    (->> (file-seq packages-dir)
+         (filter #(.isFile %))
+         (filter #(.endsWith (.getName %) ".ndjson.gz"))
+         (mapcat load-json-ndjson-file)
+         (reduce (fn [acc schema]
+                   (if-let [url (:url schema)] (assoc acc url schema) acc)) {}))))
 
 (def index (atom nil))
 
 (defn init! []
-  (reset! index (load-merge-schemas)))
+  (reset! index (load-merge-schemas))
+  (println "Loaded" (count @index) "schemas"))
 
 (defn get-schema [url] (get @index url))
 
@@ -36,6 +36,7 @@
 ;; (get-schema "http://hl7.org/fhir/StructureDefinition/boolean")
 
 (defn get-all [] @index)
+
 
 (init!)
 

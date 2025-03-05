@@ -319,9 +319,10 @@
         },
         "period" : {
           "type" : {
-            "kind" : null,
+            "kind" : "complex-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/Period",
-            "name" : "Period"
+            "name" : "Period",
+            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
           }
         }
       }

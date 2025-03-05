@@ -12,9 +12,10 @@
   "fields" : {
     "description" : {
       "type" : {
-        "kind" : null,
+        "kind" : "primitive-type",
         "url" : "http://hl7.org/fhir/StructureDefinition/markdown",
-        "name" : "markdown"
+        "name" : "markdown",
+        "base" : "http://hl7.org/fhir/StructureDefinition/string"
       }
     },
     "format" : {
@@ -87,16 +88,18 @@
     "instantiates" : {
       "array" : true,
       "type" : {
-        "kind" : null,
+        "kind" : "primitive-type",
         "url" : "http://hl7.org/fhir/StructureDefinition/canonical",
-        "name" : "canonical"
+        "name" : "canonical",
+        "base" : "http://hl7.org/fhir/StructureDefinition/uri"
       }
     },
     "purpose" : {
       "type" : {
-        "kind" : null,
+        "kind" : "primitive-type",
         "url" : "http://hl7.org/fhir/StructureDefinition/markdown",
-        "name" : "markdown"
+        "name" : "markdown",
+        "base" : "http://hl7.org/fhir/StructureDefinition/string"
       }
     },
     "name" : {
@@ -110,16 +113,18 @@
     "useContext" : {
       "array" : true,
       "type" : {
-        "kind" : null,
+        "kind" : "complex-type",
         "url" : "http://hl7.org/fhir/StructureDefinition/UsageContext",
-        "name" : "UsageContext"
+        "name" : "UsageContext",
+        "base" : "http://hl7.org/fhir/StructureDefinition/Element"
       }
     },
     "copyright" : {
       "type" : {
-        "kind" : null,
+        "kind" : "primitive-type",
         "url" : "http://hl7.org/fhir/StructureDefinition/markdown",
-        "name" : "markdown"
+        "name" : "markdown",
+        "base" : "http://hl7.org/fhir/StructureDefinition/string"
       }
     },
     "experimental" : {
@@ -133,9 +138,10 @@
     "imports" : {
       "array" : true,
       "type" : {
-        "kind" : null,
+        "kind" : "primitive-type",
         "url" : "http://hl7.org/fhir/StructureDefinition/canonical",
-        "name" : "canonical"
+        "name" : "canonical",
+        "base" : "http://hl7.org/fhir/StructureDefinition/uri"
       }
     },
     "title" : {
@@ -187,16 +193,18 @@
     "implementationGuide" : {
       "array" : true,
       "type" : {
-        "kind" : null,
+        "kind" : "primitive-type",
         "url" : "http://hl7.org/fhir/StructureDefinition/canonical",
-        "name" : "canonical"
+        "name" : "canonical",
+        "base" : "http://hl7.org/fhir/StructureDefinition/uri"
       }
     },
     "url" : {
       "type" : {
-        "kind" : null,
+        "kind" : "primitive-type",
         "url" : "http://hl7.org/fhir/StructureDefinition/uri",
-        "name" : "uri"
+        "name" : "uri",
+        "base" : "http://hl7.org/fhir/StructureDefinition/Element"
       }
     },
     "software" : {
@@ -216,9 +224,10 @@
     "contact" : {
       "array" : true,
       "type" : {
-        "kind" : null,
+        "kind" : "complex-type",
         "url" : "http://hl7.org/fhir/StructureDefinition/ContactDetail",
-        "name" : "ContactDetail"
+        "name" : "ContactDetail",
+        "base" : "http://hl7.org/fhir/StructureDefinition/Element"
       }
     },
     "implementation" : {
@@ -262,16 +271,18 @@
         },
         "profile" : {
           "type" : {
-            "kind" : null,
+            "kind" : "primitive-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/canonical",
-            "name" : "canonical"
+            "name" : "canonical",
+            "base" : "http://hl7.org/fhir/StructureDefinition/uri"
           }
         },
         "documentation" : {
           "type" : {
-            "kind" : null,
+            "kind" : "primitive-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/markdown",
-            "name" : "markdown"
+            "name" : "markdown",
+            "base" : "http://hl7.org/fhir/StructureDefinition/string"
           }
         }
       }
@@ -298,16 +309,18 @@
         },
         "documentation" : {
           "type" : {
-            "kind" : null,
+            "kind" : "primitive-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/markdown",
-            "name" : "markdown"
+            "name" : "markdown",
+            "base" : "http://hl7.org/fhir/StructureDefinition/string"
           }
         },
         "reliableCache" : {
           "type" : {
-            "kind" : null,
+            "kind" : "primitive-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/unsignedInt",
-            "name" : "unsignedInt"
+            "name" : "unsignedInt",
+            "base" : "http://hl7.org/fhir/StructureDefinition/integer"
           }
         },
         "supportedMessage" : {
@@ -334,9 +347,10 @@
       "fields" : {
         "address" : {
           "type" : {
-            "kind" : null,
+            "kind" : "primitive-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/url",
-            "name" : "url"
+            "name" : "url",
+            "base" : "http://hl7.org/fhir/StructureDefinition/uri"
           }
         },
         "protocol" : {
@@ -345,9 +359,10 @@
             "valueSet" : "http://hl7.org/fhir/ValueSet/message-transport"
           },
           "type" : {
-            "kind" : null,
+            "kind" : "complex-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/Coding",
-            "name" : "Coding"
+            "name" : "Coding",
+            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
           }
         }
       }
@@ -379,9 +394,10 @@
         },
         "definition" : {
           "type" : {
-            "kind" : null,
+            "kind" : "primitive-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/canonical",
-            "name" : "canonical"
+            "name" : "canonical",
+            "base" : "http://hl7.org/fhir/StructureDefinition/uri"
           }
         }
       }
@@ -438,9 +454,10 @@
       "fields" : {
         "url" : {
           "type" : {
-            "kind" : null,
+            "kind" : "primitive-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/url",
-            "name" : "url"
+            "name" : "url",
+            "base" : "http://hl7.org/fhir/StructureDefinition/uri"
           }
         },
         "custodian" : {
@@ -505,9 +522,10 @@
         "compartment" : {
           "array" : true,
           "type" : {
-            "kind" : null,
+            "kind" : "primitive-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/canonical",
-            "name" : "canonical"
+            "name" : "canonical",
+            "base" : "http://hl7.org/fhir/StructureDefinition/uri"
           }
         },
         "interaction" : {
@@ -522,9 +540,10 @@
         },
         "documentation" : {
           "type" : {
-            "kind" : null,
+            "kind" : "primitive-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/markdown",
-            "name" : "markdown"
+            "name" : "markdown",
+            "base" : "http://hl7.org/fhir/StructureDefinition/string"
           }
         }
       }
@@ -627,9 +646,10 @@
         },
         "documentation" : {
           "type" : {
-            "kind" : null,
+            "kind" : "primitive-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/markdown",
-            "name" : "markdown"
+            "name" : "markdown",
+            "base" : "http://hl7.org/fhir/StructureDefinition/string"
           }
         },
         "updateCreate" : {
@@ -651,9 +671,10 @@
         "supportedProfile" : {
           "array" : true,
           "type" : {
-            "kind" : null,
+            "kind" : "primitive-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/canonical",
-            "name" : "canonical"
+            "name" : "canonical",
+            "base" : "http://hl7.org/fhir/StructureDefinition/uri"
           }
         },
         "searchInclude" : {
@@ -679,9 +700,10 @@
         },
         "profile" : {
           "type" : {
-            "kind" : null,
+            "kind" : "primitive-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/canonical",
-            "name" : "canonical"
+            "name" : "canonical",
+            "base" : "http://hl7.org/fhir/StructureDefinition/uri"
           }
         },
         "conditionalDelete" : {
@@ -733,16 +755,18 @@
         },
         "definition" : {
           "type" : {
-            "kind" : null,
+            "kind" : "primitive-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/canonical",
-            "name" : "canonical"
+            "name" : "canonical",
+            "base" : "http://hl7.org/fhir/StructureDefinition/uri"
           }
         },
         "documentation" : {
           "type" : {
-            "kind" : null,
+            "kind" : "primitive-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/markdown",
-            "name" : "markdown"
+            "name" : "markdown",
+            "base" : "http://hl7.org/fhir/StructureDefinition/string"
           }
         }
       }
@@ -770,16 +794,18 @@
         },
         "definition" : {
           "type" : {
-            "kind" : null,
+            "kind" : "primitive-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/canonical",
-            "name" : "canonical"
+            "name" : "canonical",
+            "base" : "http://hl7.org/fhir/StructureDefinition/uri"
           }
         },
         "documentation" : {
           "type" : {
-            "kind" : null,
+            "kind" : "primitive-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/markdown",
-            "name" : "markdown"
+            "name" : "markdown",
+            "base" : "http://hl7.org/fhir/StructureDefinition/string"
           }
         }
       }
@@ -811,9 +837,10 @@
         },
         "documentation" : {
           "type" : {
-            "kind" : null,
+            "kind" : "primitive-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/markdown",
-            "name" : "markdown"
+            "name" : "markdown",
+            "base" : "http://hl7.org/fhir/StructureDefinition/string"
           }
         }
       }
@@ -853,9 +880,10 @@
         },
         "description" : {
           "type" : {
-            "kind" : null,
+            "kind" : "primitive-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/markdown",
-            "name" : "markdown"
+            "name" : "markdown",
+            "base" : "http://hl7.org/fhir/StructureDefinition/string"
           }
         }
       }
@@ -887,9 +915,10 @@
         },
         "documentation" : {
           "type" : {
-            "kind" : null,
+            "kind" : "primitive-type",
             "url" : "http://hl7.org/fhir/StructureDefinition/markdown",
-            "name" : "markdown"
+            "name" : "markdown",
+            "base" : "http://hl7.org/fhir/StructureDefinition/string"
           }
         }
       }
