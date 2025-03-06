@@ -1,7 +1,11 @@
 {:paths ["src" "resources"]
  :deps {org.clojure/clojure       {:mvn/version "1.12.0"}
         cheshire/cheshire         {:mvn/version "5.10.2"}
-        healthsamurai/matcho      {:mvn/version "0.3.8"}}
+        healthsamurai/matcho      {:mvn/version "0.3.8"}
+        io.github.fhir-clj/fhir-schema   {:git/url "https://github.com/fhir-clj/fhir-schema"
+                                          :git/sha "6a3d9d9fe44b47d359e526477a303b3dfd67baa4"}
+        io.github.fhir-clj/fhir-packages {:git/url "https://github.com/fhir-clj/fhir-packages"
+                                          :git/sha "f259b67972580c72ae6e6bbf093d6b77b6f635b1"}}
 
  :aliases
  {:dev {:extra-deps {nrepl/nrepl       {:mvn/version "LATEST"}
@@ -17,4 +21,7 @@
   {:extra-paths ["test"]
    :extra-deps  {io.github.cognitect-labs/test-runner {:git/tag "v0.5.1" :git/sha "dfb30dd"}}
    :main-opts   ["-m" "cognitect.test-runner"]
-   :exec-fn     cognitect.test-runner.api/test}}}
+   :exec-fn     cognitect.test-runner.api/test}
+
+  :build {:deps {io.github.clojure/tools.build {:git/tag "v0.9.6" :git/sha "8e78bcc"}}
+          :ns-default build}}}

@@ -1,6 +1,5 @@
 (ns transpiler.type-schema
-  (:require [clojure.string :as str]
-            [transpiler.package-index :refer [get-schema]]))
+  (:require [transpiler.package-index :refer [get-schema]]))
 
 ;; TypeRefType = 'resource' | 'profile' | 'logical' | 'complex-type' | 'primitive-type' | 'nested' | 'valueset' | 'choice' | 'unknown'
 
@@ -95,9 +94,6 @@
         elements (get-in fhir-schema [:elements])
         transformed-elements (iterate-over-elements fhir-schema elements [])
         transformed-backbone-elements (iterate-over-backbone-element fhir-schema elements [])]
-
-    #_(doseq [element transformed-backbone-elements]
-        (println element))
 
     (merge base-info {:fields transformed-elements
                       :nestedTypes (vec transformed-backbone-elements)})))

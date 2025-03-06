@@ -22,21 +22,7 @@
 
 (def index (atom nil))
 
-(defn init! []
-  (reset! index (load-merge-schemas))
-  (println "Loaded" (count @index) "schemas"))
+(defn init! [schemas]
+  (reset! index schemas))
 
 (defn get-schema [url] (get @index url))
-
-#_(defn get-schema [url]
-    (let [schema (get @index url)]
-      (assert (some? schema) (str "Missing schema for: " url)) schema))
-
-;; (get @index "http://hl7.org/fhir/StructureDefinition/boolean")
-;; (get-schema "http://hl7.org/fhir/StructureDefinition/boolean")
-
-(defn get-all [] @index)
-
-
-(init!)
-

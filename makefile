@@ -4,6 +4,10 @@
 repl:
 	clj -M:dev -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware]"
 
+# Build uberjar
+build:
+	clj -T:build uber
+
 # Run tests
 test:
 	clj -M:test
@@ -19,9 +23,7 @@ clean:
 	rm -rf target
 	rm -rf .cpcache
 
-# Build uberjar
-build:
-	clj -T:build uber
+
 
 # Run theapplication
 run:

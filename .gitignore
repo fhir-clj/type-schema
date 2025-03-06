@@ -5,3 +5,6 @@
 .lsp/
 .resources/packages/*
 .DS_Store
+.fhir-packages
+output
+target
