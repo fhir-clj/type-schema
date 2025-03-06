@@ -12,7 +12,6 @@
     "deceased": {
       "choices": {
         "deceasedBoolean": {
-          "choiceOf": "deceased",
           "type": {
             "type": "primitive-type",
             "url": "http://hl7.org/fhir/StructureDefinition/boolean",
@@ -21,7 +20,6 @@
           }
         },
         "deceasedDateTime": {
-          "choiceOf": "deceased",
           "type": {
             "type": "primitive-type",
             "url": "http://hl7.org/fhir/StructureDefinition/dateTime",
