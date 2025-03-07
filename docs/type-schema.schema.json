@@ -11,19 +11,21 @@
         { "const": "resource", "description": "" },
         { "const": "complex-type", "description": "" },
         { "const": "primitive-type", "description": "" },
+        { "const": "value-set", "description": "", "$comment": "FIXME: ???" },
         { "const": "nested", "description": "" }
       ]
     },
     "type-schema-ref": {
       "type": "object",
+      "$comment": "TODO: Do we need kind here? It may rise consistency issues.",
       "properties": {
         "package": { "type": "string" },
+        "name": { "type": "string", "description": "Computer friendly" },
         "url": {
           "type": "string",
           "pattern": "^(https?://|urn:)[^\\s]+$",
           "description": "A canonical URL to identifying this resource"
-        },
-        "name": { "type": "string", "description": "Computer friendly" }
+        }
       },
       "required": ["package", "name"]
     }
@@ -32,8 +34,8 @@
     "kind": {
       "$ref": "#/definitions/type-schema-kind"
     },
-    "name": {
-      "$comment": "Actually, it is a reference to itself. FIXME: Rename to self-reference?",
+    "self-reference": {
+      "$comment": "Early -- name, but it should be used as a reference to the type.",
       "$ref": "#/definitions/type-schema-ref"
     },
     "base": {
@@ -48,18 +50,28 @@
         "properties": {
           "required": { "type": "boolean", "default": false },
           "array": { "type": "boolean", "default": false },
-          "choiceOf": { "type": "string", "default": null },
+          "choiceOf": {
+            "$comment": "FIXME: ",
+            "type": "array",
+            "items": {
+              "description": "value[x]",
+              "type": "object",
+              "$ref": "#/definitions/type-schema-field"
+            }
+          },
           "choices": {
             "type": "array",
-            "items": { "type": "string" },
-            "default": []
+            "items": {
+              "description": "value<Type>",
+              "$ref": "#/definitions/type-schema-field"
+            }
           },
           "type": {
             "$ref": "#/definitions/type-schema-ref"
           },
           "binding": {
             "type": "object",
-            "$comment": "TODO: need a review",
+            "$comment": "TODO: https://build.fhir.org/terminologies-binding-examples.html",
             "properties": {
               "valueSet": {
                 "type": "object",
