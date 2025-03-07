@@ -14,5 +14,5 @@ How to check JSON by this schema:
 
 ```shell
 $ npm install -g ajv-cli
-$ ajv test -s docs/type-schema.schema.json -d docs/example.ts.json
+$ ajv test -s docs/type-schema.schema.json -d docs/example.ts.json --valid
 ```

@@ -1,19 +1,11 @@
 {
   "kind": "resource",
-  "derivation": "specialization",
-  "url": "http://hl7.org/fhir/StructureDefinition/Patient",
   "name": {
     "package": "hl7.fhir.core.r4",
     "name": "Patient",
     "parent": "http://hl7.org/fhir/StructureDefinition/DomainResource",
-    "type": "resource"
-  },
-  "type": {
-    "package": "hl7.fhir.core.r4",
     "type": "resource",
-    "name": "Patient",
-    "url": "http://hl7.org/fhir/StructureDefinition/Patient",
-    "parent": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+    "url": "http://hl7.org/fhir/StructureDefinition/Patient"
   },
   "base": {
     "package": "hl7.fhir.core.r4",
@@ -36,5 +28,5 @@
     }
   },
   "allDependencies": [],
-  "nestedTypes": []
+  "nestedTypesFlat": []
 }

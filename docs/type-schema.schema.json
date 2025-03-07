@@ -2,121 +2,64 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$comment": "$id: http://health-samurai.io/schemas/type-schema.schema.json/0.0.0.1",
   "type": "object",
-  "title": "TypeSchema",
+  "title": "Type Schema",
   "description": "FHIR StructureDefinition & FHIR Schema view for generation SDK resource classes/types.",
-  "properties": {
-    "kind": {
+  "definitions": {
+    "type-schema-kind": {
       "type": "string",
-      "enum": [
-        "resource",
-        "profile",
-        "logical",
-        "complex-type",
-        "primitive-type",
-        "nested",
-        "valueset",
-        "choice",
-        "unknown"
+      "anyOf": [
+        { "const": "resource", "description": "" },
+        { "const": "complex-type", "description": "" },
+        { "const": "primitive-type", "description": "" },
+        { "const": "nested", "description": "" }
       ]
     },
-    "derivation": {
-      "type": "string",
-      "enum": ["constraint", "specialization"]
-    },
-    "name": {
+    "type-schema-ref": {
       "type": "object",
       "properties": {
         "package": { "type": "string" },
-        "name": { "type": "string" },
-        "parent": { "type": "string" },
-        "type": {
-          "type": "string",
-          "enum": [
-            "resource",
-            "profile",
-            "logical",
-            "complex-type",
-            "primitive-type",
-            "nested",
-            "valueset",
-            "choice",
-            "unknown"
-          ]
-        },
         "url": {
           "type": "string",
-          "pattern": "^(https?://|urn:)[^\\s]+$"
-        }
+          "pattern": "^(https?://|urn:)[^\\s]+$",
+          "description": "A canonical URL to identifying this resource"
+        },
+        "name": { "type": "string", "description": "Computer friendly" }
       },
       "required": ["package", "name"]
+    }
+  },
+  "properties": {
+    "kind": {
+      "$ref": "#/definitions/type-schema-kind"
+    },
+    "name": {
+      "$comment": "Actually, it is a reference to itself. FIXME: Rename to self-reference?",
+      "$ref": "#/definitions/type-schema-ref"
     },
     "base": {
       "type": "object",
-      "properties": {
-        "package": { "type": "string" },
-        "name": { "type": "string" },
-        "parent": { "type": "string" },
-        "type": {
-          "type": "string",
-          "enum": [
-            "resource",
-            "profile",
-            "logical",
-            "complex-type",
-            "primitive-type",
-            "nested",
-            "valueset",
-            "choice",
-            "unknown"
-          ]
-        },
-        "url": {
-          "type": "string",
-          "pattern": "^(https?://|urn:)[^\\s]+$"
-        }
-      }
+      "$ref": "#/definitions/type-schema-ref"
     },
     "fields": {
       "type": "object",
       "additionalProperties": {
         "type": "object",
+        "$comment": "TODO: maybe better to mimic to JSON schema instead of FHIR StructureDefinition?",
         "properties": {
-          "required": { "type": "boolean" },
-          "array": { "type": "boolean" },
-          "choiceOf": { "type": "string" },
+          "required": { "type": "boolean", "default": false },
+          "array": { "type": "boolean", "default": false },
+          "choiceOf": { "type": "string", "default": null },
           "choices": {
             "type": "array",
-            "items": { "type": "string" }
+            "items": { "type": "string" },
+            "default": []
           },
           "type": {
-            "type": "object",
-            "properties": {
-              "package": { "type": "string" },
-              "name": { "type": "string" },
-              "parent": { "type": "string" },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "resource",
-                  "profile",
-                  "logical",
-                  "complex-type",
-                  "primitive-type",
-                  "nested",
-                  "valueset",
-                  "choice",
-                  "unknown"
-                ]
-              },
-              "url": {
-                "type": "string",
-                "pattern": "^(https?://|urn:)[^\\s]+$"
-              }
-            },
-            "required": ["package", "name"]
+            "$ref": "#/definitions/type-schema-ref"
           },
           "binding": {
             "type": "object",
+            "$comment": "TODO: need a review",
             "properties": {
               "valueSet": {
                 "type": "object",
@@ -136,53 +79,28 @@
         "required": ["type"]
       }
     },
-    "choices": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "object",
-        "properties": {
-          "required": { "type": "boolean" },
-          "choices": {
-            "type": "array",
-            "items": { "type": "string" }
-          }
-        }
+    "allDependencies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/type-schema-ref"
       }
     },
-    "allDependencies": {
+    "nestedTypesFlat": {
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
-          "package": { "type": "string" },
-          "name": { "type": "string" },
-          "parent": { "type": "string" },
-          "type": {
-            "type": "string",
-            "enum": [
-              "resource",
-              "profile",
-              "logical",
-              "complex-type",
-              "primitive-type",
-              "nested",
-              "valueset",
-              "choice",
-              "unknown"
-            ]
+          "path": {
+            "type": "array",
+            "description": "Start from the # type to simplify name generation.",
+            "items": { "type": "string" }
           },
-          "url": {
-            "type": "string",
-            "pattern": "^(https?://|urn:)[^\\s]+$"
-          }
+          "type": { "$ref": "#" }
         },
-        "required": ["package", "name"]
+        "required": ["type", "path"]
       }
-    },
-    "nestedTypes": {
-      "type": "array",
-      "items": { "$ref": "#" }
     }
   },
-  "required": ["kind", "name"]
+  "required": ["kind", "name", "nestedTypesFlat"],
+  "additionalProperties": false
 }
