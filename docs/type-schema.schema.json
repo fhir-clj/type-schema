@@ -11,13 +11,17 @@
         { "const": "resource", "description": "" },
         { "const": "complex-type", "description": "" },
         { "const": "primitive-type", "description": "" },
-        { "const": "value-set", "description": "", "$comment": "FIXME: ???" },
+        {
+          "const": "value-set",
+          "description": "",
+          "$comment": "FIXME: How to represent value set? Is it a FHIR Schema or something else?"
+        },
         { "const": "nested", "description": "" }
       ]
     },
     "type-schema-ref": {
       "type": "object",
-      "$comment": "TODO: Do we need kind here? It may rise consistency issues.",
+      "$comment": "TODO: Do we need kind here? It may raise consistency issues.",
       "properties": {
         "package": { "type": "string" },
         "name": { "type": "string", "description": "Computer friendly" },
@@ -34,61 +38,90 @@
     "kind": {
       "$ref": "#/definitions/type-schema-kind"
     },
+    "name": {
+      "type": "string",
+      "description": "Computer friendly name for the type"
+    },
     "self-reference": {
       "$comment": "Early -- name, but it should be used as a reference to the type.",
       "$ref": "#/definitions/type-schema-ref"
     },
     "base": {
-      "type": "object",
       "$ref": "#/definitions/type-schema-ref"
     },
     "fields": {
       "type": "object",
       "additionalProperties": {
-        "type": "object",
-        "$comment": "TODO: maybe better to mimic to JSON schema instead of FHIR StructureDefinition?",
-        "properties": {
-          "required": { "type": "boolean", "default": false },
-          "array": { "type": "boolean", "default": false },
-          "choiceOf": {
-            "$comment": "FIXME: ",
-            "type": "array",
-            "items": {
-              "description": "value[x]",
-              "type": "object",
-              "$ref": "#/definitions/type-schema-field"
-            }
-          },
-          "choices": {
-            "type": "array",
-            "items": {
-              "description": "value<Type>",
-              "$ref": "#/definitions/type-schema-field"
-            }
-          },
-          "type": {
-            "$ref": "#/definitions/type-schema-ref"
-          },
-          "binding": {
+        "anyOf": [
+          {
             "type": "object",
-            "$comment": "TODO: https://build.fhir.org/terminologies-binding-examples.html",
             "properties": {
-              "valueSet": {
-                "type": "object",
-                "properties": {
-                  "package": { "type": "string" },
-                  "name": { "type": "string" }
-                },
-                "required": ["package", "name"]
+              "required": { "type": "boolean", "default": false },
+              "array": { "type": "boolean", "default": false },
+              "type": {
+                "$ref": "#/definitions/type-schema-ref"
               },
-              "strength": {
-                "type": "string",
-                "enum": ["required", "extensible", "preferred", "example"]
+              "binding": {
+                "type": "object",
+                "$comment": "https://build.fhir.org/terminologies-binding-examples.html",
+                "properties": {
+                  "valueSet": {
+                    "type": "object",
+                    "properties": {
+                      "package": { "type": "string" },
+                      "name": { "type": "string" }
+                    },
+                    "required": ["package", "name"]
+                  },
+                  "strength": {
+                    "type": "string",
+                    "enum": ["required", "extensible", "preferred", "example"]
+                  }
+                }
               }
-            }
+            },
+            "required": ["type"]
+          },
+          {
+            "type": "object",
+            "description": "Polymorphic value[x] declaration",
+            "properties": {
+              "choices": { "type": "array", "items": { "type": "string" } },
+              "required": {
+                "type": "boolean",
+                "description": "== .fields.<choice>[*].required",
+                "default": false
+              },
+              "array": {
+                "type": "boolean",
+                "description": "== .fields.<choice>[*].array",
+                "default": false
+              }
+            },
+            "required": ["choices"]
+          },
+          {
+            "type": "object",
+            "description": "Instance of polymorphic value[x] field",
+            "properties": {
+              "choiceOf": { "type": "string" },
+              "required": {
+                "type": "boolean",
+                "description": "== .fields.<choiceOf>.required",
+                "default": false
+              },
+              "array": {
+                "type": "boolean",
+                "description": "== .fields.<choiceOf>.array",
+                "default": false
+              },
+              "type": {
+                "$ref": "#/definitions/type-schema-ref"
+              }
+            },
+            "required": ["type"]
           }
-        },
-        "required": ["type"]
+        ]
       }
     },
     "allDependencies": {
