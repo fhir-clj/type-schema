@@ -329,6 +329,12 @@
     }
   } ],
   "dependencies" : [ {
+    "name" : "Patient",
+    "base" : "http://hl7.org/fhir/StructureDefinition/DomainResource",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Patient",
+    "version" : "4.0.1",
+    "kind" : "resource"
+  }, {
     "kind" : "primitive-type",
     "url" : "http://hl7.org/fhir/StructureDefinition/boolean",
     "name" : "boolean",

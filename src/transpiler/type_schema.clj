@@ -111,5 +111,6 @@
 
     (merge base-info {:fields transformed-elements
                       :nestedTypes (vec transformed-backbone-elements)
-                      :dependencies (distinct (concat (extract-dependencies transformed-elements)
+                      :dependencies (distinct (concat [(get-in base-info [:type])]
+                                                      (extract-dependencies transformed-elements)
                                                       (extract-dependencies-from-backbone-elements transformed-backbone-elements)))})))

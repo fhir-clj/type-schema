@@ -806,6 +806,12 @@
     }
   } ],
   "dependencies" : [ {
+    "name" : "Questionnaire",
+    "base" : "http://hl7.org/fhir/StructureDefinition/DomainResource",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Questionnaire",
+    "version" : "4.0.1",
+    "kind" : "resource"
+  }, {
     "kind" : "primitive-type",
     "url" : "http://hl7.org/fhir/StructureDefinition/markdown",
     "name" : "markdown",
