@@ -1,10 +1,12 @@
 (ns transpiler.type-schema
   (:require [clojure.test :refer :all]
             [transpiler.type-schema :as type-schema]
+            [transpiler.package-index :refer [load-merge-schemas init!]]
             [cheshire.core :as json]
             [clojure.string :as str]
             [clojure.java.io :as io]))
 
+(init! (load-merge-schemas))
 (defn update-golden? []
   (= "true" (System/getenv "UPDATE_GOLDEN")))
 
@@ -40,7 +42,8 @@
 (deftest structure-definition-test
   (golden-test type-schema-content "test/golden/patient.fs.json")
   (golden-test type-schema-content "test/golden/bundle.fs.json")
-  (golden-test type-schema-content "test/golden/capability-statement.fs.json"))
+  (golden-test type-schema-content "test/golden/capability-statement.fs.json")
+  (golden-test type-schema-content "test/golden/questionnaire.fs.json"))
 
 
 (comment)
