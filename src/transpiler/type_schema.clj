@@ -60,7 +60,8 @@
         (cond-> element-type (assoc-in [:type :kind] (derive-kind-from-schema element-schema)))
         (cond-> element-type (assoc-in [:type :url] element-url))
         (cond-> element-type (assoc-in [:type :name] element-type))
-        (cond-> (and element-type (:base element-schema)) (assoc-in [:type :base] (:base element-schema))))))
+        (cond-> (and element-type (:base element-schema)) (assoc-in [:type :base] (:base element-schema)))
+        (cond-> (:elementReference element) (assoc-in [:elementReference] (:elementReference element))))))
 
 (defn build-backbone-element [element fhir-schema path]
   (let [required (some #{name} (:required fhir-schema))]

@@ -259,7 +259,8 @@
           }
         },
         "item" : {
-          "array" : true
+          "array" : true,
+          "elementReference" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire", "elements", "item" ]
         },
         "type" : {
           "binding" : {
