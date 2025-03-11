@@ -804,5 +804,106 @@
         }
       }
     }
+  } ],
+  "dependencies" : [ {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/markdown",
+    "name" : "markdown",
+    "base" : "http://hl7.org/fhir/StructureDefinition/string"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/code",
+    "name" : "code",
+    "base" : "http://hl7.org/fhir/StructureDefinition/string"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/dateTime",
+    "name" : "dateTime",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/string",
+    "name" : "string",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/date",
+    "name" : "date",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/CodeableConcept",
+    "name" : "CodeableConcept",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/canonical",
+    "name" : "canonical",
+    "base" : "http://hl7.org/fhir/StructureDefinition/uri"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/UsageContext",
+    "name" : "UsageContext",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/boolean",
+    "name" : "boolean",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/uri",
+    "name" : "uri",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Coding",
+    "name" : "Coding",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Identifier",
+    "name" : "Identifier",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/ContactDetail",
+    "name" : "ContactDetail",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Period",
+    "name" : "Period",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/integer",
+    "name" : "integer",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Quantity",
+    "name" : "Quantity",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/decimal",
+    "name" : "decimal",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Reference",
+    "name" : "Reference",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/time",
+    "name" : "time",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Attachment",
+    "name" : "Attachment",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
   } ]
 }

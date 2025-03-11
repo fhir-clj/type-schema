@@ -327,5 +327,71 @@
         }
       }
     }
+  } ],
+  "dependencies" : [ {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/boolean",
+    "name" : "boolean",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Address",
+    "name" : "Address",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/dateTime",
+    "name" : "dateTime",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Reference",
+    "name" : "Reference",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/HumanName",
+    "name" : "HumanName",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/date",
+    "name" : "date",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/integer",
+    "name" : "integer",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Attachment",
+    "name" : "Attachment",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Identifier",
+    "name" : "Identifier",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/ContactPoint",
+    "name" : "ContactPoint",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/code",
+    "name" : "code",
+    "base" : "http://hl7.org/fhir/StructureDefinition/string"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/CodeableConcept",
+    "name" : "CodeableConcept",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Period",
+    "name" : "Period",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
   } ]
 }

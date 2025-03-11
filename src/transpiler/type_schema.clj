@@ -44,6 +44,9 @@
 ;; 2. iterate over { :kind resource } and { :derivation "specialization" }
 ;; 3. 
 
+(defn is-schema [kind]
+  (contains? #{"resource" "profile" "logical" "complex-type" "primitive-type"} kind))
+
 (defn derive-kind-from-schema [schema]
   (cond (= (:derivation schema) "constraint") "profile"
         ;; (= (:type schema) "BackboneElement") "nested"
@@ -90,6 +93,16 @@
                         [{:path path :schema {:type (build-element element fhir-schema) :fields fields}}]
                         (iterate-over-backbone-element fhir-schema (:elements element) path))) acc)) [] elements))
 
+(defn extract-dependencies [elements]
+  (reduce (fn [acc [_ element]]
+            (if (is-schema (get-in element [:type :kind])) (conj acc (:type element)) acc)) [] elements))
+
+(defn extract-dependencies-from-backbone-elements [elements]
+  (reduce (fn [acc element]
+            (let [schema-type (get-in [:schema :type :type] element)]
+              (-> (concat acc (extract-dependencies (:fields (:schema element))))
+                  (cond-> schema-type (concat [schema-type]))))) [] elements))
+
 (defn translate [fhir-schema]
   (let [base-info (get-base-info fhir-schema)
         elements (get-in fhir-schema [:elements])
@@ -97,4 +110,6 @@
         transformed-backbone-elements (iterate-over-backbone-element fhir-schema elements [])]
 
     (merge base-info {:fields transformed-elements
-                      :nestedTypes (vec transformed-backbone-elements)})))
+                      :nestedTypes (vec transformed-backbone-elements)
+                      :dependencies (distinct (concat (extract-dependencies transformed-elements)
+                                                      (extract-dependencies-from-backbone-elements transformed-backbone-elements)))})))

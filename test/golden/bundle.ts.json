@@ -304,5 +304,50 @@
         }
       }
     }
+  } ],
+  "dependencies" : [ {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Identifier",
+    "name" : "Identifier",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/code",
+    "name" : "code",
+    "base" : "http://hl7.org/fhir/StructureDefinition/string"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/instant",
+    "name" : "instant",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/unsignedInt",
+    "name" : "unsignedInt",
+    "base" : "http://hl7.org/fhir/StructureDefinition/integer"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Signature",
+    "name" : "Signature",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/string",
+    "name" : "string",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/uri",
+    "name" : "uri",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "resource",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Resource",
+    "name" : "Resource"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/decimal",
+    "name" : "decimal",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
   } ]
 }
