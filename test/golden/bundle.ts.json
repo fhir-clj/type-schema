@@ -306,9 +306,8 @@
     }
   } ],
   "dependencies" : [ {
-    "name" : "Bundle",
-    "base" : "http://hl7.org/fhir/StructureDefinition/Resource",
-    "url" : "http://hl7.org/fhir/StructureDefinition/Bundle",
+    "name" : "Resource",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Resource",
     "version" : "4.0.1",
     "kind" : "resource"
   }, {

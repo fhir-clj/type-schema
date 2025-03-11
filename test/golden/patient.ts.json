@@ -329,9 +329,9 @@
     }
   } ],
   "dependencies" : [ {
-    "name" : "Patient",
-    "base" : "http://hl7.org/fhir/StructureDefinition/DomainResource",
-    "url" : "http://hl7.org/fhir/StructureDefinition/Patient",
+    "name" : "DomainResource",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Resource",
+    "url" : "http://hl7.org/fhir/StructureDefinition/DomainResource",
     "version" : "4.0.1",
     "kind" : "resource"
   }, {

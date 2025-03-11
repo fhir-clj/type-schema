@@ -927,9 +927,9 @@
     }
   } ],
   "dependencies" : [ {
-    "name" : "CapabilityStatement",
-    "base" : "http://hl7.org/fhir/StructureDefinition/DomainResource",
-    "url" : "http://hl7.org/fhir/StructureDefinition/CapabilityStatement",
+    "name" : "DomainResource",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Resource",
+    "url" : "http://hl7.org/fhir/StructureDefinition/DomainResource",
     "version" : "4.0.1",
     "kind" : "resource"
   }, {

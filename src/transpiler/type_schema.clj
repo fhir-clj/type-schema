@@ -104,13 +104,14 @@
                   (cond-> schema-type (concat [schema-type]))))) [] elements))
 
 (defn translate [fhir-schema]
-  (let [base-info (get-base-info fhir-schema)
+  (let [parent (get-schema (get-in fhir-schema [:base]))
+        base-info (get-base-info fhir-schema)
         elements (get-in fhir-schema [:elements])
         transformed-elements (iterate-over-elements fhir-schema elements [])
         transformed-backbone-elements (iterate-over-backbone-element fhir-schema elements [])]
 
     (merge base-info {:fields transformed-elements
                       :nestedTypes (vec transformed-backbone-elements)
-                      :dependencies (distinct (concat [(get-in base-info [:type])]
+                      :dependencies (distinct (concat (when parent [(get-in (get-base-info parent) [:type])])
                                                       (extract-dependencies transformed-elements)
                                                       (extract-dependencies-from-backbone-elements transformed-backbone-elements)))})))
