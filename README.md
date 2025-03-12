@@ -1,5 +1,7 @@
 # FHIR Type Schema
 
+[![.github/workflows/ci.yaml](https://github.com/fhir-clj/type-schema/actions/workflows/ci.yaml/badge.svg)](https://github.com/fhir-clj/type-schema/actions/workflows/ci.yaml)
+
 Status: **Draft**
 
 This repository contains the Clojure library to generate the FHIR Type Schema from the FHIR Schema.
