@@ -177,12 +177,12 @@
     }
   },
   "nestedTypes" : [ {
+    "path" : [ "http://hl7.org/fhir/StructureDefinition/Patient", "link" ],
     "type" : {
       "kind" : "complex-type",
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "http://hl7.org/fhir/StructureDefinition/Patient", "link" ]
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
     },
     "fields" : {
       "other" : {
@@ -207,12 +207,12 @@
       }
     }
   }, {
+    "path" : [ "http://hl7.org/fhir/StructureDefinition/Patient", "communication" ],
     "type" : {
       "kind" : "complex-type",
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "http://hl7.org/fhir/StructureDefinition/Patient", "communication" ]
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
     },
     "fields" : {
       "language" : {
@@ -237,12 +237,12 @@
       }
     }
   }, {
+    "path" : [ "http://hl7.org/fhir/StructureDefinition/Patient", "contact" ],
     "type" : {
       "kind" : "complex-type",
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "http://hl7.org/fhir/StructureDefinition/Patient", "contact" ]
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
     },
     "fields" : {
       "relationship" : {
@@ -378,6 +378,16 @@
     "kind" : "complex-type",
     "url" : "http://hl7.org/fhir/StructureDefinition/CodeableConcept",
     "name" : "CodeableConcept",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
+    "name" : "BackboneElement",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Period",
+    "name" : "Period",
     "base" : "http://hl7.org/fhir/StructureDefinition/Element"
   } ]
 }

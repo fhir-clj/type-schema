@@ -210,12 +210,12 @@
     }
   },
   "nestedTypes" : [ {
+    "path" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire", "item" ],
     "type" : {
       "kind" : "complex-type",
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire", "item" ]
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
     },
     "fields" : {
       "enableBehavior" : {
@@ -354,12 +354,12 @@
       }
     }
   }, {
+    "path" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire", "item", "enableWhen" ],
     "type" : {
       "kind" : "complex-type",
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire", "item", "enableWhen" ]
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
     },
     "fields" : {
       "answerQuantity" : {
@@ -517,12 +517,12 @@
       }
     }
   }, {
+    "path" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire", "item", "answerOption" ],
     "type" : {
       "kind" : "complex-type",
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire", "item", "answerOption" ]
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
     },
     "fields" : {
       "value" : {
@@ -616,12 +616,12 @@
       }
     }
   }, {
+    "path" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire", "item", "initial" ],
     "type" : {
       "kind" : "complex-type",
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire", "item", "initial" ]
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
     },
     "fields" : {
       "valueReference" : {
@@ -860,6 +860,41 @@
     "kind" : "complex-type",
     "url" : "http://hl7.org/fhir/StructureDefinition/Period",
     "name" : "Period",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/integer",
+    "name" : "integer",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
+    "name" : "BackboneElement",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Quantity",
+    "name" : "Quantity",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/decimal",
+    "name" : "decimal",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Reference",
+    "name" : "Reference",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/time",
+    "name" : "time",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Attachment",
+    "name" : "Attachment",
     "base" : "http://hl7.org/fhir/StructureDefinition/Element"
   } ]
 }

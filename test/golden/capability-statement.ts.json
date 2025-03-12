@@ -245,12 +245,12 @@
     }
   },
   "nestedTypes" : [ {
+    "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "document" ],
     "type" : {
       "kind" : "complex-type",
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "document" ]
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
     },
     "fields" : {
       "mode" : {
@@ -283,12 +283,12 @@
       }
     }
   }, {
+    "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "messaging" ],
     "type" : {
       "kind" : "complex-type",
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "messaging" ]
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
     },
     "fields" : {
       "endpoint" : {
@@ -323,12 +323,12 @@
       }
     }
   }, {
+    "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "messaging", "endpoint" ],
     "type" : {
       "kind" : "complex-type",
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "messaging", "endpoint" ]
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
     },
     "fields" : {
       "address" : {
@@ -353,12 +353,12 @@
       }
     }
   }, {
+    "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "messaging", "supportedMessage" ],
     "type" : {
       "kind" : "complex-type",
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "messaging", "supportedMessage" ]
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
     },
     "fields" : {
       "mode" : {
@@ -383,12 +383,12 @@
       }
     }
   }, {
+    "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "software" ],
     "type" : {
       "kind" : "complex-type",
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "software" ]
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
     },
     "fields" : {
       "name" : {
@@ -417,12 +417,12 @@
       }
     }
   }, {
+    "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "implementation" ],
     "type" : {
       "kind" : "complex-type",
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "implementation" ]
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
     },
     "fields" : {
       "url" : {
@@ -451,12 +451,12 @@
       }
     }
   }, {
+    "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest" ],
     "type" : {
       "kind" : "complex-type",
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest" ]
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
     },
     "fields" : {
       "mode" : {
@@ -518,12 +518,12 @@
       }
     }
   }, {
+    "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "resource" ],
     "type" : {
       "kind" : "complex-type",
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "resource" ]
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
     },
     "fields" : {
       "searchRevInclude" : {
@@ -685,12 +685,12 @@
       }
     }
   }, {
+    "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "resource", "searchParam" ],
     "type" : {
       "kind" : "complex-type",
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "resource", "searchParam" ]
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
     },
     "fields" : {
       "name" : {
@@ -731,12 +731,12 @@
       }
     }
   }, {
+    "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "resource", "operation" ],
     "type" : {
       "kind" : "complex-type",
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "resource", "operation" ]
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
     },
     "fields" : {
       "name" : {
@@ -765,12 +765,12 @@
       }
     }
   }, {
+    "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "resource", "interaction" ],
     "type" : {
       "kind" : "complex-type",
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "resource", "interaction" ]
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
     },
     "fields" : {
       "code" : {
@@ -795,12 +795,12 @@
       }
     }
   }, {
+    "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "security" ],
     "type" : {
       "kind" : "complex-type",
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "security" ]
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
     },
     "fields" : {
       "cors" : {
@@ -834,12 +834,12 @@
       }
     }
   }, {
+    "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "interaction" ],
     "type" : {
       "kind" : "complex-type",
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "interaction" ]
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
     },
     "fields" : {
       "code" : {
@@ -919,6 +919,31 @@
     "kind" : "complex-type",
     "url" : "http://hl7.org/fhir/StructureDefinition/ContactDetail",
     "name" : "ContactDetail",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
+    "name" : "BackboneElement",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/unsignedInt",
+    "name" : "unsignedInt",
+    "base" : "http://hl7.org/fhir/StructureDefinition/integer"
+  }, {
+    "kind" : "primitive-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/url",
+    "name" : "url",
+    "base" : "http://hl7.org/fhir/StructureDefinition/uri"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Coding",
+    "name" : "Coding",
+    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Reference",
+    "name" : "Reference",
     "base" : "http://hl7.org/fhir/StructureDefinition/Element"
   } ]
 }

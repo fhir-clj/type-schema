@@ -90,7 +90,7 @@
                     fields (iterate-over-elements fhir-schema (:elements element) path)
                     type (:type (build-element element fhir-schema))]
                 (concat acc
-                        [{:type (assoc type :path path) :fields fields}]
+                        [{:path path :type type :fields fields}]
                         (iterate-over-backbone-element fhir-schema (:elements element) path))) acc)) [] elements))
 
 (defn extract-dependencies [elements]
@@ -99,8 +99,8 @@
 
 (defn extract-dependencies-from-backbone-elements [elements]
   (reduce (fn [acc element]
-            (let [schema-type (get-in [:schema :type :type] element)]
-              (-> (concat acc (extract-dependencies (:fields (:schema element))))
+            (let [schema-type (:type element)]
+              (-> (concat acc (extract-dependencies (:fields element)))
                   (cond-> schema-type (concat [schema-type]))))) [] elements))
 
 (defn translate [fhir-schema]
