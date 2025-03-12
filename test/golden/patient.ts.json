@@ -178,12 +178,6 @@
   },
   "nestedTypes" : [ {
     "path" : [ "http://hl7.org/fhir/StructureDefinition/Patient", "link" ],
-    "type" : {
-      "kind" : "complex-type",
-      "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
-      "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-    },
     "fields" : {
       "other" : {
         "type" : {
@@ -205,15 +199,14 @@
           "base" : "http://hl7.org/fhir/StructureDefinition/string"
         }
       }
+    },
+    "type" : {
+      "kind" : "complex-type",
+      "name" : "BackboneElement",
+      "base" : "http://hl7.org/fhir/StructureDefinition/BackboneElement"
     }
   }, {
     "path" : [ "http://hl7.org/fhir/StructureDefinition/Patient", "communication" ],
-    "type" : {
-      "kind" : "complex-type",
-      "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
-      "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-    },
     "fields" : {
       "language" : {
         "binding" : {
@@ -235,15 +228,14 @@
           "base" : "http://hl7.org/fhir/StructureDefinition/Element"
         }
       }
+    },
+    "type" : {
+      "kind" : "complex-type",
+      "name" : "BackboneElement",
+      "base" : "http://hl7.org/fhir/StructureDefinition/BackboneElement"
     }
   }, {
     "path" : [ "http://hl7.org/fhir/StructureDefinition/Patient", "contact" ],
-    "type" : {
-      "kind" : "complex-type",
-      "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
-      "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-    },
     "fields" : {
       "relationship" : {
         "array" : true,
@@ -311,6 +303,11 @@
           "base" : "http://hl7.org/fhir/StructureDefinition/Element"
         }
       }
+    },
+    "type" : {
+      "kind" : "complex-type",
+      "name" : "BackboneElement",
+      "base" : "http://hl7.org/fhir/StructureDefinition/BackboneElement"
     }
   } ],
   "dependencies" : [ {
@@ -381,9 +378,8 @@
     "base" : "http://hl7.org/fhir/StructureDefinition/Element"
   }, {
     "kind" : "complex-type",
-    "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
     "name" : "BackboneElement",
-    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+    "base" : "http://hl7.org/fhir/StructureDefinition/BackboneElement"
   }, {
     "kind" : "complex-type",
     "url" : "http://hl7.org/fhir/StructureDefinition/Period",

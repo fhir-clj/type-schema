@@ -90,7 +90,9 @@
                     fields (iterate-over-elements fhir-schema (:elements element) path)
                     type (:type (build-element element fhir-schema))]
                 (concat acc
-                        [{:path path :type type :fields fields}]
+                        [{:path path
+                          :fields fields
+                          :type (-> type (assoc :base (:url type)) (dissoc :url))}]
                         (iterate-over-backbone-element fhir-schema (:elements element) path))) acc)) [] elements))
 
 (defn extract-dependencies [elements]
