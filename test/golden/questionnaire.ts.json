@@ -210,597 +210,577 @@
     }
   },
   "nestedTypes" : [ {
-    "path" : [ "item" ],
-    "schema" : {
-      "type" : {
-        "array" : true,
+    "type" : {
+      "kind" : "complex-type",
+      "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
+      "name" : "BackboneElement",
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
+      "path" : [ "item" ]
+    },
+    "fields" : {
+      "enableBehavior" : {
+        "binding" : {
+          "strength" : "required",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-enable-behavior"
+        },
         "type" : {
-          "kind" : "complex-type",
-          "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
-          "name" : "BackboneElement",
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/code",
+          "name" : "code",
+          "base" : "http://hl7.org/fhir/StructureDefinition/string"
+        }
+      },
+      "definition" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/uri",
+          "name" : "uri",
           "base" : "http://hl7.org/fhir/StructureDefinition/Element"
         }
       },
-      "fields" : {
-        "enableBehavior" : {
-          "binding" : {
-            "strength" : "required",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-enable-behavior"
-          },
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/code",
-            "name" : "code",
-            "base" : "http://hl7.org/fhir/StructureDefinition/string"
-          }
-        },
-        "definition" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/uri",
-            "name" : "uri",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "linkId" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/string",
-            "name" : "string",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "repeats" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/boolean",
-            "name" : "boolean",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "item" : {
-          "array" : true,
-          "elementReference" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire", "elements", "item" ]
+      "linkId" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/string",
+          "name" : "string",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "repeats" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/boolean",
+          "name" : "boolean",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "item" : {
+        "array" : true,
+        "elementReference" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire", "elements", "item" ]
+      },
+      "type" : {
+        "binding" : {
+          "strength" : "required",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/item-type"
         },
         "type" : {
-          "binding" : {
-            "strength" : "required",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/item-type"
-          },
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/code",
-            "name" : "code",
-            "base" : "http://hl7.org/fhir/StructureDefinition/string"
-          }
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/code",
+          "name" : "code",
+          "base" : "http://hl7.org/fhir/StructureDefinition/string"
+        }
+      },
+      "enableWhen" : {
+        "array" : true,
+        "type" : {
+          "kind" : "nested",
+          "path" : [ "item", "enableWhen" ]
+        }
+      },
+      "answerOption" : {
+        "array" : true,
+        "type" : {
+          "kind" : "nested",
+          "path" : [ "item", "answerOption" ]
+        }
+      },
+      "prefix" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/string",
+          "name" : "string",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "readOnly" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/boolean",
+          "name" : "boolean",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "answerValueSet" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/canonical",
+          "name" : "canonical",
+          "base" : "http://hl7.org/fhir/StructureDefinition/uri"
+        }
+      },
+      "code" : {
+        "array" : true,
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-questions"
         },
-        "enableWhen" : {
-          "array" : true,
-          "type" : {
-            "kind" : "nested",
-            "path" : [ "item", "enableWhen" ]
-          }
-        },
-        "answerOption" : {
-          "array" : true,
-          "type" : {
-            "kind" : "nested",
-            "path" : [ "item", "answerOption" ]
-          }
-        },
-        "prefix" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/string",
-            "name" : "string",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "readOnly" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/boolean",
-            "name" : "boolean",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "answerValueSet" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/canonical",
-            "name" : "canonical",
-            "base" : "http://hl7.org/fhir/StructureDefinition/uri"
-          }
-        },
-        "code" : {
-          "array" : true,
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-questions"
-          },
-          "type" : {
-            "kind" : "complex-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/Coding",
-            "name" : "Coding",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "initial" : {
-          "array" : true,
-          "type" : {
-            "kind" : "nested",
-            "path" : [ "item", "initial" ]
-          }
-        },
-        "maxLength" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/integer",
-            "name" : "integer",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "required" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/boolean",
-            "name" : "boolean",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "text" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/string",
-            "name" : "string",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "type" : {
+          "kind" : "complex-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/Coding",
+          "name" : "Coding",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "initial" : {
+        "array" : true,
+        "type" : {
+          "kind" : "nested",
+          "path" : [ "item", "initial" ]
+        }
+      },
+      "maxLength" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/integer",
+          "name" : "integer",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "required" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/boolean",
+          "name" : "boolean",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "text" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/string",
+          "name" : "string",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
         }
       }
     }
   }, {
-    "path" : [ "item", "enableWhen" ],
-    "schema" : {
-      "type" : {
-        "array" : true,
+    "type" : {
+      "kind" : "complex-type",
+      "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
+      "name" : "BackboneElement",
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
+      "path" : [ "item", "enableWhen" ]
+    },
+    "fields" : {
+      "answerQuantity" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+        },
+        "choiceOf" : "answer",
         "type" : {
           "kind" : "complex-type",
-          "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
-          "name" : "BackboneElement",
+          "url" : "http://hl7.org/fhir/StructureDefinition/Quantity",
+          "name" : "Quantity",
           "base" : "http://hl7.org/fhir/StructureDefinition/Element"
         }
       },
-      "fields" : {
-        "answerQuantity" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "answer",
-          "type" : {
-            "kind" : "complex-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/Quantity",
-            "name" : "Quantity",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+      "answerDecimal" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "answerDecimal" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "answer",
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/decimal",
-            "name" : "decimal",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "answer",
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/decimal",
+          "name" : "decimal",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "answerDate" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "answerDate" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "answer",
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/date",
-            "name" : "date",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "answer",
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/date",
+          "name" : "date",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "answerReference" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "answerReference" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "answer",
-          "type" : {
-            "kind" : "complex-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/Reference",
-            "name" : "Reference",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "answer",
+        "type" : {
+          "kind" : "complex-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/Reference",
+          "name" : "Reference",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "answerInteger" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "answerInteger" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "answer",
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/integer",
-            "name" : "integer",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "answer",
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/integer",
+          "name" : "integer",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "question" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/string",
+          "name" : "string",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "answerDateTime" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "question" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/string",
-            "name" : "string",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "answer",
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/dateTime",
+          "name" : "dateTime",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "answer" : {
+        "choices" : [ "answerBoolean", "answerDecimal", "answerInteger", "answerDate", "answerDateTime", "answerTime", "answerString", "answerCoding", "answerQuantity", "answerReference" ]
+      },
+      "answerString" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "answerDateTime" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "answer",
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/dateTime",
-            "name" : "dateTime",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "answer",
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/string",
+          "name" : "string",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "operator" : {
+        "binding" : {
+          "strength" : "required",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-enable-operator"
         },
-        "answer" : {
-          "choices" : [ "answerBoolean", "answerDecimal", "answerInteger", "answerDate", "answerDateTime", "answerTime", "answerString", "answerCoding", "answerQuantity", "answerReference" ]
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/code",
+          "name" : "code",
+          "base" : "http://hl7.org/fhir/StructureDefinition/string"
+        }
+      },
+      "answerBoolean" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "answerString" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "answer",
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/string",
-            "name" : "string",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "answer",
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/boolean",
+          "name" : "boolean",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "answerCoding" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "operator" : {
-          "binding" : {
-            "strength" : "required",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-enable-operator"
-          },
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/code",
-            "name" : "code",
-            "base" : "http://hl7.org/fhir/StructureDefinition/string"
-          }
+        "choiceOf" : "answer",
+        "type" : {
+          "kind" : "complex-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/Coding",
+          "name" : "Coding",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "answerTime" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "answerBoolean" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "answer",
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/boolean",
-            "name" : "boolean",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "answerCoding" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "answer",
-          "type" : {
-            "kind" : "complex-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/Coding",
-            "name" : "Coding",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "answerTime" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "answer",
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/time",
-            "name" : "time",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "answer",
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/time",
+          "name" : "time",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
         }
       }
     }
   }, {
-    "path" : [ "item", "answerOption" ],
-    "schema" : {
-      "type" : {
-        "array" : true,
+    "type" : {
+      "kind" : "complex-type",
+      "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
+      "name" : "BackboneElement",
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
+      "path" : [ "item", "answerOption" ]
+    },
+    "fields" : {
+      "value" : {
+        "choices" : [ "valueInteger", "valueDate", "valueTime", "valueString", "valueCoding", "valueReference" ]
+      },
+      "valueDate" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+        },
+        "choiceOf" : "value",
         "type" : {
-          "kind" : "complex-type",
-          "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
-          "name" : "BackboneElement",
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/date",
+          "name" : "date",
           "base" : "http://hl7.org/fhir/StructureDefinition/Element"
         }
       },
-      "fields" : {
-        "value" : {
-          "choices" : [ "valueInteger", "valueDate", "valueTime", "valueString", "valueCoding", "valueReference" ]
+      "valueTime" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "valueDate" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "value",
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/date",
-            "name" : "date",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "value",
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/time",
+          "name" : "time",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "valueCoding" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "valueTime" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "value",
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/time",
-            "name" : "time",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "value",
+        "type" : {
+          "kind" : "complex-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/Coding",
+          "name" : "Coding",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "valueString" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "valueCoding" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "value",
-          "type" : {
-            "kind" : "complex-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/Coding",
-            "name" : "Coding",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "value",
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/string",
+          "name" : "string",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "valueInteger" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "valueString" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "value",
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/string",
-            "name" : "string",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "value",
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/integer",
+          "name" : "integer",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "valueReference" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "valueInteger" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "value",
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/integer",
-            "name" : "integer",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "valueReference" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "value",
-          "type" : {
-            "kind" : "complex-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/Reference",
-            "name" : "Reference",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "initialSelected" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/boolean",
-            "name" : "boolean",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "value",
+        "type" : {
+          "kind" : "complex-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/Reference",
+          "name" : "Reference",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "initialSelected" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/boolean",
+          "name" : "boolean",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
         }
       }
     }
   }, {
-    "path" : [ "item", "initial" ],
-    "schema" : {
-      "type" : {
-        "array" : true,
+    "type" : {
+      "kind" : "complex-type",
+      "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
+      "name" : "BackboneElement",
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
+      "path" : [ "item", "initial" ]
+    },
+    "fields" : {
+      "valueReference" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+        },
+        "choiceOf" : "value",
         "type" : {
           "kind" : "complex-type",
-          "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
-          "name" : "BackboneElement",
+          "url" : "http://hl7.org/fhir/StructureDefinition/Reference",
+          "name" : "Reference",
           "base" : "http://hl7.org/fhir/StructureDefinition/Element"
         }
       },
-      "fields" : {
-        "valueReference" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "value",
-          "type" : {
-            "kind" : "complex-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/Reference",
-            "name" : "Reference",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+      "valueUri" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "valueUri" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "value",
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/uri",
-            "name" : "uri",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "value",
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/uri",
+          "name" : "uri",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "valueTime" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "valueTime" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "value",
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/time",
-            "name" : "time",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "value",
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/time",
+          "name" : "time",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "valueDecimal" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "valueDecimal" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "value",
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/decimal",
-            "name" : "decimal",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "value",
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/decimal",
+          "name" : "decimal",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "valueQuantity" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "valueQuantity" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "value",
-          "type" : {
-            "kind" : "complex-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/Quantity",
-            "name" : "Quantity",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "value",
+        "type" : {
+          "kind" : "complex-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/Quantity",
+          "name" : "Quantity",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "value" : {
+        "choices" : [ "valueBoolean", "valueDecimal", "valueInteger", "valueDate", "valueDateTime", "valueTime", "valueString", "valueUri", "valueAttachment", "valueCoding", "valueQuantity", "valueReference" ]
+      },
+      "valueString" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "value" : {
-          "choices" : [ "valueBoolean", "valueDecimal", "valueInteger", "valueDate", "valueDateTime", "valueTime", "valueString", "valueUri", "valueAttachment", "valueCoding", "valueQuantity", "valueReference" ]
+        "choiceOf" : "value",
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/string",
+          "name" : "string",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "valueBoolean" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "valueString" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "value",
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/string",
-            "name" : "string",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "value",
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/boolean",
+          "name" : "boolean",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "valueDateTime" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "valueBoolean" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "value",
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/boolean",
-            "name" : "boolean",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "value",
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/dateTime",
+          "name" : "dateTime",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "valueDate" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "valueDateTime" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "value",
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/dateTime",
-            "name" : "dateTime",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "value",
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/date",
+          "name" : "date",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "valueCoding" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "valueDate" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "value",
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/date",
-            "name" : "date",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "value",
+        "type" : {
+          "kind" : "complex-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/Coding",
+          "name" : "Coding",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "valueInteger" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "valueCoding" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "value",
-          "type" : {
-            "kind" : "complex-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/Coding",
-            "name" : "Coding",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "value",
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/integer",
+          "name" : "integer",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "valueAttachment" : {
+        "binding" : {
+          "strength" : "example",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
         },
-        "valueInteger" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "value",
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/integer",
-            "name" : "integer",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "valueAttachment" : {
-          "binding" : {
-            "strength" : "example",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-          },
-          "choiceOf" : "value",
-          "type" : {
-            "kind" : "complex-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/Attachment",
-            "name" : "Attachment",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+        "choiceOf" : "value",
+        "type" : {
+          "kind" : "complex-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/Attachment",
+          "name" : "Attachment",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
         }
       }
     }
@@ -880,36 +860,6 @@
     "kind" : "complex-type",
     "url" : "http://hl7.org/fhir/StructureDefinition/Period",
     "name" : "Period",
-    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-  }, {
-    "kind" : "primitive-type",
-    "url" : "http://hl7.org/fhir/StructureDefinition/integer",
-    "name" : "integer",
-    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-  }, {
-    "kind" : "complex-type",
-    "url" : "http://hl7.org/fhir/StructureDefinition/Quantity",
-    "name" : "Quantity",
-    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-  }, {
-    "kind" : "primitive-type",
-    "url" : "http://hl7.org/fhir/StructureDefinition/decimal",
-    "name" : "decimal",
-    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-  }, {
-    "kind" : "complex-type",
-    "url" : "http://hl7.org/fhir/StructureDefinition/Reference",
-    "name" : "Reference",
-    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-  }, {
-    "kind" : "primitive-type",
-    "url" : "http://hl7.org/fhir/StructureDefinition/time",
-    "name" : "time",
-    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-  }, {
-    "kind" : "complex-type",
-    "url" : "http://hl7.org/fhir/StructureDefinition/Attachment",
-    "name" : "Attachment",
     "base" : "http://hl7.org/fhir/StructureDefinition/Element"
   } ]
 }

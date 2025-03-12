@@ -88,9 +88,10 @@
   (reduce (fn [acc [key element]]
             (if (= (:type element) "BackboneElement")
               (let [path (concat parent-path [(name key)])
-                    fields (iterate-over-elements fhir-schema (:elements element) path)]
+                    fields (iterate-over-elements fhir-schema (:elements element) path)
+                    type (:type (build-element element fhir-schema))]
                 (concat acc
-                        [{:path path :schema {:type (build-element element fhir-schema) :fields fields}}]
+                        [{:type (assoc type :path path) :fields fields}]
                         (iterate-over-backbone-element fhir-schema (:elements element) path))) acc)) [] elements))
 
 (defn extract-dependencies [elements]

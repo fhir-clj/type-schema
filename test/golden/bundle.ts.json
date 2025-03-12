@@ -70,237 +70,215 @@
     }
   },
   "nestedTypes" : [ {
-    "path" : [ "link" ],
-    "schema" : {
-      "type" : {
-        "array" : true,
+    "type" : {
+      "kind" : "complex-type",
+      "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
+      "name" : "BackboneElement",
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
+      "path" : [ "link" ]
+    },
+    "fields" : {
+      "relation" : {
         "type" : {
-          "kind" : "complex-type",
-          "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
-          "name" : "BackboneElement",
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/string",
+          "name" : "string",
           "base" : "http://hl7.org/fhir/StructureDefinition/Element"
         }
       },
-      "fields" : {
-        "relation" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/string",
-            "name" : "string",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "url" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/uri",
-            "name" : "uri",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+      "url" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/uri",
+          "name" : "uri",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
         }
       }
     }
   }, {
-    "path" : [ "entry" ],
-    "schema" : {
-      "type" : {
-        "array" : true,
+    "type" : {
+      "kind" : "complex-type",
+      "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
+      "name" : "BackboneElement",
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
+      "path" : [ "entry" ]
+    },
+    "fields" : {
+      "link" : {
+        "array" : true
+      },
+      "fullUrl" : {
         "type" : {
-          "kind" : "complex-type",
-          "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
-          "name" : "BackboneElement",
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/uri",
+          "name" : "uri",
           "base" : "http://hl7.org/fhir/StructureDefinition/Element"
         }
       },
-      "fields" : {
-        "link" : {
-          "array" : true
-        },
-        "fullUrl" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/uri",
-            "name" : "uri",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "resource" : {
-          "type" : {
-            "kind" : "resource",
-            "url" : "http://hl7.org/fhir/StructureDefinition/Resource",
-            "name" : "Resource"
-          }
-        },
-        "search" : {
-          "type" : {
-            "kind" : "nested",
-            "path" : [ "entry", "search" ]
-          }
-        },
-        "request" : {
-          "type" : {
-            "kind" : "nested",
-            "path" : [ "entry", "request" ]
-          }
-        },
-        "response" : {
-          "type" : {
-            "kind" : "nested",
-            "path" : [ "entry", "response" ]
-          }
+      "resource" : {
+        "type" : {
+          "kind" : "resource",
+          "url" : "http://hl7.org/fhir/StructureDefinition/Resource",
+          "name" : "Resource"
+        }
+      },
+      "search" : {
+        "type" : {
+          "kind" : "nested",
+          "path" : [ "entry", "search" ]
+        }
+      },
+      "request" : {
+        "type" : {
+          "kind" : "nested",
+          "path" : [ "entry", "request" ]
+        }
+      },
+      "response" : {
+        "type" : {
+          "kind" : "nested",
+          "path" : [ "entry", "response" ]
         }
       }
     }
   }, {
-    "path" : [ "entry", "search" ],
-    "schema" : {
-      "type" : {
+    "type" : {
+      "kind" : "complex-type",
+      "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
+      "name" : "BackboneElement",
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
+      "path" : [ "entry", "search" ]
+    },
+    "fields" : {
+      "mode" : {
+        "binding" : {
+          "strength" : "required",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/search-entry-mode|4.0.1"
+        },
         "type" : {
-          "kind" : "complex-type",
-          "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
-          "name" : "BackboneElement",
-          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/code",
+          "name" : "code",
+          "base" : "http://hl7.org/fhir/StructureDefinition/string"
         }
       },
-      "fields" : {
-        "mode" : {
-          "binding" : {
-            "strength" : "required",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/search-entry-mode|4.0.1"
-          },
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/code",
-            "name" : "code",
-            "base" : "http://hl7.org/fhir/StructureDefinition/string"
-          }
-        },
-        "score" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/decimal",
-            "name" : "decimal",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+      "score" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/decimal",
+          "name" : "decimal",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
         }
       }
     }
   }, {
-    "path" : [ "entry", "request" ],
-    "schema" : {
-      "type" : {
+    "type" : {
+      "kind" : "complex-type",
+      "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
+      "name" : "BackboneElement",
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
+      "path" : [ "entry", "request" ]
+    },
+    "fields" : {
+      "method" : {
+        "binding" : {
+          "strength" : "required",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/http-verb|4.0.1"
+        },
         "type" : {
-          "kind" : "complex-type",
-          "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
-          "name" : "BackboneElement",
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/code",
+          "name" : "code",
+          "base" : "http://hl7.org/fhir/StructureDefinition/string"
+        }
+      },
+      "url" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/uri",
+          "name" : "uri",
           "base" : "http://hl7.org/fhir/StructureDefinition/Element"
         }
       },
-      "fields" : {
-        "method" : {
-          "binding" : {
-            "strength" : "required",
-            "valueSet" : "http://hl7.org/fhir/ValueSet/http-verb|4.0.1"
-          },
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/code",
-            "name" : "code",
-            "base" : "http://hl7.org/fhir/StructureDefinition/string"
-          }
-        },
-        "url" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/uri",
-            "name" : "uri",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "ifNoneMatch" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/string",
-            "name" : "string",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "ifModifiedSince" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/instant",
-            "name" : "instant",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "ifMatch" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/string",
-            "name" : "string",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "ifNoneExist" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/string",
-            "name" : "string",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
+      "ifNoneMatch" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/string",
+          "name" : "string",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "ifModifiedSince" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/instant",
+          "name" : "instant",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "ifMatch" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/string",
+          "name" : "string",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "ifNoneExist" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/string",
+          "name" : "string",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
         }
       }
     }
   }, {
-    "path" : [ "entry", "response" ],
-    "schema" : {
-      "type" : {
+    "type" : {
+      "kind" : "complex-type",
+      "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
+      "name" : "BackboneElement",
+      "base" : "http://hl7.org/fhir/StructureDefinition/Element",
+      "path" : [ "entry", "response" ]
+    },
+    "fields" : {
+      "status" : {
         "type" : {
-          "kind" : "complex-type",
-          "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
-          "name" : "BackboneElement",
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/string",
+          "name" : "string",
           "base" : "http://hl7.org/fhir/StructureDefinition/Element"
         }
       },
-      "fields" : {
-        "status" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/string",
-            "name" : "string",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "location" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/uri",
-            "name" : "uri",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "etag" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/string",
-            "name" : "string",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "lastModified" : {
-          "type" : {
-            "kind" : "primitive-type",
-            "url" : "http://hl7.org/fhir/StructureDefinition/instant",
-            "name" : "instant",
-            "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-          }
-        },
-        "outcome" : {
-          "type" : {
-            "kind" : "resource",
-            "url" : "http://hl7.org/fhir/StructureDefinition/Resource",
-            "name" : "Resource"
-          }
+      "location" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/uri",
+          "name" : "uri",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "etag" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/string",
+          "name" : "string",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "lastModified" : {
+        "type" : {
+          "kind" : "primitive-type",
+          "url" : "http://hl7.org/fhir/StructureDefinition/instant",
+          "name" : "instant",
+          "base" : "http://hl7.org/fhir/StructureDefinition/Element"
+        }
+      },
+      "outcome" : {
+        "type" : {
+          "kind" : "resource",
+          "url" : "http://hl7.org/fhir/StructureDefinition/Resource",
+          "name" : "Resource"
         }
       }
     }
@@ -334,25 +312,6 @@
     "kind" : "complex-type",
     "url" : "http://hl7.org/fhir/StructureDefinition/Signature",
     "name" : "Signature",
-    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-  }, {
-    "kind" : "primitive-type",
-    "url" : "http://hl7.org/fhir/StructureDefinition/string",
-    "name" : "string",
-    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-  }, {
-    "kind" : "primitive-type",
-    "url" : "http://hl7.org/fhir/StructureDefinition/uri",
-    "name" : "uri",
-    "base" : "http://hl7.org/fhir/StructureDefinition/Element"
-  }, {
-    "kind" : "resource",
-    "url" : "http://hl7.org/fhir/StructureDefinition/Resource",
-    "name" : "Resource"
-  }, {
-    "kind" : "primitive-type",
-    "url" : "http://hl7.org/fhir/StructureDefinition/decimal",
-    "name" : "decimal",
     "base" : "http://hl7.org/fhir/StructureDefinition/Element"
   } ]
 }
