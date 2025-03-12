@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Run linter
+echo "Running linter..."
+make lint
+LINT_EXIT=$?
+
+# Run formatter check
+echo "Checking formatting..."
+make format-check
+FORMAT_EXIT=$?
+
+# Exit with error if either lint or format check fails
+if [ $LINT_EXIT -ne 0 ] || [ $FORMAT_EXIT -ne 0 ]; then
+    echo "Linting or formatting check failed. Please fix the issues before pushing."
+    exit 1
+fi
+
+exit 0

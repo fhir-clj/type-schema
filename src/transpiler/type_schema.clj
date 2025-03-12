@@ -39,7 +39,6 @@
 ;;     derivation?: DerivationType;
 ;; }
 
-
 ;; 1. load everything in memory {"canonical-url" {...}}
 ;; 2. iterate over { :kind resource } and { :derivation "specialization" }
 ;; 3. 

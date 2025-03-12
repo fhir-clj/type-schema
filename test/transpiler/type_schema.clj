@@ -45,5 +45,4 @@
   (golden-test type-schema-content "test/golden/capability-statement.fs.json")
   (golden-test type-schema-content "test/golden/questionnaire.fs.json"))
 
-
 (comment)
