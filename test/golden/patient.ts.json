@@ -99,7 +99,7 @@
       "array" : true,
       "type" : {
         "kind" : "nested",
-        "path" : [ "link" ]
+        "path" : [ "http://hl7.org/fhir/StructureDefinition/Patient", "link" ]
       }
     },
     "active" : {
@@ -114,7 +114,7 @@
       "array" : true,
       "type" : {
         "kind" : "nested",
-        "path" : [ "communication" ]
+        "path" : [ "http://hl7.org/fhir/StructureDefinition/Patient", "communication" ]
       }
     },
     "identifier" : {
@@ -172,7 +172,7 @@
       "array" : true,
       "type" : {
         "kind" : "nested",
-        "path" : [ "contact" ]
+        "path" : [ "http://hl7.org/fhir/StructureDefinition/Patient", "contact" ]
       }
     }
   },
@@ -182,7 +182,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "link" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/Patient", "link" ]
     },
     "fields" : {
       "other" : {
@@ -212,7 +212,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "communication" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/Patient", "communication" ]
     },
     "fields" : {
       "language" : {
@@ -242,7 +242,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "contact" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/Patient", "contact" ]
     },
     "fields" : {
       "relationship" : {

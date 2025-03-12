@@ -97,7 +97,7 @@
       "array" : true,
       "type" : {
         "kind" : "nested",
-        "path" : [ "item" ]
+        "path" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire", "item" ]
       }
     },
     "useContext" : {
@@ -215,7 +215,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "item" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire", "item" ]
     },
     "fields" : {
       "enableBehavior" : {
@@ -274,14 +274,14 @@
         "array" : true,
         "type" : {
           "kind" : "nested",
-          "path" : [ "item", "enableWhen" ]
+          "path" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire", "item", "enableWhen" ]
         }
       },
       "answerOption" : {
         "array" : true,
         "type" : {
           "kind" : "nested",
-          "path" : [ "item", "answerOption" ]
+          "path" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire", "item", "answerOption" ]
         }
       },
       "prefix" : {
@@ -325,7 +325,7 @@
         "array" : true,
         "type" : {
           "kind" : "nested",
-          "path" : [ "item", "initial" ]
+          "path" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire", "item", "initial" ]
         }
       },
       "maxLength" : {
@@ -359,7 +359,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "item", "enableWhen" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire", "item", "enableWhen" ]
     },
     "fields" : {
       "answerQuantity" : {
@@ -522,7 +522,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "item", "answerOption" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire", "item", "answerOption" ]
     },
     "fields" : {
       "value" : {
@@ -621,7 +621,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "item", "initial" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire", "item", "initial" ]
     },
     "fields" : {
       "valueReference" : {

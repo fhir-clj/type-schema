@@ -156,7 +156,7 @@
       "array" : true,
       "type" : {
         "kind" : "nested",
-        "path" : [ "document" ]
+        "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "document" ]
       }
     },
     "status" : {
@@ -175,7 +175,7 @@
       "array" : true,
       "type" : {
         "kind" : "nested",
-        "path" : [ "messaging" ]
+        "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "messaging" ]
       }
     },
     "kind" : {
@@ -210,7 +210,7 @@
     "software" : {
       "type" : {
         "kind" : "nested",
-        "path" : [ "software" ]
+        "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "software" ]
       }
     },
     "version" : {
@@ -233,14 +233,14 @@
     "implementation" : {
       "type" : {
         "kind" : "nested",
-        "path" : [ "implementation" ]
+        "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "implementation" ]
       }
     },
     "rest" : {
       "array" : true,
       "type" : {
         "kind" : "nested",
-        "path" : [ "rest" ]
+        "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest" ]
       }
     }
   },
@@ -250,7 +250,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "document" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "document" ]
     },
     "fields" : {
       "mode" : {
@@ -288,14 +288,14 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "messaging" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "messaging" ]
     },
     "fields" : {
       "endpoint" : {
         "array" : true,
         "type" : {
           "kind" : "nested",
-          "path" : [ "messaging", "endpoint" ]
+          "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "messaging", "endpoint" ]
         }
       },
       "documentation" : {
@@ -318,7 +318,7 @@
         "array" : true,
         "type" : {
           "kind" : "nested",
-          "path" : [ "messaging", "supportedMessage" ]
+          "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "messaging", "supportedMessage" ]
         }
       }
     }
@@ -328,7 +328,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "messaging", "endpoint" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "messaging", "endpoint" ]
     },
     "fields" : {
       "address" : {
@@ -358,7 +358,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "messaging", "supportedMessage" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "messaging", "supportedMessage" ]
     },
     "fields" : {
       "mode" : {
@@ -388,7 +388,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "software" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "software" ]
     },
     "fields" : {
       "name" : {
@@ -422,7 +422,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "implementation" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "implementation" ]
     },
     "fields" : {
       "url" : {
@@ -456,7 +456,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "rest" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest" ]
     },
     "fields" : {
       "mode" : {
@@ -475,13 +475,13 @@
         "array" : true,
         "type" : {
           "kind" : "nested",
-          "path" : [ "rest", "resource" ]
+          "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "resource" ]
         }
       },
       "security" : {
         "type" : {
           "kind" : "nested",
-          "path" : [ "rest", "security" ]
+          "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "security" ]
         }
       },
       "operation" : {
@@ -501,7 +501,7 @@
         "array" : true,
         "type" : {
           "kind" : "nested",
-          "path" : [ "rest", "interaction" ]
+          "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "interaction" ]
         }
       },
       "searchParam" : {
@@ -523,7 +523,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "rest", "resource" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "resource" ]
     },
     "fields" : {
       "searchRevInclude" : {
@@ -539,7 +539,7 @@
         "array" : true,
         "type" : {
           "kind" : "nested",
-          "path" : [ "rest", "resource", "searchParam" ]
+          "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "resource", "searchParam" ]
         }
       },
       "conditionalUpdate" : {
@@ -566,7 +566,7 @@
         "array" : true,
         "type" : {
           "kind" : "nested",
-          "path" : [ "rest", "resource", "operation" ]
+          "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "resource", "operation" ]
         }
       },
       "referencePolicy" : {
@@ -606,7 +606,7 @@
         "array" : true,
         "type" : {
           "kind" : "nested",
-          "path" : [ "rest", "resource", "interaction" ]
+          "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "resource", "interaction" ]
         }
       },
       "documentation" : {
@@ -690,7 +690,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "rest", "resource", "searchParam" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "resource", "searchParam" ]
     },
     "fields" : {
       "name" : {
@@ -736,7 +736,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "rest", "resource", "operation" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "resource", "operation" ]
     },
     "fields" : {
       "name" : {
@@ -770,7 +770,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "rest", "resource", "interaction" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "resource", "interaction" ]
     },
     "fields" : {
       "code" : {
@@ -800,7 +800,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "rest", "security" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "security" ]
     },
     "fields" : {
       "cors" : {
@@ -839,7 +839,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "rest", "interaction" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement", "rest", "interaction" ]
     },
     "fields" : {
       "code" : {

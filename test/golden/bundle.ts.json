@@ -50,14 +50,14 @@
       "array" : true,
       "type" : {
         "kind" : "nested",
-        "path" : [ "link" ]
+        "path" : [ "http://hl7.org/fhir/StructureDefinition/Bundle", "link" ]
       }
     },
     "entry" : {
       "array" : true,
       "type" : {
         "kind" : "nested",
-        "path" : [ "entry" ]
+        "path" : [ "http://hl7.org/fhir/StructureDefinition/Bundle", "entry" ]
       }
     },
     "signature" : {
@@ -75,7 +75,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "link" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/Bundle", "link" ]
     },
     "fields" : {
       "relation" : {
@@ -101,7 +101,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "entry" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/Bundle", "entry" ]
     },
     "fields" : {
       "link" : {
@@ -125,19 +125,19 @@
       "search" : {
         "type" : {
           "kind" : "nested",
-          "path" : [ "entry", "search" ]
+          "path" : [ "http://hl7.org/fhir/StructureDefinition/Bundle", "entry", "search" ]
         }
       },
       "request" : {
         "type" : {
           "kind" : "nested",
-          "path" : [ "entry", "request" ]
+          "path" : [ "http://hl7.org/fhir/StructureDefinition/Bundle", "entry", "request" ]
         }
       },
       "response" : {
         "type" : {
           "kind" : "nested",
-          "path" : [ "entry", "response" ]
+          "path" : [ "http://hl7.org/fhir/StructureDefinition/Bundle", "entry", "response" ]
         }
       }
     }
@@ -147,7 +147,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "entry", "search" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/Bundle", "entry", "search" ]
     },
     "fields" : {
       "mode" : {
@@ -177,7 +177,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "entry", "request" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/Bundle", "entry", "request" ]
     },
     "fields" : {
       "method" : {
@@ -239,7 +239,7 @@
       "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement",
       "name" : "BackboneElement",
       "base" : "http://hl7.org/fhir/StructureDefinition/Element",
-      "path" : [ "entry", "response" ]
+      "path" : [ "http://hl7.org/fhir/StructureDefinition/Bundle", "entry", "response" ]
     },
     "fields" : {
       "status" : {

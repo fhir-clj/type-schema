@@ -107,8 +107,8 @@
   (let [parent (get-schema (get-in fhir-schema [:base]))
         base-info (get-base-info fhir-schema)
         elements (get-in fhir-schema [:elements])
-        transformed-elements (iterate-over-elements fhir-schema elements [])
-        transformed-backbone-elements (iterate-over-backbone-element fhir-schema elements [])]
+        transformed-elements (iterate-over-elements fhir-schema elements [(get-in fhir-schema [:url])])
+        transformed-backbone-elements (iterate-over-backbone-element fhir-schema elements [(get-in fhir-schema [:url])])]
 
     (merge base-info {:fields transformed-elements
                       :nestedTypes (vec transformed-backbone-elements)
