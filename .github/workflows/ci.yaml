@@ -1,0 +1,57 @@
+on:
+  push:
+
+jobs:
+  clj-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare java
+        uses: actions/setup-java@v3
+        with:
+          distribution: "zulu"
+          java-version: "8"
+
+      - name: Install clojure tools
+        uses: DeLaGuardo/setup-clojure@13.0
+        with:
+          cli: 1.11.1.1155
+
+      - name: Install rlwrap
+        run: sudo apt-get install -y rlwrap
+
+      - name: Cache clojure dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.m2/repository
+          key: cljdeps-${{ hashFiles('deps.edn') }}
+
+      - name: Run linters
+        run: make lint
+
+      - name: Tests
+        run: make test
+
+      - name: Check formatting
+        run: make format-check
+
+  json-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check example
+        uses: vanekj/validate-json-action@v1
+        with:
+          schema: docs/type-schema.schema.json
+          pattern: docs/example.ts.json
+
+      - name: Check all type schemas in repo
+        uses: vanekj/validate-json-action@v1
+        with:
+          schema: docs/type-schema.schema.json
+          pattern: "**/*.ts.json"

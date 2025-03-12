@@ -13,8 +13,13 @@
         :main-opts ["-m" "nrepl.cmdline"
                     "--middleware" "[cider.nrepl/cider-middleware]"]}
 
+  :format
+  {:extra-paths ["test"]
+   :extra-deps {dev.weavejester/cljfmt {:mvn/version "0.13.0"}}
+   :main-opts  ["-m" "cljfmt.main"]}
+
   :lint
-  {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2024.11.14"}}
+  {:extra-deps {clj-kondo/clj-kondo {:mvn/version "2025.02.20"}}
    :main-opts ["-m" "clj-kondo.main" "--lint" "src"]}
 
   :test
