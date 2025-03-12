@@ -1,0 +1,19 @@
+{
+    "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement",
+    "id": "BackboneElement",
+    "base": "http://hl7.org/fhir/StructureDefinition/Element",
+    "name": "BackboneElement",
+    "kind": "complex-type",
+    "type": "BackboneElement",
+    "version": "4.0.1",
+    "resourceType": "FHIRSchema",
+    "elements": {
+        "modifierExtension": {
+            "type": "Extension",
+            "array": true,
+            "summary": true,
+            "modifier": true
+        }
+    },
+    "derivation": "specialization"
+}

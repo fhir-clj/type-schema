@@ -40,6 +40,7 @@
            (str "golden-type-schema check fail for: " ~filename)))))
 
 (deftest structure-definition-test
+  (golden-test type-schema-content "test/golden/backbone-element.fs.json")
   (golden-test type-schema-content "test/golden/patient.fs.json")
   (golden-test type-schema-content "test/golden/bundle.fs.json")
   (golden-test type-schema-content "test/golden/capability-statement.fs.json")
