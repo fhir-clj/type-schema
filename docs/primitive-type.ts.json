@@ -1,17 +1,15 @@
 {
   "kind": "primitive-type",
-  "name": {
+  "name": "base64Binary",
+  "self-reference": {
     "package": "hl7.fhir.core.r4",
-    "name": "Patient",
-    "parent": "http://hl7.org/fhir/StructureDefinition/DomainResource",
-    "type": "resource",
-    "url": "http://hl7.org/fhir/StructureDefinition/Patient"
+    "url": "http://hl7.org/fhir/StructureDefinition/base64Binary",
+    "name": "base64Binary"
   },
   "base": {
     "package": "hl7.fhir.core.r4",
-    "type": "resource",
-    "name": "DomainResource",
-    "url": "http://hl7.org/fhir/StructureDefinition/DomainResource",
-    "parent": "http://hl7.org/fhir/StructureDefinition/Resource"
-  }
+    "url": "http://hl7.org/fhir/StructureDefinition/PrimitiveType",
+    "name": "PrimitiveType"
+  },
+  "description": "base64Binary Type: A stream of bytes"
 }

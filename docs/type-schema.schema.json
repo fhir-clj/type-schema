@@ -34,118 +34,155 @@
       "required": ["package", "name"]
     }
   },
-  "properties": {
-    "kind": {
-      "$ref": "#/definitions/type-schema-kind"
-    },
-    "name": {
-      "type": "string",
-      "description": "Computer friendly name for the type"
-    },
-    "self-reference": {
-      "$comment": "Early -- name, but it should be used as a reference to the type.",
-      "$ref": "#/definitions/type-schema-ref"
-    },
-    "base": {
-      "$ref": "#/definitions/type-schema-ref"
-    },
-    "fields": {
+
+  "oneOf": [
+    {
       "type": "object",
-      "additionalProperties": {
-        "anyOf": [
-          {
-            "type": "object",
-            "properties": {
-              "required": { "type": "boolean", "default": false },
-              "array": { "type": "boolean", "default": false },
-              "type": {
-                "$ref": "#/definitions/type-schema-ref"
-              },
-              "binding": {
-                "type": "object",
-                "$comment": "https://build.fhir.org/terminologies-binding-examples.html",
-                "properties": {
-                  "valueSet": {
-                    "type": "object",
-                    "properties": {
-                      "package": { "type": "string" },
-                      "name": { "type": "string" }
-                    },
-                    "required": ["package", "name"]
-                  },
-                  "strength": {
-                    "type": "string",
-                    "enum": ["required", "extensible", "preferred", "example"]
-                  }
-                }
-              }
-            },
-            "required": ["type"]
-          },
-          {
-            "type": "object",
-            "description": "Polymorphic value[x] declaration",
-            "properties": {
-              "choices": { "type": "array", "items": { "type": "string" } },
-              "required": {
-                "type": "boolean",
-                "description": "== .fields.<choice>[*].required",
-                "default": false
-              },
-              "array": {
-                "type": "boolean",
-                "description": "== .fields.<choice>[*].array",
-                "default": false
-              }
-            },
-            "required": ["choices"]
-          },
-          {
-            "type": "object",
-            "description": "Instance of polymorphic value[x] field",
-            "properties": {
-              "choiceOf": { "type": "string" },
-              "required": {
-                "type": "boolean",
-                "description": "== .fields.<choiceOf>.required",
-                "default": false
-              },
-              "array": {
-                "type": "boolean",
-                "description": "== .fields.<choiceOf>.array",
-                "default": false
-              },
-              "type": {
-                "$ref": "#/definitions/type-schema-ref"
-              }
-            },
-            "required": ["type"]
-          }
-        ]
-      }
-    },
-    "allDependencies": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/type-schema-ref"
-      }
-    },
-    "nestedTypesFlat": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "path": {
-            "type": "array",
-            "description": "Start from the # type to simplify name generation.",
-            "items": { "type": "string" }
-          },
-          "type": { "$ref": "#" }
+
+      "properties": {
+        "kind": {
+          "$ref": "#/definitions/type-schema-kind"
         },
-        "required": ["type", "path"]
-      }
+        "name": {
+          "type": "string",
+          "description": "Computer friendly name for the type"
+        },
+        "self-reference": {
+          "$comment": "Early -- name, but it should be used as a reference to the type.",
+          "$ref": "#/definitions/type-schema-ref"
+        },
+        "base": {
+          "$ref": "#/definitions/type-schema-ref"
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "required": { "type": "boolean", "default": false },
+                  "array": { "type": "boolean", "default": false },
+                  "type": {
+                    "$ref": "#/definitions/type-schema-ref"
+                  },
+                  "binding": {
+                    "type": "object",
+                    "$comment": "https://build.fhir.org/terminologies-binding-examples.html",
+                    "properties": {
+                      "valueSet": {
+                        "type": "object",
+                        "properties": {
+                          "package": { "type": "string" },
+                          "name": { "type": "string" }
+                        },
+                        "required": ["package", "name"]
+                      },
+                      "strength": {
+                        "type": "string",
+                        "enum": [
+                          "required",
+                          "extensible",
+                          "preferred",
+                          "example"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "description": "Polymorphic value[x] declaration",
+                "properties": {
+                  "choices": { "type": "array", "items": { "type": "string" } },
+                  "required": {
+                    "type": "boolean",
+                    "description": "== .fields.<choice>[*].required",
+                    "default": false
+                  },
+                  "array": {
+                    "type": "boolean",
+                    "description": "== .fields.<choice>[*].array",
+                    "default": false
+                  }
+                },
+                "required": ["choices"]
+              },
+              {
+                "type": "object",
+                "description": "Instance of polymorphic value[x] field",
+                "properties": {
+                  "choiceOf": { "type": "string" },
+                  "required": {
+                    "type": "boolean",
+                    "description": "== .fields.<choiceOf>.required",
+                    "default": false
+                  },
+                  "array": {
+                    "type": "boolean",
+                    "description": "== .fields.<choiceOf>.array",
+                    "default": false
+                  },
+                  "type": {
+                    "$ref": "#/definitions/type-schema-ref"
+                  }
+                },
+                "required": ["type"]
+              }
+            ]
+          }
+        },
+        "allDependencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/type-schema-ref"
+          }
+        },
+        "nestedTypesFlat": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "array",
+                "description": "Start from the # type to simplify name generation.",
+                "items": { "type": "string" }
+              },
+              "type": { "$ref": "#" }
+            },
+            "required": ["type", "path"]
+          }
+        }
+      },
+      "required": ["kind", "name", "nestedTypesFlat"],
+      "additionalProperties": false
+    },
+    {
+      "title": "Type Schema for Primitive Type",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "primitive-type"
+        },
+        "name": {
+          "type": "string",
+          "description": "Computer friendly name for the type"
+        },
+        "description": {
+          "type": "string"
+        },
+        "self-reference": {
+          "$comment": "Early -- name, but it should be used as a reference to the type.",
+          "$ref": "#/definitions/type-schema-ref"
+        },
+        "base": {
+          "$ref": "#/definitions/type-schema-ref"
+        }
+      },
+      "required": ["kind", "name", "base"],
+      "additionalProperties": false
     }
-  },
-  "required": ["kind", "name", "nestedTypesFlat"],
-  "additionalProperties": false
+  ]
 }

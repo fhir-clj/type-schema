@@ -1,17 +1,63 @@
 {
   "kind": "complex-type",
-  "name": {
+  "name": "ContactPoint",
+  "self-reference": {
     "package": "hl7.fhir.core.r4",
-    "name": "Patient",
-    "parent": "http://hl7.org/fhir/StructureDefinition/DomainResource",
-    "type": "resource",
-    "url": "http://hl7.org/fhir/StructureDefinition/Patient"
+    "name": "ContactPoint",
+    "type": "complex-type",
+    "url": "http://hl7.org/fhir/StructureDefinition/ContactPoint",
+    "base": "http://hl7.org/fhir/StructureDefinition/Element"
   },
   "base": {
     "package": "hl7.fhir.core.r4",
-    "type": "resource",
-    "name": "DomainResource",
-    "url": "http://hl7.org/fhir/StructureDefinition/DomainResource",
-    "parent": "http://hl7.org/fhir/StructureDefinition/Resource"
+    "name": "Element",
+    "type": "complex-type",
+    "url": "http://hl7.org/fhir/StructureDefinition/Element"
+  },
+  "fields": {
+    "system": {
+      "required": false,
+      "array": false,
+      "type": {
+        "package": "hl7.fhir.core.r4",
+        "name": "code",
+        "type": "primitive-type"
+      },
+      "binding": {
+        "valueSet": "http://hl7.org/fhir/ValueSet/contact-point-system",
+        "strength": "required"
+      }
+    },
+    "value": {
+      "required": false,
+      "array": false,
+      "type": {
+        "package": "hl7.fhir.core.r4",
+        "name": "string",
+        "type": "primitive-type"
+      }
+    },
+    "use": {
+      "required": false,
+      "array": false,
+      "type": {
+        "package": "hl7.fhir.core.r4",
+        "name": "code",
+        "type": "primitive-type"
+      },
+      "binding": {
+        "valueSet": "http://hl7.org/fhir/ValueSet/contact-point-use",
+        "strength": "required"
+      }
+    },
+    "rank": {
+      "required": false,
+      "array": false,
+      "type": {
+        "package": "hl7.fhir.core.r4",
+        "name": "positiveInt",
+        "type": "primitive-type"
+      }
+    }
   }
 }

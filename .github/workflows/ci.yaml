@@ -44,14 +44,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check example
+      - name: Check type schemas from examples
         uses: vanekj/validate-json-action@v1
         with:
           schema: docs/type-schema.schema.json
-          pattern: docs/example.ts.json
+          pattern: docs/**/*.ts.json
 
-      - name: Check all type schemas in repo
+      - name: Check type schemas from tests
         uses: vanekj/validate-json-action@v1
         with:
           schema: docs/type-schema.schema.json
-          pattern: "**/*.ts.json"
+          pattern: test/**/*.ts.json"
