@@ -20,9 +20,10 @@
          (reduce (fn [acc schema]
                    (if-let [url (:url schema)] (assoc acc url schema) acc)) {}))))
 
-(def index (atom nil))
+(def fhir-schema-index (atom nil))
+(defn init-fhir-schema-index! [schemas] (reset! fhir-schema-index schemas))
+(defn get-fhir-schema [url] (get @fhir-schema-index url))
 
-(defn init! [schemas]
-  (reset! index schemas))
-
-(defn get-schema [url] (get @index url))
+(def valueset-index (atom nil))
+(defn init-valueset-index! [schemas] (reset! valueset-index schemas))
+(defn get-enum [url] (get @valueset-index url))

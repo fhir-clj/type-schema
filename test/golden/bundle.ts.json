@@ -21,7 +21,8 @@
     "type" : {
       "binding" : {
         "strength" : "required",
-        "valueSet" : "http://hl7.org/fhir/ValueSet/bundle-type|4.0.1"
+        "valueSet" : "http://hl7.org/fhir/ValueSet/bundle-type|4.0.1",
+        "enum" : [ "document", "message", "transaction", "transaction-response", "batch", "batch-response", "history", "searchset", "collection" ]
       },
       "type" : {
         "kind" : "primitive-type",
@@ -145,7 +146,8 @@
       "mode" : {
         "binding" : {
           "strength" : "required",
-          "valueSet" : "http://hl7.org/fhir/ValueSet/search-entry-mode|4.0.1"
+          "valueSet" : "http://hl7.org/fhir/ValueSet/search-entry-mode|4.0.1",
+          "enum" : [ "match", "include", "outcome" ]
         },
         "type" : {
           "kind" : "primitive-type",
@@ -174,7 +176,8 @@
       "method" : {
         "binding" : {
           "strength" : "required",
-          "valueSet" : "http://hl7.org/fhir/ValueSet/http-verb|4.0.1"
+          "valueSet" : "http://hl7.org/fhir/ValueSet/http-verb|4.0.1",
+          "enum" : [ "GET", "HEAD", "POST", "PUT", "DELETE", "PATCH" ]
         },
         "type" : {
           "kind" : "primitive-type",

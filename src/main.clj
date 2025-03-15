@@ -2,7 +2,8 @@
   (:require [fhir.package]
             [transpiler.fhir-schema :as fhir-schema]
             [transpiler.type-schema :as type-schema]
-            [transpiler.package-index :refer [init!]]
+            [transpiler.package-index :refer [get-enum init-fhir-schema-index! init-valueset-index!]]
+            [extract-enum]
             [clojure.string :as str]
             [cheshire.core])
   (:gen-class))
@@ -21,7 +22,6 @@
             (assoc acc url (fhir-schema/translate structure-definition))) {} structure-definition-index))
 
 (defn fhir-schema->type-schema [fhir-schema-index]
-  (init! fhir-schema-index)
   (reduce (fn [acc [url fhir-schema]]
             (assoc acc url (type-schema/translate fhir-schema))) {} fhir-schema-index))
 
@@ -38,16 +38,14 @@
         (.newLine writer)))))
 
 (defn process-package [package-name output-dir]
-  (-> package-name
-      (logging (str "Package " package-name " is loading"))
-      get-package
-      (logging "StructureDefinitions to FHIR schema translation")
-      structure-definition->fhir-schema
-      (logging "FHIR schema to TypeSchema translation")
-      fhir-schema->type-schema
-      (logging (str "Saving to the directory: " output-dir))
-      (save-as-ndjson output-dir)
-      (logging "DONE!")))
+  (let [package-index (get-package package-name)
+        fhir-schema (structure-definition->fhir-schema package-index)
+        type-schema (fhir-schema->type-schema fhir-schema)]
+
+    (init-valueset-index! (extract-enum/get-resolvable-valueset-codes package-index))
+    (init-fhir-schema-index! fhir-schema)
+
+    (save-as-ndjson type-schema output-dir)))
 
 (defn -main [& args]
   (if (not= (count args) 2)
@@ -63,3 +61,8 @@
         (catch Exception e
           (println "Error:" (.getMessage e))
           (System/exit 1))))))
+
+(comment
+  (process-package "hl7.fhir.r4.core@4.0.1" "output")
+
+  (get-enum "http://hl7.org/fhir/ValueSet/administrative-gender"))

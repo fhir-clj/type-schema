@@ -1,47 +1,6 @@
 (ns transpiler.type-schema
-  (:require [transpiler.package-index :refer [get-schema]]))
-
-;; TypeRefType = 'resource' | 'profile' | 'logical' | 'complex-type' | 'primitive-type' | 'nested' | 'valueset' | 'choice' | 'unknown'
-
-;;  TypeRef {
-;;     name: string;
-;;     package: string;
-;;     parent?: string;
-;;     type?: TypeRefType;
-;;     url?: string;
-;; }
-
-;; ClassField {
-;;     required?: boolean;
-;;     type: TypeRef;
-;;     array?: boolean;
-;;     choiceOf?: string;
-;;     choices?: string[];
-;;     binding?: {
-;;         valueSet?: TypeRef;
-;;         strength?: 'required' | 'extensible' | 'preferred' | 'example';
-;;     };
-;; }
-
-;; ChoiceField {
-;;     required?: boolean;
-;;     choices?: string[];
-;; }
-
-;; ITypeSchema {
-;;     kind: TypeRefType;
-;;     name: TypeRef (Patient)
-;;     base?: TypeRef (DomainResource)
-;;     fields?:  { [key: string]: ClassField };
-;;     choices?: { [key: string]: ChoiceField };
-;;     allDependencies?: TypeRef[];
-;;     nestedTypes?: ITypeSchema[];
-;;     derivation?: DerivationType;
-;; }
-
-;; 1. load everything in memory {"canonical-url" {...}}
-;; 2. iterate over { :kind resource } and { :derivation "specialization" }
-;; 3. 
+  (:require [transpiler.package-index :refer [get-fhir-schema get-enum]]
+            [clojure.string :as str]))
 
 (defn is-schema [kind]
   (contains? #{"resource" "profile" "logical" "complex-type" "primitive-type"} kind))
@@ -52,13 +11,22 @@
         (:choices schema) "choices"
         :else (:kind schema)))
 
+(defn split-url-version [url-with-version]
+  (if (and url-with-version (string? url-with-version))
+    (first (str/split url-with-version #"\|")) url-with-version))
+
+(defn attach-enum [binding]
+  (let [enum (get-enum (split-url-version (:valueSet binding)))]
+    (if enum (assoc binding :enum enum) binding)))
+
 (defn build-element [element fhir-schema]
   (let [required (some #{name} (:required fhir-schema))
         element-type (:type element)
         element-url (str "http://hl7.org/fhir/StructureDefinition/" element-type)
-        element-schema (get-schema element-url)]
-    (-> (select-keys element [:choices :array :binding :choiceOf])
+        element-schema (get-fhir-schema element-url)]
+    (-> (select-keys element [:choices :array :choiceOf])
         (cond-> required (assoc-in [:required] required))
+        (cond-> (:binding element) (assoc-in [:binding] (attach-enum (:binding element))))
         (cond-> element-type (assoc-in [:type :kind] (derive-kind-from-schema element-schema)))
         (cond-> element-type (assoc-in [:type :url] element-url))
         (cond-> element-type (assoc-in [:type :name] element-type))
@@ -106,7 +74,7 @@
                   (cond-> schema-type (concat [schema-type]))))) [] elements))
 
 (defn translate [fhir-schema]
-  (let [parent (get-schema (get-in fhir-schema [:base]))
+  (let [parent (get-fhir-schema (get-in fhir-schema [:base]))
         base-info (get-base-info fhir-schema)
         elements (get-in fhir-schema [:elements])
         transformed-elements (iterate-over-elements fhir-schema elements [(get-in fhir-schema [:url])])

@@ -1,12 +1,14 @@
 (ns transpiler.type-schema
   (:require [clojure.test :refer :all]
             [transpiler.type-schema :as type-schema]
-            [transpiler.package-index :refer [load-merge-schemas init!]]
+            [transpiler.package-index :as index]
             [cheshire.core :as json]
             [clojure.string :as str]
             [clojure.java.io :as io]))
 
-(init! (load-merge-schemas))
+(index/init-fhir-schema-index! (index/load-merge-schemas))
+(index/init-fhir-schema-index! (index/load-merge-schemas))
+
 (defn update-golden? []
   (= "true" (System/getenv "UPDATE_GOLDEN")))
 
