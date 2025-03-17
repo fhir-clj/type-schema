@@ -1,0 +1,55 @@
+{
+  "type": {
+    "name": "Questionnaire",
+    "base": "http://hl7.org/fhir/StructureDefinition/DomainResource",
+    "url": "http://hl7.org/fhir/StructureDefinition/Questionnaire",
+    "version": "4.0.1",
+    "kind": "resource"
+  },
+  "fields": {
+    "item": {
+      "array": true,
+      "type": {
+        "kind": "nested",
+        "path": [
+          "http://hl7.org/fhir/StructureDefinition/Questionnaire",
+          "item"
+        ]
+      }
+    }
+  },
+  "dependencies": [
+    {
+      "path": [
+        "http://hl7.org/fhir/StructureDefinition/Questionnaire",
+        "item"
+      ],
+      "fields": {
+        "item": {
+          "array": true,
+          "elementReference": [
+            "http://hl7.org/fhir/StructureDefinition/Questionnaire",
+            "item"
+          ]
+        },
+        "type": {
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/item-type"
+          },
+          "type": {
+            "kind": "primitive-type",
+            "url": "http://hl7.org/fhir/StructureDefinition/code",
+            "name": "code",
+            "base": "http://hl7.org/fhir/StructureDefinition/string"
+          }
+        }
+      },
+      "type": {
+        "kind": "complex-type",
+        "name": "BackboneElement",
+        "base": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
+      }
+    }
+  ]
+}

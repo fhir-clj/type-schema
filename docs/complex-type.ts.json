@@ -21,7 +21,9 @@
       "type": {
         "package": "hl7.fhir.core.r4",
         "name": "code",
-        "type": "primitive-type"
+        "type": "primitive-type",
+        "base": "http://hl7.org/fhir/StructureDefinition/string",
+        "url": "http://hl7.org/fhir/StructureDefinition/code"
       },
       "binding": {
         "valueSet": "http://hl7.org/fhir/ValueSet/contact-point-system",
@@ -34,7 +36,9 @@
       "type": {
         "package": "hl7.fhir.core.r4",
         "name": "string",
-        "type": "primitive-type"
+        "type": "primitive-type",
+        "base": "http://hl7.org/fhir/StructureDefinition/Element",
+        "url": "http://hl7.org/fhir/StructureDefinition/string"
       }
     },
     "use": {
@@ -43,7 +47,9 @@
       "type": {
         "package": "hl7.fhir.core.r4",
         "name": "code",
-        "type": "primitive-type"
+        "type": "primitive-type",
+        "base": "http://hl7.org/fhir/StructureDefinition/string",
+        "url": "http://hl7.org/fhir/StructureDefinition/code"
       },
       "binding": {
         "valueSet": "http://hl7.org/fhir/ValueSet/contact-point-use",
@@ -56,7 +62,9 @@
       "type": {
         "package": "hl7.fhir.core.r4",
         "name": "positiveInt",
-        "type": "primitive-type"
+        "type": "primitive-type",
+        "base": "http://hl7.org/fhir/StructureDefinition/integer",
+        "url": "http://hl7.org/fhir/StructureDefinition/positiveInt"
       }
     }
   }

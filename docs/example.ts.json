@@ -28,7 +28,10 @@
       }
     },
     "deceased": {
-      "choices": ["deceasedBoolean", "deceasedDateTime"],
+      "choices": [
+        "deceasedBoolean",
+        "deceasedDateTime"
+      ],
       "required": false,
       "array": false
     },
@@ -51,6 +54,6 @@
       }
     }
   },
-  "allDependencies": [],
+  "dependencies": [],
   "nestedTypesFlat": []
 }

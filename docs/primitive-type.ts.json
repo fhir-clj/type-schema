@@ -4,12 +4,14 @@
   "self-reference": {
     "package": "hl7.fhir.core.r4",
     "url": "http://hl7.org/fhir/StructureDefinition/base64Binary",
-    "name": "base64Binary"
+    "name": "base64Binary",
+    "type": "primitive-type"
   },
   "base": {
     "package": "hl7.fhir.core.r4",
-    "url": "http://hl7.org/fhir/StructureDefinition/PrimitiveType",
-    "name": "PrimitiveType"
+    "url": "http://hl7.org/fhir/StructureDefinition/Element",
+    "name": "Element",
+    "type": "complex-type"
   },
   "description": "base64Binary Type: A stream of bytes"
 }
