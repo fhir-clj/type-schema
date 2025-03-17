@@ -20,3 +20,9 @@ $ ajv test -s docs/type-schema.schema.json -d docs/example.ts.json --valid
 $ fd -e .ts.json | xargs -n 1 ajv test -s docs/type-schema.schema.json --valid -d
 $ find . -name "*.ts.json" | xargs -n 1 ajv test -s docs/type-schema.schema.json --valid -d
 ```
+
+## Local Build & Run
+
+```shell
+make build && java -jar target/type-schema.jar hl7.fhir.us.core@6.1.0 ./output-us-core
+```

@@ -3,7 +3,7 @@
 
 (def class-dir "target/classes")
 (def basis (b/create-basis {:project "deps.edn"}))
-(def uber-file "target/app.jar")
+(def uber-file "target/type-schema.jar")
 
 (defn clean [_]
   (b/delete {:path "target"}))
@@ -18,4 +18,4 @@
   (b/uber {:class-dir class-dir
            :uber-file uber-file
            :basis basis
-           :main 'main})) 
+           :main 'main}))
