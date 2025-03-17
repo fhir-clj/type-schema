@@ -8,14 +8,20 @@
             [cheshire.core])
   (:gen-class))
 
-(defn create-package-index [acc file-name read-fn]
+(defn keep-fhir-resource-file [acc file-name read-fn]
   (if (str/ends-with? file-name ".json")
-    (let [res (read-fn true)]
-      (if (and (:resourceType res) (:url res))
-        (assoc-in acc [(:url res)] res) acc)) acc))
+    (try (let [res (read-fn true)]
+           (if (and (:resourceType res) (:url res))
+             (assoc-in acc [(:url res)] res)
+             acc))
+         (catch Exception e
+           (binding [*out* *err*]
+             (println "SKIP: " file-name
+                      " error: " (str/replace (.getMessage e) #"\n" " ")))
+           acc)) acc))
 
 (defn get-package [package-name]
-  (fhir.package/reduce-package (fhir.package/pkg-info package-name) create-package-index))
+  (fhir.package/reduce-package (fhir.package/pkg-info package-name) keep-fhir-resource-file))
 
 (defn structure-definition->fhir-schema [structure-definition-index]
   (reduce (fn [acc [url structure-definition]]
@@ -64,5 +70,7 @@
 
 (comment
   (process-package "hl7.fhir.r4.core@4.0.1" "output")
-
+  (process-package "hl7.fhir.us.core@6.1.0" "output")
+  (fhir.package/pkg-info "hl7.fhir.r4.core@4.0.1")
+  (fhir.package/pkg-info "hl7.fhir.us.core@6.1.0")
   (get-enum "http://hl7.org/fhir/ValueSet/administrative-gender"))
