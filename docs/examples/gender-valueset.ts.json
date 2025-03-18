@@ -1,0 +1,31 @@
+{
+  "kind": "value-set",
+  "name": "administrative-gender",
+  "self-reference": {
+    "package": "hl7.fhir.core.r4",
+    "name": "administrative-gender",
+    "url": "http://hl7.org/fhir/administrative-gender"
+  },
+  "coding": [
+    {
+      "system": "http://hl7.org/fhir/administrative-gender",
+      "code": "female",
+      "display": "Female"
+    },
+    {
+      "system": "http://hl7.org/fhir/administrative-gender",
+      "code": "male",
+      "display": "Male"
+    },
+    {
+      "system": "http://hl7.org/fhir/administrative-gender",
+      "code": "other",
+      "display": "Other"
+    },
+    {
+      "system": "http://hl7.org/fhir/administrative-gender",
+      "code": "unknown",
+      "display": "Unknown"
+    }
+  ]
+}

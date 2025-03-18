@@ -45,5 +45,8 @@ clean:
 
 ###########################################################
 
+check-example-json:
+	find docs/examples -name "*.ts.json" | xargs -n 1 ajv test -s docs/type-schema.schema.json --valid -d
+
 check-json:
 	find . -name "*.ts.json" | xargs -n 1 ajv test -s docs/type-schema.schema.json --valid -d

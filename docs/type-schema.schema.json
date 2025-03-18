@@ -5,20 +5,6 @@
   "title": "Type Schema",
   "description": "FHIR StructureDefinition & FHIR Schema view for generation SDK resource classes/types.",
   "definitions": {
-    "type-schema-kind": {
-      "type": "string",
-      "anyOf": [
-        { "const": "resource", "description": "" },
-        { "const": "complex-type", "description": "" },
-        { "const": "primitive-type", "description": "" },
-        {
-          "const": "value-set",
-          "description": "",
-          "$comment": "FIXME: How to represent value set? Is it a FHIR Schema or something else?"
-        },
-        { "const": "nested", "description": "" }
-      ]
-    },
     "type-schema-ref": {
       "type": "object",
       "$comment": "TODO: Do we need kind here? It may raise consistency issues.",
@@ -34,14 +20,70 @@
       "required": ["package", "name"]
     }
   },
-
   "oneOf": [
     {
+      "title": "Type Schema for Primitive Type",
       "type": "object",
+      "properties": {
+        "kind": { "const": "primitive-type" },
+        "name": {
+          "type": "string",
+          "description": "Computer friendly name for the type"
+        },
+        "description": {
+          "type": "string"
+        },
+        "self-reference": {
+          "$comment": "Early -- name, but it should be used as a reference to the type.",
+          "$ref": "#/definitions/type-schema-ref"
+        },
+        "base": {
+          "$ref": "#/definitions/type-schema-ref"
+        }
+      },
+      "required": ["kind", "name", "self-reference", "base"],
+      "additionalProperties": false
+    },
 
+    {
+      "title": "Type Schema for ValueSet",
+      "type": "object",
       "properties": {
         "kind": {
-          "$ref": "#/definitions/type-schema-kind"
+          "const": "value-set"
+        },
+        "name": {
+          "type": "string",
+          "description": "Computer friendly name for the type"
+        },
+        "self-reference": {
+          "$comment": "Early -- name, but it should be used as a reference to the type.",
+          "$ref": "#/definitions/type-schema-ref"
+        },
+        "coding": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": { "type": "string" },
+              "display": { "type": "string" },
+              "system": { "type": "string" }
+            },
+            "required": ["code"],
+            "additionalProperties": false
+          }
+        },
+        "compose": { "type": "object" }
+      },
+      "required": ["kind", "name", "self-reference"],
+      "additionalProperties": false
+    },
+
+    {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "oneOf": [{ "const": "resource" }, { "const": "complex-type" }]
         },
         "name": {
           "type": "string",
@@ -71,12 +113,7 @@
                     "$comment": "https://build.fhir.org/terminologies-binding-examples.html",
                     "properties": {
                       "valueSet": {
-                        "type": "object",
-                        "properties": {
-                          "package": { "type": "string" },
-                          "name": { "type": "string" }
-                        },
-                        "required": ["package", "name"]
+                        "$ref": "#/definitions/type-schema-ref"
                       },
                       "strength": {
                         "type": "string",
@@ -157,31 +194,6 @@
         }
       },
       "required": ["kind", "name", "nestedTypesFlat"],
-      "additionalProperties": false
-    },
-    {
-      "title": "Type Schema for Primitive Type",
-      "type": "object",
-      "properties": {
-        "kind": {
-          "const": "primitive-type"
-        },
-        "name": {
-          "type": "string",
-          "description": "Computer friendly name for the type"
-        },
-        "description": {
-          "type": "string"
-        },
-        "self-reference": {
-          "$comment": "Early -- name, but it should be used as a reference to the type.",
-          "$ref": "#/definitions/type-schema-ref"
-        },
-        "base": {
-          "$ref": "#/definitions/type-schema-ref"
-        }
-      },
-      "required": ["kind", "name", "base"],
       "additionalProperties": false
     }
   ]

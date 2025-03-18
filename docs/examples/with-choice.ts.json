@@ -1,0 +1,42 @@
+{
+  "kind": "resource",
+  "name": "with-choice",
+  "self-reference": {
+    "package": "hl7.fhir.core.r4",
+    "name": "with-choice",
+    "url": "http://example.io/fhir/WithChoice"
+  },
+  "base": {
+    "package": "hl7.fhir.core.r4",
+    "type": "resource",
+    "name": "DomainResource",
+    "url": "http://hl7.org/fhir/StructureDefinition/DomainResource",
+    "parent": "http://hl7.org/fhir/StructureDefinition/Resource"
+  },
+  "fields": {
+    "deceased": {
+      "choices": [
+        "deceasedBoolean",
+        "deceasedDateTime"
+      ],
+      "required": false,
+      "array": false
+    },
+    "deceasedBoolean": {
+      "type": {
+        "package": "hl7.fhir.core.r4",
+        "name": "boolean",
+        "url": "http://hl7.org/fhir/StructureDefinition/boolean"
+      }
+    },
+    "deceasedDateTime": {
+      "type": {
+        "package": "hl7.fhir.core.r4",
+        "name": "dateTime",
+        "url": "http://hl7.org/fhir/StructureDefinition/dateTime"
+      }
+    }
+  },
+  "dependencies": [],
+  "nestedTypesFlat": []
+}

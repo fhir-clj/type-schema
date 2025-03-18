@@ -1,0 +1,35 @@
+{
+  "kind": "resource",
+  "name": "with-code",
+  "self-reference": {
+    "package": "hl7.fhir.core.r4",
+    "name": "with-code",
+    "url": "http://example.io/fhir/WithCode"
+  },
+  "base": {
+    "package": "hl7.fhir.core.r4",
+    "type": "resource",
+    "name": "DomainResource",
+    "url": "http://hl7.org/fhir/StructureDefinition/DomainResource",
+    "parent": "http://hl7.org/fhir/StructureDefinition/Resource"
+  },
+  "fields": {
+    "gender": {
+      "type": {
+        "package": "hl7.fhir.core.r4",
+        "name": "code",
+        "url": "http://hl7.org/fhir/StructureDefinition/code"
+      },
+      "binding": {
+        "strength": "extensible",
+        "valueset": {
+          "package": "hl7.fhir.core.r4",
+          "name": "administrative-gender",
+          "url": "http://hl7.org/fhir/ValueSet/administrative-gender"
+        }
+      }
+    }
+  },
+  "allDependencies": [],
+  "nestedTypesFlat": []
+}

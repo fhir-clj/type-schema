@@ -1,0 +1,16 @@
+{
+  "kind": "value-set",
+  "name": "all-languages",
+  "self-reference": {
+    "package": "hl7.fhir.core.r4",
+    "name": "all-languages",
+    "url": "http://hl7.org/fhir/ValueSet/all-languages"
+  },
+  "compose": {
+    "include": [
+      {
+        "system": "urn:ietf:bcp:47"
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "kind": "resource",
+  "name": "with-primitive-string",
+  "self-reference": {
+    "package": "hl7.fhir.core.r4",
+    "name": "with-primitive-string",
+    "url": "http://example.io/fhir/WithPrimitiveString"
+  },
+  "base": {
+    "package": "hl7.fhir.core.r4",
+    "name": "DomainResource",
+    "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+  },
+  "fields": {
+    "some-string": {
+      "required": true,
+      "array": false,
+      "type": {
+        "package": "hl7.fhir.core.r4",
+        "name": "string",
+        "url": "http://hl7.org/fhir/StructureDefinition/string"
+      }
+    }
+  },
+  "allDependencies": [],
+  "nestedTypesFlat": []
+}

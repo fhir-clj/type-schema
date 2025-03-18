@@ -1,0 +1,15 @@
+{
+  "kind": "primitive-type",
+  "name": "string",
+  "description": "Primitive type \"string\" in FHIR",
+  "self-reference": {
+    "package": "hl7.fhir.core.r4",
+    "name": "string",
+    "url": "http://hl7.org/fhir/StructureDefinition/string"
+  },
+  "base": {
+    "package": "hl7.fhir.core.r4",
+    "name": "PrimitiveType",
+    "url": "http://hl7.org/fhir/StructureDefinition/PrimitiveType"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "kind": "value-set",
+  "name": "marital-status",
+  "self-reference": {
+    "package": "hl7.fhir.core.r4",
+    "name": "marital-status",
+    "url": "http://hl7.org/fhir/ValueSet/marital-status"
+  },
+  "coding": [
+    {
+      "system": "http://terminology.hl7.org/CodeSystem/v3-NullFlavor",
+      "code": "UNK",
+      "display": "unknown"
+    },
+    {
+      "system": "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus",
+      "code": "A",
+      "display": "Annulled"
+    },
+    {
+      "system": "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus",
+      "code": "D",
+      "display": "Divorced"
+    },
+    {
+      "system": "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus",
+      "code": "T",
+      "display": "Domestic partner"
+    },
+    {
+      "system": "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus",
+      "code": "I",
+      "display": "Interlocutory"
+    },
+    {
+      "system": "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus",
+      "code": "L",
+      "display": "Legally Separated"
+    },
+    {
+      "system": "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus",
+      "code": "M",
+      "display": "Married"
+    },
+    {
+      "system": "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus",
+      "code": "S",
+      "display": "Never Married"
+    }
+  ]
+}
