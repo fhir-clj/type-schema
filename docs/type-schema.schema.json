@@ -13,7 +13,8 @@
             { "const": "primitive-type" },
             { "const": "valueset" },
             { "const": "complex-type" },
-            { "const": "resource" }
+            { "const": "resource" },
+            { "const": "nested" }
           ]
         },
         "package": { "type": "string" },
@@ -52,8 +53,14 @@
         "kind": { "const": "resource" }
       }
     },
+    "with-nested-kind": {
+      "type": "object",
+      "properties": {
+        "kind": { "const": "nested" }
+      }
+    },
 
-    "field-binding": {
+    "field.*.binding": {
       "type": "object",
       "$comment": "https://build.fhir.org/terminologies-binding-examples.html",
       "properties": {
@@ -70,8 +77,50 @@
       },
       "required": ["strength", "valueset"],
       "additionalProperties": false
+    },
+
+    "field.regular": {
+      "title": "Regular field",
+      "type": "object",
+      "properties": {
+        "required": { "type": "boolean", "default": false },
+        "array": { "type": "boolean", "default": false },
+        "type": {
+          "$ref": "#/definitions/type-schema-identifier"
+        },
+        "binding": { "$ref": "#/definitions/field.*.binding" }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "field.polymorphic-declaration": {
+      "title": "Polymorphic value[x] field declaration",
+      "type": "object",
+      "properties": {
+        "required": { "type": "boolean", "default": false },
+        "array": { "type": "boolean", "default": false },
+        "choices": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["choices"],
+      "additionalProperties": false
+    },
+    "field.polymorphic-instance": {
+      "title": "Polymorphic value[x] field instance",
+      "type": "object",
+      "$comment": "TODO: required, array consistency with field declaration (name in choiceOf).",
+      "properties": {
+        "choiceOf": { "type": "string" },
+        "required": { "type": "boolean", "default": false },
+        "array": { "type": "boolean", "default": false },
+        "type": {
+          "$ref": "#/definitions/type-schema-identifier"
+        }
+      },
+      "required": ["type", "choiceOf"],
+      "additionalProperties": false
     }
   },
+
   "oneOf": [
     {
       "title": "Type Schema for Primitive Type",
@@ -145,62 +194,39 @@
           "type": "object",
           "additionalProperties": {
             "anyOf": [
-              {
-                "title": "Regular field",
-                "type": "object",
-                "properties": {
-                  "required": { "type": "boolean", "default": false },
-                  "array": { "type": "boolean", "default": false },
-                  "type": {
-                    "$ref": "#/definitions/type-schema-identifier"
-                  },
-                  "binding": { "$ref": "#/definitions/field-binding" }
-                },
-                "required": ["type"],
-                "additionalProperties": false
-              },
-              {
-                "title": "Polymorphic value[x] field declaration",
-                "type": "object",
-                "properties": {
-                  "required": { "type": "boolean", "default": false },
-                  "array": { "type": "boolean", "default": false },
-                  "choices": { "type": "array", "items": { "type": "string" } }
-                },
-                "required": ["choices"],
-                "additionalProperties": false
-              },
-              {
-                "title": "Polymorphic value[x] field instance",
-                "type": "object",
-                "$comment": "TODO: required, array consistency with field declaration (name in choiceOf).",
-                "properties": {
-                  "choiceOf": { "type": "string" },
-                  "required": { "type": "boolean", "default": false },
-                  "array": { "type": "boolean", "default": false },
-                  "type": {
-                    "$ref": "#/definitions/type-schema-identifier"
-                  }
-                },
-                "required": ["type", "choiceOf"],
-                "additionalProperties": false
-              }
+              { "$ref": "#/definitions/field.regular" },
+              { "$ref": "#/definitions/field.polymorphic-declaration" },
+              { "$ref": "#/definitions/field.polymorphic-instance" }
             ]
           }
         },
-        "nestedTypesFlat": {
-          "type": "array",
-          "items": {
+        "nestedTypes": {
+          "type": "object",
+          "additionalProperties": {
             "type": "object",
             "properties": {
-              "path": {
-                "type": "array",
-                "description": "Start from the # type to simplify name generation.",
-                "items": { "type": "string" }
+              "identifier": {
+                "allOf": [
+                  { "$ref": "#/definitions/type-schema-identifier" },
+                  { "$ref": "#/definitions/with-nested-kind" }
+                ]
               },
-              "type": { "$ref": "#" }
+              "base": {
+                "$ref": "#/definitions/type-schema-identifier"
+              },
+              "fields": {
+                "type": "object",
+                "additionalProperties": {
+                  "anyOf": [
+                    { "$ref": "#/definitions/field.regular" },
+                    { "$ref": "#/definitions/field.polymorphic-declaration" },
+                    { "$ref": "#/definitions/field.polymorphic-instance" }
+                  ]
+                }
+              }
             },
-            "required": ["type", "path"]
+            "required": ["identifier", "base"],
+            "additionalProperties": false
           }
         },
         "dependencies": {
