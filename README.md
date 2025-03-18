@@ -25,4 +25,6 @@ $ find . -name "*.ts.json" | xargs -n 1 ajv test -s docs/type-schema.schema.json
 
 ```shell
 make build && java -jar target/type-schema.jar hl7.fhir.us.core@6.1.0 ./output-us-core
+
+cat type-schema.ndjson | jq -c '.' | while read -r line; do id=$(echo "$line" | jq -r '.type.name'); echo "$line" | jq > "output_${id}.json"; done
 ```
