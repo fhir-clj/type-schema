@@ -9,6 +9,12 @@
     "version" : "4.0.1",
     "kind" : "resource"
   },
+  "base": {
+    "version": "4.0.1",
+    "package": "hl7.fhir.core.r4",
+    "name": "DomainResource",
+    "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+  },
   "fields" : {
     "multipleBirthBoolean" : {
       "choiceOf" : "multipleBirth",
@@ -97,9 +103,12 @@
     },
     "link" : {
       "array" : true,
-      "type" : {
+      "type":{
         "kind" : "nested",
-        "path" : [ "http://hl7.org/fhir/StructureDefinition/Patient", "link" ]
+        "version": "4.0.1",
+        "package": "hl7.fhir.core.r4",
+        "name": "PatientLink",
+        "url": "http://hl7.org/fhir/StructureDefinition/Patient#link"
       }
     },
     "active" : {
@@ -179,7 +188,20 @@
     }
   },
   "nestedTypes" : [ {
-    "path" : [ "http://hl7.org/fhir/StructureDefinition/Patient", "link" ],
+    "identifier": {
+      "kind" : "nested",
+      "version": "4.0.1",
+      "package": "hl7.fhir.core.r4",
+      "name": "PatientLink",
+      "url": "http://hl7.org/fhir/StructureDefinition/Patient#link"
+    },
+    "base" : {
+      "kind" : "complex-type",
+      "version": "4.0.1",
+      "package": "hl7.fhir.core.r4",
+      "name": "BackboneElement",
+      "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
+    },
     "fields" : {
       "other" : {
         "type" : {
@@ -202,11 +224,6 @@
           "base" : "http://hl7.org/fhir/StructureDefinition/string"
         }
       }
-    },
-    "type" : {
-      "kind" : "complex-type",
-      "name" : "BackboneElement",
-      "base" : "http://hl7.org/fhir/StructureDefinition/BackboneElement"
     }
   }, {
     "path" : [ "http://hl7.org/fhir/StructureDefinition/Patient", "communication" ],

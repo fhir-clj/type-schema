@@ -1,17 +1,16 @@
 {
   "kind": "resource",
-  "name": "with-choice",
-  "self-reference": {
+  "identifier": {
+    "version": "4.0.1",
     "package": "hl7.fhir.core.r4",
     "name": "with-choice",
     "url": "http://example.io/fhir/WithChoice"
   },
   "base": {
+    "version": "4.0.1",
     "package": "hl7.fhir.core.r4",
-    "type": "resource",
     "name": "DomainResource",
-    "url": "http://hl7.org/fhir/StructureDefinition/DomainResource",
-    "parent": "http://hl7.org/fhir/StructureDefinition/Resource"
+    "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
   },
   "fields": {
     "deceased": {

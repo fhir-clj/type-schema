@@ -1,21 +1,22 @@
 {
   "kind": "resource",
   "name": "with-code",
-  "self-reference": {
+  "identifier": {
+    "version": "4.0.1",
     "package": "hl7.fhir.core.r4",
     "name": "with-code",
     "url": "http://example.io/fhir/WithCode"
   },
   "base": {
+    "version": "4.0.1",
     "package": "hl7.fhir.core.r4",
-    "type": "resource",
     "name": "DomainResource",
-    "url": "http://hl7.org/fhir/StructureDefinition/DomainResource",
-    "parent": "http://hl7.org/fhir/StructureDefinition/Resource"
+    "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
   },
   "fields": {
     "gender": {
       "type": {
+        "version": "4.0.1",
         "package": "hl7.fhir.core.r4",
         "name": "code",
         "url": "http://hl7.org/fhir/StructureDefinition/code"

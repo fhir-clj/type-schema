@@ -1,15 +1,17 @@
 {
-  "kind": "primitive-type",
-  "name": "string",
   "description": "Primitive type \"string\" in FHIR",
-  "self-reference": {
+  "identifier": {
+    "kind": "primitive-type",
+    "version": "4.0.1",
     "package": "hl7.fhir.core.r4",
     "name": "string",
     "url": "http://hl7.org/fhir/StructureDefinition/string"
   },
   "base": {
+    "kind": "complex-type",
+    "version": "4.0.1",
     "package": "hl7.fhir.core.r4",
-    "name": "PrimitiveType",
-    "url": "http://hl7.org/fhir/StructureDefinition/PrimitiveType"
+    "name": "Element",
+    "url": "http://hl7.org/fhir/StructureDefinition/Element"
   }
 }

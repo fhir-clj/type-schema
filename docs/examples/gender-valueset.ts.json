@@ -1,12 +1,12 @@
 {
-  "kind": "value-set",
-  "name": "administrative-gender",
-  "self-reference": {
+  "identifier": {
+    "kind": "value-set",
+    "version": "4.0.1",
     "package": "hl7.fhir.core.r4",
     "name": "administrative-gender",
     "url": "http://hl7.org/fhir/administrative-gender"
   },
-  "coding": [
+  "concept": [
     {
       "system": "http://hl7.org/fhir/administrative-gender",
       "code": "female",

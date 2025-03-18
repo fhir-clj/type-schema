@@ -1,12 +1,13 @@
 {
   "kind": "resource",
-  "name": "with-primitive-string",
-  "self-reference": {
+  "identifier": {
+    "version": "4.0.1",
     "package": "hl7.fhir.core.r4",
     "name": "with-primitive-string",
     "url": "http://example.io/fhir/WithPrimitiveString"
   },
   "base": {
+    "version": "4.0.1",
     "package": "hl7.fhir.core.r4",
     "name": "DomainResource",
     "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
@@ -16,6 +17,7 @@
       "required": true,
       "array": false,
       "type": {
+        "version": "4.0.1",
         "package": "hl7.fhir.core.r4",
         "name": "string",
         "url": "http://hl7.org/fhir/StructureDefinition/string"
