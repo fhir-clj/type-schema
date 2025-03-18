@@ -70,7 +70,10 @@
 
 (comment
   (process-package "hl7.fhir.r4.core@4.0.1" "output")
+  (process-package "hl7.fhir.r5.core" "output")
+  (process-package "hl7.fhir.r6.core" "output")
   (process-package "hl7.fhir.us.core@6.1.0" "output")
+
   (fhir.package/pkg-info "hl7.fhir.r4.core@4.0.1")
   (fhir.package/pkg-info "hl7.fhir.us.core@6.1.0")
   (get-enum "http://hl7.org/fhir/ValueSet/administrative-gender"))

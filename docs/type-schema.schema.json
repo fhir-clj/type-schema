@@ -5,11 +5,19 @@
   "title": "Type Schema",
   "description": "FHIR StructureDefinition & FHIR Schema view for generation SDK resource classes/types.",
   "definitions": {
-    "type-schema-ref": {
+    "type-schema-identifier": {
       "type": "object",
-      "$comment": "TODO: Do we need kind here? It may raise consistency issues.",
       "properties": {
+        "kind": {
+          "oneOf": [
+            { "const": "primitive-type" },
+            { "const": "valueset" },
+            { "const": "complex-type" },
+            { "const": "resource" }
+          ]
+        },
         "package": { "type": "string" },
+        "version": { "type": "string" },
         "name": { "type": "string", "description": "Computer friendly" },
         "url": {
           "type": "string",
@@ -17,7 +25,51 @@
           "description": "A canonical URL to identifying this resource"
         }
       },
-      "required": ["package", "name"]
+      "required": ["kind", "package", "version", "name", "url"],
+      "additionalProperties": false
+    },
+    "with-primitive-type-kind": {
+      "type": "object",
+      "properties": {
+        "kind": { "const": "primitive-type" }
+      }
+    },
+    "with-valueset-kind": {
+      "type": "object",
+      "properties": {
+        "kind": { "const": "valueset" }
+      }
+    },
+    "with-complex-type-kind": {
+      "type": "object",
+      "properties": {
+        "kind": { "const": "complex-type" }
+      }
+    },
+    "with-resource-kind": {
+      "type": "object",
+      "properties": {
+        "kind": { "const": "resource" }
+      }
+    },
+
+    "field-binding": {
+      "type": "object",
+      "$comment": "https://build.fhir.org/terminologies-binding-examples.html",
+      "properties": {
+        "strength": {
+          "type": "string",
+          "enum": ["required", "extensible", "preferred", "example"]
+        },
+        "valueset": {
+          "allOf": [
+            { "$ref": "#/definitions/type-schema-identifier" },
+            { "$ref": "#/definitions/with-valueset-kind" }
+          ]
+        }
+      },
+      "required": ["strength", "valueset"],
+      "additionalProperties": false
     }
   },
   "oneOf": [
@@ -25,23 +77,20 @@
       "title": "Type Schema for Primitive Type",
       "type": "object",
       "properties": {
-        "kind": { "const": "primitive-type" },
-        "name": {
-          "type": "string",
-          "description": "Computer friendly name for the type"
+        "identifier": {
+          "allOf": [
+            { "$ref": "#/definitions/type-schema-identifier" },
+            { "$ref": "#/definitions/with-primitive-type-kind" }
+          ]
         },
         "description": {
           "type": "string"
         },
-        "self-reference": {
-          "$comment": "Early -- name, but it should be used as a reference to the type.",
-          "$ref": "#/definitions/type-schema-ref"
-        },
         "base": {
-          "$ref": "#/definitions/type-schema-ref"
+          "$ref": "#/definitions/type-schema-identifier"
         }
       },
-      "required": ["kind", "name", "self-reference", "base"],
+      "required": ["identifier", "base"],
       "additionalProperties": false
     },
 
@@ -49,18 +98,13 @@
       "title": "Type Schema for ValueSet",
       "type": "object",
       "properties": {
-        "kind": {
-          "const": "value-set"
+        "identifier": {
+          "allOf": [
+            { "$ref": "#/definitions/type-schema-identifier" },
+            { "$ref": "#/definitions/with-valueset-kind" }
+          ]
         },
-        "name": {
-          "type": "string",
-          "description": "Computer friendly name for the type"
-        },
-        "self-reference": {
-          "$comment": "Early -- name, but it should be used as a reference to the type.",
-          "$ref": "#/definitions/type-schema-ref"
-        },
-        "coding": {
+        "concept": {
           "type": "array",
           "items": {
             "type": "object",
@@ -75,106 +119,73 @@
         },
         "compose": { "type": "object" }
       },
-      "required": ["kind", "name", "self-reference"],
+      "required": ["identifier"],
       "additionalProperties": false
     },
 
     {
+      "title": "Type Schema for Resource and Complex Type",
       "type": "object",
       "properties": {
-        "kind": {
-          "oneOf": [{ "const": "resource" }, { "const": "complex-type" }]
-        },
-        "name": {
-          "type": "string",
-          "description": "Computer friendly name for the type"
-        },
-        "self-reference": {
-          "$comment": "Early -- name, but it should be used as a reference to the type.",
-          "$ref": "#/definitions/type-schema-ref"
+        "identifier": {
+          "allOf": [
+            { "$ref": "#/definitions/type-schema-identifier" },
+            {
+              "oneOf": [
+                { "$ref": "#/definitions/with-resource-kind" },
+                { "$ref": "#/definitions/with-complex-type-kind" }
+              ]
+            }
+          ]
         },
         "base": {
-          "$ref": "#/definitions/type-schema-ref"
+          "$ref": "#/definitions/type-schema-identifier"
         },
         "fields": {
           "type": "object",
           "additionalProperties": {
             "anyOf": [
               {
+                "title": "Regular field",
                 "type": "object",
                 "properties": {
                   "required": { "type": "boolean", "default": false },
                   "array": { "type": "boolean", "default": false },
                   "type": {
-                    "$ref": "#/definitions/type-schema-ref"
+                    "$ref": "#/definitions/type-schema-identifier"
                   },
-                  "binding": {
-                    "type": "object",
-                    "$comment": "https://build.fhir.org/terminologies-binding-examples.html",
-                    "properties": {
-                      "valueSet": {
-                        "$ref": "#/definitions/type-schema-ref"
-                      },
-                      "strength": {
-                        "type": "string",
-                        "enum": [
-                          "required",
-                          "extensible",
-                          "preferred",
-                          "example"
-                        ]
-                      }
-                    }
-                  }
+                  "binding": { "$ref": "#/definitions/field-binding" }
                 },
-                "required": ["type"]
+                "required": ["type"],
+                "additionalProperties": false
               },
               {
+                "title": "Polymorphic value[x] field declaration",
                 "type": "object",
-                "description": "Polymorphic value[x] declaration",
                 "properties": {
-                  "choices": { "type": "array", "items": { "type": "string" } },
-                  "required": {
-                    "type": "boolean",
-                    "description": "== .fields.<choice>[*].required",
-                    "default": false
-                  },
-                  "array": {
-                    "type": "boolean",
-                    "description": "== .fields.<choice>[*].array",
-                    "default": false
-                  }
+                  "required": { "type": "boolean", "default": false },
+                  "array": { "type": "boolean", "default": false },
+                  "choices": { "type": "array", "items": { "type": "string" } }
                 },
-                "required": ["choices"]
+                "required": ["choices"],
+                "additionalProperties": false
               },
               {
+                "title": "Polymorphic value[x] field instance",
                 "type": "object",
-                "description": "Instance of polymorphic value[x] field",
+                "$comment": "TODO: required, array consistency with field declaration (name in choiceOf).",
                 "properties": {
                   "choiceOf": { "type": "string" },
-                  "required": {
-                    "type": "boolean",
-                    "description": "== .fields.<choiceOf>.required",
-                    "default": false
-                  },
-                  "array": {
-                    "type": "boolean",
-                    "description": "== .fields.<choiceOf>.array",
-                    "default": false
-                  },
+                  "required": { "type": "boolean", "default": false },
+                  "array": { "type": "boolean", "default": false },
                   "type": {
-                    "$ref": "#/definitions/type-schema-ref"
+                    "$ref": "#/definitions/type-schema-identifier"
                   }
                 },
-                "required": ["type"]
+                "required": ["type", "choiceOf"],
+                "additionalProperties": false
               }
             ]
-          }
-        },
-        "allDependencies": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/type-schema-ref"
           }
         },
         "nestedTypesFlat": {
@@ -191,9 +202,15 @@
             },
             "required": ["type", "path"]
           }
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/type-schema-identifier"
+          }
         }
       },
-      "required": ["kind", "name", "nestedTypesFlat"],
+      "required": ["identifier", "base"],
       "additionalProperties": false
     }
   ]

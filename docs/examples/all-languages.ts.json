@@ -1,8 +1,8 @@
 {
-  "kind": "value-set",
   "identifier": {
-    "version": "4.0.1",
+    "kind": "valueset",
     "package": "hl7.fhir.core.r4",
+    "version": "4.0.1",
     "name": "all-languages",
     "url": "http://hl7.org/fhir/ValueSet/all-languages"
   },

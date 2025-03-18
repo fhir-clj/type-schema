@@ -1,20 +1,22 @@
 {
-  "kind": "resource",
   "identifier": {
-    "version": "4.0.1",
+    "kind": "resource",
     "package": "hl7.fhir.core.r4",
+    "version": "4.0.1",
     "name": "with-codable-concept",
     "url": "http://example.io/fhir/WithCodableConcept"
   },
   "base": {
-    "version": "4.0.1",
+    "kind": "resource",
     "package": "hl7.fhir.core.r4",
+    "version": "4.0.1",
     "name": "DomainResource",
     "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
   },
   "fields": {
     "marital-status": {
       "type": {
+        "kind": "resource",
         "version": "4.0.1",
         "package": "hl7.fhir.core.r4",
         "name": "CodeableConcept",
@@ -32,6 +34,6 @@
       }
     }
   },
-  "allDependencies": [],
+  "dependencies": [],
   "nestedTypesFlat": []
 }

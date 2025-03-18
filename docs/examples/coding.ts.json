@@ -1,55 +1,65 @@
 {
-  "kind": "complex-type",
-  "name": "Coding",
-  "self-reference": {
+  "identifier": {
+    "kind": "complex-type",
     "package": "hl7.fhir.core.r4",
+    "version": "4.0.1",
     "name": "Coding",
     "url": "http://hl7.org/fhir/StructureDefinition/Coding"
   },
   "base": {
+    "kind": "resource",
     "package": "hl7.fhir.core.r4",
-    "type": "resource",
+    "version": "4.0.1",
     "name": "DomainResource",
-    "url": "http://hl7.org/fhir/StructureDefinition/DomainResource",
-    "parent": "http://hl7.org/fhir/StructureDefinition/Resource"
+    "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
   },
   "fields": {
     "code": {
       "type": {
+        "kind": "primitive-type",
         "package": "hl7.fhir.core.r4",
+        "version": "4.0.1",
         "name": "code",
         "url": "http://hl7.org/fhir/StructureDefinition/code"
       }
     },
     "system": {
       "type": {
+        "kind": "primitive-type",
         "package": "hl7.fhir.core.r4",
+        "version": "4.0.1",
         "name": "uri",
         "url": "http://hl7.org/fhir/StructureDefinition/uri"
       }
     },
     "display": {
       "type": {
+        "kind": "primitive-type",
         "package": "hl7.fhir.core.r4",
+        "version": "4.0.1",
         "name": "string",
         "url": "http://hl7.org/fhir/StructureDefinition/string"
       }
     },
     "version": {
       "type": {
+        "kind": "primitive-type",
         "package": "hl7.fhir.core.r4",
+        "version": "4.0.1",
         "name": "string",
         "url": "http://hl7.org/fhir/StructureDefinition/string"
       }
     },
     "userSelected": {
       "type": {
+        "kind": "primitive-type",
         "package": "hl7.fhir.core.r4",
+        "version": "4.0.1",
         "name": "boolean",
         "url": "http://hl7.org/fhir/StructureDefinition/boolean"
       }
     }
   },
-  "allDependencies": [],
+  "dependencies": [],
   "nestedTypesFlat": []
 }

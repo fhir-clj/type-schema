@@ -1,12 +1,13 @@
 {
-  "kind": "resource",
   "identifier": {
-    "version": "4.0.1",
+    "kind": "resource",
     "package": "hl7.fhir.core.r4",
+    "version": "4.0.1",
     "name": "with-choice",
     "url": "http://example.io/fhir/WithChoice"
   },
   "base": {
+    "kind": "resource",
     "version": "4.0.1",
     "package": "hl7.fhir.core.r4",
     "name": "DomainResource",
@@ -14,23 +15,24 @@
   },
   "fields": {
     "deceased": {
-      "choices": [
-        "deceasedBoolean",
-        "deceasedDateTime"
-      ],
+      "choices": ["deceasedBoolean", "deceasedDateTime"],
       "required": false,
       "array": false
     },
     "deceasedBoolean": {
       "type": {
+        "kind": "primitive-type",
         "package": "hl7.fhir.core.r4",
+        "version": "4.0.1",
         "name": "boolean",
         "url": "http://hl7.org/fhir/StructureDefinition/boolean"
       }
     },
     "deceasedDateTime": {
       "type": {
+        "kind": "primitive-type",
         "package": "hl7.fhir.core.r4",
+        "version": "4.0.1",
         "name": "dateTime",
         "url": "http://hl7.org/fhir/StructureDefinition/dateTime"
       }
