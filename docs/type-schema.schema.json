@@ -93,6 +93,7 @@
       "required": ["type"],
       "additionalProperties": false
     },
+
     "field.polymorphic-declaration": {
       "title": "Polymorphic value[x] field declaration",
       "type": "object",
@@ -104,6 +105,7 @@
       "required": ["choices"],
       "additionalProperties": false
     },
+
     "field.polymorphic-instance": {
       "title": "Polymorphic value[x] field instance",
       "type": "object",
@@ -118,6 +120,13 @@
       },
       "required": ["type", "choiceOf"],
       "additionalProperties": false
+    },
+
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/type-schema-identifier"
+      }
     }
   },
 
@@ -137,7 +146,8 @@
         },
         "base": {
           "$ref": "#/definitions/type-schema-identifier"
-        }
+        },
+        "dependencies": { "$ref": "#/definitions/dependencies" }
       },
       "required": ["identifier", "base"],
       "additionalProperties": false

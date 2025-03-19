@@ -13,5 +13,14 @@
     "version": "4.0.1",
     "name": "Element",
     "url": "http://hl7.org/fhir/StructureDefinition/Element"
-  }
+  },
+  "dependencies": [
+    {
+      "kind": "complex-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "Element",
+      "url": "http://hl7.org/fhir/StructureDefinition/Element"
+    }
+  ]
 }

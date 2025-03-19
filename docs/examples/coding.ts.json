@@ -1,50 +1,51 @@
 {
   "identifier": {
     "kind": "complex-type",
-    "package": "hl7.fhir.core.r4",
+    "package": "hl7.fhir.r4.core",
     "version": "4.0.1",
     "name": "Coding",
     "url": "http://hl7.org/fhir/StructureDefinition/Coding"
   },
   "base": {
     "kind": "complex-type",
-    "package": "hl7.fhir.core.r4",
+    "package": "hl7.fhir.r4.core",
     "version": "4.0.1",
     "name": "Element",
     "url": "http://hl7.org/fhir/StructureDefinition/Element"
   },
+  "description": "Base StructureDefinition for Coding Type: A reference to a code defined by a terminology system.",
   "fields": {
-    "code": {
-      "type": {
-        "kind": "primitive-type",
-        "package": "hl7.fhir.core.r4",
-        "version": "4.0.1",
-        "name": "code",
-        "url": "http://hl7.org/fhir/StructureDefinition/code"
-      }
-    },
     "system": {
       "type": {
         "kind": "primitive-type",
-        "package": "hl7.fhir.core.r4",
+        "package": "hl7.fhir.r4.core",
         "version": "4.0.1",
         "name": "uri",
         "url": "http://hl7.org/fhir/StructureDefinition/uri"
       }
     },
-    "display": {
+    "version": {
       "type": {
         "kind": "primitive-type",
-        "package": "hl7.fhir.core.r4",
+        "package": "hl7.fhir.r4.core",
         "version": "4.0.1",
         "name": "string",
         "url": "http://hl7.org/fhir/StructureDefinition/string"
       }
     },
-    "version": {
+    "code": {
       "type": {
         "kind": "primitive-type",
-        "package": "hl7.fhir.core.r4",
+        "package": "hl7.fhir.r4.core",
+        "version": "4.0.1",
+        "name": "code",
+        "url": "http://hl7.org/fhir/StructureDefinition/code"
+      }
+    },
+    "display": {
+      "type": {
+        "kind": "primitive-type",
+        "package": "hl7.fhir.r4.core",
         "version": "4.0.1",
         "name": "string",
         "url": "http://hl7.org/fhir/StructureDefinition/string"
@@ -53,7 +54,7 @@
     "userSelected": {
       "type": {
         "kind": "primitive-type",
-        "package": "hl7.fhir.core.r4",
+        "package": "hl7.fhir.r4.core",
         "version": "4.0.1",
         "name": "boolean",
         "url": "http://hl7.org/fhir/StructureDefinition/boolean"
@@ -62,40 +63,39 @@
   },
   "dependencies": [
     {
-      "kind": "resource",
-      "package": "hl7.fhir.core.r4",
+      "kind": "complex-type",
+      "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "DomainResource",
-      "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+      "name": "Element",
+      "url": "http://hl7.org/fhir/StructureDefinition/Element"
     },
     {
       "kind": "primitive-type",
-      "package": "hl7.fhir.core.r4",
-      "version": "4.0.1",
-      "name": "code",
-      "url": "http://hl7.org/fhir/StructureDefinition/code"
-    },
-    {
-      "kind": "primitive-type",
-      "package": "hl7.fhir.core.r4",
+      "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
       "name": "uri",
       "url": "http://hl7.org/fhir/StructureDefinition/uri"
     },
     {
       "kind": "primitive-type",
-      "package": "hl7.fhir.core.r4",
+      "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
       "name": "string",
       "url": "http://hl7.org/fhir/StructureDefinition/string"
     },
     {
       "kind": "primitive-type",
-      "package": "hl7.fhir.core.r4",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "code",
+      "url": "http://hl7.org/fhir/StructureDefinition/code"
+    },
+    {
+      "kind": "primitive-type",
+      "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
       "name": "boolean",
       "url": "http://hl7.org/fhir/StructureDefinition/boolean"
     }
-  ],
-  "nested": {}
+  ]
 }
