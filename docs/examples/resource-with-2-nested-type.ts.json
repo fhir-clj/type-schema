@@ -1,0 +1,144 @@
+{
+  "identifier": {
+    "kind": "resource",
+    "package": "hl7.fhir.core.r4",
+    "version": "4.0.1",
+    "name": "with-2-nested-type",
+    "url": "http://example.io/With2NestedType"
+  },
+  "base": {
+    "kind": "resource",
+    "version": "4.0.1",
+    "package": "hl7.fhir.core.r4",
+    "name": "DomainResource",
+    "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+  },
+  "fields": {
+    "foo": {
+      "type": {
+        "kind": "nested",
+        "version": "4.0.1",
+        "package": "hl7.fhir.core.r4",
+        "name": "Patient.foo",
+        "url": "http://hl7.org/fhir/StructureDefinition/Patient#foo"
+      }
+    },
+    "bar": {
+      "type": {
+        "kind": "nested",
+        "version": "4.0.1",
+        "package": "hl7.fhir.core.r4",
+        "name": "Patient.bar",
+        "url": "http://hl7.org/fhir/StructureDefinition/Patient#foo"
+      }
+    }
+  },
+  "nested": {
+    "Patient.foo": {
+      "identifier": {
+        "kind": "nested",
+        "version": "4.0.1",
+        "package": "hl7.fhir.core.r4",
+        "name": "Patient.foo",
+        "url": "http://hl7.org/fhir/StructureDefinition/Patient#foo"
+      },
+      "base": {
+        "kind": "complex-type",
+        "version": "4.0.1",
+        "package": "hl7.fhir.core.r4",
+        "name": "BackboneElement",
+        "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
+      },
+      "fields": {
+        "bar": {
+          "required": true,
+          "array": false,
+          "type": {
+            "kind": "nested",
+            "version": "4.0.1",
+            "package": "hl7.fhir.core.r4",
+            "name": "Patient.foo.bar",
+            "url": "http://hl7.org/fhir/StructureDefinition/Patient#foo.bar"
+          }
+        }
+      }
+    },
+    "Patient.foo.bar": {
+      "identifier": {
+        "kind": "nested",
+        "version": "4.0.1",
+        "package": "hl7.fhir.core.r4",
+        "name": "Patient.foo.bar",
+        "url": "http://hl7.org/fhir/StructureDefinition/Patient#foo.bar"
+      },
+      "base": {
+        "kind": "complex-type",
+        "version": "4.0.1",
+        "package": "hl7.fhir.core.r4",
+        "name": "BackboneElement",
+        "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
+      },
+      "fields": {
+        "text": {
+          "type": {
+            "kind": "primitive-type",
+            "package": "hl7.fhir.core.r4",
+            "version": "4.0.1",
+            "name": "string",
+            "url": "http://hl7.org/fhir/StructureDefinition/string"
+          }
+        }
+      }
+    },
+    "Patient.baz": {
+      "identifier": {
+        "kind": "nested",
+        "version": "4.0.1",
+        "package": "hl7.fhir.core.r4",
+        "name": "Patient.baz",
+        "url": "http://hl7.org/fhir/StructureDefinition/Patient#baz"
+      },
+      "base": {
+        "kind": "complex-type",
+        "version": "4.0.1",
+        "package": "hl7.fhir.core.r4",
+        "name": "BackboneElement",
+        "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
+      },
+      "fields": {
+        "text": {
+          "type": {
+            "kind": "primitive-type",
+            "package": "hl7.fhir.core.r4",
+            "version": "4.0.1",
+            "name": "string",
+            "url": "http://hl7.org/fhir/StructureDefinition/string"
+          }
+        }
+      }
+    }
+  },
+  "dependencies": [
+    {
+      "kind": "resource",
+      "version": "4.0.1",
+      "package": "hl7.fhir.core.r4",
+      "name": "DomainResource",
+      "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+    },
+    {
+      "kind": "complex-type",
+      "version": "4.0.1",
+      "package": "hl7.fhir.core.r4",
+      "name": "BackboneElement",
+      "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
+    },
+    {
+      "kind": "primitive-type",
+      "package": "hl7.fhir.core.r4",
+      "version": "4.0.1",
+      "name": "string",
+      "url": "http://hl7.org/fhir/StructureDefinition/string"
+    }
+  ]
+}
