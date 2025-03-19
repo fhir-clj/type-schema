@@ -20,7 +20,7 @@ jobs:
           cli: 1.11.1.1155
 
       - name: Install rlwrap
-        run: sudo apt-get install -y rlwrap
+        run: sudo PYTHONWARNINGS="ignore:invalid escape sequence" apt-get install -y rlwrap
 
       - name: Cache clojure dependencies
         uses: actions/cache@v4
