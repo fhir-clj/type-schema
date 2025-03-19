@@ -7,7 +7,6 @@
             [golden.core :refer [golden-file-content golden-test]]))
 
 (index/init-fhir-schema-index! (index/load-merge-schemas))
-(index/init-fhir-schema-index! (index/load-merge-schemas))
 
 (defn type-schema-content [fs-filename]
   (let [ts-filename (str/replace fs-filename #".fs.json$" ".ts.json")

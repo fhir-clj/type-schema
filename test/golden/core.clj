@@ -1,6 +1,5 @@
 (ns golden.core
-  (:require [clojure.test]
-            [clojure.test :refer [is]]
+  (:require [clojure.test :refer [is]]
             [cheshire.core :as json]
             [clojure.java.io :as io]))
 
