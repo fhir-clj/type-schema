@@ -200,7 +200,7 @@
             ]
           }
         },
-        "nestedTypes": {
+        "nested": {
           "type": "object",
           "additionalProperties": {
             "type": "object",

@@ -34,6 +34,28 @@
       }
     }
   },
-  "dependencies": [],
-  "nestedTypes": {}
+  "dependencies": [
+    {
+      "kind": "resource",
+      "package": "hl7.fhir.core.r4",
+      "version": "4.0.1",
+      "name": "DomainResource",
+      "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+    },
+    {
+      "kind": "resource",
+      "version": "4.0.1",
+      "package": "hl7.fhir.core.r4",
+      "name": "CodeableConcept",
+      "url": "http://hl7.org/fhir/StructureDefinition/CodeableConcept"
+    },
+    {
+      "kind": "valueset",
+      "version": "4.0.1",
+      "package": "hl7.fhir.core.r4",
+      "name": "marital-status",
+      "url": "http://hl7.org/fhir/ValueSet/marital-status"
+    }
+  ],
+  "nested": {}
 }

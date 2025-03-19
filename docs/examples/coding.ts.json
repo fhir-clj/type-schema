@@ -60,6 +60,42 @@
       }
     }
   },
-  "dependencies": [],
-  "nestedTypes": {}
+  "dependencies": [
+    {
+      "kind": "resource",
+      "package": "hl7.fhir.core.r4",
+      "version": "4.0.1",
+      "name": "DomainResource",
+      "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+    },
+    {
+      "kind": "primitive-type",
+      "package": "hl7.fhir.core.r4",
+      "version": "4.0.1",
+      "name": "code",
+      "url": "http://hl7.org/fhir/StructureDefinition/code"
+    },
+    {
+      "kind": "primitive-type",
+      "package": "hl7.fhir.core.r4",
+      "version": "4.0.1",
+      "name": "uri",
+      "url": "http://hl7.org/fhir/StructureDefinition/uri"
+    },
+    {
+      "kind": "primitive-type",
+      "package": "hl7.fhir.core.r4",
+      "version": "4.0.1",
+      "name": "string",
+      "url": "http://hl7.org/fhir/StructureDefinition/string"
+    },
+    {
+      "kind": "primitive-type",
+      "package": "hl7.fhir.core.r4",
+      "version": "4.0.1",
+      "name": "boolean",
+      "url": "http://hl7.org/fhir/StructureDefinition/boolean"
+    }
+  ],
+  "nested": {}
 }

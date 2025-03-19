@@ -25,7 +25,7 @@
       }
     }
   },
-  "nestedTypes": {
+  "nested": {
     "Patient.link": {
       "identifier": {
         "kind": "nested",
@@ -47,7 +47,6 @@
           "array": false,
           "type": {
             "kind": "primitive-type",
-
             "package": "hl7.fhir.core.r4",
             "version": "4.0.1",
             "name": "string",
@@ -57,5 +56,27 @@
       }
     }
   },
-  "dependencies": []
+  "dependencies": [
+    {
+      "kind": "resource",
+      "version": "4.0.1",
+      "package": "hl7.fhir.core.r4",
+      "name": "DomainResource",
+      "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+    },
+    {
+      "kind": "complex-type",
+      "version": "4.0.1",
+      "package": "hl7.fhir.core.r4",
+      "name": "BackboneElement",
+      "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
+    },
+    {
+      "kind": "primitive-type",
+      "package": "hl7.fhir.core.r4",
+      "version": "4.0.1",
+      "name": "string",
+      "url": "http://hl7.org/fhir/StructureDefinition/string"
+    }
+  ]
 }
