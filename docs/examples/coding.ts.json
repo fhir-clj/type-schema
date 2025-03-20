@@ -7,11 +7,11 @@
     "url": "http://hl7.org/fhir/StructureDefinition/Coding"
   },
   "base": {
-    "kind": "resource",
+    "kind": "complex-type",
     "package": "hl7.fhir.core.r4",
     "version": "4.0.1",
-    "name": "DomainResource",
-    "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+    "name": "Element",
+    "url": "http://hl7.org/fhir/StructureDefinition/Element"
   },
   "fields": {
     "code": {
