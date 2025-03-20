@@ -28,3 +28,9 @@ make build && java -jar target/type-schema.jar hl7.fhir.us.core@6.1.0 ./output-u
 
 cat type-schema.ndjson | jq -c '.' | while read -r line; do id=$(echo "$line" | jq -r '.type.name'); echo "$line" | jq > "output_${id}.json"; done
 ```
+
+---
+
+TODO:
+
+- [ ] remove obejct from `nested`. Use array.

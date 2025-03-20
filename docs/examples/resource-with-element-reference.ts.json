@@ -1,10 +1,10 @@
 {
   "identifier": {
-    "name": "Questionnaire",
-    "base": "http://hl7.org/fhir/StructureDefinition/DomainResource",
-    "url": "http://hl7.org/fhir/StructureDefinition/Questionnaire",
+    "kind": "resource",
+    "package": "hl7.fhir.core.r4",
     "version": "4.0.1",
-    "kind": "resource"
+    "name": "with-element-reference",
+    "url": "http://example.io/fhir/withElementReference"
   },
   "base": {
     "kind": "resource",
@@ -25,8 +25,8 @@
       }
     }
   },
-  "nested": [
-    {
+  "nested": {
+    "QuestionnaireItem": {
       "identifier": {
         "kind": "nested",
         "version": "4.0.1",
@@ -44,7 +44,6 @@
       "fields": {
         "item": {
           "array": true,
-          "elementReference": true,
           "type": {
             "kind": "nested",
             "version": "4.0.1",
@@ -55,6 +54,6 @@
         }
       }
     }
-  ],
+  },
   "dependencies": []
 }
