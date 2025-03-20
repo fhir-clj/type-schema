@@ -15,10 +15,12 @@
                                (json/parse-string true)))]
      (cond
        (or (nil? golden-content#)
-           (update-golden?))
+           (and (update-golden?)
+                (not= golden-content# actual-content#)))
        (do (spit ~golden-filename (json/generate-string actual-content# {:pretty true}))
            (is true))
 
        :else
        (is (= golden-content# actual-content#)
            (str "golden json from " ~golden-filename " is not equal to actual data")))))
+

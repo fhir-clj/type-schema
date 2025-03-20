@@ -1,21 +1,29 @@
 (ns transpiler.type-schema-test
-  (:require [clojure.test :refer [deftest]]
+  (:require [clojure.test :refer [deftest is]]
             [transpiler.type-schema :as type-schema]
             [transpiler.package-index :as index]
             [cheshire.core :as json]
             [clojure.string :as str]
             [golden.core :as golden]))
 
-(deftest structure-definition-test
+(deftest build-field-test
+  (is (= {:array false
+          :required true
+          :excluded false}
+         (type-schema/build-field {:required ["type"]}
+                                  ["type"]
+                                  {}))))
+
+(deftest golden-test
   (index/init-from-package! "hl7.fhir.r4.core")
 
   (golden/vs-json-file "test/golden/backbone-element.ts.json"
                        "test/golden/backbone-element.fs.json"
                        type-schema/translate)
 
-  #_(golden/vs-json-file "test/golden/bundle.ts.json"
-                         "test/golden/bundle.fs.json"
-                         type-schema/translate)
+  (golden/vs-json-file "test/golden/bundle.ts.json"
+                       "test/golden/bundle.fs.json"
+                       type-schema/translate)
 
   #_(golden/vs-json-file "test/golden/patient.ts.json"
                          "test/golden/patient.fs.json"

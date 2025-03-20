@@ -16,6 +16,8 @@
   "fields" : {
     "modifierExtension" : {
       "array" : true,
+      "required" : false,
+      "excluded" : false,
       "type" : {
         "kind" : "complex-type",
         "package" : "hl7.fhir.r4.core",

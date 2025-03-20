@@ -34,3 +34,4 @@ cat type-schema.ndjson | jq -c '.' | while read -r line; do id=$(echo "$line" | 
 TODO:
 
 - [ ] remove obejct from `nested`. Use array.
+- [ ] provide default value to array required, etc.
