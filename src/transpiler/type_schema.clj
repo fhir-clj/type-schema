@@ -50,7 +50,7 @@
     {:kind    (derive-kind-from-schema fhir-schema)
      :package (:name package-meta)
      :version (:version package-meta)
-     :name    (:id fhir-schema)
+     :name    (:name fhir-schema)
      :url     (:url fhir-schema)}))
 
 (defn get-nested-identifier [fhir-schema path]

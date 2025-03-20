@@ -23,9 +23,7 @@
         }
       },
       "isModifierReason": "reason...",
-      "required": [
-        "someString"
-      ],
+      "required": ["someString"],
       "isSummary": true
     }
   },

@@ -18,9 +18,7 @@
       "index": 10
     }
   },
-  "required": [
-    "someString"
-  ],
+  "required": ["someString"],
   "class": "resource",
   "version": "4.0.1"
 }

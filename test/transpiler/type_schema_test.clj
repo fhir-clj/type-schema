@@ -25,6 +25,14 @@
                        "test/golden/bundle.fs.json"
                        type-schema/translate)
 
+  (golden/vs-json-file "docs/examples/string.ts.json"
+                       "docs/examples/fhir-schema/string.fs.json"
+                       type-schema/translate)
+
+  (golden/vs-json-file "docs/examples/coding.ts.json"
+                       "docs/examples/fhir-schema/coding.fs.json"
+                       type-schema/translate)
+
   #_(golden/vs-json-file "test/golden/patient.ts.json"
                          "test/golden/patient.fs.json"
                          type-schema/translate)
@@ -37,4 +45,6 @@
                          "test/golden/questionnaire.fs.json"
                          type-schema/translate))
 
-(comment)
+(comment
+  (index/init-from-package! "hl7.fhir.r4.core")
+  (index/get-fhir-schema "Coding"))

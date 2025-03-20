@@ -1,19 +1,19 @@
 {
-  "description": "Primitive type \"string\" in FHIR",
   "identifier": {
     "kind": "primitive-type",
-    "package": "hl7.fhir.core.r4",
+    "package": "hl7.fhir.r4.core",
     "version": "4.0.1",
     "name": "string",
     "url": "http://hl7.org/fhir/StructureDefinition/string"
   },
   "base": {
     "kind": "complex-type",
-    "package": "hl7.fhir.core.r4",
+    "package": "hl7.fhir.r4.core",
     "version": "4.0.1",
     "name": "Element",
     "url": "http://hl7.org/fhir/StructureDefinition/Element"
   },
+  "description": "Base StructureDefinition for string Type: A sequence of Unicode characters",
   "dependencies": [
     {
       "kind": "complex-type",

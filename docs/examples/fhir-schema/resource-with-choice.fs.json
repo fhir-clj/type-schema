@@ -32,10 +32,7 @@
     "deceased": {
       "isModifier": true,
       "short": "Indicates if the individual is deceased or not",
-      "choices": [
-        "deceasedBoolean",
-        "deceasedDateTime"
-      ],
+      "choices": ["deceasedBoolean", "deceasedDateTime"],
       "isModifierReason": "This element is labeled as a modifier because once a patient is marked as deceased, the actions that are appropriate to perform on the patient may be significantly different.",
       "isSummary": true,
       "index": 7

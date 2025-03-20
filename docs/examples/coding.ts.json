@@ -16,6 +16,9 @@
   "description": "Base StructureDefinition for Coding Type: A reference to a code defined by a terminology system.",
   "fields": {
     "system": {
+      "array": false,
+      "required": false,
+      "excluded": false,
       "type": {
         "kind": "primitive-type",
         "package": "hl7.fhir.r4.core",
@@ -25,6 +28,9 @@
       }
     },
     "version": {
+      "array": false,
+      "required": false,
+      "excluded": false,
       "type": {
         "kind": "primitive-type",
         "package": "hl7.fhir.r4.core",
@@ -34,6 +40,9 @@
       }
     },
     "code": {
+      "array": false,
+      "required": false,
+      "excluded": false,
       "type": {
         "kind": "primitive-type",
         "package": "hl7.fhir.r4.core",
@@ -43,6 +52,9 @@
       }
     },
     "display": {
+      "array": false,
+      "required": false,
+      "excluded": false,
       "type": {
         "kind": "primitive-type",
         "package": "hl7.fhir.r4.core",
@@ -52,6 +64,9 @@
       }
     },
     "userSelected": {
+      "array": false,
+      "required": false,
+      "excluded": false,
       "type": {
         "kind": "primitive-type",
         "package": "hl7.fhir.r4.core",
