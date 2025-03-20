@@ -57,5 +57,5 @@
       "url": "http://hl7.org/fhir/ValueSet/administrative-gender"
     }
   ],
-  "nested": {}
+  "nested": []
 }

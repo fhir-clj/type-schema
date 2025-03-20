@@ -57,5 +57,5 @@
       "url": "http://hl7.org/fhir/ValueSet/marital-status"
     }
   ],
-  "nested": {}
+  "nested": []
 }

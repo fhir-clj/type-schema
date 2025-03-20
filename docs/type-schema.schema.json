@@ -163,6 +163,9 @@
             { "$ref": "#/definitions/with-valueset-kind" }
           ]
         },
+        "description": {
+          "type": "string"
+        },
         "concept": {
           "type": "array",
           "items": {
@@ -200,6 +203,9 @@
         "base": {
           "$ref": "#/definitions/type-schema-identifier"
         },
+        "description": {
+          "type": "string"
+        },
         "fields": {
           "type": "object",
           "additionalProperties": {
@@ -211,8 +217,8 @@
           }
         },
         "nested": {
-          "type": "object",
-          "additionalProperties": {
+          "type": "array",
+          "items": {
             "type": "object",
             "properties": {
               "identifier": {
@@ -238,6 +244,7 @@
             "required": ["identifier", "base"],
             "additionalProperties": false
           }
+
         },
         "dependencies": {
           "type": "array",

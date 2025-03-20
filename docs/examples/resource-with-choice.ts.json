@@ -15,10 +15,7 @@
   },
   "fields": {
     "deceased": {
-      "choices": [
-        "deceasedBoolean",
-        "deceasedDateTime"
-      ],
+      "choices": ["deceasedBoolean", "deceasedDateTime"],
       "required": false,
       "array": false
     },
@@ -64,5 +61,5 @@
       "url": "http://hl7.org/fhir/StructureDefinition/dateTime"
     }
   ],
-  "nested": {}
+  "nested": []
 }
