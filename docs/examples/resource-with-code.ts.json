@@ -3,8 +3,8 @@
     "kind": "resource",
     "package": "hl7.fhir.core.r4",
     "version": "4.0.1",
-    "name": "with-code",
-    "url": "http://example.io/fhir/WithCode"
+    "name": "WithCode",
+    "url": "http://hl7.org/fhir/StructureDefinition/WithCode"
   },
   "base": {
     "kind": "resource",

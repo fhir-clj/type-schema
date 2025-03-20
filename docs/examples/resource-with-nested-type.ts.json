@@ -3,8 +3,8 @@
     "kind": "resource",
     "package": "hl7.fhir.core.r4",
     "version": "4.0.1",
-    "name": "with-nested-type",
-    "url": "http://hl7.org/fhir/StructureDefinition/Patient"
+    "name": "WithNestedType",
+    "url": "http://hl7.org/fhir/StructureDefinition/WithNestedType"
   },
   "base": {
     "kind": "resource",
@@ -20,19 +20,19 @@
         "kind": "nested",
         "version": "4.0.1",
         "package": "hl7.fhir.core.r4",
-        "name": "Patient.link",
-        "url": "http://hl7.org/fhir/StructureDefinition/Patient#link"
+        "name": "WithNestedType.link",
+        "url": "http://hl7.org/fhir/StructureDefinition/WithNestedType#link"
       }
     }
   },
-  "nested": {
-    "Patient.link": {
+  "nested": [
+    {
       "identifier": {
         "kind": "nested",
         "version": "4.0.1",
         "package": "hl7.fhir.core.r4",
-        "name": "Patient.link",
-        "url": "http://hl7.org/fhir/StructureDefinition/Patient#link"
+        "name": "WithNestedType.link",
+        "url": "http://hl7.org/fhir/StructureDefinition/WithNestedType#link"
       },
       "base": {
         "kind": "complex-type",
@@ -42,7 +42,7 @@
         "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
       },
       "fields": {
-        "some-string": {
+        "someString": {
           "required": true,
           "array": false,
           "type": {
@@ -55,7 +55,7 @@
         }
       }
     }
-  },
+  ],
   "dependencies": [
     {
       "kind": "resource",

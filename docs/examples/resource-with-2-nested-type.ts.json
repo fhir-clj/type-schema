@@ -33,8 +33,8 @@
       }
     }
   },
-  "nested": {
-    "Patient.foo": {
+  "nested": [
+    {
       "identifier": {
         "kind": "nested",
         "version": "4.0.1",
@@ -63,7 +63,7 @@
         }
       }
     },
-    "Patient.foo.bar": {
+    {
       "identifier": {
         "kind": "nested",
         "version": "4.0.1",
@@ -90,7 +90,7 @@
         }
       }
     },
-    "Patient.baz": {
+    {
       "identifier": {
         "kind": "nested",
         "version": "4.0.1",
@@ -117,7 +117,7 @@
         }
       }
     }
-  },
+  ],
   "dependencies": [
     {
       "kind": "resource",
