@@ -33,6 +33,26 @@
                        "docs/examples/fhir-schema/coding.fs.json"
                        type-schema/translate)
 
+  (golden/vs-json-file "docs/examples/resource-with-string.ts.json"
+                       "docs/examples/fhir-schema/resource-with-string.fs.json"
+                       type-schema/translate)
+
+  #_(golden/vs-json-file "docs/examples/resource-with-choice.ts.json"
+                         "docs/examples/fhir-schema/resource-with-choice.fs.json"
+                         type-schema/translate)
+
+  #_(golden/vs-json-file "docs/examples/resource-with-nested-type.ts.json"
+                         "docs/examples/fhir-schema/resource-with-nested-type.fs.json"
+                         type-schema/translate)
+
+  #_(golden/vs-json-file "docs/examples/resource-with-codable-concept.ts.json"
+                         "docs/examples/fhir-schema/resource-with-codable-concept.fs.json"
+                         type-schema/translate)
+
+  #_(golden/vs-json-file "docs/examples/resource-with-code.ts.json"
+                         "docs/examples/fhir-schema/resource-with-code.fs.json"
+                         type-schema/translate)
+
   #_(golden/vs-json-file "test/golden/patient.ts.json"
                          "test/golden/patient.fs.json"
                          type-schema/translate)

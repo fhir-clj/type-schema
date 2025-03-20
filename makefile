@@ -1,6 +1,6 @@
 .PHONY: install-hooks repl test clean build run format lint check fix check-json update-golden deps
 
-all: test format lint
+all: test format lint format-example-json
 
 install-hooks:
 	@bash scripts/install-hooks.sh
@@ -53,3 +53,6 @@ check-json:
 
 check-json-fail-fast:
 	find . -name "*.ts.json" | xargs -n 1 sh -c 'ajv test -s docs/type-schema.schema.json --valid -d $$0 || exit 255'm
+
+format-example-json:
+	prettier -w docs/examples/**/*.json

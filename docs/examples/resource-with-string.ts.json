@@ -3,23 +3,25 @@
     "kind": "resource",
     "package": "hl7.fhir.core.r4",
     "version": "4.0.1",
-    "name": "with-primitive-string",
+    "name": "WithPrimitiveString",
     "url": "http://example.io/fhir/WithPrimitiveString"
   },
   "base": {
     "kind": "resource",
-    "package": "hl7.fhir.core.r4",
+    "package": "hl7.fhir.r4.core",
     "version": "4.0.1",
     "name": "DomainResource",
     "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
   },
+  "description": "description",
   "fields": {
-    "some-string": {
-      "required": true,
+    "someString": {
       "array": false,
+      "required": false,
+      "excluded": false,
       "type": {
         "kind": "primitive-type",
-        "package": "hl7.fhir.core.r4",
+        "package": "hl7.fhir.r4.core",
         "version": "4.0.1",
         "name": "string",
         "url": "http://hl7.org/fhir/StructureDefinition/string"
@@ -28,19 +30,18 @@
   },
   "dependencies": [
     {
-      "kind": "primitive-type",
-      "package": "hl7.fhir.core.r4",
-      "version": "4.0.1",
-      "name": "string",
-      "url": "http://hl7.org/fhir/StructureDefinition/string"
-    },
-    {
       "kind": "resource",
-      "package": "hl7.fhir.core.r4",
+      "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
       "name": "DomainResource",
       "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+    },
+    {
+      "kind": "primitive-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "string",
+      "url": "http://hl7.org/fhir/StructureDefinition/string"
     }
-  ],
-  "nested": []
+  ]
 }

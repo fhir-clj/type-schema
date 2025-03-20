@@ -2,18 +2,19 @@
   "identifier": {
     "kind": "resource",
     "package": "hl7.fhir.core.r4",
-    "version": "4.0.1",
-    "name": "with-codable-concept",
-    "url": "http://example.io/fhir/WithCodableConcept"
+    "version" : "4.0.1",
+    "name" : "WithCodableConcept",
+    "url" : "http://example.io/fhir/WithCodableConcept"
   },
-  "base": {
-    "kind": "resource",
-    "package": "hl7.fhir.core.r4",
-    "version": "4.0.1",
-    "name": "DomainResource",
-    "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+  "base" : {
+    "kind" : "resource",
+    "package" : "hl7.fhir.r4.core",
+    "version" : "4.0.1",
+    "name" : "DomainResource",
+    "url" : "http://hl7.org/fhir/StructureDefinition/DomainResource"
   },
-  "fields": {
+  "description" : "description",
+  "fields" : {
     "marital-status": {
       "type": {
         "kind": "resource",
