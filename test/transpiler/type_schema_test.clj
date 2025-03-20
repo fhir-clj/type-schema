@@ -2,8 +2,6 @@
   (:require [clojure.test :refer [deftest is]]
             [transpiler.type-schema :as type-schema]
             [transpiler.package-index :as index]
-            [cheshire.core :as json]
-            [clojure.string :as str]
             [golden.core :as golden]))
 
 (deftest build-field-test
@@ -37,9 +35,9 @@
                        "docs/examples/fhir-schema/resource-with-string.fs.json"
                        type-schema/translate)
 
-  #_(golden/vs-json-file "docs/examples/resource-with-choice.ts.json"
-                         "docs/examples/fhir-schema/resource-with-choice.fs.json"
-                         type-schema/translate)
+  (golden/vs-json-file "docs/examples/resource-with-choice.ts.json"
+                       "docs/examples/fhir-schema/resource-with-choice.fs.json"
+                       type-schema/translate)
 
   (golden/vs-json-file "docs/examples/resource-with-nested-type.ts.json"
                        "docs/examples/fhir-schema/resource-with-nested-type.fs.json"

@@ -397,7 +397,14 @@
       "link" : {
         "array" : true,
         "required" : false,
-        "excluded" : false
+        "excluded" : false,
+        "type" : {
+          "kind" : "nested",
+          "package" : "hl7.fhir.core.r4",
+          "version" : "4.0.1",
+          "name" : "link",
+          "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#link"
+        }
       },
       "fullUrl" : {
         "array" : false,

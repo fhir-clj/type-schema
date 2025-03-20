@@ -107,16 +107,28 @@
      :valueset (get-valueset-identifier valueset)}))
 
 (defn build-field [fhir-schema path element]
-  (let [type (some-> (:type element)
-                     (get-fhir-schema)
-                     (get-identifier))]
-    (cond-> {:array    (true? (:array element))
+  (let [type (or (some-> (:type element)
+                         (get-fhir-schema)
+                         (get-identifier))
+                 (when-let [fhir-schema-path (:element-reference element)]
+                   (get-nested-identifier fhir-schema
+                                          (->> fhir-schema-path
+                                               (drop 1)
+                                               (keep-indexed (fn [i key]
+                                                               (when (odd? i)
+                                                                 key)))
+                                               (map keyword)
+                                               (into [])))))]
+
+    (cond-> {:type     type
+             :array    (true? (:array element))
              :required (is-required? fhir-schema path element)
              :excluded (is-excluded? fhir-schema path element)}
+
       (some? type)        (assoc :type type)
       (:choices element)  (assoc :choices (:choices element))
       (:choiceOf element) (assoc :choiceOf (:choiceOf element))
-      (:binding element) (assoc :binding (build-binding element)))))
+      (:binding element)  (assoc :binding (build-binding element)))))
 
 #_(defn build-backbone-element [element fhir-schema path]
     (let [;; FIXME:

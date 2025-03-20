@@ -15,52 +15,60 @@
   },
   "description": "description",
   "fields": {
-    "deceased": {
-      "choices": ["deceasedBoolean", "deceasedDateTime"],
-      "required": false,
-      "array": false
-    },
-    "deceasedBoolean": {
-      "type": {
-        "kind": "primitive-type",
-        "package": "hl7.fhir.core.r4",
-        "version": "4.0.1",
-        "name": "boolean",
-        "url": "http://hl7.org/fhir/StructureDefinition/boolean"
-      }
-    },
     "deceasedDateTime": {
+      "array": false,
+      "required": false,
+      "excluded": false,
       "type": {
         "kind": "primitive-type",
-        "package": "hl7.fhir.core.r4",
+        "package": "hl7.fhir.r4.core",
         "version": "4.0.1",
         "name": "dateTime",
         "url": "http://hl7.org/fhir/StructureDefinition/dateTime"
-      }
+      },
+      "choiceOf": "deceased"
+    },
+    "deceasedBoolean": {
+      "array": false,
+      "required": false,
+      "excluded": false,
+      "type": {
+        "kind": "primitive-type",
+        "package": "hl7.fhir.r4.core",
+        "version": "4.0.1",
+        "name": "boolean",
+        "url": "http://hl7.org/fhir/StructureDefinition/boolean"
+      },
+      "choiceOf": "deceased"
+    },
+    "deceased": {
+      "array": false,
+      "required": false,
+      "excluded": false,
+      "choices": ["deceasedBoolean", "deceasedDateTime"]
     }
   },
   "dependencies": [
     {
       "kind": "resource",
+      "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "package": "hl7.fhir.core.r4",
       "name": "DomainResource",
       "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
     },
     {
       "kind": "primitive-type",
-      "package": "hl7.fhir.core.r4",
-      "version": "4.0.1",
-      "name": "boolean",
-      "url": "http://hl7.org/fhir/StructureDefinition/boolean"
-    },
-    {
-      "kind": "primitive-type",
-      "package": "hl7.fhir.core.r4",
+      "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
       "name": "dateTime",
       "url": "http://hl7.org/fhir/StructureDefinition/dateTime"
+    },
+    {
+      "kind": "primitive-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "boolean",
+      "url": "http://hl7.org/fhir/StructureDefinition/boolean"
     }
-  ],
-  "nested": []
+  ]
 }
