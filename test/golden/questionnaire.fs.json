@@ -1,695 +1,674 @@
 {
-    "url": "http://hl7.org/fhir/StructureDefinition/Questionnaire",
-    "constraints": {
-        "que-0": {
-            "human": "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            "severity": "warning",
-            "expression": "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')"
-        },
-        "que-2": {
-            "human": "The link ids for groups and questions must be unique within the questionnaire",
-            "severity": "error",
-            "expression": "descendants().linkId.isDistinct()"
-        }
+  "package-meta": { "name": "hl7.fhir.core.r4", "version": "4.0.1" },
+  "url": "http://hl7.org/fhir/StructureDefinition/Questionnaire",
+  "constraints": {
+    "que-0": {
+      "human": "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+      "severity": "warning",
+      "expression": "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')"
     },
-    "id": "Questionnaire",
-    "base": "http://hl7.org/fhir/StructureDefinition/DomainResource",
-    "name": "Questionnaire",
-    "kind": "resource",
-    "required": [
-        "status"
-    ],
-    "type": "Questionnaire",
-    "version": "4.0.1",
-    "resourceType": "FHIRSchema",
-    "elements": {
-        "url": {
-            "type": "uri",
-            "scalar": true,
-            "summary": true
+    "que-2": {
+      "human": "The link ids for groups and questions must be unique within the questionnaire",
+      "severity": "error",
+      "expression": "descendants().linkId.isDistinct()"
+    }
+  },
+  "id": "Questionnaire",
+  "base": "http://hl7.org/fhir/StructureDefinition/DomainResource",
+  "name": "Questionnaire",
+  "kind": "resource",
+  "required": ["status"],
+  "type": "Questionnaire",
+  "version": "4.0.1",
+  "resourceType": "FHIRSchema",
+  "elements": {
+    "url": {
+      "type": "uri",
+      "scalar": true,
+      "summary": true
+    },
+    "derivedFrom": {
+      "type": "canonical",
+      "array": true,
+      "refers": ["http://hl7.org/fhir/StructureDefinition/Questionnaire"]
+    },
+    "experimental": {
+      "type": "boolean",
+      "scalar": true,
+      "summary": true
+    },
+    "effectivePeriod": {
+      "type": "Period",
+      "scalar": true,
+      "summary": true
+    },
+    "approvalDate": {
+      "type": "date",
+      "scalar": true
+    },
+    "name": {
+      "type": "string",
+      "scalar": true,
+      "summary": true
+    },
+    "status": {
+      "type": "code",
+      "scalar": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status"
+      },
+      "summary": true,
+      "modifier": true
+    },
+    "identifier": {
+      "type": "Identifier",
+      "array": true,
+      "summary": true
+    },
+    "item": {
+      "type": "BackboneElement",
+      "array": true,
+      "elements": {
+        "answerValueSet": {
+          "type": "canonical",
+          "refers": ["http://hl7.org/fhir/StructureDefinition/ValueSet"],
+          "scalar": true
         },
-        "derivedFrom": {
-            "type": "canonical",
-            "array": true,
-            "refers": [
-                "http://hl7.org/fhir/StructureDefinition/Questionnaire"
-            ]
+        "repeats": {
+          "type": "boolean",
+          "scalar": true
         },
-        "experimental": {
-            "type": "boolean",
-            "scalar": true,
-            "summary": true
+        "prefix": {
+          "type": "string",
+          "scalar": true
         },
-        "effectivePeriod": {
-            "type": "Period",
-            "scalar": true,
-            "summary": true
-        },
-        "approvalDate": {
-            "type": "date",
-            "scalar": true
-        },
-        "name": {
-            "type": "string",
-            "scalar": true,
-            "summary": true
-        },
-        "status": {
-            "type": "code",
-            "scalar": true,
-            "binding": {
-                "strength": "required",
-                "valueSet": "http://hl7.org/fhir/ValueSet/publication-status"
+        "answerOption": {
+          "type": "BackboneElement",
+          "array": true,
+          "elements": {
+            "value": {
+              "scalar": true,
+              "choices": [
+                "valueInteger",
+                "valueDate",
+                "valueTime",
+                "valueString",
+                "valueCoding",
+                "valueReference"
+              ]
             },
-            "summary": true,
-            "modifier": true
+            "valueDate": {
+              "type": "date",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "value",
+              "required-element": true
+            },
+            "valueTime": {
+              "type": "time",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "value",
+              "required-element": true
+            },
+            "valueCoding": {
+              "type": "Coding",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "value",
+              "required-element": true
+            },
+            "valueString": {
+              "type": "string",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "value",
+              "required-element": true
+            },
+            "valueInteger": {
+              "type": "integer",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "value",
+              "required-element": true
+            },
+            "valueReference": {
+              "type": "Reference",
+              "refers": ["http://hl7.org/fhir/StructureDefinition/Resource"],
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "value",
+              "required-element": true
+            },
+            "initialSelected": {
+              "type": "boolean",
+              "scalar": true
+            }
+          },
+          "required": ["value", "value", "value", "value", "value", "value"]
         },
-        "identifier": {
-            "type": "Identifier",
-            "array": true,
-            "summary": true
+        "maxLength": {
+          "type": "integer",
+          "scalar": true
+        },
+        "initial": {
+          "type": "BackboneElement",
+          "array": true,
+          "elements": {
+            "valueCoding": {
+              "type": "Coding",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "value",
+              "required-element": true
+            },
+            "valueUri": {
+              "type": "uri",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "value",
+              "required-element": true
+            },
+            "valueString": {
+              "type": "string",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "value",
+              "required-element": true
+            },
+            "valueReference": {
+              "type": "Reference",
+              "refers": ["http://hl7.org/fhir/StructureDefinition/Resource"],
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "value",
+              "required-element": true
+            },
+            "valueDecimal": {
+              "type": "decimal",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "value",
+              "required-element": true
+            },
+            "valueAttachment": {
+              "type": "Attachment",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "value",
+              "required-element": true
+            },
+            "valueDateTime": {
+              "type": "dateTime",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "value",
+              "required-element": true
+            },
+            "value": {
+              "scalar": true,
+              "choices": [
+                "valueBoolean",
+                "valueDecimal",
+                "valueInteger",
+                "valueDate",
+                "valueDateTime",
+                "valueTime",
+                "valueString",
+                "valueUri",
+                "valueAttachment",
+                "valueCoding",
+                "valueQuantity",
+                "valueReference"
+              ]
+            },
+            "valueBoolean": {
+              "type": "boolean",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "value",
+              "required-element": true
+            },
+            "valueDate": {
+              "type": "date",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "value",
+              "required-element": true
+            },
+            "valueTime": {
+              "type": "time",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "value",
+              "required-element": true
+            },
+            "valueQuantity": {
+              "type": "Quantity",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "value",
+              "required-element": true
+            },
+            "valueInteger": {
+              "type": "integer",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "value",
+              "required-element": true
+            }
+          },
+          "required": [
+            "value",
+            "value",
+            "value",
+            "value",
+            "value",
+            "value",
+            "value",
+            "value",
+            "value",
+            "value",
+            "value",
+            "value"
+          ]
+        },
+        "enableWhen": {
+          "type": "BackboneElement",
+          "array": true,
+          "elements": {
+            "answerReference": {
+              "type": "Reference",
+              "refers": ["http://hl7.org/fhir/StructureDefinition/Resource"],
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "answer",
+              "required-element": true
+            },
+            "operator": {
+              "type": "code",
+              "scalar": true,
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-enable-operator"
+              }
+            },
+            "answerDate": {
+              "type": "date",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "answer",
+              "required-element": true
+            },
+            "answerTime": {
+              "type": "time",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "answer",
+              "required-element": true
+            },
+            "answerString": {
+              "type": "string",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "answer",
+              "required-element": true
+            },
+            "answerCoding": {
+              "type": "Coding",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "answer",
+              "required-element": true
+            },
+            "question": {
+              "type": "string",
+              "scalar": true
+            },
+            "answerInteger": {
+              "type": "integer",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "answer",
+              "required-element": true
+            },
+            "answerQuantity": {
+              "type": "Quantity",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "answer",
+              "required-element": true
+            },
+            "answerDateTime": {
+              "type": "dateTime",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "answer",
+              "required-element": true
+            },
+            "answerBoolean": {
+              "type": "boolean",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "answer",
+              "required-element": true
+            },
+            "answerDecimal": {
+              "type": "decimal",
+              "scalar": true,
+              "binding": {
+                "strength": "example",
+                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
+              },
+              "choiceOf": "answer",
+              "required-element": true
+            },
+            "answer": {
+              "scalar": true,
+              "choices": [
+                "answerBoolean",
+                "answerDecimal",
+                "answerInteger",
+                "answerDate",
+                "answerDateTime",
+                "answerTime",
+                "answerString",
+                "answerCoding",
+                "answerQuantity",
+                "answerReference"
+              ]
+            }
+          },
+          "modifier": true,
+          "required": [
+            "question",
+            "operator",
+            "answer",
+            "answer",
+            "answer",
+            "answer",
+            "answer",
+            "answer",
+            "answer",
+            "answer",
+            "answer",
+            "answer"
+          ],
+          "constraints": {
+            "que-7": {
+              "human": "If the operator is 'exists', the value must be a boolean",
+              "severity": "error",
+              "expression": "operator = 'exists' implies (answer is Boolean)"
+            }
+          }
+        },
+        "text": {
+          "type": "string",
+          "scalar": true
         },
         "item": {
-            "type": "BackboneElement",
-            "array": true,
-            "elements": {
-                "answerValueSet": {
-                    "type": "canonical",
-                    "refers": [
-                        "http://hl7.org/fhir/StructureDefinition/ValueSet"
-                    ],
-                    "scalar": true
-                },
-                "repeats": {
-                    "type": "boolean",
-                    "scalar": true
-                },
-                "prefix": {
-                    "type": "string",
-                    "scalar": true
-                },
-                "answerOption": {
-                    "type": "BackboneElement",
-                    "array": true,
-                    "elements": {
-                        "value": {
-                            "scalar": true,
-                            "choices": [
-                                "valueInteger",
-                                "valueDate",
-                                "valueTime",
-                                "valueString",
-                                "valueCoding",
-                                "valueReference"
-                            ]
-                        },
-                        "valueDate": {
-                            "type": "date",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "value",
-                            "required-element": true
-                        },
-                        "valueTime": {
-                            "type": "time",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "value",
-                            "required-element": true
-                        },
-                        "valueCoding": {
-                            "type": "Coding",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "value",
-                            "required-element": true
-                        },
-                        "valueString": {
-                            "type": "string",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "value",
-                            "required-element": true
-                        },
-                        "valueInteger": {
-                            "type": "integer",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "value",
-                            "required-element": true
-                        },
-                        "valueReference": {
-                            "type": "Reference",
-                            "refers": [
-                                "http://hl7.org/fhir/StructureDefinition/Resource"
-                            ],
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "value",
-                            "required-element": true
-                        },
-                        "initialSelected": {
-                            "type": "boolean",
-                            "scalar": true
-                        }
-                    },
-                    "required": [
-                        "value",
-                        "value",
-                        "value",
-                        "value",
-                        "value",
-                        "value"
-                    ]
-                },
-                "maxLength": {
-                    "type": "integer",
-                    "scalar": true
-                },
-                "initial": {
-                    "type": "BackboneElement",
-                    "array": true,
-                    "elements": {
-                        "valueCoding": {
-                            "type": "Coding",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "value",
-                            "required-element": true
-                        },
-                        "valueUri": {
-                            "type": "uri",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "value",
-                            "required-element": true
-                        },
-                        "valueString": {
-                            "type": "string",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "value",
-                            "required-element": true
-                        },
-                        "valueReference": {
-                            "type": "Reference",
-                            "refers": [
-                                "http://hl7.org/fhir/StructureDefinition/Resource"
-                            ],
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "value",
-                            "required-element": true
-                        },
-                        "valueDecimal": {
-                            "type": "decimal",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "value",
-                            "required-element": true
-                        },
-                        "valueAttachment": {
-                            "type": "Attachment",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "value",
-                            "required-element": true
-                        },
-                        "valueDateTime": {
-                            "type": "dateTime",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "value",
-                            "required-element": true
-                        },
-                        "value": {
-                            "scalar": true,
-                            "choices": [
-                                "valueBoolean",
-                                "valueDecimal",
-                                "valueInteger",
-                                "valueDate",
-                                "valueDateTime",
-                                "valueTime",
-                                "valueString",
-                                "valueUri",
-                                "valueAttachment",
-                                "valueCoding",
-                                "valueQuantity",
-                                "valueReference"
-                            ]
-                        },
-                        "valueBoolean": {
-                            "type": "boolean",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "value",
-                            "required-element": true
-                        },
-                        "valueDate": {
-                            "type": "date",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "value",
-                            "required-element": true
-                        },
-                        "valueTime": {
-                            "type": "time",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "value",
-                            "required-element": true
-                        },
-                        "valueQuantity": {
-                            "type": "Quantity",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "value",
-                            "required-element": true
-                        },
-                        "valueInteger": {
-                            "type": "integer",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "value",
-                            "required-element": true
-                        }
-                    },
-                    "required": [
-                        "value",
-                        "value",
-                        "value",
-                        "value",
-                        "value",
-                        "value",
-                        "value",
-                        "value",
-                        "value",
-                        "value",
-                        "value",
-                        "value"
-                    ]
-                },
-                "enableWhen": {
-                    "type": "BackboneElement",
-                    "array": true,
-                    "elements": {
-                        "answerReference": {
-                            "type": "Reference",
-                            "refers": [
-                                "http://hl7.org/fhir/StructureDefinition/Resource"
-                            ],
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "answer",
-                            "required-element": true
-                        },
-                        "operator": {
-                            "type": "code",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "required",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-enable-operator"
-                            }
-                        },
-                        "answerDate": {
-                            "type": "date",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "answer",
-                            "required-element": true
-                        },
-                        "answerTime": {
-                            "type": "time",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "answer",
-                            "required-element": true
-                        },
-                        "answerString": {
-                            "type": "string",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "answer",
-                            "required-element": true
-                        },
-                        "answerCoding": {
-                            "type": "Coding",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "answer",
-                            "required-element": true
-                        },
-                        "question": {
-                            "type": "string",
-                            "scalar": true
-                        },
-                        "answerInteger": {
-                            "type": "integer",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "answer",
-                            "required-element": true
-                        },
-                        "answerQuantity": {
-                            "type": "Quantity",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "answer",
-                            "required-element": true
-                        },
-                        "answerDateTime": {
-                            "type": "dateTime",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "answer",
-                            "required-element": true
-                        },
-                        "answerBoolean": {
-                            "type": "boolean",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "answer",
-                            "required-element": true
-                        },
-                        "answerDecimal": {
-                            "type": "decimal",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "example",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-answers"
-                            },
-                            "choiceOf": "answer",
-                            "required-element": true
-                        },
-                        "answer": {
-                            "scalar": true,
-                            "choices": [
-                                "answerBoolean",
-                                "answerDecimal",
-                                "answerInteger",
-                                "answerDate",
-                                "answerDateTime",
-                                "answerTime",
-                                "answerString",
-                                "answerCoding",
-                                "answerQuantity",
-                                "answerReference"
-                            ]
-                        }
-                    },
-                    "modifier": true,
-                    "required": [
-                        "question",
-                        "operator",
-                        "answer",
-                        "answer",
-                        "answer",
-                        "answer",
-                        "answer",
-                        "answer",
-                        "answer",
-                        "answer",
-                        "answer",
-                        "answer"
-                    ],
-                    "constraints": {
-                        "que-7": {
-                            "human": "If the operator is 'exists', the value must be a boolean",
-                            "severity": "error",
-                            "expression": "operator = 'exists' implies (answer is Boolean)"
-                        }
-                    }
-                },
-                "text": {
-                    "type": "string",
-                    "scalar": true
-                },
-                "item": {
-                    "array": true,
-                    "elementReference": [
-                        "http://hl7.org/fhir/StructureDefinition/Questionnaire",
-                        "elements",
-                        "item"
-                    ]
-                },
-                "enableBehavior": {
-                    "type": "code",
-                    "scalar": true,
-                    "binding": {
-                        "strength": "required",
-                        "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-enable-behavior"
-                    }
-                },
-                "definition": {
-                    "type": "uri",
-                    "scalar": true
-                },
-                "readOnly": {
-                    "type": "boolean",
-                    "scalar": true
-                },
-                "required": {
-                    "type": "boolean",
-                    "scalar": true
-                },
-                "type": {
-                    "type": "code",
-                    "scalar": true,
-                    "binding": {
-                        "strength": "required",
-                        "valueSet": "http://hl7.org/fhir/ValueSet/item-type"
-                    }
-                },
-                "linkId": {
-                    "type": "string",
-                    "scalar": true
-                },
-                "code": {
-                    "type": "Coding",
-                    "array": true,
-                    "binding": {
-                        "strength": "example",
-                        "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-questions"
-                    }
-                }
-            },
-            "required": [
-                "linkId",
-                "type"
-            ],
-            "constraints": {
-                "que-6": {
-                    "human": "Required and repeat aren't permitted for display items",
-                    "severity": "error",
-                    "expression": "type!='display' or (required.empty() and repeats.empty())"
-                },
-                "que-3": {
-                    "human": "Display items cannot have a \"code\" asserted",
-                    "severity": "error",
-                    "expression": "type!='display' or code.empty()"
-                },
-                "que-4": {
-                    "human": "A question cannot have both answerOption and answerValueSet",
-                    "severity": "error",
-                    "expression": "answerOption.empty() or answerValueSet.empty()"
-                },
-                "que-8": {
-                    "human": "Initial values can't be specified for groups or display items",
-                    "severity": "error",
-                    "expression": "(type!='group' and type!='display') or initial.empty()"
-                },
-                "que-13": {
-                    "human": "Can only have multiple initial values for repeating items",
-                    "severity": "error",
-                    "expression": "repeats=true or initial.count() <= 1"
-                },
-                "que-12": {
-                    "human": "If there are more than one enableWhen, enableBehavior must be specified",
-                    "severity": "error",
-                    "expression": "enableWhen.count() > 2 implies enableBehavior.exists()"
-                },
-                "que-11": {
-                    "human": "If one or more answerOption is present, initial[x] must be missing",
-                    "severity": "error",
-                    "expression": "answerOption.empty() or initial.empty()"
-                },
-                "que-9": {
-                    "human": "Read-only can't be specified for \"display\" items",
-                    "severity": "error",
-                    "expression": "type!='display' or readOnly.empty()"
-                },
-                "que-1": {
-                    "human": "Group items must have nested items, display items cannot have nested items",
-                    "severity": "error",
-                    "expression": "(type='group' implies item.empty().not()) and (type.trace('type')='display' implies item.trace('item').empty())"
-                },
-                "que-10": {
-                    "human": "Maximum length can only be declared for simple question types",
-                    "severity": "error",
-                    "expression": "(type in ('boolean' | 'decimal' | 'integer' | 'string' | 'text' | 'url' | 'open-choice')) or maxLength.empty()"
-                },
-                "que-5": {
-                    "human": "Only 'choice' and 'open-choice' items can have answerValueSet",
-                    "severity": "error",
-                    "expression": "(type ='choice' or type = 'open-choice' or type = 'decimal' or type = 'integer' or type = 'date' or type = 'dateTime' or type = 'time' or type = 'string' or type = 'quantity') or (answerValueSet.empty() and answerOption.empty())"
-                }
-            }
+          "array": true,
+          "elementReference": [
+            "http://hl7.org/fhir/StructureDefinition/Questionnaire",
+            "elements",
+            "item"
+          ]
         },
-        "jurisdiction": {
-            "type": "CodeableConcept",
-            "array": true,
-            "binding": {
-                "strength": "extensible",
-                "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
-            },
-            "summary": true
+        "enableBehavior": {
+          "type": "code",
+          "scalar": true,
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-enable-behavior"
+          }
         },
-        "title": {
-            "type": "string",
-            "scalar": true,
-            "summary": true
+        "definition": {
+          "type": "uri",
+          "scalar": true
         },
-        "copyright": {
-            "type": "markdown",
-            "scalar": true
+        "readOnly": {
+          "type": "boolean",
+          "scalar": true
         },
-        "publisher": {
-            "type": "string",
-            "scalar": true,
-            "summary": true
+        "required": {
+          "type": "boolean",
+          "scalar": true
         },
-        "version": {
-            "type": "string",
-            "scalar": true,
-            "summary": true
+        "type": {
+          "type": "code",
+          "scalar": true,
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/item-type"
+          }
         },
-        "date": {
-            "type": "dateTime",
-            "scalar": true,
-            "summary": true
-        },
-        "subjectType": {
-            "type": "code",
-            "array": true,
-            "binding": {
-                "strength": "required",
-                "valueSet": "http://hl7.org/fhir/ValueSet/resource-types"
-            },
-            "summary": true
-        },
-        "useContext": {
-            "type": "UsageContext",
-            "array": true,
-            "summary": true
-        },
-        "lastReviewDate": {
-            "type": "date",
-            "scalar": true
+        "linkId": {
+          "type": "string",
+          "scalar": true
         },
         "code": {
-            "type": "Coding",
-            "array": true,
-            "binding": {
-                "strength": "example",
-                "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-questions"
-            },
-            "summary": true
-        },
-        "contact": {
-            "type": "ContactDetail",
-            "array": true,
-            "summary": true
-        },
-        "description": {
-            "type": "markdown",
-            "scalar": true
-        },
-        "purpose": {
-            "type": "markdown",
-            "scalar": true
+          "type": "Coding",
+          "array": true,
+          "binding": {
+            "strength": "example",
+            "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-questions"
+          }
         }
+      },
+      "required": ["linkId", "type"],
+      "constraints": {
+        "que-6": {
+          "human": "Required and repeat aren't permitted for display items",
+          "severity": "error",
+          "expression": "type!='display' or (required.empty() and repeats.empty())"
+        },
+        "que-3": {
+          "human": "Display items cannot have a \"code\" asserted",
+          "severity": "error",
+          "expression": "type!='display' or code.empty()"
+        },
+        "que-4": {
+          "human": "A question cannot have both answerOption and answerValueSet",
+          "severity": "error",
+          "expression": "answerOption.empty() or answerValueSet.empty()"
+        },
+        "que-8": {
+          "human": "Initial values can't be specified for groups or display items",
+          "severity": "error",
+          "expression": "(type!='group' and type!='display') or initial.empty()"
+        },
+        "que-13": {
+          "human": "Can only have multiple initial values for repeating items",
+          "severity": "error",
+          "expression": "repeats=true or initial.count() <= 1"
+        },
+        "que-12": {
+          "human": "If there are more than one enableWhen, enableBehavior must be specified",
+          "severity": "error",
+          "expression": "enableWhen.count() > 2 implies enableBehavior.exists()"
+        },
+        "que-11": {
+          "human": "If one or more answerOption is present, initial[x] must be missing",
+          "severity": "error",
+          "expression": "answerOption.empty() or initial.empty()"
+        },
+        "que-9": {
+          "human": "Read-only can't be specified for \"display\" items",
+          "severity": "error",
+          "expression": "type!='display' or readOnly.empty()"
+        },
+        "que-1": {
+          "human": "Group items must have nested items, display items cannot have nested items",
+          "severity": "error",
+          "expression": "(type='group' implies item.empty().not()) and (type.trace('type')='display' implies item.trace('item').empty())"
+        },
+        "que-10": {
+          "human": "Maximum length can only be declared for simple question types",
+          "severity": "error",
+          "expression": "(type in ('boolean' | 'decimal' | 'integer' | 'string' | 'text' | 'url' | 'open-choice')) or maxLength.empty()"
+        },
+        "que-5": {
+          "human": "Only 'choice' and 'open-choice' items can have answerValueSet",
+          "severity": "error",
+          "expression": "(type ='choice' or type = 'open-choice' or type = 'decimal' or type = 'integer' or type = 'date' or type = 'dateTime' or type = 'time' or type = 'string' or type = 'quantity') or (answerValueSet.empty() and answerOption.empty())"
+        }
+      }
     },
-    "derivation": "specialization"
+    "jurisdiction": {
+      "type": "CodeableConcept",
+      "array": true,
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
+      },
+      "summary": true
+    },
+    "title": {
+      "type": "string",
+      "scalar": true,
+      "summary": true
+    },
+    "copyright": {
+      "type": "markdown",
+      "scalar": true
+    },
+    "publisher": {
+      "type": "string",
+      "scalar": true,
+      "summary": true
+    },
+    "version": {
+      "type": "string",
+      "scalar": true,
+      "summary": true
+    },
+    "date": {
+      "type": "dateTime",
+      "scalar": true,
+      "summary": true
+    },
+    "subjectType": {
+      "type": "code",
+      "array": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/resource-types"
+      },
+      "summary": true
+    },
+    "useContext": {
+      "type": "UsageContext",
+      "array": true,
+      "summary": true
+    },
+    "lastReviewDate": {
+      "type": "date",
+      "scalar": true
+    },
+    "code": {
+      "type": "Coding",
+      "array": true,
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/questionnaire-questions"
+      },
+      "summary": true
+    },
+    "contact": {
+      "type": "ContactDetail",
+      "array": true,
+      "summary": true
+    },
+    "description": {
+      "type": "markdown",
+      "scalar": true
+    },
+    "purpose": {
+      "type": "markdown",
+      "scalar": true
+    }
+  },
+  "derivation": "specialization"
 }

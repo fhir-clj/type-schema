@@ -1,9 +1,41 @@
 {
   "identifier" : {
     "kind" : "complex-type",
-    "package" : "undefined",
+    "package" : "hl7.fhir.core.r4",
     "version" : "4.0.1",
     "name" : "BackboneElement",
     "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement"
-  }
+  },
+  "base" : {
+    "kind" : "complex-type",
+    "package" : "hl7.fhir.r4.core",
+    "version" : "4.0.1",
+    "name" : "Element",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Element"
+  },
+  "fields" : {
+    "modifierExtension" : {
+      "array" : true,
+      "type" : {
+        "kind" : "complex-type",
+        "package" : "hl7.fhir.r4.core",
+        "version" : "4.0.1",
+        "name" : "Extension",
+        "url" : "http://hl7.org/fhir/StructureDefinition/Extension"
+      }
+    }
+  },
+  "dependencies" : [ {
+    "kind" : "complex-type",
+    "package" : "hl7.fhir.r4.core",
+    "version" : "4.0.1",
+    "name" : "Element",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Element"
+  }, {
+    "kind" : "complex-type",
+    "package" : "hl7.fhir.r4.core",
+    "version" : "4.0.1",
+    "name" : "Extension",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Extension"
+  } ]
 }

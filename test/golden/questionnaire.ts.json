@@ -1,9 +1,0 @@
-{
-  "identifier" : {
-    "kind" : "resource",
-    "package" : "undefined",
-    "version" : "4.0.1",
-    "name" : "Questionnaire",
-    "url" : "http://hl7.org/fhir/StructureDefinition/Questionnaire"
-  }
-}

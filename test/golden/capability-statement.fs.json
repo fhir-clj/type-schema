@@ -1,640 +1,600 @@
 {
-    "url": "http://hl7.org/fhir/StructureDefinition/CapabilityStatement",
-    "constraints": {
-        "cpb-0": {
-            "human": "Name should be usable as an identifier for the module by machine processing applications such as code generation",
-            "severity": "warning",
-            "expression": "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')"
-        },
-        "cpb-1": {
-            "human": "A Capability Statement SHALL have at least one of REST, messaging or document element.",
-            "severity": "error",
-            "expression": "rest.exists() or messaging.exists() or document.exists()"
-        },
-        "cpb-2": {
-            "human": "A Capability Statement SHALL have at least one of description, software, or implementation element.",
-            "severity": "error",
-            "expression": "(description.count() + software.count() + implementation.count()) > 0"
-        },
-        "cpb-3": {
-            "human": "Messaging end-point is required (and is only permitted) when a statement is for an implementation.",
-            "severity": "error",
-            "expression": "messaging.endpoint.empty() or kind = 'instance'"
-        },
-        "cpb-7": {
-            "human": "The set of documents must be unique by the combination of profile and mode.",
-            "severity": "error",
-            "expression": "document.select(profile&mode).isDistinct()"
-        },
-        "cpb-14": {
-            "human": "If kind = instance, implementation must be present and software may be present",
-            "severity": "error",
-            "expression": "(kind != 'instance') or implementation.exists()"
-        },
-        "cpb-15": {
-            "human": "If kind = capability, implementation must be absent, software must be present",
-            "severity": "error",
-            "expression": "(kind != 'capability') or (implementation.exists().not() and software.exists())"
-        },
-        "cpb-16": {
-            "human": "If kind = requirements, implementation and software must be absent",
-            "severity": "error",
-            "expression": "(kind!='requirements') or (implementation.exists().not() and software.exists().not())"
-        }
+  "package-meta": { "name": "hl7.fhir.core.r4", "version": "4.0.1" },
+  "url": "http://hl7.org/fhir/StructureDefinition/CapabilityStatement",
+  "constraints": {
+    "cpb-0": {
+      "human": "Name should be usable as an identifier for the module by machine processing applications such as code generation",
+      "severity": "warning",
+      "expression": "name.matches('[A-Z]([A-Za-z0-9_]){0,254}')"
     },
-    "id": "CapabilityStatement",
-    "base": "http://hl7.org/fhir/StructureDefinition/DomainResource",
-    "name": "CapabilityStatement",
-    "kind": "resource",
-    "required": [
-        "status",
-        "date",
-        "kind",
-        "fhirVersion",
-        "format"
-    ],
-    "type": "CapabilityStatement",
-    "version": "4.0.1",
-    "resourceType": "FHIRSchema",
-    "elements": {
-        "url": {
-            "type": "uri",
-            "scalar": true,
-            "summary": true
-        },
-        "experimental": {
-            "type": "boolean",
-            "scalar": true,
-            "summary": true
-        },
-        "implementationGuide": {
-            "type": "canonical",
-            "array": true,
-            "refers": [
-                "http://hl7.org/fhir/StructureDefinition/ImplementationGuide"
-            ],
-            "summary": true
-        },
-        "software": {
-            "type": "BackboneElement",
-            "scalar": true,
-            "summary": true,
-            "elements": {
-                "name": {
-                    "type": "string",
-                    "scalar": true,
-                    "summary": true
-                },
-                "version": {
-                    "type": "string",
-                    "scalar": true,
-                    "summary": true
-                },
-                "releaseDate": {
-                    "type": "dateTime",
-                    "scalar": true,
-                    "summary": true
-                }
-            },
-            "required": [
-                "name"
-            ]
-        },
-        "patchFormat": {
-            "type": "code",
-            "array": true,
-            "binding": {
-                "strength": "required",
-                "valueSet": "http://hl7.org/fhir/ValueSet/mimetypes"
-            },
-            "summary": true
-        },
-        "rest": {
-            "type": "BackboneElement",
-            "array": true,
-            "summary": true,
-            "elements": {
-                "mode": {
-                    "type": "code",
-                    "scalar": true,
-                    "binding": {
-                        "strength": "required",
-                        "valueSet": "http://hl7.org/fhir/ValueSet/restful-capability-mode"
-                    },
-                    "summary": true
-                },
-                "resource": {
-                    "type": "BackboneElement",
-                    "array": true,
-                    "summary": true,
-                    "elements": {
-                        "documentation": {
-                            "type": "markdown",
-                            "scalar": true
-                        },
-                        "interaction": {
-                            "type": "BackboneElement",
-                            "array": true,
-                            "elements": {
-                                "code": {
-                                    "type": "code",
-                                    "scalar": true,
-                                    "binding": {
-                                        "strength": "required",
-                                        "valueSet": "http://hl7.org/fhir/ValueSet/type-restful-interaction"
-                                    }
-                                },
-                                "documentation": {
-                                    "type": "markdown",
-                                    "scalar": true
-                                }
-                            },
-                            "required": [
-                                "code"
-                            ]
-                        },
-                        "supportedProfile": {
-                            "type": "canonical",
-                            "array": true,
-                            "refers": [
-                                "http://hl7.org/fhir/StructureDefinition/StructureDefinition"
-                            ],
-                            "summary": true
-                        },
-                        "readHistory": {
-                            "type": "boolean",
-                            "scalar": true
-                        },
-                        "updateCreate": {
-                            "type": "boolean",
-                            "scalar": true
-                        },
-                        "profile": {
-                            "type": "canonical",
-                            "refers": [
-                                "http://hl7.org/fhir/StructureDefinition/StructureDefinition"
-                            ],
-                            "scalar": true,
-                            "summary": true
-                        },
-                        "versioning": {
-                            "type": "code",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "required",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/versioning-policy"
-                            }
-                        },
-                        "searchRevInclude": {
-                            "type": "string",
-                            "array": true
-                        },
-                        "referencePolicy": {
-                            "type": "code",
-                            "array": true,
-                            "binding": {
-                                "strength": "required",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/reference-handling-policy"
-                            }
-                        },
-                        "operation": {
-                            "type": "BackboneElement",
-                            "array": true,
-                            "summary": true,
-                            "elements": {
-                                "name": {
-                                    "type": "string",
-                                    "scalar": true,
-                                    "summary": true
-                                },
-                                "definition": {
-                                    "type": "canonical",
-                                    "refers": [
-                                        "http://hl7.org/fhir/StructureDefinition/OperationDefinition"
-                                    ],
-                                    "scalar": true,
-                                    "summary": true
-                                },
-                                "documentation": {
-                                    "type": "markdown",
-                                    "scalar": true
-                                }
-                            },
-                            "required": [
-                                "name",
-                                "definition"
-                            ]
-                        },
-                        "conditionalRead": {
-                            "type": "code",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "required",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/conditional-read-status"
-                            }
-                        },
-                        "searchInclude": {
-                            "type": "string",
-                            "array": true
-                        },
-                        "type": {
-                            "type": "code",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "required",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/resource-types"
-                            },
-                            "summary": true
-                        },
-                        "conditionalDelete": {
-                            "type": "code",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "required",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/conditional-delete-status"
-                            }
-                        },
-                        "conditionalUpdate": {
-                            "type": "boolean",
-                            "scalar": true
-                        },
-                        "conditionalCreate": {
-                            "type": "boolean",
-                            "scalar": true
-                        },
-                        "searchParam": {
-                            "type": "BackboneElement",
-                            "array": true,
-                            "elements": {
-                                "name": {
-                                    "type": "string",
-                                    "scalar": true
-                                },
-                                "type": {
-                                    "type": "code",
-                                    "scalar": true,
-                                    "binding": {
-                                        "strength": "required",
-                                        "valueSet": "http://hl7.org/fhir/ValueSet/search-param-type"
-                                    }
-                                },
-                                "definition": {
-                                    "type": "canonical",
-                                    "refers": [
-                                        "http://hl7.org/fhir/StructureDefinition/SearchParameter"
-                                    ],
-                                    "scalar": true
-                                },
-                                "documentation": {
-                                    "type": "markdown",
-                                    "scalar": true
-                                }
-                            },
-                            "required": [
-                                "name",
-                                "type"
-                            ]
-                        }
-                    },
-                    "required": [
-                        "type"
-                    ],
-                    "constraints": {
-                        "cpb-12": {
-                            "human": "Search parameter names must be unique in the context of a resource.",
-                            "severity": "error",
-                            "expression": "searchParam.select(name).isDistinct()"
-                        }
-                    }
-                },
-                "security": {
-                    "type": "BackboneElement",
-                    "scalar": true,
-                    "summary": true,
-                    "elements": {
-                        "cors": {
-                            "type": "boolean",
-                            "scalar": true,
-                            "summary": true
-                        },
-                        "service": {
-                            "type": "CodeableConcept",
-                            "array": true,
-                            "binding": {
-                                "strength": "extensible",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/restful-security-service"
-                            },
-                            "summary": true
-                        },
-                        "description": {
-                            "type": "markdown",
-                            "scalar": true
-                        }
-                    }
-                },
-                "operation": {
-                    "array": true,
-                    "summary": true,
-                    "elementReference": [
-                        "http://hl7.org/fhir/StructureDefinition/CapabilityStatement",
-                        "elements",
-                        "rest",
-                        "elements",
-                        "resource",
-                        "elements",
-                        "operation"
-                    ]
-                },
-                "compartment": {
-                    "type": "canonical",
-                    "array": true,
-                    "refers": [
-                        "http://hl7.org/fhir/StructureDefinition/CompartmentDefinition"
-                    ]
-                },
-                "interaction": {
-                    "type": "BackboneElement",
-                    "array": true,
-                    "elements": {
-                        "code": {
-                            "type": "code",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "required",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/system-restful-interaction"
-                            }
-                        },
-                        "documentation": {
-                            "type": "markdown",
-                            "scalar": true
-                        }
-                    },
-                    "required": [
-                        "code"
-                    ]
-                },
-                "searchParam": {
-                    "array": true,
-                    "elementReference": [
-                        "http://hl7.org/fhir/StructureDefinition/CapabilityStatement",
-                        "elements",
-                        "rest",
-                        "elements",
-                        "resource",
-                        "elements",
-                        "searchParam"
-                    ]
-                },
-                "documentation": {
-                    "type": "markdown",
-                    "scalar": true
-                }
-            },
-            "required": [
-                "mode"
-            ],
-            "constraints": {
-                "cpb-9": {
-                    "human": "A given resource can only be described once per RESTful mode.",
-                    "severity": "error",
-                    "expression": "resource.select(type).isDistinct()"
-                }
-            }
-        },
-        "document": {
-            "type": "BackboneElement",
-            "array": true,
-            "summary": true,
-            "elements": {
-                "mode": {
-                    "type": "code",
-                    "scalar": true,
-                    "binding": {
-                        "strength": "required",
-                        "valueSet": "http://hl7.org/fhir/ValueSet/document-mode"
-                    },
-                    "summary": true
-                },
-                "profile": {
-                    "type": "canonical",
-                    "refers": [
-                        "http://hl7.org/fhir/StructureDefinition/StructureDefinition"
-                    ],
-                    "scalar": true,
-                    "summary": true
-                },
-                "documentation": {
-                    "type": "markdown",
-                    "scalar": true
-                }
-            },
-            "required": [
-                "mode",
-                "profile"
-            ]
-        },
+    "cpb-1": {
+      "human": "A Capability Statement SHALL have at least one of REST, messaging or document element.",
+      "severity": "error",
+      "expression": "rest.exists() or messaging.exists() or document.exists()"
+    },
+    "cpb-2": {
+      "human": "A Capability Statement SHALL have at least one of description, software, or implementation element.",
+      "severity": "error",
+      "expression": "(description.count() + software.count() + implementation.count()) > 0"
+    },
+    "cpb-3": {
+      "human": "Messaging end-point is required (and is only permitted) when a statement is for an implementation.",
+      "severity": "error",
+      "expression": "messaging.endpoint.empty() or kind = 'instance'"
+    },
+    "cpb-7": {
+      "human": "The set of documents must be unique by the combination of profile and mode.",
+      "severity": "error",
+      "expression": "document.select(profile&mode).isDistinct()"
+    },
+    "cpb-14": {
+      "human": "If kind = instance, implementation must be present and software may be present",
+      "severity": "error",
+      "expression": "(kind != 'instance') or implementation.exists()"
+    },
+    "cpb-15": {
+      "human": "If kind = capability, implementation must be absent, software must be present",
+      "severity": "error",
+      "expression": "(kind != 'capability') or (implementation.exists().not() and software.exists())"
+    },
+    "cpb-16": {
+      "human": "If kind = requirements, implementation and software must be absent",
+      "severity": "error",
+      "expression": "(kind!='requirements') or (implementation.exists().not() and software.exists().not())"
+    }
+  },
+  "id": "CapabilityStatement",
+  "base": "http://hl7.org/fhir/StructureDefinition/DomainResource",
+  "name": "CapabilityStatement",
+  "kind": "resource",
+  "required": ["status", "date", "kind", "fhirVersion", "format"],
+  "type": "CapabilityStatement",
+  "version": "4.0.1",
+  "resourceType": "FHIRSchema",
+  "elements": {
+    "url": {
+      "type": "uri",
+      "scalar": true,
+      "summary": true
+    },
+    "experimental": {
+      "type": "boolean",
+      "scalar": true,
+      "summary": true
+    },
+    "implementationGuide": {
+      "type": "canonical",
+      "array": true,
+      "refers": ["http://hl7.org/fhir/StructureDefinition/ImplementationGuide"],
+      "summary": true
+    },
+    "software": {
+      "type": "BackboneElement",
+      "scalar": true,
+      "summary": true,
+      "elements": {
         "name": {
-            "type": "string",
-            "scalar": true,
-            "summary": true
-        },
-        "implementation": {
-            "type": "BackboneElement",
-            "scalar": true,
-            "summary": true,
-            "elements": {
-                "url": {
-                    "type": "url",
-                    "scalar": true,
-                    "summary": true
-                },
-                "custodian": {
-                    "type": "Reference",
-                    "refers": [
-                        "http://hl7.org/fhir/StructureDefinition/Organization"
-                    ],
-                    "scalar": true,
-                    "summary": true
-                },
-                "description": {
-                    "type": "string",
-                    "scalar": true,
-                    "summary": true
-                }
-            },
-            "required": [
-                "description"
-            ]
-        },
-        "status": {
-            "type": "code",
-            "scalar": true,
-            "binding": {
-                "strength": "required",
-                "valueSet": "http://hl7.org/fhir/ValueSet/publication-status"
-            },
-            "summary": true,
-            "modifier": true
-        },
-        "messaging": {
-            "type": "BackboneElement",
-            "array": true,
-            "summary": true,
-            "elements": {
-                "endpoint": {
-                    "type": "BackboneElement",
-                    "array": true,
-                    "elements": {
-                        "address": {
-                            "type": "url",
-                            "scalar": true
-                        },
-                        "protocol": {
-                            "type": "Coding",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "extensible",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/message-transport"
-                            }
-                        }
-                    },
-                    "required": [
-                        "protocol",
-                        "address"
-                    ]
-                },
-                "documentation": {
-                    "type": "markdown",
-                    "scalar": true
-                },
-                "reliableCache": {
-                    "type": "unsignedInt",
-                    "scalar": true
-                },
-                "supportedMessage": {
-                    "type": "BackboneElement",
-                    "array": true,
-                    "summary": true,
-                    "elements": {
-                        "mode": {
-                            "type": "code",
-                            "scalar": true,
-                            "binding": {
-                                "strength": "required",
-                                "valueSet": "http://hl7.org/fhir/ValueSet/event-capability-mode"
-                            },
-                            "summary": true
-                        },
-                        "definition": {
-                            "type": "canonical",
-                            "refers": [
-                                "http://hl7.org/fhir/StructureDefinition/MessageDefinition"
-                            ],
-                            "scalar": true,
-                            "summary": true
-                        }
-                    },
-                    "required": [
-                        "mode",
-                        "definition"
-                    ]
-                }
-            }
-        },
-        "kind": {
-            "type": "code",
-            "scalar": true,
-            "binding": {
-                "strength": "required",
-                "valueSet": "http://hl7.org/fhir/ValueSet/capability-statement-kind"
-            },
-            "summary": true
-        },
-        "jurisdiction": {
-            "type": "CodeableConcept",
-            "array": true,
-            "binding": {
-                "strength": "extensible",
-                "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
-            },
-            "summary": true
-        },
-        "title": {
-            "type": "string",
-            "scalar": true,
-            "summary": true
-        },
-        "fhirVersion": {
-            "type": "code",
-            "scalar": true,
-            "binding": {
-                "strength": "required",
-                "valueSet": "http://hl7.org/fhir/ValueSet/FHIR-version"
-            },
-            "summary": true
-        },
-        "copyright": {
-            "type": "markdown",
-            "scalar": true
-        },
-        "publisher": {
-            "type": "string",
-            "scalar": true,
-            "summary": true
+          "type": "string",
+          "scalar": true,
+          "summary": true
         },
         "version": {
-            "type": "string",
-            "scalar": true,
-            "summary": true
+          "type": "string",
+          "scalar": true,
+          "summary": true
         },
-        "date": {
-            "type": "dateTime",
-            "scalar": true,
-            "summary": true
+        "releaseDate": {
+          "type": "dateTime",
+          "scalar": true,
+          "summary": true
+        }
+      },
+      "required": ["name"]
+    },
+    "patchFormat": {
+      "type": "code",
+      "array": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/mimetypes"
+      },
+      "summary": true
+    },
+    "rest": {
+      "type": "BackboneElement",
+      "array": true,
+      "summary": true,
+      "elements": {
+        "mode": {
+          "type": "code",
+          "scalar": true,
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/restful-capability-mode"
+          },
+          "summary": true
         },
-        "useContext": {
-            "type": "UsageContext",
-            "array": true,
-            "summary": true
+        "resource": {
+          "type": "BackboneElement",
+          "array": true,
+          "summary": true,
+          "elements": {
+            "documentation": {
+              "type": "markdown",
+              "scalar": true
+            },
+            "interaction": {
+              "type": "BackboneElement",
+              "array": true,
+              "elements": {
+                "code": {
+                  "type": "code",
+                  "scalar": true,
+                  "binding": {
+                    "strength": "required",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/type-restful-interaction"
+                  }
+                },
+                "documentation": {
+                  "type": "markdown",
+                  "scalar": true
+                }
+              },
+              "required": ["code"]
+            },
+            "supportedProfile": {
+              "type": "canonical",
+              "array": true,
+              "refers": [
+                "http://hl7.org/fhir/StructureDefinition/StructureDefinition"
+              ],
+              "summary": true
+            },
+            "readHistory": {
+              "type": "boolean",
+              "scalar": true
+            },
+            "updateCreate": {
+              "type": "boolean",
+              "scalar": true
+            },
+            "profile": {
+              "type": "canonical",
+              "refers": [
+                "http://hl7.org/fhir/StructureDefinition/StructureDefinition"
+              ],
+              "scalar": true,
+              "summary": true
+            },
+            "versioning": {
+              "type": "code",
+              "scalar": true,
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/versioning-policy"
+              }
+            },
+            "searchRevInclude": {
+              "type": "string",
+              "array": true
+            },
+            "referencePolicy": {
+              "type": "code",
+              "array": true,
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/reference-handling-policy"
+              }
+            },
+            "operation": {
+              "type": "BackboneElement",
+              "array": true,
+              "summary": true,
+              "elements": {
+                "name": {
+                  "type": "string",
+                  "scalar": true,
+                  "summary": true
+                },
+                "definition": {
+                  "type": "canonical",
+                  "refers": [
+                    "http://hl7.org/fhir/StructureDefinition/OperationDefinition"
+                  ],
+                  "scalar": true,
+                  "summary": true
+                },
+                "documentation": {
+                  "type": "markdown",
+                  "scalar": true
+                }
+              },
+              "required": ["name", "definition"]
+            },
+            "conditionalRead": {
+              "type": "code",
+              "scalar": true,
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/conditional-read-status"
+              }
+            },
+            "searchInclude": {
+              "type": "string",
+              "array": true
+            },
+            "type": {
+              "type": "code",
+              "scalar": true,
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/resource-types"
+              },
+              "summary": true
+            },
+            "conditionalDelete": {
+              "type": "code",
+              "scalar": true,
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/conditional-delete-status"
+              }
+            },
+            "conditionalUpdate": {
+              "type": "boolean",
+              "scalar": true
+            },
+            "conditionalCreate": {
+              "type": "boolean",
+              "scalar": true
+            },
+            "searchParam": {
+              "type": "BackboneElement",
+              "array": true,
+              "elements": {
+                "name": {
+                  "type": "string",
+                  "scalar": true
+                },
+                "type": {
+                  "type": "code",
+                  "scalar": true,
+                  "binding": {
+                    "strength": "required",
+                    "valueSet": "http://hl7.org/fhir/ValueSet/search-param-type"
+                  }
+                },
+                "definition": {
+                  "type": "canonical",
+                  "refers": [
+                    "http://hl7.org/fhir/StructureDefinition/SearchParameter"
+                  ],
+                  "scalar": true
+                },
+                "documentation": {
+                  "type": "markdown",
+                  "scalar": true
+                }
+              },
+              "required": ["name", "type"]
+            }
+          },
+          "required": ["type"],
+          "constraints": {
+            "cpb-12": {
+              "human": "Search parameter names must be unique in the context of a resource.",
+              "severity": "error",
+              "expression": "searchParam.select(name).isDistinct()"
+            }
+          }
         },
-        "imports": {
-            "type": "canonical",
-            "array": true,
-            "refers": [
-                "http://hl7.org/fhir/StructureDefinition/CapabilityStatement"
-            ],
-            "summary": true
+        "security": {
+          "type": "BackboneElement",
+          "scalar": true,
+          "summary": true,
+          "elements": {
+            "cors": {
+              "type": "boolean",
+              "scalar": true,
+              "summary": true
+            },
+            "service": {
+              "type": "CodeableConcept",
+              "array": true,
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/restful-security-service"
+              },
+              "summary": true
+            },
+            "description": {
+              "type": "markdown",
+              "scalar": true
+            }
+          }
         },
-        "contact": {
-            "type": "ContactDetail",
-            "array": true,
-            "summary": true
+        "operation": {
+          "array": true,
+          "summary": true,
+          "elementReference": [
+            "http://hl7.org/fhir/StructureDefinition/CapabilityStatement",
+            "elements",
+            "rest",
+            "elements",
+            "resource",
+            "elements",
+            "operation"
+          ]
+        },
+        "compartment": {
+          "type": "canonical",
+          "array": true,
+          "refers": [
+            "http://hl7.org/fhir/StructureDefinition/CompartmentDefinition"
+          ]
+        },
+        "interaction": {
+          "type": "BackboneElement",
+          "array": true,
+          "elements": {
+            "code": {
+              "type": "code",
+              "scalar": true,
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/system-restful-interaction"
+              }
+            },
+            "documentation": {
+              "type": "markdown",
+              "scalar": true
+            }
+          },
+          "required": ["code"]
+        },
+        "searchParam": {
+          "array": true,
+          "elementReference": [
+            "http://hl7.org/fhir/StructureDefinition/CapabilityStatement",
+            "elements",
+            "rest",
+            "elements",
+            "resource",
+            "elements",
+            "searchParam"
+          ]
+        },
+        "documentation": {
+          "type": "markdown",
+          "scalar": true
+        }
+      },
+      "required": ["mode"],
+      "constraints": {
+        "cpb-9": {
+          "human": "A given resource can only be described once per RESTful mode.",
+          "severity": "error",
+          "expression": "resource.select(type).isDistinct()"
+        }
+      }
+    },
+    "document": {
+      "type": "BackboneElement",
+      "array": true,
+      "summary": true,
+      "elements": {
+        "mode": {
+          "type": "code",
+          "scalar": true,
+          "binding": {
+            "strength": "required",
+            "valueSet": "http://hl7.org/fhir/ValueSet/document-mode"
+          },
+          "summary": true
+        },
+        "profile": {
+          "type": "canonical",
+          "refers": [
+            "http://hl7.org/fhir/StructureDefinition/StructureDefinition"
+          ],
+          "scalar": true,
+          "summary": true
+        },
+        "documentation": {
+          "type": "markdown",
+          "scalar": true
+        }
+      },
+      "required": ["mode", "profile"]
+    },
+    "name": {
+      "type": "string",
+      "scalar": true,
+      "summary": true
+    },
+    "implementation": {
+      "type": "BackboneElement",
+      "scalar": true,
+      "summary": true,
+      "elements": {
+        "url": {
+          "type": "url",
+          "scalar": true,
+          "summary": true
+        },
+        "custodian": {
+          "type": "Reference",
+          "refers": ["http://hl7.org/fhir/StructureDefinition/Organization"],
+          "scalar": true,
+          "summary": true
         },
         "description": {
-            "type": "markdown",
-            "scalar": true
-        },
-        "format": {
-            "type": "code",
-            "array": true,
-            "binding": {
-                "strength": "required",
-                "valueSet": "http://hl7.org/fhir/ValueSet/mimetypes"
-            },
-            "summary": true
-        },
-        "instantiates": {
-            "type": "canonical",
-            "array": true,
-            "refers": [
-                "http://hl7.org/fhir/StructureDefinition/CapabilityStatement"
-            ],
-            "summary": true
-        },
-        "purpose": {
-            "type": "markdown",
-            "scalar": true
+          "type": "string",
+          "scalar": true,
+          "summary": true
         }
+      },
+      "required": ["description"]
     },
-    "derivation": "specialization"
+    "status": {
+      "type": "code",
+      "scalar": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/publication-status"
+      },
+      "summary": true,
+      "modifier": true
+    },
+    "messaging": {
+      "type": "BackboneElement",
+      "array": true,
+      "summary": true,
+      "elements": {
+        "endpoint": {
+          "type": "BackboneElement",
+          "array": true,
+          "elements": {
+            "address": {
+              "type": "url",
+              "scalar": true
+            },
+            "protocol": {
+              "type": "Coding",
+              "scalar": true,
+              "binding": {
+                "strength": "extensible",
+                "valueSet": "http://hl7.org/fhir/ValueSet/message-transport"
+              }
+            }
+          },
+          "required": ["protocol", "address"]
+        },
+        "documentation": {
+          "type": "markdown",
+          "scalar": true
+        },
+        "reliableCache": {
+          "type": "unsignedInt",
+          "scalar": true
+        },
+        "supportedMessage": {
+          "type": "BackboneElement",
+          "array": true,
+          "summary": true,
+          "elements": {
+            "mode": {
+              "type": "code",
+              "scalar": true,
+              "binding": {
+                "strength": "required",
+                "valueSet": "http://hl7.org/fhir/ValueSet/event-capability-mode"
+              },
+              "summary": true
+            },
+            "definition": {
+              "type": "canonical",
+              "refers": [
+                "http://hl7.org/fhir/StructureDefinition/MessageDefinition"
+              ],
+              "scalar": true,
+              "summary": true
+            }
+          },
+          "required": ["mode", "definition"]
+        }
+      }
+    },
+    "kind": {
+      "type": "code",
+      "scalar": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/capability-statement-kind"
+      },
+      "summary": true
+    },
+    "jurisdiction": {
+      "type": "CodeableConcept",
+      "array": true,
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/jurisdiction"
+      },
+      "summary": true
+    },
+    "title": {
+      "type": "string",
+      "scalar": true,
+      "summary": true
+    },
+    "fhirVersion": {
+      "type": "code",
+      "scalar": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/FHIR-version"
+      },
+      "summary": true
+    },
+    "copyright": {
+      "type": "markdown",
+      "scalar": true
+    },
+    "publisher": {
+      "type": "string",
+      "scalar": true,
+      "summary": true
+    },
+    "version": {
+      "type": "string",
+      "scalar": true,
+      "summary": true
+    },
+    "date": {
+      "type": "dateTime",
+      "scalar": true,
+      "summary": true
+    },
+    "useContext": {
+      "type": "UsageContext",
+      "array": true,
+      "summary": true
+    },
+    "imports": {
+      "type": "canonical",
+      "array": true,
+      "refers": ["http://hl7.org/fhir/StructureDefinition/CapabilityStatement"],
+      "summary": true
+    },
+    "contact": {
+      "type": "ContactDetail",
+      "array": true,
+      "summary": true
+    },
+    "description": {
+      "type": "markdown",
+      "scalar": true
+    },
+    "format": {
+      "type": "code",
+      "array": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/mimetypes"
+      },
+      "summary": true
+    },
+    "instantiates": {
+      "type": "canonical",
+      "array": true,
+      "refers": ["http://hl7.org/fhir/StructureDefinition/CapabilityStatement"],
+      "summary": true
+    },
+    "purpose": {
+      "type": "markdown",
+      "scalar": true
+    }
+  },
+  "derivation": "specialization"
 }
