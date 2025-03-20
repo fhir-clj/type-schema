@@ -31,7 +31,7 @@
 
 (def valueset-index (atom nil))
 (defn init-valueset-index! [schemas] (reset! valueset-index schemas))
-(defn get-enum [url] (get @valueset-index url))
+(defn get-valueset [url] (get @valueset-index url))
 
 (defn keep-fhir-resource-file [acc file-name read-fn]
   (if (str/ends-with? file-name ".json")
@@ -88,6 +88,6 @@
                (count fhir-schemas-index)))
 
     (init-fhir-schema-index! fhir-schemas-index)
-    (init-valueset-index! (extract-enum/get-resolvable-valueset-codes value-sets-index))
+    (init-valueset-index! value-sets-index)
 
     :ok))

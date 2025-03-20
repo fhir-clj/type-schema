@@ -6,14 +6,14 @@
     "name": "WithChoice",
     "url": "http://example.io/fhir/WithChoice"
   },
-  "base" : {
-    "kind" : "resource",
-    "package" : "hl7.fhir.r4.core",
-    "version" : "4.0.1",
-    "name" : "DomainResource",
-    "url" : "http://hl7.org/fhir/StructureDefinition/DomainResource"
+  "base": {
+    "kind": "resource",
+    "package": "hl7.fhir.r4.core",
+    "version": "4.0.1",
+    "name": "DomainResource",
+    "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
   },
-  "description" : "description",
+  "description": "description",
   "fields": {
     "deceased": {
       "choices": ["deceasedBoolean", "deceasedDateTime"],

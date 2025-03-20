@@ -1,5 +1,6 @@
 (ns transpiler.type-schema
-  (:require [transpiler.package-index :refer [get-fhir-schema get-enum]]
+  (:require [transpiler.package-index :refer [get-fhir-schema get-valueset]]
+            [extract-enum]
             [clojure.string :as str]))
 
 (defn is-schema [kind]
@@ -7,6 +8,7 @@
 
 (defn derive-kind-from-schema [schema]
   (cond (= (:derivation schema) "constraint") "profile"
+        (= (:resourceType schema) "ValueSet") "valueset"
         ;; (= (:type schema) "BackboneElement") "nested"
         (:choices schema) "choices"
         :else (:kind schema)))
@@ -15,17 +17,13 @@
   (if (and url-with-version (string? url-with-version))
     (first (str/split url-with-version #"\|")) url-with-version))
 
-(defn attach-enum [binding]
-  (let [enum (get-enum (split-url-version (:valueSet binding)))]
-    (if enum (assoc binding :enum enum) binding)))
-
 (defn- package-meta-fallback [fhir-schema]
   {:name (cond
-           (and (some-> fhir-schema (str/starts-with? "http://hl7.org/fhir"))
+           (and (some-> fhir-schema :url (str/starts-with? "http://hl7.org/fhir"))
                 (some-> fhir-schema :version (str/starts-with? "4.")))
            "hl7.fhir.r4.core"
 
-           (and (some-> fhir-schema (str/starts-with? "http://hl7.org/fhir"))
+           (and (some-> fhir-schema :url (str/starts-with? "http://hl7.org/fhir"))
                 (some-> fhir-schema :version (str/starts-with? "5.")))
            "hl7.fhir.r5.core"
 
@@ -52,6 +50,15 @@
      :version (:version package-meta)
      :name    (:name fhir-schema)
      :url     (:url fhir-schema)}))
+
+(defn get-valueset-identifier [value-set]
+  #_(assert (some? (:url fhir-schema)))
+  (let [package-meta (package-meta value-set)]
+    {:kind    (derive-kind-from-schema value-set)
+     :package (:name package-meta)
+     :version (:version package-meta)
+     :name    (:id value-set)
+     :url     (:url value-set)}))
 
 (defn get-nested-identifier [fhir-schema path]
   #_(assert (some? (:url fhir-schema)))
@@ -88,6 +95,17 @@
                  (set))
              (last path)))
 
+#_(defn attach-enum [binding]
+    (let [enum (get-valueset-concepts (split-url-version (:valueSet binding)))]
+      (if enum (assoc binding :concept enum) binding)))
+
+(defn build-binding [element]
+  (let [strength (get-in element [:binding :strength])
+        valueset-url (get-in element [:binding :valueSet])
+        valueset (get-valueset (split-url-version valueset-url))]
+    {:strength strength
+     :valueset (get-valueset-identifier valueset)}))
+
 (defn build-field [fhir-schema path element]
   (let [type (some-> (:type element)
                      (get-fhir-schema)
@@ -97,7 +115,8 @@
              :excluded (is-excluded? fhir-schema path element)}
       (some? type)        (assoc :type type)
       (:choices element)  (assoc :choices (:choices element))
-      (:choiceOf element) (assoc :choiceOf (:choiceOf element)))))
+      (:choiceOf element) (assoc :choiceOf (:choiceOf element))
+      (:binding element) (assoc :binding (build-binding element)))))
 
 #_(defn build-backbone-element [element fhir-schema path]
     (let [;; FIXME:
@@ -145,17 +164,17 @@
        (into [])))
 
 (defn extract-dependencies [elements]
-  (->> elements
-       (keep (fn [[_ element]]
-               (when (is-schema (get-in element [:type :kind]))
-                 (:type element))))
-       (into [])))
+  (concat (->> elements
+               (keep (fn [[_key element]] (:type element))))
+          (->> elements
+               (keep (fn [[_key element]] (get-in element [:binding :valueset]))))))
 
-(defn extract-dependencies-from-backbone-elements [elements]
-  (reduce (fn [acc element]
-            (let [schema-type (:type element)]
-              (-> (concat acc (extract-dependencies (:fields element)))
-                  (cond-> schema-type (concat [schema-type]))))) [] elements))
+#_(defn extract-dependencies-from-nested [nested-types]
+    (->> nested-types)
+    #_(reduce (fn [acc element]
+                (let [schema-type (:type element)]
+                  (-> (concat acc (extract-dependencies (:fields element)))
+                      (cond-> schema-type (concat [schema-type]))))) [] nested-types))
 
 (defn translate [fhir-schema]
   (let [parent      (-> fhir-schema :base (get-fhir-schema))
@@ -172,7 +191,7 @@
         depends
         (->> (concat [base]
                      (extract-dependencies fields)
-                     #_(extract-dependencies-from-backbone-elements transformed-backbone-elements))
+                     #_(extract-dependencies-from-nested transformed-backbone-elements))
              (distinct)
              (sort-by #(get-in % [:idetifier :name]))
              (into []))]

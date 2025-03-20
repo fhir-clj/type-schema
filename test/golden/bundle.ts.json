@@ -37,6 +37,16 @@
         "version" : "4.0.1",
         "name" : "code",
         "url" : "http://hl7.org/fhir/StructureDefinition/code"
+      },
+      "binding" : {
+        "strength" : "required",
+        "valueset" : {
+          "kind" : "valueset",
+          "package" : "hl7.fhir.r4.core",
+          "version" : "4.0.1",
+          "name" : "bundle-type",
+          "url" : "http://hl7.org/fhir/ValueSet/bundle-type"
+        }
       }
     },
     "timestamp" : {
@@ -167,6 +177,16 @@
           "version" : "4.0.1",
           "name" : "code",
           "url" : "http://hl7.org/fhir/StructureDefinition/code"
+        },
+        "binding" : {
+          "strength" : "required",
+          "valueset" : {
+            "kind" : "valueset",
+            "package" : "hl7.fhir.r4.core",
+            "version" : "4.0.1",
+            "name" : "search-entry-mode",
+            "url" : "http://hl7.org/fhir/ValueSet/search-entry-mode"
+          }
         }
       },
       "score" : {
@@ -208,6 +228,16 @@
           "version" : "4.0.1",
           "name" : "code",
           "url" : "http://hl7.org/fhir/StructureDefinition/code"
+        },
+        "binding" : {
+          "strength" : "required",
+          "valueset" : {
+            "kind" : "valueset",
+            "package" : "hl7.fhir.r4.core",
+            "version" : "4.0.1",
+            "name" : "http-verb",
+            "url" : "http://hl7.org/fhir/ValueSet/http-verb"
+          }
         }
       },
       "url" : {
@@ -462,10 +492,28 @@
     "name" : "unsignedInt",
     "url" : "http://hl7.org/fhir/StructureDefinition/unsignedInt"
   }, {
+    "kind" : "nested",
+    "package" : "hl7.fhir.core.r4",
+    "version" : "4.0.1",
+    "name" : "link",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#link"
+  }, {
+    "kind" : "nested",
+    "package" : "hl7.fhir.core.r4",
+    "version" : "4.0.1",
+    "name" : "entry",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#entry"
+  }, {
     "kind" : "complex-type",
     "package" : "hl7.fhir.r4.core",
     "version" : "4.0.1",
     "name" : "Signature",
     "url" : "http://hl7.org/fhir/StructureDefinition/Signature"
+  }, {
+    "kind" : "valueset",
+    "package" : "hl7.fhir.r4.core",
+    "version" : "4.0.1",
+    "name" : "bundle-type",
+    "url" : "http://hl7.org/fhir/ValueSet/bundle-type"
   } ]
 }

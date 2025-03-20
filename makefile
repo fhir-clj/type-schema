@@ -55,4 +55,4 @@ check-json-fail-fast:
 	find . -name "*.ts.json" | xargs -n 1 sh -c 'ajv test -s docs/type-schema.schema.json --valid -d $$0 || exit 255'm
 
 format-example-json:
-	prettier -w docs/examples/**/*.json
+	prettier -w docs/**/*.json

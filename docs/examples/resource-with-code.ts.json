@@ -4,29 +4,33 @@
     "package": "hl7.fhir.core.r4",
     "version": "4.0.1",
     "name": "WithCode",
-    "url": "http://hl7.org/fhir/StructureDefinition/WithCode"
+    "url": "http://example.io/fhir/WithCode"
   },
   "base": {
     "kind": "resource",
+    "package": "hl7.fhir.r4.core",
     "version": "4.0.1",
-    "package": "hl7.fhir.core.r4",
     "name": "DomainResource",
     "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
   },
+  "description": "description",
   "fields": {
     "gender": {
+      "array": false,
+      "required": false,
+      "excluded": false,
       "type": {
         "kind": "primitive-type",
-        "package": "hl7.fhir.core.r4",
+        "package": "hl7.fhir.r4.core",
         "version": "4.0.1",
         "name": "code",
         "url": "http://hl7.org/fhir/StructureDefinition/code"
       },
       "binding": {
-        "strength": "extensible",
+        "strength": "required",
         "valueset": {
           "kind": "valueset",
-          "package": "hl7.fhir.core.r4",
+          "package": "hl7.fhir.r4.core",
           "version": "4.0.1",
           "name": "administrative-gender",
           "url": "http://hl7.org/fhir/ValueSet/administrative-gender"
@@ -37,25 +41,24 @@
   "dependencies": [
     {
       "kind": "resource",
+      "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "package": "hl7.fhir.core.r4",
       "name": "DomainResource",
       "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
     },
     {
       "kind": "primitive-type",
-      "package": "hl7.fhir.core.r4",
+      "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
       "name": "code",
       "url": "http://hl7.org/fhir/StructureDefinition/code"
     },
     {
       "kind": "valueset",
-      "package": "hl7.fhir.core.r4",
+      "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
       "name": "administrative-gender",
       "url": "http://hl7.org/fhir/ValueSet/administrative-gender"
     }
-  ],
-  "nested": []
+  ]
 }

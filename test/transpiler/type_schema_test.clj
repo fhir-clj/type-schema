@@ -45,13 +45,13 @@
                          "docs/examples/fhir-schema/resource-with-nested-type.fs.json"
                          type-schema/translate)
 
-  #_(golden/vs-json-file "docs/examples/resource-with-codable-concept.ts.json"
-                         "docs/examples/fhir-schema/resource-with-codable-concept.fs.json"
-                         type-schema/translate)
+  (golden/vs-json-file "docs/examples/resource-with-codable-concept.ts.json"
+                       "docs/examples/fhir-schema/resource-with-codable-concept.fs.json"
+                       type-schema/translate)
 
-  #_(golden/vs-json-file "docs/examples/resource-with-code.ts.json"
-                         "docs/examples/fhir-schema/resource-with-code.fs.json"
-                         type-schema/translate)
+  (golden/vs-json-file "docs/examples/resource-with-code.ts.json"
+                       "docs/examples/fhir-schema/resource-with-code.fs.json"
+                       type-schema/translate)
 
   #_(golden/vs-json-file "test/golden/patient.ts.json"
                          "test/golden/patient.fs.json"
