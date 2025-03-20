@@ -1,6 +1,9 @@
 (ns golden.core
   (:require [clojure.test :refer [is]]
             [cheshire.core :as json]
+            [clojure.pprint :as pprint]
+            [clojure.data :as data]
+            [clojure.string :as str]
             [clojure.java.io :as io]))
 
 (defn update-golden? []
@@ -22,5 +25,7 @@
 
        :else
        (is (= golden-content# actual-content#)
-           (str "golden json from " ~golden-filename " is not equal to actual data")))))
-
+           (str "golden json from " ~golden-filename " is not equal: \n"
+                (->> (data/diff golden-content# actual-content#)
+                     (map #(with-out-str (pprint/pprint %)))
+                     (str/join "")))))))
