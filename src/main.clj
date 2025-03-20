@@ -2,7 +2,7 @@
   (:require [fhir.package]
             [transpiler.fhir-schema :as fhir-schema]
             [transpiler.type-schema :as type-schema]
-            [transpiler.package-index :refer [get-enum init-fhir-schema-index! init-valueset-index!]]
+            [transpiler.package-index :as index]
             [extract-enum]
             [clojure.string :as str]
             [cheshire.core])
@@ -49,53 +49,10 @@
         (.newLine writer)))))
 
 (defn process-package [package-name output-dir]
-  (let [;; NOTE: not a part of SD till 5.2.0-ballot
-        ;; https://build.fhir.org/ig/HL7/fhir-extensions/StructureDefinition-package-source.html
-        ;; So we add that info manually to fhir-schema in :package-meta, like in
-        ;; custom Aidbox resources.
-        package-meta (-> (fhir.package/pkg-info package-name)
-                         (select-keys [:name :version]))
-
-        package-index (get-package-index package-name)
-
-        structure-definitions
-        (->> package-index
-             (filter (fn [[_ r]] (= (:resourceType r) "StructureDefinition")))
-             (into {}))
-
-        value-sets
-        (->> package-index
-             (filter (fn [[_ r]] (= (:resourceType r) "ValueSet")))
-             (into {}))
-
-        fhir-schemas (structure-definition->fhir-schema {:package-meta package-meta}
-                                                        structure-definitions)
-        fhir-schemas-by-name (->> fhir-schemas
-                                  (map (fn [[url fhir-schema]]
-                                         [(:name fhir-schema) fhir-schema]))
-                                  (into {}))
-        fhir-schemas-index (merge fhir-schemas fhir-schemas-by-name)]
-    (assert (= (+ (count fhir-schemas) (count fhir-schemas-by-name))
-               (count fhir-schemas-index)))
-
-    (init-fhir-schema-index! fhir-schemas-index)
-    (init-valueset-index! (extract-enum/get-resolvable-valueset-codes package-index))
-
-    (let [type-schemas (fhir-schema->type-schema fhir-schemas)]
-
-      (def structure-definitions0 structure-definitions)
-      (def value-sets-0 value-sets)
-      (def package-index0 package-index)
-      (def fhir-schemas0 fhir-schemas)
-      (def type-schemas0 type-schemas)
-
-      (-> package-index0 keys)
-      (-> structure-definitions0 (get "http://hl7.org/fhir/StructureDefinition/Patient"))
-      (-> fhir-schemas0 (get "http://hl7.org/fhir/StructureDefinition/Patient"))
-      (-> fhir-schemas0 (get "http://hl7.org/fhir/StructureDefinition/string"))
-      (-> type-schemas0 (get "http://hl7.org/fhir/StructureDefinition/Patient"))
-
-      (save-as-ndjson type-schemas output-dir))))
+  (index/init-from-package! package-name)
+  (let [fhir-schemas (index/get-fhir-schema-index)
+        type-schemas (fhir-schema->type-schema fhir-schemas)]
+    (save-as-ndjson type-schemas output-dir)))
 
 (defn -main [& args]
   (if (not= (count args) 2)

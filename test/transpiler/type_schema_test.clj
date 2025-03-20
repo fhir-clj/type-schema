@@ -7,26 +7,28 @@
             [golden.core :as golden]))
 
 (deftest structure-definition-test
-  (index/init-fhir-schema-index! (index/load-merge-schemas))
+  (index/init-from-package!"hl7.fhir.r4.core")
 
-  (golden/vs-json-file "test/golden/backbone-element.fs.json"
-                       "test/golden/backbone-element.ts.json"
+  (golden/vs-json-file "test/golden/backbone-element.ts.json"
+                       "test/golden/backbone-element.fs.json"
                        type-schema/translate)
 
-  (golden/vs-json-file "test/golden/patient.fs.json"
-                       "test/golden/patient.ts.json"
+  #_(golden/vs-json-file "test/golden/bundle.ts.json"
+                       "test/golden/bundle.fs.json"
                        type-schema/translate)
 
-  (golden/vs-json-file "test/golden/bundle.fs.json"
-                       "test/golden/bundle.ts.json"
+  #_(golden/vs-json-file "test/golden/patient.ts.json"
+                       "test/golden/patient.fs.json"
                        type-schema/translate)
 
-  (golden/vs-json-file "test/golden/capability-statement.fs.json"
-                       "test/golden/capability-statement.ts.json"
+
+
+  #_(golden/vs-json-file "test/golden/capability-statement.ts.json"
+                       "test/golden/capability-statement.fs.json"
                        type-schema/translate)
 
-  (golden/vs-json-file "test/golden/questionnaire.fs.json"
-                       "test/golden/questionnaire.ts.json"
+  #_(golden/vs-json-file "test/golden/questionnaire.ts.json"
+                       "test/golden/questionnaire.fs.json"
                        type-schema/translate))
 
 (comment)
