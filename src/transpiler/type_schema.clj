@@ -163,18 +163,18 @@
        (apply concat)
        (into [])))
 
-(defn extract-dependencies [elements]
-  (concat (->> elements
+(defn extract-dependencies [fields]
+  (concat (->> fields
+               (remove (fn [[_key element]] (= "nested" (:kind element))))
                (keep (fn [[_key element]] (:type element))))
-          (->> elements
+          (->> fields
                (keep (fn [[_key element]] (get-in element [:binding :valueset]))))))
 
-#_(defn extract-dependencies-from-nested [nested-types]
-    (->> nested-types)
-    #_(reduce (fn [acc element]
-                (let [schema-type (:type element)]
-                  (-> (concat acc (extract-dependencies (:fields element)))
-                      (cond-> schema-type (concat [schema-type]))))) [] nested-types))
+(defn extract-dependencies-from-nested [nested-types]
+  (->> nested-types
+       (map (fn [nested-type]
+              (extract-dependencies (:fields nested-type))))
+       (apply concat)))
 
 (defn translate [fhir-schema]
   (let [parent      (-> fhir-schema :base (get-fhir-schema))
@@ -191,7 +191,7 @@
         depends
         (->> (concat [base]
                      (extract-dependencies fields)
-                     #_(extract-dependencies-from-nested transformed-backbone-elements))
+                     (extract-dependencies-from-nested nested))
              (distinct)
              (sort-by #(get-in % [:idetifier :name]))
              (into []))]

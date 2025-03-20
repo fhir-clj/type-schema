@@ -4,50 +4,54 @@
     "package": "hl7.fhir.core.r4",
     "version": "4.0.1",
     "name": "WithNestedType",
-    "url": "http://hl7.org/fhir/StructureDefinition/WithNestedType"
+    "url": "http://example.io/fhir/WithNestedType"
   },
   "base": {
     "kind": "resource",
+    "package": "hl7.fhir.r4.core",
     "version": "4.0.1",
-    "package": "hl7.fhir.core.r4",
     "name": "DomainResource",
     "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
   },
+  "description": "some description",
   "fields": {
     "link": {
-      "array": true,
       "type": {
         "kind": "nested",
-        "version": "4.0.1",
         "package": "hl7.fhir.core.r4",
-        "name": "WithNestedType.link",
-        "url": "http://hl7.org/fhir/StructureDefinition/WithNestedType#link"
-      }
+        "version": "4.0.1",
+        "name": "link",
+        "url": "http://example.io/fhir/WithNestedType#link"
+      },
+      "array": true,
+      "required": false,
+      "excluded": false
     }
   },
   "nested": [
     {
       "identifier": {
         "kind": "nested",
-        "version": "4.0.1",
         "package": "hl7.fhir.core.r4",
-        "name": "WithNestedType.link",
-        "url": "http://hl7.org/fhir/StructureDefinition/WithNestedType#link"
+        "version": "4.0.1",
+        "name": "link",
+        "url": "http://example.io/fhir/WithNestedType#link"
       },
       "base": {
         "kind": "complex-type",
+        "package": "hl7.fhir.r4.core",
         "version": "4.0.1",
-        "package": "hl7.fhir.core.r4",
         "name": "BackboneElement",
         "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
       },
       "fields": {
         "someString": {
-          "required": true,
           "array": false,
+          "required": false,
+          "excluded": false,
           "type": {
             "kind": "primitive-type",
-            "package": "hl7.fhir.core.r4",
+            "package": "hl7.fhir.r4.core",
             "version": "4.0.1",
             "name": "string",
             "url": "http://hl7.org/fhir/StructureDefinition/string"
@@ -59,21 +63,21 @@
   "dependencies": [
     {
       "kind": "resource",
+      "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "package": "hl7.fhir.core.r4",
       "name": "DomainResource",
       "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
     },
     {
-      "kind": "complex-type",
-      "version": "4.0.1",
+      "kind": "nested",
       "package": "hl7.fhir.core.r4",
-      "name": "BackboneElement",
-      "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
+      "version": "4.0.1",
+      "name": "link",
+      "url": "http://example.io/fhir/WithNestedType#link"
     },
     {
       "kind": "primitive-type",
-      "package": "hl7.fhir.core.r4",
+      "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
       "name": "string",
       "url": "http://hl7.org/fhir/StructureDefinition/string"

@@ -41,9 +41,9 @@
                          "docs/examples/fhir-schema/resource-with-choice.fs.json"
                          type-schema/translate)
 
-  #_(golden/vs-json-file "docs/examples/resource-with-nested-type.ts.json"
-                         "docs/examples/fhir-schema/resource-with-nested-type.fs.json"
-                         type-schema/translate)
+  (golden/vs-json-file "docs/examples/resource-with-nested-type.ts.json"
+                       "docs/examples/fhir-schema/resource-with-nested-type.fs.json"
+                       type-schema/translate)
 
   (golden/vs-json-file "docs/examples/resource-with-codable-concept.ts.json"
                        "docs/examples/fhir-schema/resource-with-codable-concept.fs.json"
