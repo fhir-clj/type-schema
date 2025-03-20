@@ -9,14 +9,19 @@
 (defn update-golden? []
   (= "true" (System/getenv "UPDATE_GOLDEN")))
 
-(defmacro vs-json-file [golden-filename input-filename action-fn]
-  `(let [input-content#  (-> (slurp ~input-filename)
-                             (json/parse-string true))
-         actual-content# (~action-fn input-content#)
+(defn force-update-golden? []
+  (= "true" (System/getenv "FORCE_UPDATE_GOLDEN")))
+
+(defmacro vs-json [golden-filename content-gen]
+  `(let [actual-content# ~content-gen
          golden-content# (when (.exists (io/file ~golden-filename))
                            (-> (slurp ~golden-filename)
                                (json/parse-string true)))]
      (cond
+       (force-update-golden?)
+       (do (spit ~golden-filename (json/generate-string actual-content# {:pretty true}))
+           (is true))
+
        (or (nil? golden-content#)
            (and (update-golden?)
                 (not= golden-content# actual-content#)))

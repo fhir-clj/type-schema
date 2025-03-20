@@ -3,14 +3,8 @@
             [extract-enum]
             [clojure.string :as str]))
 
-(defn is-schema [kind]
-  (contains? #{"resource" "profile" "logical" "complex-type" "primitive-type"} kind))
-
 (defn derive-kind-from-schema [schema]
-  (cond (= (:derivation schema) "constraint") "profile"
-        (= (:resourceType schema) "ValueSet") "valueset"
-        ;; (= (:type schema) "BackboneElement") "nested"
-        (:choices schema) "choices"
+  (cond (= (:resourceType schema) "ValueSet") "valueset"
         :else (:kind schema)))
 
 (defn split-url-version [url-with-version]
@@ -52,9 +46,9 @@
      :url     (:url fhir-schema)}))
 
 (defn get-valueset-identifier [value-set]
-  #_(assert (some? (:url fhir-schema)))
+  #_(assert (some? (:url value-set)))
   (let [package-meta (package-meta value-set)]
-    {:kind    (derive-kind-from-schema value-set)
+    {:kind    "valueset"
      :package (:name package-meta)
      :version (:version package-meta)
      :name    (:id value-set)
@@ -68,20 +62,6 @@
      :version (:version package-meta)
      :name    (build-nested-name path)
      :url     (build-nested-url fhir-schema path)}))
-
-#_(defn build-element [element fhir-schema]
-    (let [required (some #{name} (:required fhir-schema))
-          element-type (:type element)
-          element-url (str "http://hl7.org/fhir/StructureDefinition/" element-type)
-          element-schema (get-fhir-schema element-url)]
-      (-> (select-keys element [:choices :array :choiceOf])
-          (cond-> required (assoc-in [:required] required))
-          (cond-> (:binding element) (assoc-in [:binding] (attach-enum (:binding element))))
-          (cond-> element-type (assoc-in [:type :kind] (derive-kind-from-schema element-schema)))
-          (cond-> element-type (assoc-in [:type :url] element-url))
-          (cond-> element-type (assoc-in [:type :name] element-type))
-          (cond-> (and element-type (:base element-schema)) (assoc-in [:type :base] (:base element-schema)))
-          (cond-> (:elementReference element) (assoc-in [:elementReference] (:elementReference element))))))
 
 (defn- is-required? [fhir-schema path element]
   (contains? (-> (if (= 1 (count path)) fhir-schema element)
@@ -100,11 +80,19 @@
       (if enum (assoc binding :concept enum) binding)))
 
 (defn build-binding [element]
-  (let [strength (get-in element [:binding :strength])
-        valueset-url (get-in element [:binding :valueSet])
-        valueset (get-valueset (split-url-version valueset-url))]
-    {:strength strength
-     :valueset (get-valueset-identifier valueset)}))
+  (when (:binding element)
+    (let [strength (get-in element [:binding :strength])
+          valueset-url (get-in element [:binding :valueSet])
+          valueset (get-valueset (split-url-version valueset-url))]
+      {:strength strength
+       :valueset (get-valueset-identifier valueset)})))
+
+(defn remove-empty-vals [m]
+  (->> m
+       (remove (fn [[_ v]]
+                 (when (seqable? v)
+                   (empty? v))))
+       (into {})))
 
 (defn build-field [fhir-schema path element]
   (let [type (or (some-> (:type element)
@@ -119,24 +107,14 @@
                                                                  key)))
                                                (map keyword)
                                                (into [])))))]
+    (remove-empty-vals {:array    (true? (:array element))
+                        :required (is-required? fhir-schema path element)
+                        :excluded (is-excluded? fhir-schema path element)
+                        :type     type
+                        :choices  (:choices element)
+                        :choiceOf (:choiceOf element)
 
-    (cond-> {:type     type
-             :array    (true? (:array element))
-             :required (is-required? fhir-schema path element)
-             :excluded (is-excluded? fhir-schema path element)}
-
-      (some? type)        (assoc :type type)
-      (:choices element)  (assoc :choices (:choices element))
-      (:choiceOf element) (assoc :choiceOf (:choiceOf element))
-      (:binding element)  (assoc :binding (build-binding element)))))
-
-#_(defn build-backbone-element [element fhir-schema path]
-    (let [;; FIXME:
-          required (some #{name} (:required fhir-schema))]
-      (-> (select-keys element [:array])
-          (assoc-in [:type :kind] "nested")
-          (assoc-in [:type :path] path)
-          (cond-> required (assoc-in [:required] required)))))
+                        :binding  (build-binding element)})))
 
 (defn build-nested-field [fhir-schema path element]
   (let [package-meta (package-meta fhir-schema)]
@@ -166,7 +144,9 @@
 
                     current
                     {:identifier (get-nested-identifier fhir-schema path)
-                     :base       (some-> "BackboneElement" (get-fhir-schema) (get-identifier))
+                     :base       (some-> "BackboneElement"
+                                         (get-fhir-schema)
+                                         (get-identifier))
                      :fields     (iterate-over-elements fhir-schema path (:elements element))}
 
                     nested
@@ -192,7 +172,8 @@
   (let [parent      (-> fhir-schema :base (get-fhir-schema))
 
         identifier  (get-identifier fhir-schema)
-        base        (some-> parent (get-identifier))
+        base        (some-> parent
+                            (get-identifier))
         description (:description fhir-schema)
 
         elements    (:elements fhir-schema)
@@ -208,9 +189,9 @@
              (sort-by #(get-in % [:idetifier :name]))
              (into []))]
 
-    (cond-> {:identifier identifier}
-      base                   (assoc :base base)
-      description            (assoc :description description)
-      (not (empty? fields))  (assoc :fields fields)
-      (not (empty? nested))  (assoc :nested nested)
-      (not (empty? depends)) (assoc :dependencies depends))))
+    (remove-empty-vals {:identifier identifier
+                        :base base
+                        :description description
+                        :fields fields
+                        :nested nested
+                        :dependencies depends})))
