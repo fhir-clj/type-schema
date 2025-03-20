@@ -84,13 +84,14 @@
       "type": "object",
       "properties": {
         "required": { "type": "boolean", "default": false },
+        "excluded": { "type": "boolean", "default": false },
         "array": { "type": "boolean", "default": false },
         "type": {
           "$ref": "#/definitions/type-schema-identifier"
         },
         "binding": { "$ref": "#/definitions/field.*.binding" }
       },
-      "required": ["type"],
+      "required": [],
       "additionalProperties": false
     },
 
@@ -99,6 +100,7 @@
       "type": "object",
       "properties": {
         "required": { "type": "boolean", "default": false },
+        "excluded": { "type": "boolean", "default": false },
         "array": { "type": "boolean", "default": false },
         "choices": { "type": "array", "items": { "type": "string" } }
       },
@@ -113,6 +115,7 @@
       "properties": {
         "choiceOf": { "type": "string" },
         "required": { "type": "boolean", "default": false },
+        "excluded": { "type": "boolean", "default": false },
         "array": { "type": "boolean", "default": false },
         "type": {
           "$ref": "#/definitions/type-schema-identifier"

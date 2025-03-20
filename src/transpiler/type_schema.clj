@@ -114,9 +114,9 @@
                     :version (:version package-meta)
                     :name    (build-nested-name path)
                     :url     (build-nested-url fhir-schema path)}
-             :array   (true? (:array element))
-             :requied (is-required? fhir-schema path element)
-             :exluded (is-excluded? fhir-schema path element)})))
+             :array    (true? (:array element))
+             :required (is-required? fhir-schema path element)
+             :excluded (is-excluded? fhir-schema path element)})))
 
 (defn iterate-over-elements [fhir-schema path elements]
   (->> elements
@@ -135,6 +135,7 @@
 
                     current
                     {:identifier (get-nested-identifier fhir-schema path)
+                     :base       (some-> "BackboneElement" (get-fhir-schema) (get-identifier))
                      :fields     (iterate-over-elements fhir-schema path (:elements element))}
 
                     nested
