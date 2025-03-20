@@ -7,19 +7,13 @@
             [cheshire.core :as json])
   (:import [java.util.zip GZIPInputStream]))
 
-(defn- filename->package-meta [file]
-  (let [[name dirty-version] (str/split file "@" 2)
-        version (str/replace dirty-version ".tar.gz" "")]
-    {:name name :version version}))
-
 (defn load-json-ndjson-file [file]
-  (let [package-meta (filename->package-meta file)]
-    (with-open [reader (io/reader (-> file io/input-stream GZIPInputStream.))]
-      (->> (line-seq reader)
-           (filter seq)
-           (map #(json/parse-string % true))
-           (filter #(= "FHIRSchema" (:resourceType %)))
-           (doall)))))
+  (with-open [reader (io/reader (-> file io/input-stream GZIPInputStream.))]
+    (->> (line-seq reader)
+         (filter seq)
+         (map #(json/parse-string % true))
+         (filter #(= "FHIRSchema" (:resourceType %)))
+         (doall))))
 
 (defn load-merge-schemas []
   (let [packages-dir (io/file "resources/packages")]

@@ -127,7 +127,7 @@
         elements    (:elements fhir-schema)
         fields      (iterate-over-elements fhir-schema elements [(get-in fhir-schema [:url])])
 
-        transformed-backbone-elements (iterate-over-backbone-element fhir-schema elements [(get-in fhir-schema [:url])])
+        _transformed-backbone-elements (iterate-over-backbone-element fhir-schema elements [(get-in fhir-schema [:url])])
 
         nested []
 

@@ -1,7 +1,7 @@
 .cpcache/
 .nrepl-port
 .calva/
-.clj-kondo
+.clj-kondo/.cache
 .lsp/
 .resources/packages/*
 .DS_Store

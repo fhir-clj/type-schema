@@ -74,6 +74,8 @@
 
   (process-package "hl7.fhir.r4.core@4.0.1" "output")
 
+  (declare type-schemas0 fhir-schemas0)
+
   (-> type-schemas0 (get "http://hl7.org/fhir/StructureDefinition/Patient"))
   (-> fhir-schemas0
       (get "http://hl7.org/fhir/StructureDefinition/string"))
@@ -96,4 +98,4 @@
 
   (fhir.package/pkg-info "hl7.fhir.r4.core@4.0.1")
   (fhir.package/pkg-info "hl7.fhir.us.core@6.1.0")
-  (get-enum "http://hl7.org/fhir/ValueSet/administrative-gender"))
+  (extract-enum/get-enum "http://hl7.org/fhir/ValueSet/administrative-gender"))
