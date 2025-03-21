@@ -80,10 +80,12 @@
 (defn build-binding [element]
   (when (:binding element)
     (let [strength (get-in element [:binding :strength])
-          valueset-url (get-in element [:binding :valueSet])
-          valueset (package/index (split-url-version valueset-url))]
-      {:strength strength
-       :valueset (get-value-set-identifier valueset)})))
+          value-set-url (get-in element [:binding :valueSet])
+          value-set (package/index (split-url-version value-set-url))]
+      (if (nil? value-set)
+        (println "WARN: unknown value set:" value-set-url)
+        {:strength strength
+         :valueset (get-value-set-identifier value-set)}))))
 
 (defn remove-empty-vals [m]
   (->> m
@@ -180,7 +182,7 @@
         nested      (iterate-over-backbone-element fhir-schema [] elements)
 
         depends
-        (->> (concat [base]
+        (->> (concat (when base [base])
                      (extract-dependencies fields)
                      (extract-dependencies-from-nested nested))
              (distinct)

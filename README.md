@@ -37,4 +37,6 @@ bash -c '
         echo "$line" | jq "." > "$out_file"
     done
 '
+
+make clean r4-ts-json check-output-json
 ```

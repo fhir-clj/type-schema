@@ -1,9 +1,9 @@
 (ns main
   (:require [cheshire.core]
+            [clojure.java.io :as io]
             [extract-enum]
             [fhir.package]
             [type-schema.core :as type-schema]
-            [clojure.java.io :as io]
             [type-schema.package-index :as package])
   (:gen-class))
 

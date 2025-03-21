@@ -55,7 +55,10 @@ r4-ts-json: build r4-ndjson
 	mkdir -p "$$OUTPUT_DIR/$$PACKAGE" && \
 	cat "$$OUTPUT_DIR/$$PACKAGE.ndjson" | jq -c "." | while read -r line; do \
 		name=$$(echo "$$line" | jq -r ".identifier.name"); \
-		out_file=$$OUTPUT_DIR/$$PACKAGE/$$name.json; \
+		if [ -z "$$name" ]; then \
+			continue; \
+		fi; \
+		out_file=$$OUTPUT_DIR/$$PACKAGE/$$(echo $$name | tr " " "_").json; \
 		echo $$out_file; \
 		echo "$$line" | jq "." > "$$out_file"; \
 	done
@@ -70,7 +73,7 @@ check-json-fail-fast:
 	find . -name "*.ts.json" | xargs -n 1 sh -c 'ajv test -s docs/type-schema.schema.json --valid -d $$0 || exit 255'
 
 check-output-json:
-	find output -name "*.json" | grep -v ndjson | xargs -P4 -n 1 ajv test -s docs/type-schema.schema.json --valid -d
+	find output -name "*.json" | grep -v ndjson | xargs -P0 -n 1 ajv test -s docs/type-schema.schema.json --valid -d
 
 check-output-json-fail-fast:
 	find output -name "*.json" | grep -v ndjson | xargs -P1 -n 1 sh -c 'ajv test -s docs/type-schema.schema.json --valid -d $$0 || exit 255'

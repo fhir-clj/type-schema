@@ -14,7 +14,8 @@
             { "const": "valueset" },
             { "const": "complex-type" },
             { "const": "resource" },
-            { "const": "nested" }
+            { "const": "nested" },
+            { "const": "logical" }
           ]
         },
         "package": { "type": "string" },
@@ -57,6 +58,12 @@
       "type": "object",
       "properties": {
         "kind": { "const": "nested" }
+      }
+    },
+    "with-logical-kind": {
+      "type": "object",
+      "properties": {
+        "kind": { "const": "logical" }
       }
     },
 
@@ -190,7 +197,7 @@
     },
 
     {
-      "title": "Type Schema for Resource and Complex Type",
+      "title": "Type Schema for Resource, Complex Type, Logical",
       "type": "object",
       "properties": {
         "identifier": {
@@ -199,7 +206,8 @@
             {
               "oneOf": [
                 { "$ref": "#/definitions/with-resource-kind" },
-                { "$ref": "#/definitions/with-complex-type-kind" }
+                { "$ref": "#/definitions/with-complex-type-kind" },
+                { "$ref": "#/definitions/with-logical-kind" }
               ]
             }
           ]
@@ -257,7 +265,7 @@
           }
         }
       },
-      "required": ["identifier", "base"],
+      "required": ["identifier"],
       "additionalProperties": false
     }
   ]
