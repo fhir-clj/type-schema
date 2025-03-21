@@ -3,6 +3,7 @@
             [extract-enum]
             [fhir.package]
             [type-schema.core :as type-schema]
+            [clojure.java.io :as io]
             [type-schema.package-index :as package])
   (:gen-class))
 
@@ -12,11 +13,9 @@
               [url (type-schema/translate fhir-schema)]))
        (into {})))
 
-(defn- save-as-ndjson [data output-dir]
-  (let [file (java.io.File. (str output-dir "/type-schema.ndjson"))
-        parent-dir (.getParentFile file)]
-    (when (and parent-dir (not (.exists parent-dir)))
-      (.mkdirs parent-dir))
+(defn- save-as-ndjson [data output-file]
+  (let [file (java.io.File. output-file)]
+    (io/make-parents output-file)
     (with-open [writer (java.io.BufferedWriter. (java.io.FileWriter. file))]
       (doseq [item (vals data)]
         (.write writer (cheshire.core/generate-string item))
@@ -25,8 +24,9 @@
 (defn process-package [package-name output-dir]
   (package/init-from-package! package-name)
   (let [fhir-schemas (package/fhir-schema-index)
-        type-schemas (fhir-schema->type-schema fhir-schemas)]
-    (save-as-ndjson type-schemas output-dir)
+        type-schemas (fhir-schema->type-schema fhir-schemas)
+        output-file (str output-dir "/" package-name ".ndjson")]
+    (save-as-ndjson type-schemas output-file)
     :ok))
 
 (defn -main [& args]
@@ -35,8 +35,7 @@
       (println "Usage: java -jar program.jar <package-name> <output-dir>")
       (println "Example: java -jar program.jar hl7.fhir.r4.core@4.0.1 output")
       (System/exit 1))
-    (let [package-name (first args)
-          output-dir (second args)]
+    (let [[package-name output-dir] args]
       (try
         (process-package package-name output-dir)
         (System/exit 0)

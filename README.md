@@ -24,14 +24,17 @@ $ find . -name "*.ts.json" | xargs -n 1 ajv test -s docs/type-schema.schema.json
 ## Local Build & Run
 
 ```shell
-make build && java -jar target/type-schema.jar hl7.fhir.us.core@6.1.0 ./output-us-core
+make build && java -jar target/type-schema.jar hl7.fhir.r4.core@4.0.1 ./output
 
-cat type-schema.ndjson | jq -c '.' | while read -r line; do id=$(echo "$line" | jq -r '.type.name'); echo "$line" | jq > "output_${id}.json"; done
+bash -c '
+    PACKAGE=hl7.fhir.r4.core@4.0.1
+    OUTPUT_DIR=output
+    mkdir -p "$OUTPUT_DIR/$PACKAGE"
+    cat "$OUTPUT_DIR/$PACKAGE.ndjson" | jq -c "." | while read -r line; do
+        name=$(echo "$line" | jq -r ".identifier.name")
+        out_file=$OUTPUT_DIR/$PACKAGE/${name}.json
+        echo $out_file
+        echo "$line" | jq "." > "$out_file"
+    done
+'
 ```
-
----
-
-TODO:
-
-- [ ] remove obejct from `nested`. Use array.
-- [ ] provide default value to array required, etc.

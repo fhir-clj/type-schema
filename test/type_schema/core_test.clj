@@ -78,5 +78,10 @@
                   (value-set->json "docs/examples/value-set/marital-status.json")))
 
 (comment
+  (package/fhir-schema-index "UsageContext")
+
+  (transpiler.fhir-schema/translate
+   (package/index "http://hl7.org/fhir/StructureDefinition/UsageContext"))
+
   (package/init-from-package! "hl7.fhir.r4.core")
   (package/fhir-schema-index "Coding"))
