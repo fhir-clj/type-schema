@@ -1,21 +1,22 @@
 {
   "identifier": {
     "kind": "valueset",
-    "package": "hl7.fhir.core.r4",
+    "package": "hl7.fhir.r4.core",
     "version": "4.0.1",
     "name": "administrative-gender",
-    "url": "http://hl7.org/fhir/administrative-gender"
+    "url": "http://hl7.org/fhir/ValueSet/administrative-gender"
   },
+  "description": "The gender of a person used for administrative purposes.",
   "concept": [
-    {
-      "system": "http://hl7.org/fhir/administrative-gender",
-      "code": "female",
-      "display": "Female"
-    },
     {
       "system": "http://hl7.org/fhir/administrative-gender",
       "code": "male",
       "display": "Male"
+    },
+    {
+      "system": "http://hl7.org/fhir/administrative-gender",
+      "code": "female",
+      "display": "Female"
     },
     {
       "system": "http://hl7.org/fhir/administrative-gender",

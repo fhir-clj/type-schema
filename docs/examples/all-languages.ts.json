@@ -1,11 +1,12 @@
 {
   "identifier": {
     "kind": "valueset",
-    "package": "hl7.fhir.core.r4",
+    "package": "hl7.fhir.r4.core",
     "version": "4.0.1",
     "name": "all-languages",
     "url": "http://hl7.org/fhir/ValueSet/all-languages"
   },
+  "description": "This value set includes all possible codes from BCP-47 (http://tools.ietf.org/html/bcp47)",
   "compose": {
     "include": [
       {

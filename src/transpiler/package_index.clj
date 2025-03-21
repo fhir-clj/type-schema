@@ -24,6 +24,10 @@
          (reduce (fn [acc schema]
                    (if-let [url (:url schema)] (assoc acc url schema) acc)) {}))))
 
+(def index (atom nil))
+(defn init-package-index! [schemas] (reset! index schemas))
+(defn get-index [] @index)
+
 (def fhir-schema-index (atom nil))
 (defn init-fhir-schema-index! [schemas] (reset! fhir-schema-index schemas))
 (defn get-fhir-schema-index [] @fhir-schema-index)
@@ -32,6 +36,10 @@
 (def valueset-index (atom nil))
 (defn init-valueset-index! [schemas] (reset! valueset-index schemas))
 (defn get-valueset [url] (get @valueset-index url))
+
+(def valueset-concepts (atom nil))
+(defn init-valueset-concepts-index! [schemas] (reset! valueset-concepts schemas))
+(defn get-concepts [url] (get @valueset-concepts url))
 
 (defn keep-fhir-resource-file [acc file-name read-fn]
   (if (str/ends-with? file-name ".json")
@@ -87,7 +95,7 @@
     (assert (= (+ (count fhir-schemas-by-url) (count fhir-schemas-by-name))
                (count fhir-schemas-index)))
 
+    (init-package-index! package-index)
     (init-fhir-schema-index! fhir-schemas-index)
     (init-valueset-index! value-sets-index)
-
     :ok))

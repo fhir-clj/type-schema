@@ -18,7 +18,7 @@
       (json/parse-string true)
       (type-schema/translate)))
 
-(deftest golden-test
+(deftest fhir-schema->type-schema-golden-test
   (index/init-from-package! "hl7.fhir.r4.core")
 
   (golden/vs-json "test/golden/backbone-element.ts.json"
@@ -59,6 +59,23 @@
 
   #_(golden/vs-json "test/golden/questionnaire.ts.json"
                     (fhir-schema->json "test/golden/questionnaire.fs.json")))
+
+(defn value-set->json [fhir-schema-file]
+  (-> (slurp fhir-schema-file)
+      (json/parse-string true)
+      (type-schema/translate-value-set)))
+
+(deftest value-set->type-schema-golden-test
+  (index/init-from-package! "hl7.fhir.r4.core")
+
+  (golden/vs-json "docs/examples/administrative-gender.ts.json"
+                  (value-set->json "docs/examples/value-set/administrative-gender.json"))
+
+  (golden/vs-json "docs/examples/all-languages.ts.json"
+                  (value-set->json "docs/examples/value-set/all-languages.json"))
+
+  (golden/vs-json "docs/examples/marital-status.ts.json"
+                  (value-set->json "docs/examples/value-set/marital-status.json")))
 
 (comment
   (index/init-from-package! "hl7.fhir.r4.core")
