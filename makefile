@@ -46,10 +46,10 @@ clean:
 ###########################################################
 
 check-example-json:
-	find docs/examples -name "*.ts.json" | xargs -n 1 ajv test -s docs/type-schema.schema.json --valid -d
+	find docs/examples -name "*.ts.json" | xargs -P4 -n 1 ajv test -s docs/type-schema.schema.json --valid -d
 
 check-json:
-	find . -name "*.ts.json" | xargs -n 1 ajv test -s docs/type-schema.schema.json --valid -d
+	find . -name "*.ts.json" | xargs -P4 -n 1 ajv test -s docs/type-schema.schema.json --valid -d
 
 check-json-fail-fast:
 	find . -name "*.ts.json" | xargs -n 1 sh -c 'ajv test -s docs/type-schema.schema.json --valid -d $$0 || exit 255'm
