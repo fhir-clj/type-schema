@@ -51,14 +51,14 @@
   (golden/vs-json "docs/examples/resource-with-code.ts.json"
                   (fhir-schema->json "docs/examples/fhir-schema/resource-with-code.fs.json"))
 
-  #_(golden/vs-json "test/golden/patient.ts.json"
-                    (fhir-schema->json "test/golden/patient.fs.json"))
+  (golden/vs-json "test/golden/patient.ts.json"
+                  (fhir-schema->json "test/golden/patient.fs.json"))
 
-  #_(golden/vs-json "test/golden/capability-statement.ts.json"
-                    (fhir-schema->json "test/golden/capability-statement.fs.json"))
+  (golden/vs-json "test/golden/capability-statement.ts.json"
+                  (fhir-schema->json "test/golden/capability-statement.fs.json"))
 
-  #_(golden/vs-json "test/golden/questionnaire.ts.json"
-                    (fhir-schema->json "test/golden/questionnaire.fs.json")))
+  (golden/vs-json "test/golden/questionnaire.ts.json"
+                  (fhir-schema->json "test/golden/questionnaire.fs.json")))
 
 (defn value-set->json [fhir-schema-file]
   (-> (slurp fhir-schema-file)

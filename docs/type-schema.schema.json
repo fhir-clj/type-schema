@@ -119,7 +119,8 @@
         "array": { "type": "boolean", "default": false },
         "type": {
           "$ref": "#/definitions/type-schema-identifier"
-        }
+        },
+        "binding": { "$ref": "#/definitions/field.*.binding" }
       },
       "required": ["type", "choiceOf"],
       "additionalProperties": false
