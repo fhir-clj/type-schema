@@ -1,9 +1,9 @@
-(ns transpiler.type-schema-test
-  (:require [clojure.test :refer [deftest is]]
-            [transpiler.type-schema :as type-schema]
-            [transpiler.package-index :as index]
-            [cheshire.core :as json]
-            [golden.core :as golden]))
+(ns type-schema.core-test
+  (:require [cheshire.core :as json]
+            [clojure.test :refer [deftest is]]
+            [golden.core :as golden]
+            [type-schema.core :as type-schema]
+            [type-schema.package-index :as package]))
 
 (deftest build-field-test
   (is (= {:array false
@@ -19,7 +19,7 @@
       (type-schema/translate)))
 
 (deftest fhir-schema->type-schema-golden-test
-  (index/init-from-package! "hl7.fhir.r4.core")
+  (package/init-from-package! "hl7.fhir.r4.core")
 
   (golden/vs-json "test/golden/backbone-element.ts.json"
                   (fhir-schema->json "test/golden/backbone-element.fs.json"))
@@ -66,7 +66,7 @@
       (type-schema/translate-value-set)))
 
 (deftest value-set->type-schema-golden-test
-  (index/init-from-package! "hl7.fhir.r4.core")
+  (package/init-from-package! "hl7.fhir.r4.core")
 
   (golden/vs-json "docs/examples/administrative-gender.ts.json"
                   (value-set->json "docs/examples/value-set/administrative-gender.json"))
@@ -78,5 +78,5 @@
                   (value-set->json "docs/examples/value-set/marital-status.json")))
 
 (comment
-  (index/init-from-package! "hl7.fhir.r4.core")
-  (index/get-fhir-schema "Coding"))
+  (package/init-from-package! "hl7.fhir.r4.core")
+  (package/fhir-schema-index "Coding"))

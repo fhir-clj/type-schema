@@ -1,44 +1,18 @@
 (ns main
-  (:require [fhir.package]
-            [transpiler.fhir-schema :as fhir-schema]
-            [transpiler.type-schema :as type-schema]
-            [transpiler.package-index :as index]
+  (:require [cheshire.core]
             [extract-enum]
-            [clojure.string :as str]
-            [cheshire.core])
+            [fhir.package]
+            [type-schema.core :as type-schema]
+            [type-schema.package-index :as package])
   (:gen-class))
 
-(defn keep-fhir-resource-file [acc file-name read-fn]
-  (if (str/ends-with? file-name ".json")
-    (try (let [res (read-fn true)]
-           (if (and (:resourceType res) (:url res))
-             (assoc-in acc [(:url res)] res)
-             acc))
-         (catch Exception e
-           (binding [*out* *err*]
-             (println "SKIP: " file-name
-                      " error: " (str/replace (.getMessage e) #"\n" " ")))
-           acc)) acc))
-
-(defn get-package-index [package-name]
-  (fhir.package/reduce-package (fhir.package/pkg-info package-name)
-                               keep-fhir-resource-file))
-
-(defn structure-definition->fhir-schema [conf structure-definition-index]
-  (->> structure-definition-index
-       (map (fn [[url structure-definition]]
-              [url (fhir-schema/translate conf structure-definition)]))
-       (into {})))
-
-(defn fhir-schema->type-schema [fhir-schema-index]
+(defn- fhir-schema->type-schema [fhir-schema-index]
   (->> fhir-schema-index
        (map (fn [[url fhir-schema]]
               [url (type-schema/translate fhir-schema)]))
        (into {})))
 
-(defn logging [data text] (println text) data)
-
-(defn save-as-ndjson [data output-dir]
+(defn- save-as-ndjson [data output-dir]
   (let [file (java.io.File. (str output-dir "/type-schema.ndjson"))
         parent-dir (.getParentFile file)]
     (when (and parent-dir (not (.exists parent-dir)))
@@ -49,10 +23,11 @@
         (.newLine writer)))))
 
 (defn process-package [package-name output-dir]
-  (index/init-from-package! package-name)
-  (let [fhir-schemas (index/get-fhir-schema-index)
+  (package/init-from-package! package-name)
+  (let [fhir-schemas (package/fhir-schema-index)
         type-schemas (fhir-schema->type-schema fhir-schemas)]
-    (save-as-ndjson type-schemas output-dir)))
+    (save-as-ndjson type-schemas output-dir)
+    :ok))
 
 (defn -main [& args]
   (if (not= (count args) 2)

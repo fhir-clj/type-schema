@@ -1,8 +1,8 @@
-(ns transpiler.type-schema
-  (:require [transpiler.package-index :as index]
+(ns type-schema.core
+  (:require [clojure.string :as str]
             [extract-enum]
-            [transpiler.value-set :as value-set]
-            [clojure.string :as str]))
+            [type-schema.package-index :as package]
+            [type-schema.value-set :as value-set]))
 
 (defn derive-kind-from-schema [schema]
   (cond (= (:resourceType schema) "ValueSet") "valueset"
@@ -47,7 +47,7 @@
      :name    (:name fhir-schema)
      :url     (:url fhir-schema)}))
 
-(defn get-valueset-identifier [value-set]
+(defn get-value-set-identifier [value-set]
   #_(assert (some? (:url value-set)))
   (let [package-meta (package-meta value-set)]
     {:kind    "valueset"
@@ -81,9 +81,9 @@
   (when (:binding element)
     (let [strength (get-in element [:binding :strength])
           valueset-url (get-in element [:binding :valueSet])
-          valueset (index/get-valueset (split-url-version valueset-url))]
+          valueset (package/index (split-url-version valueset-url))]
       {:strength strength
-       :valueset (get-valueset-identifier valueset)})))
+       :valueset (get-value-set-identifier valueset)})))
 
 (defn remove-empty-vals [m]
   (->> m
@@ -94,7 +94,7 @@
 
 (defn build-field [fhir-schema path element]
   (let [type (or (some-> (:type element)
-                         (index/get-fhir-schema)
+                         (package/fhir-schema-index)
                          (get-identifier))
                  (when-let [fhir-schema-path (:element-reference element)]
                    (get-nested-identifier fhir-schema
@@ -143,7 +143,7 @@
                     current
                     {:identifier (get-nested-identifier fhir-schema path)
                      :base       (some-> "BackboneElement"
-                                         (index/get-fhir-schema)
+                                         (package/fhir-schema-index)
                                          (get-identifier))
                      :fields     (iterate-over-elements fhir-schema path (:elements element))}
 
@@ -166,8 +166,8 @@
               (extract-dependencies (:fields nested-type))))
        (apply concat)))
 
-(defn translate [fhir-schema]
-  (let [parent      (-> fhir-schema :base (index/get-fhir-schema))
+(defn translate-fhir-schema [fhir-schema]
+  (let [parent      (-> fhir-schema :base (package/fhir-schema-index))
 
         identifier  (get-identifier fhir-schema)
         base        (some-> parent
@@ -195,17 +195,26 @@
                         :dependencies depends})))
 
 (defn translate-value-set [value-set]
-  (let [identifier  (get-valueset-identifier value-set)
+  (let [identifier  (get-value-set-identifier value-set)
         description (:description value-set)
 
-        concepts    (value-set/value-set->concepts (index/get-index) value-set)
+        concepts    (value-set/value-set->concepts (package/index) value-set)
 
         compose     (when (empty? concepts)
                       (:compose value-set))
+        ;; FIXME: collect deps
         depends     []]
 
-    (remove-empty-vals {:identifier identifier
-                        :description description
-                        :concept    concepts
-                        :compose    compose
+    (remove-empty-vals {:identifier   identifier
+                        :description  description
+                        :concept      concepts
+                        :compose      compose
                         :dependencies depends})))
+
+(defn translate [resource]
+  (cond
+    (package/is-value-set? resource)
+    (translate-value-set resource)
+
+    :else
+    (translate-fhir-schema resource)))

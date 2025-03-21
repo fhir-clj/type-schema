@@ -1,4 +1,4 @@
-(ns transpiler.value-set)
+(ns type-schema.value-set)
 
 (defn- concat-concepts [& results]
   (cond
@@ -20,7 +20,7 @@
 
 (declare value-set->concepts-inner)
 
-(defn process-include-exclude-item [package-index system-or-value-set]
+(defn- process-include-exclude-item [package-index system-or-value-set]
   (cond
     (:filter system-or-value-set) ::not-expand
 
@@ -31,7 +31,7 @@
      ;; FIXME: check keyword spell
      (value-set->concepts-inner package-index (:valueSet system-or-value-set)))))
 
-(defn process-include-exclude
+(defn- process-include-exclude
   "Process include or exclude elements to extract codes."
   [package-index items]
   (->> items

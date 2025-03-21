@@ -1,10 +1,10 @@
 (ns golden.core
-  (:require [clojure.test :refer [is]]
-            [cheshire.core :as json]
-            [clojure.pprint :as pprint]
+  (:require [cheshire.core :as json]
             [clojure.data :as data]
+            [clojure.java.io :as io]
+            [clojure.pprint :as pprint]
             [clojure.string :as str]
-            [clojure.java.io :as io]))
+            [clojure.test :refer [is]]))
 
 (defn update-golden? []
   (= "true" (System/getenv "UPDATE_GOLDEN")))

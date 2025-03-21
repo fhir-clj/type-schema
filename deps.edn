@@ -1,4 +1,4 @@
-{:paths ["src" "resources"]
+{:paths ["src"]
  :deps {org.clojure/clojure       {:mvn/version "1.12.0"}
         cheshire/cheshire         {:mvn/version "5.10.2"}
         healthsamurai/matcho      {:mvn/version "0.3.8"}

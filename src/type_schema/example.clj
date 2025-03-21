@@ -1,4 +1,4 @@
-(ns transpiler.example)
+(ns type-schema.example)
 
 {"url" "http://hl7.org/fhir/StructureDefinition/Resource"
  "id" "Resource"
