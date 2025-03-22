@@ -19,11 +19,11 @@
       "required" : false,
       "excluded" : false,
       "type" : {
-        "kind" : "complex-type",
+        "kind" : "primitive-type",
         "package" : "hl7.fhir.r4.core",
         "version" : "4.0.1",
         "name" : "markdown",
-        "url" : "http://hl7.org/fhir/StructureDefinition/rendering-markdown"
+        "url" : "http://hl7.org/fhir/StructureDefinition/markdown"
       }
     },
     "format" : {
@@ -155,11 +155,11 @@
       "required" : false,
       "excluded" : false,
       "type" : {
-        "kind" : "complex-type",
+        "kind" : "primitive-type",
         "package" : "hl7.fhir.r4.core",
         "version" : "4.0.1",
         "name" : "markdown",
-        "url" : "http://hl7.org/fhir/StructureDefinition/rendering-markdown"
+        "url" : "http://hl7.org/fhir/StructureDefinition/markdown"
       }
     },
     "name" : {
@@ -191,11 +191,11 @@
       "required" : false,
       "excluded" : false,
       "type" : {
-        "kind" : "complex-type",
+        "kind" : "primitive-type",
         "package" : "hl7.fhir.r4.core",
         "version" : "4.0.1",
         "name" : "markdown",
-        "url" : "http://hl7.org/fhir/StructureDefinition/rendering-markdown"
+        "url" : "http://hl7.org/fhir/StructureDefinition/markdown"
       }
     },
     "experimental" : {
@@ -442,11 +442,11 @@
         "required" : false,
         "excluded" : false,
         "type" : {
-          "kind" : "complex-type",
+          "kind" : "primitive-type",
           "package" : "hl7.fhir.r4.core",
           "version" : "4.0.1",
           "name" : "markdown",
-          "url" : "http://hl7.org/fhir/StructureDefinition/rendering-markdown"
+          "url" : "http://hl7.org/fhir/StructureDefinition/markdown"
         }
       }
     }
@@ -585,11 +585,11 @@
         "required" : false,
         "excluded" : false,
         "type" : {
-          "kind" : "complex-type",
+          "kind" : "primitive-type",
           "package" : "hl7.fhir.r4.core",
           "version" : "4.0.1",
           "name" : "markdown",
-          "url" : "http://hl7.org/fhir/StructureDefinition/rendering-markdown"
+          "url" : "http://hl7.org/fhir/StructureDefinition/markdown"
         }
       },
       "reliableCache" : {
@@ -790,11 +790,11 @@
         "required" : false,
         "excluded" : false,
         "type" : {
-          "kind" : "complex-type",
+          "kind" : "primitive-type",
           "package" : "hl7.fhir.r4.core",
           "version" : "4.0.1",
           "name" : "markdown",
-          "url" : "http://hl7.org/fhir/StructureDefinition/rendering-markdown"
+          "url" : "http://hl7.org/fhir/StructureDefinition/markdown"
         }
       }
     }
@@ -843,11 +843,11 @@
         "required" : false,
         "excluded" : false,
         "type" : {
-          "kind" : "complex-type",
+          "kind" : "primitive-type",
           "package" : "hl7.fhir.r4.core",
           "version" : "4.0.1",
           "name" : "markdown",
-          "url" : "http://hl7.org/fhir/StructureDefinition/rendering-markdown"
+          "url" : "http://hl7.org/fhir/StructureDefinition/markdown"
         }
       }
     }
@@ -894,11 +894,11 @@
         "required" : false,
         "excluded" : false,
         "type" : {
-          "kind" : "complex-type",
+          "kind" : "primitive-type",
           "package" : "hl7.fhir.r4.core",
           "version" : "4.0.1",
           "name" : "markdown",
-          "url" : "http://hl7.org/fhir/StructureDefinition/rendering-markdown"
+          "url" : "http://hl7.org/fhir/StructureDefinition/markdown"
         }
       }
     }
@@ -1061,11 +1061,11 @@
         "required" : false,
         "excluded" : false,
         "type" : {
-          "kind" : "complex-type",
+          "kind" : "primitive-type",
           "package" : "hl7.fhir.r4.core",
           "version" : "4.0.1",
           "name" : "markdown",
-          "url" : "http://hl7.org/fhir/StructureDefinition/rendering-markdown"
+          "url" : "http://hl7.org/fhir/StructureDefinition/markdown"
         }
       },
       "updateCreate" : {
@@ -1228,11 +1228,11 @@
         "required" : false,
         "excluded" : false,
         "type" : {
-          "kind" : "complex-type",
+          "kind" : "primitive-type",
           "package" : "hl7.fhir.r4.core",
           "version" : "4.0.1",
           "name" : "markdown",
-          "url" : "http://hl7.org/fhir/StructureDefinition/rendering-markdown"
+          "url" : "http://hl7.org/fhir/StructureDefinition/markdown"
         }
       }
     }
@@ -1279,11 +1279,11 @@
         "required" : false,
         "excluded" : false,
         "type" : {
-          "kind" : "complex-type",
+          "kind" : "primitive-type",
           "package" : "hl7.fhir.r4.core",
           "version" : "4.0.1",
           "name" : "markdown",
-          "url" : "http://hl7.org/fhir/StructureDefinition/rendering-markdown"
+          "url" : "http://hl7.org/fhir/StructureDefinition/markdown"
         }
       }
     }
@@ -1350,6 +1350,13 @@
         "excluded" : false
       },
       "operation" : {
+        "type" : {
+          "kind" : "nested",
+          "package" : "hl7.fhir.core.r4",
+          "version" : "4.0.1",
+          "name" : "rest.resource.operation",
+          "url" : "http://hl7.org/fhir/StructureDefinition/CapabilityStatement#rest.resource.operation"
+        },
         "array" : true,
         "required" : false,
         "excluded" : false
@@ -1379,6 +1386,13 @@
         "excluded" : false
       },
       "searchParam" : {
+        "type" : {
+          "kind" : "nested",
+          "package" : "hl7.fhir.core.r4",
+          "version" : "4.0.1",
+          "name" : "rest.resource.searchParam",
+          "url" : "http://hl7.org/fhir/StructureDefinition/CapabilityStatement#rest.resource.searchParam"
+        },
         "array" : true,
         "required" : false,
         "excluded" : false
@@ -1388,11 +1402,11 @@
         "required" : false,
         "excluded" : false,
         "type" : {
-          "kind" : "complex-type",
+          "kind" : "primitive-type",
           "package" : "hl7.fhir.r4.core",
           "version" : "4.0.1",
           "name" : "markdown",
-          "url" : "http://hl7.org/fhir/StructureDefinition/rendering-markdown"
+          "url" : "http://hl7.org/fhir/StructureDefinition/markdown"
         }
       }
     }
@@ -1404,11 +1418,11 @@
     "name" : "DomainResource",
     "url" : "http://hl7.org/fhir/StructureDefinition/DomainResource"
   }, {
-    "kind" : "complex-type",
+    "kind" : "primitive-type",
     "package" : "hl7.fhir.r4.core",
     "version" : "4.0.1",
     "name" : "markdown",
-    "url" : "http://hl7.org/fhir/StructureDefinition/rendering-markdown"
+    "url" : "http://hl7.org/fhir/StructureDefinition/markdown"
   }, {
     "kind" : "primitive-type",
     "package" : "hl7.fhir.r4.core",

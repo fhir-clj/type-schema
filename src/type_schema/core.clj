@@ -4,6 +4,10 @@
             [type-schema.package-index :as package]
             [type-schema.value-set :as value-set]))
 
+(defn type-to-url [type]
+  ;; TODO: why don't we keep type as url? what if we reference type from another IG?
+  (str "http://hl7.org/fhir/StructureDefinition/" type))
+
 (defn derive-kind-from-schema [schema]
   (cond (= (:resourceType schema) "ValueSet") "valueset"
         (= (:derivation schema) "constraint") "constraint"
@@ -105,9 +109,10 @@
        (into {})))
 
 (defn build-field [fhir-schema path element]
-  (let [type (or (some-> (:type element)
+  (let [type (or (some-> (type-to-url (:type element))
                          (package/fhir-schema-index)
                          (get-identifier))
+                 ;; FIXME: align :elementReference with :element-reference (lol :D)
                  (when-let [fhir-schema-path (:element-reference element)]
                    (get-nested-identifier fhir-schema
                                           (->> fhir-schema-path
@@ -155,7 +160,7 @@
 
                     current
                     {:identifier (get-nested-identifier fhir-schema path)
-                     :base       (some-> "BackboneElement"
+                     :base       (some-> (type-to-url "BackboneElement")
                                          (package/fhir-schema-index)
                                          (get-identifier))
                      :fields     (iterate-over-elements fhir-schema path (:elements element))}

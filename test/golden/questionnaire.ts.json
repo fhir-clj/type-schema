@@ -19,11 +19,11 @@
       "required" : false,
       "excluded" : false,
       "type" : {
-        "kind" : "constraint",
+        "kind" : "primitive-type",
         "package" : "hl7.fhir.r4.core",
         "version" : "4.0.1",
         "name" : "markdown",
-        "url" : "http://hl7.org/fhir/StructureDefinition/rendering-markdown"
+        "url" : "http://hl7.org/fhir/StructureDefinition/markdown"
       }
     },
     "subjectType" : {
@@ -123,11 +123,11 @@
       "required" : false,
       "excluded" : false,
       "type" : {
-        "kind" : "constraint",
+        "kind" : "primitive-type",
         "package" : "hl7.fhir.r4.core",
         "version" : "4.0.1",
         "name" : "markdown",
-        "url" : "http://hl7.org/fhir/StructureDefinition/rendering-markdown"
+        "url" : "http://hl7.org/fhir/StructureDefinition/markdown"
       }
     },
     "name" : {
@@ -171,11 +171,11 @@
       "required" : false,
       "excluded" : false,
       "type" : {
-        "kind" : "constraint",
+        "kind" : "primitive-type",
         "package" : "hl7.fhir.r4.core",
         "version" : "4.0.1",
         "name" : "markdown",
-        "url" : "http://hl7.org/fhir/StructureDefinition/rendering-markdown"
+        "url" : "http://hl7.org/fhir/StructureDefinition/markdown"
       }
     },
     "experimental" : {
@@ -1325,11 +1325,11 @@
     "name" : "DomainResource",
     "url" : "http://hl7.org/fhir/StructureDefinition/DomainResource"
   }, {
-    "kind" : "constraint",
+    "kind" : "primitive-type",
     "package" : "hl7.fhir.r4.core",
     "version" : "4.0.1",
     "name" : "markdown",
-    "url" : "http://hl7.org/fhir/StructureDefinition/rendering-markdown"
+    "url" : "http://hl7.org/fhir/StructureDefinition/markdown"
   }, {
     "kind" : "primitive-type",
     "package" : "hl7.fhir.r4.core",
