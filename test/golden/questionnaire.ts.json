@@ -1153,16 +1153,16 @@
         }
       },
       "item" : {
+        "array" : true,
+        "required" : false,
+        "excluded" : false,
         "type" : {
           "kind" : "nested",
           "package" : "hl7.fhir.core.r4",
           "version" : "4.0.1",
           "name" : "item",
           "url" : "http://hl7.org/fhir/StructureDefinition/Questionnaire#item"
-        },
-        "array" : true,
-        "required" : false,
-        "excluded" : false
+        }
       },
       "type" : {
         "array" : false,

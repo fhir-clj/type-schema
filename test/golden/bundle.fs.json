@@ -1,5 +1,8 @@
 {
-  "package-meta": { "name": "hl7.fhir.core.r4", "version": "4.0.1" },
+  "package-meta": {
+    "name": "hl7.fhir.core.r4",
+    "version": "4.0.1"
+  },
   "description": "A container for a collection of resources.",
   "derivation": "specialization",
   "name": "Bundle",
@@ -53,7 +56,10 @@
           "index": 6
         }
       },
-      "required": ["url", "relation"]
+      "required": [
+        "url",
+        "relation"
+      ]
     },
     "entry": {
       "constraint": {
@@ -78,7 +84,7 @@
         "link": {
           "short": "Links related to this entry",
           "isSummary": true,
-          "element-reference": [
+          "elementReference": [
             "http://hl7.org/fhir/StructureDefinition/Bundle",
             "elements",
             "link"
@@ -169,7 +175,10 @@
               "index": 20
             }
           },
-          "required": ["url", "method"]
+          "required": [
+            "url",
+            "method"
+          ]
         },
         "response": {
           "short": "Results of execution (transaction/batch/history)",
@@ -208,7 +217,9 @@
               "index": 26
             }
           },
-          "required": ["status"]
+          "required": [
+            "status"
+          ]
         }
       }
     },
@@ -225,5 +236,7 @@
   "url": "http://hl7.org/fhir/StructureDefinition/Bundle",
   "base": "http://hl7.org/fhir/StructureDefinition/Resource",
   "version": "4.0.1",
-  "required": ["type"]
+  "required": [
+    "type"
+  ]
 }
