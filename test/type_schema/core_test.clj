@@ -21,8 +21,8 @@
 (deftest fhir-schema->type-schema-golden-test
   (package/init-from-package! "hl7.fhir.r4.core")
 
-  (golden/vs-json "test/golden/backbone-element.ts.json"
-                  (fhir-schema->json "test/golden/backbone-element.fs.json"))
+  (golden/vs-json "test/golden/element.ts.json"
+                  (fhir-schema->json "test/golden/element.fs.json"))
 
   (golden/vs-json "test/golden/backbone-element.ts.json"
                   (fhir-schema->json "test/golden/backbone-element.fs.json"))
