@@ -19,7 +19,7 @@
       "required" : false,
       "excluded" : false,
       "type" : {
-        "kind" : "complex-type",
+        "kind" : "constraint",
         "package" : "hl7.fhir.r4.core",
         "version" : "4.0.1",
         "name" : "markdown",
@@ -123,7 +123,7 @@
       "required" : false,
       "excluded" : false,
       "type" : {
-        "kind" : "complex-type",
+        "kind" : "constraint",
         "package" : "hl7.fhir.r4.core",
         "version" : "4.0.1",
         "name" : "markdown",
@@ -171,7 +171,7 @@
       "required" : false,
       "excluded" : false,
       "type" : {
-        "kind" : "complex-type",
+        "kind" : "constraint",
         "package" : "hl7.fhir.r4.core",
         "version" : "4.0.1",
         "name" : "markdown",
@@ -1153,6 +1153,13 @@
         }
       },
       "item" : {
+        "type" : {
+          "kind" : "nested",
+          "package" : "hl7.fhir.core.r4",
+          "version" : "4.0.1",
+          "name" : "item",
+          "url" : "http://hl7.org/fhir/StructureDefinition/Questionnaire#item"
+        },
         "array" : true,
         "required" : false,
         "excluded" : false
@@ -1318,7 +1325,7 @@
     "name" : "DomainResource",
     "url" : "http://hl7.org/fhir/StructureDefinition/DomainResource"
   }, {
-    "kind" : "complex-type",
+    "kind" : "constraint",
     "package" : "hl7.fhir.r4.core",
     "version" : "4.0.1",
     "name" : "markdown",

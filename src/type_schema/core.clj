@@ -36,8 +36,17 @@
        (map name)
        (str/join ".")))
 
+(defn- build-reference-name [reference]
+  (->> (subvec reference 1)
+       (filter #(not= "elements" %))
+       (map name)
+       (str/join ".")))
+
 (defn- build-nested-url [fhir-schema path]
   (str (:url fhir-schema) "#" (build-nested-name path)))
+
+(defn- build-reference-url [reference]
+  (str (get-in reference [0] "") "#" (build-reference-name reference)))
 
 (defn get-identifier [fhir-schema]
   #_(assert (some? (:url fhir-schema)))
@@ -118,12 +127,13 @@
                         :binding  (build-binding element)})))
 
 (defn build-nested-field [fhir-schema path element]
-  (let [package-meta (package-meta fhir-schema)]
+  (let [package-meta (package-meta fhir-schema)
+        reference (:elementReference element)]
     (cond-> {:type {:kind    "nested"
                     :package (:name package-meta)
                     :version (:version package-meta)
-                    :name    (build-nested-name path)
-                    :url     (build-nested-url fhir-schema path)}
+                    :name    (if reference (build-reference-name reference) (build-nested-name path))
+                    :url     (if reference (build-reference-url reference) (build-nested-url fhir-schema path))}
              :array    (true? (:array element))
              :required (is-required? fhir-schema path element)
              :excluded (is-excluded? fhir-schema path element)})))
@@ -132,7 +142,7 @@
   (->> elements
        (map (fn [[key element]]
               (let [path (conj path key)]
-                (if (= (:type element) "BackboneElement")
+                (if (or (= (:type element) "BackboneElement") (:elementReference element))
                   [key (build-nested-field fhir-schema path element)]
                   [key (build-field fhir-schema path element)]))))
        (into {})))
