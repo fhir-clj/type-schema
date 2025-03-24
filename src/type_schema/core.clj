@@ -168,10 +168,13 @@
                (keep (fn [[_key element]] (get-in element [:binding :valueset]))))))
 
 (defn extract-dependencies-from-nested [nested-types]
-  (->> nested-types
-       (map (fn [nested-type]
-              (extract-dependencies (:fields nested-type))))
-       (apply concat)))
+  (concat
+   (->> nested-types
+        (map (fn [nested-type]
+               (extract-dependencies (:fields nested-type))))
+        (apply concat))
+   (when-let [base (get-in (first nested-types) [:base])]
+     [base])))
 
 (defn translate-fhir-schema [fhir-schema]
   (let [parent      (-> fhir-schema :base (package/fhir-schema-index))

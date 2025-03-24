@@ -570,5 +570,11 @@
     "version" : "4.0.1",
     "name" : "entry.response",
     "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#entry.response"
+  }, {
+    "kind" : "complex-type",
+    "package" : "hl7.fhir.r4.core",
+    "version" : "4.0.1",
+    "name" : "BackboneElement",
+    "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement"
   } ]
 }

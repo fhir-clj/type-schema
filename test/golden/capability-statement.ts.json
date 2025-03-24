@@ -1350,16 +1350,16 @@
         "excluded" : false
       },
       "operation" : {
+        "array" : true,
+        "required" : false,
+        "excluded" : false,
         "type" : {
           "kind" : "nested",
           "package" : "hl7.fhir.core.r4",
           "version" : "4.0.1",
           "name" : "rest.resource.operation",
           "url" : "http://hl7.org/fhir/StructureDefinition/CapabilityStatement#rest.resource.operation"
-        },
-        "array" : true,
-        "required" : false,
-        "excluded" : false
+        }
       },
       "compartment" : {
         "array" : true,
@@ -1386,16 +1386,16 @@
         "excluded" : false
       },
       "searchParam" : {
+        "array" : true,
+        "required" : false,
+        "excluded" : false,
         "type" : {
           "kind" : "nested",
           "package" : "hl7.fhir.core.r4",
           "version" : "4.0.1",
           "name" : "rest.resource.searchParam",
           "url" : "http://hl7.org/fhir/StructureDefinition/CapabilityStatement#rest.resource.searchParam"
-        },
-        "array" : true,
-        "required" : false,
-        "excluded" : false
+        }
       },
       "documentation" : {
         "array" : false,
@@ -1687,5 +1687,11 @@
     "version" : "4.0.1",
     "name" : "restful-capability-mode",
     "url" : "http://hl7.org/fhir/ValueSet/restful-capability-mode"
+  }, {
+    "kind" : "complex-type",
+    "package" : "hl7.fhir.r4.core",
+    "version" : "4.0.1",
+    "name" : "BackboneElement",
+    "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement"
   } ]
 }
