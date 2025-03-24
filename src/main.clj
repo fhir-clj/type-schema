@@ -13,6 +13,12 @@
               [url (type-schema/translate fhir-schema)]))
        (into {})))
 
+(defn- value-set->type-schema [index]
+  (->> index
+       (filter (fn [[_ value-set]] (package/is-value-set? value-set)))
+       (map (fn [[url value-set]] [url (type-schema/translate value-set)]))
+       (into {})))
+
 (defn- save-as-ndjson [data output-file]
   (let [file (java.io.File. output-file)]
     (io/make-parents output-file)
@@ -25,8 +31,9 @@
   (package/init-from-package! package-name)
   (let [fhir-schemas (package/fhir-schema-index)
         type-schemas (fhir-schema->type-schema fhir-schemas)
+        type-schemas-valuesets (value-set->type-schema (package/index))
         output-file (str output-dir "/" package-name ".ndjson")]
-    (save-as-ndjson type-schemas output-file)
+    (save-as-ndjson (merge type-schemas type-schemas-valuesets) output-file)
     :ok))
 
 (defn -main [& args]
