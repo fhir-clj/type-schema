@@ -11,7 +11,7 @@
         "kind": {
           "oneOf": [
             { "const": "primitive-type" },
-            { "const": "valueset" },
+            { "const": "value-set" },
             { "const": "complex-type" },
             { "const": "resource" },
             { "const": "nested" },
@@ -39,7 +39,7 @@
     "with-valueset-kind": {
       "type": "object",
       "properties": {
-        "kind": { "const": "valueset" }
+        "kind": { "const": "value-set" }
       }
     },
     "with-complex-type-kind": {
@@ -93,6 +93,7 @@
         "required": { "type": "boolean", "default": false },
         "excluded": { "type": "boolean", "default": false },
         "array": { "type": "boolean", "default": false },
+        "enum": { "type": "array", "items": { "type": "string" } },
         "type": {
           "$ref": "#/definitions/type-schema-identifier"
         },

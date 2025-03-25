@@ -25,16 +25,6 @@
         "version": "4.0.1",
         "name": "CodeableConcept",
         "url": "http://hl7.org/fhir/StructureDefinition/CodeableConcept"
-      },
-      "binding": {
-        "strength": "extensible",
-        "valueset": {
-          "kind": "valueset",
-          "package": "hl7.fhir.r4.core",
-          "version": "4.0.1",
-          "name": "marital-status",
-          "url": "http://hl7.org/fhir/ValueSet/marital-status"
-        }
       }
     }
   },
@@ -52,13 +42,6 @@
       "version": "4.0.1",
       "name": "CodeableConcept",
       "url": "http://hl7.org/fhir/StructureDefinition/CodeableConcept"
-    },
-    {
-      "kind": "valueset",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "marital-status",
-      "url": "http://hl7.org/fhir/ValueSet/marital-status"
     }
   ]
 }

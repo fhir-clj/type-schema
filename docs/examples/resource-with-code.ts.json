@@ -26,16 +26,12 @@
         "name": "code",
         "url": "http://hl7.org/fhir/StructureDefinition/code"
       },
-      "binding": {
-        "strength": "required",
-        "valueset": {
-          "kind": "valueset",
-          "package": "hl7.fhir.r4.core",
-          "version": "4.0.1",
-          "name": "administrative-gender",
-          "url": "http://hl7.org/fhir/ValueSet/administrative-gender"
-        }
-      }
+      "enum": [
+        "male",
+        "female",
+        "other",
+        "unknown"
+      ]
     }
   },
   "dependencies": [
@@ -52,13 +48,6 @@
       "version": "4.0.1",
       "name": "code",
       "url": "http://hl7.org/fhir/StructureDefinition/code"
-    },
-    {
-      "kind": "valueset",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "administrative-gender",
-      "url": "http://hl7.org/fhir/ValueSet/administrative-gender"
     }
   ]
 }
