@@ -116,7 +116,8 @@
         "version" : "4.0.1",
         "name" : "canonical",
         "url" : "http://hl7.org/fhir/StructureDefinition/canonical"
-      }
+      },
+      "reference" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire" ]
     },
     "purpose" : {
       "array" : false,
@@ -425,7 +426,8 @@
             "name" : "questionnaire-answers",
             "url" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
           }
-        }
+        },
+        "reference" : [ "http://hl7.org/fhir/StructureDefinition/Resource" ]
       },
       "answerInteger" : {
         "array" : false,
@@ -764,7 +766,8 @@
             "name" : "questionnaire-answers",
             "url" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
           }
-        }
+        },
+        "reference" : [ "http://hl7.org/fhir/StructureDefinition/Resource" ]
       },
       "initialSelected" : {
         "array" : false,
@@ -816,7 +819,8 @@
             "name" : "questionnaire-answers",
             "url" : "http://hl7.org/fhir/ValueSet/questionnaire-answers"
           }
-        }
+        },
+        "reference" : [ "http://hl7.org/fhir/StructureDefinition/Resource" ]
       },
       "valueUri" : {
         "array" : false,
@@ -1244,7 +1248,8 @@
           "version" : "4.0.1",
           "name" : "canonical",
           "url" : "http://hl7.org/fhir/StructureDefinition/canonical"
-        }
+        },
+        "reference" : [ "http://hl7.org/fhir/StructureDefinition/ValueSet" ]
       },
       "code" : {
         "array" : true,

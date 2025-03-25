@@ -148,7 +148,8 @@
         "version" : "4.0.1",
         "name" : "canonical",
         "url" : "http://hl7.org/fhir/StructureDefinition/canonical"
-      }
+      },
+      "reference" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement" ]
     },
     "purpose" : {
       "array" : false,
@@ -220,7 +221,8 @@
         "version" : "4.0.1",
         "name" : "canonical",
         "url" : "http://hl7.org/fhir/StructureDefinition/canonical"
-      }
+      },
+      "reference" : [ "http://hl7.org/fhir/StructureDefinition/CapabilityStatement" ]
     },
     "title" : {
       "array" : false,
@@ -312,7 +314,8 @@
         "version" : "4.0.1",
         "name" : "canonical",
         "url" : "http://hl7.org/fhir/StructureDefinition/canonical"
-      }
+      },
+      "reference" : [ "http://hl7.org/fhir/StructureDefinition/ImplementationGuide" ]
     },
     "url" : {
       "array" : false,
@@ -435,7 +438,8 @@
           "version" : "4.0.1",
           "name" : "canonical",
           "url" : "http://hl7.org/fhir/StructureDefinition/canonical"
-        }
+        },
+        "reference" : [ "http://hl7.org/fhir/StructureDefinition/StructureDefinition" ]
       },
       "documentation" : {
         "array" : false,
@@ -549,7 +553,8 @@
           "version" : "4.0.1",
           "name" : "canonical",
           "url" : "http://hl7.org/fhir/StructureDefinition/canonical"
-        }
+        },
+        "reference" : [ "http://hl7.org/fhir/StructureDefinition/MessageDefinition" ]
       }
     }
   }, {
@@ -708,7 +713,8 @@
           "version" : "4.0.1",
           "name" : "Reference",
           "url" : "http://hl7.org/fhir/StructureDefinition/Reference"
-        }
+        },
+        "reference" : [ "http://hl7.org/fhir/StructureDefinition/Organization" ]
       },
       "description" : {
         "array" : false,
@@ -783,7 +789,8 @@
           "version" : "4.0.1",
           "name" : "canonical",
           "url" : "http://hl7.org/fhir/StructureDefinition/canonical"
-        }
+        },
+        "reference" : [ "http://hl7.org/fhir/StructureDefinition/SearchParameter" ]
       },
       "documentation" : {
         "array" : false,
@@ -836,7 +843,8 @@
           "version" : "4.0.1",
           "name" : "canonical",
           "url" : "http://hl7.org/fhir/StructureDefinition/canonical"
-        }
+        },
+        "reference" : [ "http://hl7.org/fhir/StructureDefinition/OperationDefinition" ]
       },
       "documentation" : {
         "array" : false,
@@ -1102,7 +1110,8 @@
           "version" : "4.0.1",
           "name" : "canonical",
           "url" : "http://hl7.org/fhir/StructureDefinition/canonical"
-        }
+        },
+        "reference" : [ "http://hl7.org/fhir/StructureDefinition/StructureDefinition" ]
       },
       "searchInclude" : {
         "array" : true,
@@ -1148,7 +1157,8 @@
           "version" : "4.0.1",
           "name" : "canonical",
           "url" : "http://hl7.org/fhir/StructureDefinition/canonical"
-        }
+        },
+        "reference" : [ "http://hl7.org/fhir/StructureDefinition/StructureDefinition" ]
       },
       "conditionalDelete" : {
         "array" : false,
@@ -1371,7 +1381,8 @@
           "version" : "4.0.1",
           "name" : "canonical",
           "url" : "http://hl7.org/fhir/StructureDefinition/canonical"
-        }
+        },
+        "reference" : [ "http://hl7.org/fhir/StructureDefinition/CompartmentDefinition" ]
       },
       "interaction" : {
         "type" : {

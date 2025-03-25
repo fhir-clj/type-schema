@@ -92,6 +92,10 @@
         {:strength strength
          :valueset (get-value-set-identifier value-set)}))))
 
+(defn build-reference [element]
+  (when (:refers element)
+    (let [reference (get-in element [:refers])] reference)))
+
 (defn remove-empty-vals [m]
   (->> m
        (remove (fn [[_ v]]
@@ -112,14 +116,15 @@
                                                                  key)))
                                                (map keyword)
                                                (into [])))))]
-    (remove-empty-vals {:array    (true? (:array element))
-                        :required (is-required? fhir-schema path element)
-                        :excluded (is-excluded? fhir-schema path element)
-                        :type     type
-                        :choices  (:choices element)
-                        :choiceOf (:choiceOf element)
+    (remove-empty-vals {:array     (true? (:array element))
+                        :required  (is-required? fhir-schema path element)
+                        :excluded  (is-excluded? fhir-schema path element)
+                        :type      type
+                        :choices   (:choices element)
+                        :choiceOf  (:choiceOf element)
 
-                        :binding  (build-binding element)})))
+                        :binding   (build-binding element)
+                        :reference (build-reference element)})))
 
 (defn build-nested-field [fhir-schema path element]
   (let [package-meta (package-meta fhir-schema)]
