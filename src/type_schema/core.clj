@@ -55,7 +55,7 @@
 (defn get-value-set-identifier [value-set]
   #_(assert (some? (:url value-set)))
   (let [package-meta (package-meta value-set)]
-    {:kind    "valueset"
+    {:kind    "value-set"
      :package (:name package-meta)
      :version (:version package-meta)
      :name    (:id value-set)
@@ -81,6 +81,15 @@
                  :excluded
                  (set))
              (last path)))
+
+(defn build-enum [element]
+  (let [value-set-url (get-in element [:binding :valueSet])
+        strength (get-in element [:binding :strength])
+        type (get-in element [:type])
+        value-set (package/index (split-url-version value-set-url))
+        concepts (value-set/value-set->concepts (package/index) value-set)]
+    (when (and (= strength "required") (= type "code") value-set)
+      (map (fn [concept] (:code concept)) concepts))))
 
 (defn build-binding [element]
   (when (:binding element)
@@ -123,7 +132,8 @@
                         :choices   (:choices element)
                         :choiceOf  (:choiceOf element)
 
-                        :binding   (build-binding element)
+                        :enum      (build-enum element)
+                        ;; :binding   (build-binding element)
                         :reference (build-reference element)})))
 
 (defn build-nested-field [fhir-schema path element]

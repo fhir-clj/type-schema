@@ -224,16 +224,7 @@
         "name" : "code",
         "url" : "http://hl7.org/fhir/StructureDefinition/code"
       },
-      "binding" : {
-        "strength" : "required",
-        "valueset" : {
-          "kind" : "valueset",
-          "package" : "hl7.fhir.r4.core",
-          "version" : "4.0.1",
-          "name" : "administrative-gender",
-          "url" : "http://hl7.org/fhir/ValueSet/administrative-gender"
-        }
-      }
+      "enum" : [ "male", "female", "other", "unknown" ]
     },
     "maritalStatus" : {
       "array" : false,
@@ -245,16 +236,6 @@
         "version" : "4.0.1",
         "name" : "CodeableConcept",
         "url" : "http://hl7.org/fhir/StructureDefinition/CodeableConcept"
-      },
-      "binding" : {
-        "strength" : "extensible",
-        "valueset" : {
-          "kind" : "valueset",
-          "package" : "hl7.fhir.r4.core",
-          "version" : "4.0.1",
-          "name" : "marital-status",
-          "url" : "http://hl7.org/fhir/ValueSet/marital-status"
-        }
       }
     },
     "contact" : {
@@ -310,16 +291,7 @@
           "name" : "code",
           "url" : "http://hl7.org/fhir/StructureDefinition/code"
         },
-        "binding" : {
-          "strength" : "required",
-          "valueset" : {
-            "kind" : "valueset",
-            "package" : "hl7.fhir.r4.core",
-            "version" : "4.0.1",
-            "name" : "link-type",
-            "url" : "http://hl7.org/fhir/ValueSet/link-type"
-          }
-        }
+        "enum" : [ "replaced-by", "replaces", "refer", "seealso" ]
       }
     }
   }, {
@@ -348,16 +320,6 @@
           "version" : "4.0.1",
           "name" : "CodeableConcept",
           "url" : "http://hl7.org/fhir/StructureDefinition/CodeableConcept"
-        },
-        "binding" : {
-          "strength" : "preferred",
-          "valueset" : {
-            "kind" : "valueset",
-            "package" : "hl7.fhir.r4.core",
-            "version" : "4.0.1",
-            "name" : "languages",
-            "url" : "http://hl7.org/fhir/ValueSet/languages"
-          }
         }
       },
       "preferred" : {
@@ -399,16 +361,6 @@
           "version" : "4.0.1",
           "name" : "CodeableConcept",
           "url" : "http://hl7.org/fhir/StructureDefinition/CodeableConcept"
-        },
-        "binding" : {
-          "strength" : "extensible",
-          "valueset" : {
-            "kind" : "valueset",
-            "package" : "hl7.fhir.r4.core",
-            "version" : "4.0.1",
-            "name" : "patient-contactrelationship",
-            "url" : "http://hl7.org/fhir/ValueSet/patient-contactrelationship"
-          }
         }
       },
       "name" : {
@@ -458,16 +410,7 @@
           "name" : "code",
           "url" : "http://hl7.org/fhir/StructureDefinition/code"
         },
-        "binding" : {
-          "strength" : "required",
-          "valueset" : {
-            "kind" : "valueset",
-            "package" : "hl7.fhir.r4.core",
-            "version" : "4.0.1",
-            "name" : "administrative-gender",
-            "url" : "http://hl7.org/fhir/ValueSet/administrative-gender"
-          }
-        }
+        "enum" : [ "male", "female", "other", "unknown" ]
       },
       "organization" : {
         "array" : false,
@@ -593,41 +536,11 @@
     "name" : "contact",
     "url" : "http://hl7.org/fhir/StructureDefinition/Patient#contact"
   }, {
-    "kind" : "valueset",
-    "package" : "hl7.fhir.r4.core",
-    "version" : "4.0.1",
-    "name" : "administrative-gender",
-    "url" : "http://hl7.org/fhir/ValueSet/administrative-gender"
-  }, {
-    "kind" : "valueset",
-    "package" : "hl7.fhir.r4.core",
-    "version" : "4.0.1",
-    "name" : "marital-status",
-    "url" : "http://hl7.org/fhir/ValueSet/marital-status"
-  }, {
-    "kind" : "valueset",
-    "package" : "hl7.fhir.r4.core",
-    "version" : "4.0.1",
-    "name" : "link-type",
-    "url" : "http://hl7.org/fhir/ValueSet/link-type"
-  }, {
-    "kind" : "valueset",
-    "package" : "hl7.fhir.r4.core",
-    "version" : "4.0.1",
-    "name" : "languages",
-    "url" : "http://hl7.org/fhir/ValueSet/languages"
-  }, {
     "kind" : "complex-type",
     "package" : "hl7.fhir.r4.core",
     "version" : "4.0.1",
     "name" : "Period",
     "url" : "http://hl7.org/fhir/StructureDefinition/Period"
-  }, {
-    "kind" : "valueset",
-    "package" : "hl7.fhir.r4.core",
-    "version" : "4.0.1",
-    "name" : "patient-contactrelationship",
-    "url" : "http://hl7.org/fhir/ValueSet/patient-contactrelationship"
   }, {
     "kind" : "complex-type",
     "package" : "hl7.fhir.r4.core",
