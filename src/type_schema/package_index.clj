@@ -51,21 +51,12 @@
 
         package-index (get-package-index package-name)
 
-        fhir-schemas-by-url (->> package-index
-                                 (filter (fn [[_ res]] (is-structure-definition? res)))
-                                 (map (fn [[url structure-definition]]
-                                        [url (fhir-schema/translate {:package-meta package-meta}
-                                                                    structure-definition)]))
-                                 (into {}))
-        fhir-schemas-by-name (->> fhir-schemas-by-url
-                                  (map (fn [[_url fhir-schema]]
-                                         [(:name fhir-schema) fhir-schema]))
-                                  (into {}))
-        fhir-schemas-index (merge fhir-schemas-by-url
-                                  fhir-schemas-by-name)]
-
-    (assert (= (+ (count fhir-schemas-by-url) (count fhir-schemas-by-name))
-               (count fhir-schemas-index)))
+        fhir-schemas-index (->> package-index
+                                (filter (fn [[_ res]] (is-structure-definition? res)))
+                                (map (fn [[url structure-definition]]
+                                       [url (fhir-schema/translate {:package-meta package-meta}
+                                                                   structure-definition)]))
+                                (into {}))]
 
     (reset! *index package-index)
     (reset! *fhir-schema-index fhir-schemas-index)
