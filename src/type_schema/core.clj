@@ -103,7 +103,11 @@
 
 (defn build-reference [element]
   (when (:refers element)
-    (let [reference (get-in element [:refers])] reference)))
+    (let [references (get-in element [:refers])]
+      (->> references
+           (map #(-> %
+                     (package/fhir-schema-index)
+                     (get-identifier)))))))
 
 (defn remove-empty-vals [m]
   (->> m

@@ -65,6 +65,7 @@ Resources and complex types include:
 - `base`: Reference to the base type in accordance to Structure Definition
 - `fields`: Object mapping field names to their definitions, including:
   - `type`: Reference to another type
+  - `reference`: Reference to another type
   - `array`: Boolean indicating if the field can have multiple values
   - `required`: Boolean indicating if the field is required
   - `enum`: List of possible values for the primitive type if we can simply expand value set for it

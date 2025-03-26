@@ -98,7 +98,13 @@
         "name" : "canonical",
         "url" : "http://hl7.org/fhir/StructureDefinition/canonical"
       },
-      "reference" : [ "http://hl7.org/fhir/StructureDefinition/Questionnaire" ]
+      "reference" : [ {
+        "kind" : "resource",
+        "package" : "hl7.fhir.r4.core",
+        "version" : "4.0.1",
+        "name" : "Questionnaire",
+        "url" : "http://hl7.org/fhir/StructureDefinition/Questionnaire"
+      } ]
     },
     "purpose" : {
       "array" : false,
@@ -349,7 +355,13 @@
           "url" : "http://hl7.org/fhir/StructureDefinition/Reference"
         },
         "choiceOf" : "answer",
-        "reference" : [ "http://hl7.org/fhir/StructureDefinition/Resource" ]
+        "reference" : [ {
+          "kind" : "resource",
+          "package" : "hl7.fhir.r4.core",
+          "version" : "4.0.1",
+          "name" : "Resource",
+          "url" : "http://hl7.org/fhir/StructureDefinition/Resource"
+        } ]
       },
       "answerInteger" : {
         "array" : false,
@@ -560,7 +572,13 @@
           "url" : "http://hl7.org/fhir/StructureDefinition/Reference"
         },
         "choiceOf" : "value",
-        "reference" : [ "http://hl7.org/fhir/StructureDefinition/Resource" ]
+        "reference" : [ {
+          "kind" : "resource",
+          "package" : "hl7.fhir.r4.core",
+          "version" : "4.0.1",
+          "name" : "Resource",
+          "url" : "http://hl7.org/fhir/StructureDefinition/Resource"
+        } ]
       },
       "initialSelected" : {
         "array" : false,
@@ -603,7 +621,13 @@
           "url" : "http://hl7.org/fhir/StructureDefinition/Reference"
         },
         "choiceOf" : "value",
-        "reference" : [ "http://hl7.org/fhir/StructureDefinition/Resource" ]
+        "reference" : [ {
+          "kind" : "resource",
+          "package" : "hl7.fhir.r4.core",
+          "version" : "4.0.1",
+          "name" : "Resource",
+          "url" : "http://hl7.org/fhir/StructureDefinition/Resource"
+        } ]
       },
       "valueUri" : {
         "array" : false,
@@ -904,7 +928,13 @@
           "name" : "canonical",
           "url" : "http://hl7.org/fhir/StructureDefinition/canonical"
         },
-        "reference" : [ "http://hl7.org/fhir/StructureDefinition/ValueSet" ]
+        "reference" : [ {
+          "kind" : "resource",
+          "package" : "hl7.fhir.r4.core",
+          "version" : "4.0.1",
+          "name" : "ValueSet",
+          "url" : "http://hl7.org/fhir/StructureDefinition/ValueSet"
+        } ]
       },
       "code" : {
         "array" : true,

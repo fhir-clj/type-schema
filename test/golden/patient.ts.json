@@ -64,7 +64,13 @@
         "name" : "Reference",
         "url" : "http://hl7.org/fhir/StructureDefinition/Reference"
       },
-      "reference" : [ "http://hl7.org/fhir/StructureDefinition/Organization" ]
+      "reference" : [ {
+        "kind" : "resource",
+        "package" : "hl7.fhir.r4.core",
+        "version" : "4.0.1",
+        "name" : "Organization",
+        "url" : "http://hl7.org/fhir/StructureDefinition/Organization"
+      } ]
     },
     "deceasedBoolean" : {
       "array" : false,
@@ -211,7 +217,25 @@
         "name" : "Reference",
         "url" : "http://hl7.org/fhir/StructureDefinition/Reference"
       },
-      "reference" : [ "http://hl7.org/fhir/StructureDefinition/Practitioner", "http://hl7.org/fhir/StructureDefinition/PractitionerRole", "http://hl7.org/fhir/StructureDefinition/Organization" ]
+      "reference" : [ {
+        "kind" : "resource",
+        "package" : "hl7.fhir.r4.core",
+        "version" : "4.0.1",
+        "name" : "Practitioner",
+        "url" : "http://hl7.org/fhir/StructureDefinition/Practitioner"
+      }, {
+        "kind" : "resource",
+        "package" : "hl7.fhir.r4.core",
+        "version" : "4.0.1",
+        "name" : "PractitionerRole",
+        "url" : "http://hl7.org/fhir/StructureDefinition/PractitionerRole"
+      }, {
+        "kind" : "resource",
+        "package" : "hl7.fhir.r4.core",
+        "version" : "4.0.1",
+        "name" : "Organization",
+        "url" : "http://hl7.org/fhir/StructureDefinition/Organization"
+      } ]
     },
     "gender" : {
       "array" : false,
@@ -278,7 +302,19 @@
           "name" : "Reference",
           "url" : "http://hl7.org/fhir/StructureDefinition/Reference"
         },
-        "reference" : [ "http://hl7.org/fhir/StructureDefinition/RelatedPerson", "http://hl7.org/fhir/StructureDefinition/Patient" ]
+        "reference" : [ {
+          "kind" : "resource",
+          "package" : "hl7.fhir.r4.core",
+          "version" : "4.0.1",
+          "name" : "RelatedPerson",
+          "url" : "http://hl7.org/fhir/StructureDefinition/RelatedPerson"
+        }, {
+          "kind" : "resource",
+          "package" : "hl7.fhir.r4.core",
+          "version" : "4.0.1",
+          "name" : "Patient",
+          "url" : "http://hl7.org/fhir/StructureDefinition/Patient"
+        } ]
       },
       "type" : {
         "array" : false,
@@ -423,7 +459,13 @@
           "name" : "Reference",
           "url" : "http://hl7.org/fhir/StructureDefinition/Reference"
         },
-        "reference" : [ "http://hl7.org/fhir/StructureDefinition/Organization" ]
+        "reference" : [ {
+          "kind" : "resource",
+          "package" : "hl7.fhir.r4.core",
+          "version" : "4.0.1",
+          "name" : "Organization",
+          "url" : "http://hl7.org/fhir/StructureDefinition/Organization"
+        } ]
       },
       "period" : {
         "array" : false,

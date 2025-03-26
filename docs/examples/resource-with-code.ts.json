@@ -26,12 +26,7 @@
         "name": "code",
         "url": "http://hl7.org/fhir/StructureDefinition/code"
       },
-      "enum": [
-        "male",
-        "female",
-        "other",
-        "unknown"
-      ]
+      "enum": ["male", "female", "other", "unknown"]
     }
   },
   "dependencies": [

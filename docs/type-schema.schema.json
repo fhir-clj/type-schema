@@ -132,6 +132,13 @@
           "$ref": "#/definitions/type-schema-identifier",
           "description": "The data type of this field"
         },
+        "reference": {
+          "type": "array",
+          "description": "Reference to other types that this field can point to",
+          "items": {
+            "$ref": "#/definitions/type-schema-identifier"
+          }
+        },
         "required": {
           "type": "boolean",
           "default": false,
@@ -218,6 +225,13 @@
           "type": "boolean",
           "default": false,
           "description": "Whether this choice can contain multiple values"
+        },
+        "reference": {
+          "type": "array",
+          "description": "Reference to other types that this field can point to",
+          "items": {
+            "$ref": "#/definitions/type-schema-identifier"
+          }
         },
         "binding": {
           "$ref": "#/definitions/field.*.binding",
