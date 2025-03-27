@@ -1,9 +1,10 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$comment": "$id: http://health-samurai.io/schemas/type-schema.schema.json/0.0.0.1",
-  "type": "object",
+  "$id": "https://fhir-clj.github.io/type-schema/json-schema/type-schema.json",
+  "$comment": "Maturity Level: Draft",
   "title": "Type Schema",
   "description": "A code generation friendly representation of FHIR StructureDefinition and FHIR Schema designed to simplify SDK resource classes/types generation.",
+  "type": "object",
   "definitions": {
     "type-schema-identifier": {
       "type": "object",

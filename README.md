@@ -4,13 +4,30 @@
 
 Status: **Draft**
 
-This repository contains the Clojure library to generate the FHIR Type Schema.
+This repository contains the Clojure library to generate the Type Schema, an intermediate representation for FHIR SDK generation.
 
 Recommended file extension for the FHIR Type Schema is `.ts.json`.
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [FHIR Type Schema](#fhir-type-schema)
+  - [Motivation](#motivation)
+  - [Overview](#overview)
+    - [Common Structure](#common-structure)
+    - [`"primitive-type"`](#primitive-type)
+    - [`"resource"`, `"complex-type"`](#resource-complex-type)
+    - [`"nested"`](#nested)
+    - [Validation by JSON Schema](#validation-by-json-schema)
+  - [SDK Pipeline](#sdk-pipeline)
+  - [TODO](#todo)
+  - [Local Build & Run](#local-build--run)
+
+<!-- markdown-toc end -->
+
 ## Motivation
 
-FHIR resources, as defined in FHIR Implementation Guides, are represented in complex, nested Structure Definitions that are difficult to directly use in code generation. Type Schema provides a simplified, normalized representation of these FHIR types that is specifically designed for easy consumption by code generators.
+FHIR resources, as defined in FHIR Implementation Guides, are represented in complex, nested Structure Definitions that are difficult to directly use in code generation. Type Schema provides a simplified, normalized representation of these FHIR entities that is specifically designed for easy consumption by code generators.
 
 The FHIR Type Schema aims to:
 
@@ -25,7 +42,7 @@ By using Type Schema as an intermediate representation, we can separate the conc
 
 ## Overview
 
-The Type Schema is a JSON-based format that provides a simplified representation of FHIR entities (resources, value sets, primitive types, etc).
+The Type Schema is a JSON-based format that provides a simplified representation of FHIR entities (resources, primitive types, etc.).
 
 JSON Schema to validate the FHIR Type Schemas is placed in <docs/type-schema.schema.json>.
 
@@ -96,11 +113,41 @@ How to check JSON by this schema:
 ```shell
 $ npm install -g ajv-cli
 $ ajv test -s docs/type-schema.schema.json -d docs/example.ts.json --valid
-$ fd -e .ts.json | xargs -n 1 ajv test -s docs/type-schema.schema.json --valid -d
 $ find . -name "*.ts.json" | xargs -n 1 ajv test -s docs/type-schema.schema.json --valid -d
 ```
 
-## TODO:
+## SDK Pipeline
+
+The typical SDK generation pipeline with Type Schema consists of several transformation steps:
+
+1. **FHIR Package** [Github](https://github.com/fhir-clj/fhir-package-registry) → Start with a FHIR package (e.g., `hl7.fhir.r4.core@4.0.1`)
+   - Contains Structure Definitions, Value Sets, and other FHIR artifacts
+   - Provides the canonical definitions for FHIR resources and types
+
+2. **FHIR Schema Generation** [Github](https://github.com/fhir-clj/fhir-schema)
+   - Transform Structure Definitions into FHIR Schema
+   - Simplifies the complex differential/snapshot structure
+   - Normalizes resource and type definitions
+   - Recommended extension: `.fs.json`
+
+3. **Type Schema Generation** [Github](https://github.com/fhir-clj/type-schema)
+   - Transform FHIR Schema into Type Schema
+   - Further simplifies and normalizes for code generation
+   - Makes the structure more language-agnostic
+   - Recommended extension: `.ts.json`
+
+4. **SDK Generation** (language-specific part)
+   - Consume Type Schema to generate language-specific code
+   - Generate classes, types, or structs for each resource
+   - Add validation, serialization, and deserialization capabilities
+   - Implement FHIR operations as language-specific methods
+   - Output is ready-to-use SDK code in target language
+
+See the example of the last step implemented in TypeScript for several languages here: [fhir-schema-codegen](https://github.com/fhir-schema/fhir-schema-codegen)
+
+This pipeline separates concerns between parsing FHIR packages, transforming into intermediate representations, and generating language-specific code, making each step more maintainable and reusable.
+
+## TODO
 
 - [ ] ndjson/path output from CLI
 - [ ] Bindings
@@ -130,7 +177,7 @@ bash -c '
 make clean r4-ts-json check-output-json
 ```
 
-Generate r4 package and check the output JSON files in accordance JSON Schema.
+Generate r4 package and check the output JSON files in accordance with JSON Schema.
 
 <!-- FIXME: support ndjson/path output to avoid bash inlines. -->
 <!-- FIXME: required, array consistency with field declaration (name in choiceOf). -->
