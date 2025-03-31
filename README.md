@@ -22,6 +22,10 @@ Recommended file extension for the FHIR Type Schema is `.ts.json`.
   - [SDK Pipeline](#sdk-pipeline)
   - [TODO](#todo)
   - [Local Build & Run](#local-build--run)
+  - [Installation](#installation)
+    - [Using the Released JAR](#using-the-released-jar)
+    - [Usage with Java/JVM](#usage-with-javajvm)
+    - [Maven/Gradle Dependencies](#mavengradle-dependencies)
 
 <!-- markdown-toc end -->
 
@@ -157,6 +161,31 @@ This pipeline separates concerns between parsing FHIR packages, transforming int
 - [ ] Profiles
 - [ ] Search Parameters
 - [ ] Operations
+
+## Installation
+
+### Using the Released JAR
+
+You can download the latest release jar from the [GitHub Releases page](https://github.com/fhir-clj/type-schema/releases).
+
+### Command Line Usage
+
+The type-schema tool can be used directly from the command line to process FHIR packages and generate Type Schema files.
+
+```bash
+java -jar type-schema.jar <fhir-package-name> <output-dir>
+```
+
+Example:
+```bash
+java -jar type-schema.jar hl7.fhir.r4.core@4.0.1 ./output
+```
+
+This will:
+1. Process the specified FHIR package (e.g., hl7.fhir.r4.core@4.0.1)
+2. Generate a .ndjson file containing all the type schemas
+3. Save it to `<output-dir>/<package-name>.ndjson`
+
 
 ## Local Build & Run
 
