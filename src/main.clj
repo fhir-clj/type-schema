@@ -40,7 +40,7 @@
     (if output-dir
       (save-as-ndjson (merge type-schemas type-schemas-valuesets) output-file)
       (doseq [item (vals (merge type-schemas type-schemas-valuesets))]
-        (println (cheshire.core/generate-string item))))))
+        (println (cheshire.core/generate-string item)))) :ok))
 
 (defn -main [& args]
   (if (and (not= (count args) 1) (not= (count args) 2))
