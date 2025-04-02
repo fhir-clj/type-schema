@@ -10,36 +10,70 @@ on:
 
 jobs:
   build-and-release:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            platform: linux
+            binary_name: type-schema
+          - os: macos-latest
+            platform: macos
+            binary_name: type-schema
+          - os: windows-latest
+            platform: windows
+            binary_name: type-schema.exe
+    
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Java
-        uses: actions/setup-java@v3
+      - name: Setup GraalVM
+        uses: graalvm/setup-graalvm@v1
         with:
-          distribution: 'temurin'
           java-version: '17'
+          distribution: 'graalvm'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          native-image-job-reports: 'true'
 
+      # Install build essentials on Linux
+      - name: Install Linux Build Dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential zlib1g-dev
+
+      # Install rlwrap (skip for Windows)
       - name: Install Dependencies
-        run: sudo apt-get update && sudo apt-get install -y rlwrap
+        if: matrix.os != 'windows-latest'
+        run: |
+          if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
+            sudo apt-get install -y rlwrap
+          elif [ "${{ matrix.os }}" = "macos-latest" ]; then
+            brew install rlwrap
+          fi
+        shell: bash
 
       - name: Install Clojure Tools
         uses: DeLaGuardo/setup-clojure@12.1
         with:
           cli: latest
 
-      - name: Build project
-        run: clojure -T:build uber
+      # Build native binary
+      - name: Build Native Binary
+        run: |
+          clojure -T:build uber
+          native-image --no-fallback -jar target/type-schema.jar -H:Name=target/${{ matrix.binary_name }}
 
+      # Create GitHub Release
       - name: Create Release
-        id: create_release
         uses: softprops/action-gh-release@v1
         with:
           name: Release ${{ github.ref_name }}
           draft: false
           prerelease: false
           files: |
-            target/type-schema.jar
+            target/${{ matrix.binary_name }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

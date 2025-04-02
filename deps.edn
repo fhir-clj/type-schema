@@ -32,5 +32,6 @@
    :main-opts   ["-m" "cognitect.test-runner"]
    :exec-fn     cognitect.test-runner.api/test}
 
-  :build {:deps {io.github.clojure/tools.build {:git/tag "v0.9.6" :git/sha "8e78bcc"}}
+  :build {:deps {io.github.clojure/tools.build {:git/tag "v0.9.6" :git/sha "8e78bcc"}
+                 com.github.clj-easy/graal-build-time {:mvn/version "1.0.5"}}
           :ns-default build}}}
