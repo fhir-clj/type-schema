@@ -12,17 +12,11 @@ jobs:
   build-and-release:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest]
         include:
           - os: ubuntu-latest
             platform: linux
             binary_name: type-schema
-          - os: macos-latest
-            platform: macos
-            binary_name: type-schema
-          - os: windows-latest
-            platform: windows
-            binary_name: type-schema.exe
     
     runs-on: ${{ matrix.os }}
     steps:
@@ -37,36 +31,22 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           native-image-job-reports: 'true'
 
-      # Install build essentials on Linux
       - name: Install Linux Build Dependencies
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential zlib1g-dev
 
-      # Install rlwrap (skip for Windows)
-      - name: Install Dependencies
-        if: matrix.os != 'windows-latest'
-        run: |
-          if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
-            sudo apt-get install -y rlwrap
-          elif [ "${{ matrix.os }}" = "macos-latest" ]; then
-            brew install rlwrap
-          fi
-        shell: bash
-
       - name: Install Clojure Tools
         uses: DeLaGuardo/setup-clojure@12.1
         with:
           cli: latest
 
-      # Build native binary
       - name: Build Native Binary
         run: |
           clojure -T:build uber
-          native-image --no-fallback -jar target/type-schema.jar -H:Name=target/${{ matrix.binary_name }}
+          native-image --no-fallback -jar target/type-schema.jar -o type-schema -H:Name=target/${{ matrix.binary_name }} -H:ReflectionConfigurationFiles=reflect-config.json --initialize-at-build-time --enable-url-protocols=https,http
 
-      # Create GitHub Release
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
