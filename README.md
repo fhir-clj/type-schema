@@ -21,11 +21,9 @@ Recommended file extension for the FHIR Type Schema is `.ts.json`.
     - [Validation by JSON Schema](#validation-by-json-schema)
   - [SDK Pipeline](#sdk-pipeline)
   - [TODO](#todo)
-  - [Local Build & Run](#local-build--run)
   - [Installation](#installation)
     - [Using the Released JAR](#using-the-released-jar)
-    - [Usage with Java/JVM](#usage-with-javajvm)
-    - [Maven/Gradle Dependencies](#mavengradle-dependencies)
+  - [Local Build & Run](#local-build--run)
 
 <!-- markdown-toc end -->
 
