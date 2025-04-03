@@ -86,7 +86,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.binary_name }}
-          path: target/${{ matrix.binary_name }}
+          path: target/${{ matrix.binary_name }}${{ matrix.platform == 'windows' && '.exe' || '' }}
 
   create-release:
     needs: build-native
@@ -96,16 +96,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: /tmp/artifacts
-
-      - name: Extract Artifacts
-        run: |
-          cd /tmp/artifacts
-          for dir in */; do
-            cd "$dir"
-            unzip -q *.zip
-            rm *.zip
-            cd ..
-          done
 
       - name: List Downloaded Files
         run: |
