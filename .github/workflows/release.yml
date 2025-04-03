@@ -108,9 +108,10 @@ jobs:
           draft: false
           prerelease: false
           files: |
+            /tmp/artifacts/type-schema-jar/type-schema.jar
             /tmp/artifacts/type-schema-linux/type-schema-linux
             /tmp/artifacts/type-schema-linux-arm64/type-schema-linux-arm64
-            /tmp/artifacts/type-schema-windows.exe/type-schema-windows.exe
+            /tmp/artifacts/type-schema-windows/type-schema-windows.exe
             /tmp/artifacts/type-schema-macos-arm64/type-schema-macos-arm64
             /tmp/artifacts/type-schema-macos/type-schema-macos
         env:
