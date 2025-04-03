@@ -121,25 +121,29 @@ $ find . -name "*.ts.json" | xargs -n 1 ajv test -s docs/type-schema.schema.json
 
 ## SDK Pipeline
 
+![Type Schema Pipeline](docs/assets/image.png)
+
 The typical SDK generation pipeline with Type Schema consists of several transformation steps:
 
-1. **FHIR Package** [Github](https://github.com/fhir-clj/fhir-package-registry) → Start with a FHIR package (e.g., `hl7.fhir.r4.core@4.0.1`)
-   - Contains Structure Definitions, Value Sets, and other FHIR artifacts
+1. **FHIR Package Loader** [Github](https://github.com/fhir-clj/fhir-package-registry) → Start with a FHIR package (e.g., `hl7.fhir.r4.core@4.0.1`)
+   - Contains Structure Definitions, Value Sets, and other FHIR artifacts and Aidbox configuration packages with Custom Resource, Acess Policy, User etc.
    - Provides the canonical definitions for FHIR resources and types
 
-2. **FHIR Schema Generation** [Github](https://github.com/fhir-clj/fhir-schema)
+2. **FHIR Artifact Regestry** : TBD
+
+3. **FHIR Schema Generation** [Github](https://github.com/fhir-clj/fhir-schema)
    - Transform Structure Definitions into FHIR Schema
    - Simplifies the complex differential/snapshot structure
    - Normalizes resource and type definitions
    - Recommended extension: `.fs.json`
 
-3. **Type Schema Generation** [Github](https://github.com/fhir-clj/type-schema)
+4. **Type Schema Generation** [Github](https://github.com/fhir-clj/type-schema)
    - Transform FHIR Schema into Type Schema
    - Further simplifies and normalizes for code generation
    - Makes the structure more language-agnostic
    - Recommended extension: `.ts.json`
 
-4. **SDK Generation** (language-specific part)
+5. **SDK Generation** (language-specific part)
    - Consume Type Schema to generate language-specific code
    - Generate classes, types, or structs for each resource
    - Add validation, serialization, and deserialization capabilities
