@@ -9,7 +9,30 @@ on:
       - 'v*'
 
 jobs:
-  build-and-release:
+  build-jar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Clojure Tools
+        uses: DeLaGuardo/setup-clojure@13.2
+        with:
+          cli: latest
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Uberjar
+        run: |
+          clojure -T:build uber
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: type-schema-jar
+          path: target/type-schema.jar
+
+  build-native:
+    needs: build-jar
     strategy:
       matrix:
         os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-latest, macos-13]
@@ -35,6 +58,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Download Jar Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: type-schema-jar
+          path: target/
+
       - name: Setup GraalVM
         uses: graalvm/setup-graalvm@v1
         with:
@@ -49,16 +78,24 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y build-essential zlib1g-dev
 
-      - name: Install Clojure Tools
-        uses: DeLaGuardo/setup-clojure@12.1
-        with:
-          cli: latest
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Build Native Binary
         run: |
-          clojure -T:build uber
           native-image --no-fallback -jar target/type-schema.jar -o type-schema -H:Name=target/${{ matrix.binary_name }} -H:ReflectionConfigurationFiles=reflect-config.json --initialize-at-build-time --enable-url-protocols=https,http
+
+      - name: Upload Native Binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.binary_name }}
+          path: target/${{ matrix.binary_name }}
+
+  create-release:
+    needs: build-native
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download All Binaries
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
@@ -67,6 +104,10 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            target/${{ matrix.binary_name }}
+            artifacts/type-schema-linux
+            artifacts/type-schema-linux-arm64
+            artifacts/type-schema-windows.exe
+            artifacts/type-schema-macos-arm64
+            artifacts/type-schema-macos
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
