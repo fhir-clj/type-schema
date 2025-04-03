@@ -12,12 +12,24 @@ jobs:
   build-and-release:
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, ubuntu-24.04-arm, windows-latest, macos-latest, macos-13]
         include:
           - os: ubuntu-latest
             platform: linux
-            binary_name: type-schema
-    
+            binary_name: type-schema-linux
+          - os: ubuntu-24.04-arm
+            platform: linux
+            binary_name: type-schema-linux-arm64
+          - os: windows-latest
+            platform: windows
+            binary_name: type-schema-windows.exe
+          - os: macos-latest
+            platform: macos
+            binary_name: type-schema-macos-arm64
+          - os: macos-13
+            platform: macos
+            binary_name: type-schema-macos
+
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
