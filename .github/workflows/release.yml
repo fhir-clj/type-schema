@@ -95,7 +95,7 @@ jobs:
       - name: Download All Binaries
         uses: actions/download-artifact@v4
         with:
-          path: artifacts
+          path: /tmp/artifacts
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
@@ -104,10 +104,11 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            artifacts/type-schema-linux
-            artifacts/type-schema-linux-arm64
-            artifacts/type-schema-windows.exe
-            artifacts/type-schema-macos-arm64
-            artifacts/type-schema-macos
+            /tmp/artifacts/type-schema-jar
+            /tmp/artifacts/type-schema-linux
+            /tmp/artifacts/type-schema-linux-arm64
+            /tmp/artifacts/type-schema-windows.exe
+            /tmp/artifacts/type-schema-macos-arm64
+            /tmp/artifacts/type-schema-macos
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
