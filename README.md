@@ -237,7 +237,7 @@ This pipeline separates concerns between parsing FHIR packages, transforming int
 
 ### Using the Released JAR
 
-You can download the latest release jar from the [GitHub Releases page](https://github.com/fhir-clj/type-schema/releases).
+You can download the latest release jar from the [GitHub Releases page](https://github.com/fhir-clj/type-schema/releases). Or native standalone binaries that don't require a Java runtime. Simply download the appropriate binary for your operating system and architecture.
 
 ### Command Line Usage
 
