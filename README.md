@@ -107,6 +107,75 @@ Backbone elements are represented as:
 
 This normalized structure eliminates the complexity of navigating differential and snapshot views in Structure Definitions, making it straightforward to generate strongly-typed code in any programming language.
 
+### Snippet of the Patient resource from hl7.fhir.r4.core
+You can see the full type-schema structure in [./test/golden/patient.ts.json](./test/golden/patient.ts.json), which demonstrates how a Patient resource is represented in our normalized format.
+
+This structure makes it easy to understand the relationships between FHIR resources and their properties during generation process without having to parse and lookup for the more complex original FHIR definitions.
+
+```json
+{
+  "identifier" : {
+    "kind" : "resource",
+    "package" : "hl7.fhir.core.r4",
+    "version" : "4.0.1",
+    "name" : "Patient",
+    "url" : "http://hl7.org/fhir/StructureDefinition/Patient"
+  },
+  "base" : {
+    "kind" : "resource",
+    "package" : "hl7.fhir.r4.core",
+    "version" : "4.0.1",
+    "name" : "DomainResource",
+    "url" : "http://hl7.org/fhir/StructureDefinition/DomainResource"
+  },
+  "description" : "Demographics and other administrative information about an individual or animal receiving care or other health-related services.",
+  "fields" : {
+    "address" : {
+      "array" : true,
+      "required" : false,
+      "excluded" : false,
+      "type" : {
+        "kind" : "complex-type",
+        "package" : "hl7.fhir.r4.core",
+        "version" : "4.0.1",
+        "name" : "Address",
+        "url" : "http://hl7.org/fhir/StructureDefinition/Address"
+      }
+    },
+    "managingOrganization" : {
+      "array" : false,
+      "required" : false,
+      "excluded" : false,
+      "type" : {
+        "kind" : "complex-type",
+        "package" : "hl7.fhir.r4.core",
+        "version" : "4.0.1",
+        "name" : "Reference",
+        "url" : "http://hl7.org/fhir/StructureDefinition/Reference"
+      },
+      "reference" : [ {
+        "kind" : "resource",
+        "package" : "hl7.fhir.r4.core",
+        "version" : "4.0.1",
+        "name" : "Organization",
+        "url" : "http://hl7.org/fhir/StructureDefinition/Organization"
+      } ]
+    },
+    ...
+  },
+  "nested": [...],
+  "dependencies" : [ {
+    "kind" : "resource",
+    "package" : "hl7.fhir.r4.core",
+    "version" : "4.0.1",
+    "name" : "DomainResource",
+    "url" : "http://hl7.org/fhir/StructureDefinition/DomainResource"
+  },
+  ...
+  ]
+}
+```
+
 ### Validation by JSON Schema
 
 JSON Schema for the FHIR Type Schema is placed in <docs/type-schema.schema.json>.
