@@ -58,7 +58,7 @@ r4-ts-json: build r4-ndjson
 		if [ -z "$$name" ]; then \
 			continue; \
 		fi; \
-		out_file=$$OUTPUT_DIR/$$PACKAGE/$$(echo $$name | tr " " "_").json; \
+		out_file=$$OUTPUT_DIR/$$PACKAGE/$$(echo $$name | tr " " "_").ts.json; \
 		echo $$out_file; \
 		echo "$$line" | jq "." > "$$out_file"; \
 	done

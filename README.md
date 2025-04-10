@@ -269,7 +269,7 @@ bash -c '
     mkdir -p "$OUTPUT_DIR/$PACKAGE"
     cat "$OUTPUT_DIR/$PACKAGE.ndjson" | jq -c "." | while read -r line; do
         name=$(echo "$line" | jq -r ".identifier.name")
-        out_file=$OUTPUT_DIR/$PACKAGE/${name}.json
+        out_file=$OUTPUT_DIR/$PACKAGE/${name}.ts.json
         echo $out_file
         echo "$line" | jq "." > "$out_file"
     done
