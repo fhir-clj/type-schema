@@ -2,7 +2,7 @@
   (:require
    [clojure.string :as str]
    [fhir.package]
-   [transpiler.fhir-schema :as fhir-schema]))
+   [fhir.schema.translate :as fhir-schema]))
 
 (def *index (atom nil))
 
