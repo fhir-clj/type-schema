@@ -13,7 +13,7 @@
                                   ["type"]
                                   {}))))
 
-(defn fhir-schema->json [fhir-schema-file]
+(defn fhir-schema->type-schema [fhir-schema-file]
   (-> (slurp fhir-schema-file)
       (json/parse-string true)
       (type-schema/translate)))
@@ -22,43 +22,43 @@
   (package/init-from-package! "hl7.fhir.r4.core")
 
   (golden/as-json "test/golden/element.ts.json"
-                  (fhir-schema->json "test/golden/element.fs.json"))
+                  (fhir-schema->type-schema "test/golden/element.fs.json"))
 
   (golden/as-json "test/golden/backbone-element.ts.json"
-                  (fhir-schema->json "test/golden/backbone-element.fs.json"))
+                  (fhir-schema->type-schema "test/golden/backbone-element.fs.json"))
 
   (golden/as-json "test/golden/bundle.ts.json"
-                  (fhir-schema->json "test/golden/bundle.fs.json"))
+                  (fhir-schema->type-schema "test/golden/bundle.fs.json"))
 
   (golden/as-json "docs/examples/string.ts.json"
-                  (fhir-schema->json "docs/examples/fhir-schema/string.fs.json"))
+                  (fhir-schema->type-schema "docs/examples/fhir-schema/string.fs.json"))
 
   (golden/as-json "docs/examples/coding.ts.json"
-                  (fhir-schema->json "docs/examples/fhir-schema/coding.fs.json"))
+                  (fhir-schema->type-schema "docs/examples/fhir-schema/coding.fs.json"))
 
   (golden/as-json "docs/examples/resource-with-string.ts.json"
-                  (fhir-schema->json "docs/examples/fhir-schema/resource-with-string.fs.json"))
+                  (fhir-schema->type-schema "docs/examples/fhir-schema/resource-with-string.fs.json"))
 
   (golden/as-json "docs/examples/resource-with-choice.ts.json"
-                  (fhir-schema->json "docs/examples/fhir-schema/resource-with-choice.fs.json"))
+                  (fhir-schema->type-schema "docs/examples/fhir-schema/resource-with-choice.fs.json"))
 
   (golden/as-json "docs/examples/resource-with-nested-type.ts.json"
-                  (fhir-schema->json "docs/examples/fhir-schema/resource-with-nested-type.fs.json"))
+                  (fhir-schema->type-schema "docs/examples/fhir-schema/resource-with-nested-type.fs.json"))
 
   (golden/as-json "docs/examples/resource-with-codable-concept.ts.json"
-                  (fhir-schema->json "docs/examples/fhir-schema/resource-with-codable-concept.fs.json"))
+                  (fhir-schema->type-schema "docs/examples/fhir-schema/resource-with-codable-concept.fs.json"))
 
   (golden/as-json "docs/examples/resource-with-code.ts.json"
-                  (fhir-schema->json "docs/examples/fhir-schema/resource-with-code.fs.json"))
+                  (fhir-schema->type-schema "docs/examples/fhir-schema/resource-with-code.fs.json"))
 
   (golden/as-json "test/golden/patient.ts.json"
-                  (fhir-schema->json "test/golden/patient.fs.json"))
+                  (fhir-schema->type-schema "test/golden/patient.fs.json"))
 
   (golden/as-json "test/golden/capability-statement.ts.json"
-                  (fhir-schema->json "test/golden/capability-statement.fs.json"))
+                  (fhir-schema->type-schema "test/golden/capability-statement.fs.json"))
 
   (golden/as-json "test/golden/questionnaire.ts.json"
-                  (fhir-schema->json "test/golden/questionnaire.fs.json")))
+                  (fhir-schema->type-schema "test/golden/questionnaire.fs.json")))
 
 (defn value-set->json [fhir-schema-file]
   (-> (slurp fhir-schema-file)
