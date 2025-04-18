@@ -7,7 +7,9 @@
         io.github.fhir-clj/fhir-packages    {:git/url "https://github.com/fhir-clj/fhir-packages"
                                              :git/sha "f259b67972580c72ae6e6bbf093d6b77b6f635b1"}
         io.github.fhir-clj/valueset-to-enum {:git/url "https://github.com/fhir-clj/valueset-to-enum"
-                                             :git/sha "6081380400170e7138b28ab523b7077d6d1b725f"}}
+                                             :git/sha "6081380400170e7138b28ab523b7077d6d1b725f"}
+        io.github.HealthSamurai/golden-clj {:git/url "https://github.com/HealthSamurai/golden-clj.git"
+                                            :git/sha "7b857ed93b9df8f74885a2746c65f1d8525e44a4"}}
 
  :aliases
  {:dev
