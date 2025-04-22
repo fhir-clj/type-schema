@@ -1,4 +1,6 @@
-# Bindings to valueSet
+# Bindings to ValueSet
+
+**Status**: In progress
 
 <!-- TODO: codable concept examples -->
 <!-- TODO: Use & Example: http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName -->
@@ -9,62 +11,70 @@ Patient StructureDefinition, `.difference.elements` (from FHIR):
 
 ```json
 {
-     "id" : "Patient.gender",
-     "path" : "Patient.gender",
-     "short" : "male | female | other | unknown",
-     "definition" : "Administrative Gender - the gender ...",
-     "comment" : "The gender might ...",
-     "requirements" : "Needed for identification of the individual, in combination with (at least) name and birth date.",
-     "min" : 0,
-     "max" : "1",
-     "base" : {
-       "path" : "Patient.gender",
-       "min" : 0,
-       "max" : "1"
-     },
-     "type" : [{
-       "code" : "code"
-     }],
-     "constraint" : [{
-       "key" : "ele-1",
-       "severity" : "error",
-       "human" : "All FHIR elements must have a @value or children",
-       "expression" : "hasValue() or (children().count() > id.count())",
-       "source" : "http://hl7.org/fhir/StructureDefinition/Element"
-     }],
-     "mustSupport" : false,
-     "isModifier" : false,
-     "isSummary" : true,
-     "binding" : {
-       "extension" : [{
-         "url" : "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-         "valueString" : "AdministrativeGender"
-       },
-       {
-         "url" : "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding",
-         "valueBoolean" : true
-       }],
-       "strength" : "required",
-       "description" : "The gender of a person used for administrative purposes.",
-       "valueSet" : "http://hl7.org/fhir/ValueSet/administrative-gender|6.0.0-ballot2"
-     },
-     "mapping" : [{
-       "identity" : "v2",
-       "map" : "PID-8"
-     },
-     {
-       "identity" : "rim",
-       "map" : "player[classCode=PSN|ANM and determinerCode=INSTANCE]/administrativeGender"
-     },
-     {
-       "identity" : "interface",
-       "map" : "ParticipantLiving.gender"
-     },
-     {
-       "identity" : "cda",
-       "map" : ".patient.administrativeGenderCode"
-     }]
-   }
+  "id": "Patient.gender",
+  "path": "Patient.gender",
+  "short": "male | female | other | unknown",
+  "definition": "Administrative Gender - the gender ...",
+  "comment": "The gender might ...",
+  "requirements": "Needed for identification of the individual, in combination with (at least) name and birth date.",
+  "min": 0,
+  "max": "1",
+  "base": {
+    "path": "Patient.gender",
+    "min": 0,
+    "max": "1"
+  },
+  "type": [
+    {
+      "code": "code"
+    }
+  ],
+  "constraint": [
+    {
+      "key": "ele-1",
+      "severity": "error",
+      "human": "All FHIR elements must have a @value or children",
+      "expression": "hasValue() or (children().count() > id.count())",
+      "source": "http://hl7.org/fhir/StructureDefinition/Element"
+    }
+  ],
+  "mustSupport": false,
+  "isModifier": false,
+  "isSummary": true,
+  "binding": {
+    "extension": [
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+        "valueString": "AdministrativeGender"
+      },
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding",
+        "valueBoolean": true
+      }
+    ],
+    "strength": "required",
+    "description": "The gender of a person used for administrative purposes.",
+    "valueSet": "http://hl7.org/fhir/ValueSet/administrative-gender|6.0.0-ballot2"
+  },
+  "mapping": [
+    {
+      "identity": "v2",
+      "map": "PID-8"
+    },
+    {
+      "identity": "rim",
+      "map": "player[classCode=PSN|ANM and determinerCode=INSTANCE]/administrativeGender"
+    },
+    {
+      "identity": "interface",
+      "map": "ParticipantLiving.gender"
+    },
+    {
+      "identity": "cda",
+      "map": ".patient.administrativeGenderCode"
+    }
+  ]
+}
 ```
 
 The same thing in FHIR Schema, `elements`:
@@ -84,6 +94,10 @@ The same thing in FHIR Schema, `elements`:
 }
 ```
 
+Field with binging description has two elements:
+
+- shape (code, coding, CodableConcept).
+- value restrictions.
 
 And here we can see a problem: programming languages don't have binding concepts directly. We have the following options depending on the programming language:
 
@@ -97,8 +111,8 @@ We will write both examples in TypeScript and Python.
 Some programming languages allow the use of type level literals and permit the following constructs:
 
 ```typescript
-type MaritalStatus = 'single' | 'married' | 'divorced' | 'widowed';
-const status: MaritalStatus = 'married';
+type MaritalStatus = "single" | "married" | "divorced" | "widowed";
+const status: MaritalStatus = "married";
 ```
 
 ```python
@@ -111,21 +125,51 @@ For simple and fast generation of such code, Type Schema provides an `enum` fiel
 
 ```json
 {
-  "identifier": { "kind": "resource", "package": "hl7.fhir.core.r4", "version": "4.0.1", "name": "WithCode", "url": "http://example.io/fhir/WithCode" },
-  "base": { "kind": "resource", "package": "hl7.fhir.r4.core", "version": "4.0.1", "name": "DomainResource", "url": "http://hl7.org/fhir/StructureDefinition/DomainResource" },
+  "identifier": {
+    "kind": "resource",
+    "package": "hl7.fhir.core.r4",
+    "version": "4.0.1",
+    "name": "WithCode",
+    "url": "http://example.io/fhir/WithCode"
+  },
+  "base": {
+    "kind": "resource",
+    "package": "hl7.fhir.r4.core",
+    "version": "4.0.1",
+    "name": "DomainResource",
+    "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+  },
   "description": "description",
   "fields": {
     "gender": {
       "array": false,
       "required": false,
       "excluded": false,
-      "type": { "kind": "primitive-type", "package": "hl7.fhir.r4.core", "version": "4.0.1", "name": "code", "url": "http://hl7.org/fhir/StructureDefinition/code" },
+      "type": {
+        "kind": "primitive-type",
+        "package": "hl7.fhir.r4.core",
+        "version": "4.0.1",
+        "name": "code",
+        "url": "http://hl7.org/fhir/StructureDefinition/code"
+      },
       "enum": ["male", "female", "other", "unknown"]
     }
   },
   "dependencies": [
-    { "kind": "resource", "package": "hl7.fhir.r4.core", "version": "4.0.1", "name": "DomainResource", "url": "http://hl7.org/fhir/StructureDefinition/DomainResource" },
-    { "kind": "primitive-type", "package": "hl7.fhir.r4.core", "version": "4.0.1", "name": "code", "url": "http://hl7.org/fhir/StructureDefinition/code" }
+    {
+      "kind": "resource",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "DomainResource",
+      "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+    },
+    {
+      "kind": "primitive-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "code",
+      "url": "http://hl7.org/fhir/StructureDefinition/code"
+    }
   ]
 }
 ```
@@ -173,15 +217,16 @@ Proposed:
       "array": false,
       "required": false,
       "excluded": false,
+      "type": { "kind": "primitive-type", "package": "hl7.fhir.r4.core", "version": "4.0.1", "name": "code", "url": "http://hl7.org/fhir/StructureDefinition/code" },
       // name & url tail generated from http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName extension
       // or autogenerated something like: "Patient#gender.binding" which is not shared.
-      "type": { "kind": "binding", "package": "hl7.fhir.core.r4", "version": "4.0.1", "name": "AdministrativeGender", "url": "http://example.io/fhir/AdministrativeGender" },
-      // duplicate binding content. Can be removed if we have type-schema registry
+      "binding": { "kind": "binding", "package": "hl7.fhir.core.r4", "version": "4.0.1", "name": "AdministrativeGender", "url": "http://example.io/fhir/AdministrativeGender" },
       "enum": ["male", "female", "other", "unknown"]
     }
   },
   "dependencies": [
     { "kind": "resource", "package": "hl7.fhir.r4.core", "version": "4.0.1", "name": "DomainResource", "url": "http://hl7.org/fhir/StructureDefinition/DomainResource" },
+    { "kind": "primitive-type", "package": "hl7.fhir.r4.core", "version": "4.0.1", "name": "code", "url": "http://hl7.org/fhir/StructureDefinition/code" },
     { "kind": "binding", "package": "hl7.fhir.core.r4", "version": "4.0.1", "name": "AdministrativeGender", "url": "http://example.io/fhir/AdministrativeGender" }
   ]
 }
@@ -210,3 +255,54 @@ Proposed:
   ]
 }
 ```
+Why do we separate type and binding in a field? The underlying entities have different shapes. It can be a string (code) or an object (CodeableConcept), and we should know this without introducing additional concepts.
+
+## Code Generation
+
+With type literals:
+
+- If we see `enum` exists & type is `code` -- just inline it.
+- If we see `enum` exists & type is `CodeableConcept` -- inline or generate an enumerated type.
+
+With enumerated types: if we see `binding` exists -- just link it; the type should be defined for binding by other TypeSchema.
+
+## Isomorphism between JSON and Types
+
+Resource:
+
+```json
+{
+  "coding": [
+    {
+      "system": "http://snomed.info/sct",
+      "code": "260385009",
+      "display": "Negative"
+    },
+    {
+      "system": "https://acme.lab/resultcodes",
+      "code": "NEG",
+      "display": "Negative"
+    }
+  ],
+  "text": "Negative for Chlamydia Trachomatis rRNA"
+}
+```
+
+Isomorphic representations:
+
+```python
+CodeableConcept(
+    Coding(
+        system="http://snomed.info/sct",
+        code="260385009",
+        display="Negative"
+    ),
+    Coding(
+        system="https://acme.lab/resultcodes",
+        code="NEG",
+        display="Negative"
+    )
+)
+```
+
+**Open question**: Do we have cases where isomorphism is a problem?
