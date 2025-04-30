@@ -216,12 +216,12 @@
              (sort-by #(get-in % [:idetifier :name]))
              (into []))]
 
-    (remove-empty-vals {:identifier identifier
-                        :base base
-                        :description description
-                        :fields fields
-                        :nested nested
-                        :dependencies depends})))
+    [(remove-empty-vals {:identifier identifier
+                         :base base
+                         :description description
+                         :fields fields
+                         :nested nested
+                         :dependencies depends})]))
 
 (defn translate-value-set [value-set]
   (let [identifier  (get-value-set-identifier value-set)
@@ -243,7 +243,7 @@
 (defn translate [resource]
   (cond
     (package/is-value-set? resource)
-    (translate-value-set resource)
+    [(translate-value-set resource)]
 
     :else
     (translate-fhir-schema resource)))

@@ -14,9 +14,11 @@
                                   {}))))
 
 (defn fhir-schema->type-schema [fhir-schema-file]
-  (-> (slurp fhir-schema-file)
-      (json/parse-string true)
-      (type-schema/translate)))
+  (let [type-schemas (-> (slurp fhir-schema-file)
+                         (json/parse-string true)
+                         (type-schema/translate))]
+    (assert (= (count type-schemas) 1))
+    (first type-schemas)))
 
 (deftest fhir-schema->type-schema-golden-test
   (package/init-from-package! "hl7.fhir.r4.core")
