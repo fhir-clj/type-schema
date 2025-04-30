@@ -3,7 +3,7 @@
         cheshire/cheshire         {:mvn/version "5.10.2"}
         healthsamurai/matcho      {:mvn/version "0.3.8"}
         io.github.fhir-clj/fhir-schema      {:git/url "https://github.com/fhir-clj/fhir-schema"
-                                             :git/sha "5b7437e995e9b0e8dbd85ea29d2650fcf185e18f"}
+                                             :git/sha "1d11e34fd2fc8f6e33b0bac693db60213cbd95ac"}
         io.github.fhir-clj/fhir-packages    {:git/url "https://github.com/fhir-clj/fhir-packages"
                                              :git/sha "f259b67972580c72ae6e6bbf093d6b77b6f635b1"}
         io.github.fhir-clj/valueset-to-enum {:git/url "https://github.com/fhir-clj/valueset-to-enum"
