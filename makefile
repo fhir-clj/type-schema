@@ -22,6 +22,7 @@ test:
 
 update-golden:
 	UPDATE_GOLDEN=true clj -M:test
+	make format-example-json
 
 lint:
 	clj -M:lint
