@@ -1,7 +1,7 @@
 {
   "identifier" : {
     "kind" : "resource",
-    "package" : "hl7.fhir.core.r4",
+    "package" : "hl7.fhir.r4.core",
     "version" : "4.0.1",
     "name" : "Questionnaire",
     "url" : "http://hl7.org/fhir/StructureDefinition/Questionnaire"
@@ -13,6 +13,7 @@
     "name" : "DomainResource",
     "url" : "http://hl7.org/fhir/StructureDefinition/DomainResource"
   },
+  "description" : "A structured set of questions intended to guide the collection of answers from end-users. Questionnaires provide detailed control over order, presentation, phraseology and grouping to allow coherent, consistent data collection.",
   "fields" : {
     "description" : {
       "array" : false,
@@ -97,14 +98,7 @@
         "version" : "4.0.1",
         "name" : "canonical",
         "url" : "http://hl7.org/fhir/StructureDefinition/canonical"
-      },
-      "reference" : [ {
-        "kind" : "resource",
-        "package" : "hl7.fhir.r4.core",
-        "version" : "4.0.1",
-        "name" : "Questionnaire",
-        "url" : "http://hl7.org/fhir/StructureDefinition/Questionnaire"
-      } ]
+      }
     },
     "purpose" : {
       "array" : false,
@@ -133,7 +127,7 @@
     "item" : {
       "type" : {
         "kind" : "nested",
-        "package" : "hl7.fhir.core.r4",
+        "package" : "hl7.fhir.r4.core",
         "version" : "4.0.1",
         "name" : "item",
         "url" : "http://hl7.org/fhir/StructureDefinition/Questionnaire#item"
@@ -291,7 +285,7 @@
   "nested" : [ {
     "identifier" : {
       "kind" : "nested",
-      "package" : "hl7.fhir.core.r4",
+      "package" : "hl7.fhir.r4.core",
       "version" : "4.0.1",
       "name" : "item.enableWhen",
       "url" : "http://hl7.org/fhir/StructureDefinition/Questionnaire#item.enableWhen"
@@ -476,7 +470,7 @@
   }, {
     "identifier" : {
       "kind" : "nested",
-      "package" : "hl7.fhir.core.r4",
+      "package" : "hl7.fhir.r4.core",
       "version" : "4.0.1",
       "name" : "item.answerOption",
       "url" : "http://hl7.org/fhir/StructureDefinition/Questionnaire#item.answerOption"
@@ -494,6 +488,19 @@
         "required" : false,
         "excluded" : false,
         "choices" : [ "valueInteger", "valueDate", "valueTime", "valueString", "valueCoding", "valueReference" ]
+      },
+      "valueInteger" : {
+        "array" : false,
+        "required" : false,
+        "excluded" : false,
+        "type" : {
+          "kind" : "primitive-type",
+          "package" : "hl7.fhir.r4.core",
+          "version" : "4.0.1",
+          "name" : "integer",
+          "url" : "http://hl7.org/fhir/StructureDefinition/integer"
+        },
+        "choiceOf" : "value"
       },
       "valueDate" : {
         "array" : false,
@@ -521,19 +528,6 @@
         },
         "choiceOf" : "value"
       },
-      "valueCoding" : {
-        "array" : false,
-        "required" : false,
-        "excluded" : false,
-        "type" : {
-          "kind" : "complex-type",
-          "package" : "hl7.fhir.r4.core",
-          "version" : "4.0.1",
-          "name" : "Coding",
-          "url" : "http://hl7.org/fhir/StructureDefinition/Coding"
-        },
-        "choiceOf" : "value"
-      },
       "valueString" : {
         "array" : false,
         "required" : false,
@@ -547,16 +541,16 @@
         },
         "choiceOf" : "value"
       },
-      "valueInteger" : {
+      "valueCoding" : {
         "array" : false,
         "required" : false,
         "excluded" : false,
         "type" : {
-          "kind" : "primitive-type",
+          "kind" : "complex-type",
           "package" : "hl7.fhir.r4.core",
           "version" : "4.0.1",
-          "name" : "integer",
-          "url" : "http://hl7.org/fhir/StructureDefinition/integer"
+          "name" : "Coding",
+          "url" : "http://hl7.org/fhir/StructureDefinition/Coding"
         },
         "choiceOf" : "value"
       },
@@ -596,7 +590,7 @@
   }, {
     "identifier" : {
       "kind" : "nested",
-      "package" : "hl7.fhir.core.r4",
+      "package" : "hl7.fhir.r4.core",
       "version" : "4.0.1",
       "name" : "item.initial",
       "url" : "http://hl7.org/fhir/StructureDefinition/Questionnaire#item.initial"
@@ -782,7 +776,7 @@
   }, {
     "identifier" : {
       "kind" : "nested",
-      "package" : "hl7.fhir.core.r4",
+      "package" : "hl7.fhir.r4.core",
       "version" : "4.0.1",
       "name" : "item",
       "url" : "http://hl7.org/fhir/StructureDefinition/Questionnaire#item"
@@ -850,7 +844,7 @@
         "excluded" : false,
         "type" : {
           "kind" : "nested",
-          "package" : "hl7.fhir.core.r4",
+          "package" : "hl7.fhir.r4.core",
           "version" : "4.0.1",
           "name" : "item",
           "url" : "http://hl7.org/fhir/StructureDefinition/Questionnaire#item"
@@ -872,7 +866,7 @@
       "enableWhen" : {
         "type" : {
           "kind" : "nested",
-          "package" : "hl7.fhir.core.r4",
+          "package" : "hl7.fhir.r4.core",
           "version" : "4.0.1",
           "name" : "item.enableWhen",
           "url" : "http://hl7.org/fhir/StructureDefinition/Questionnaire#item.enableWhen"
@@ -884,7 +878,7 @@
       "answerOption" : {
         "type" : {
           "kind" : "nested",
-          "package" : "hl7.fhir.core.r4",
+          "package" : "hl7.fhir.r4.core",
           "version" : "4.0.1",
           "name" : "item.answerOption",
           "url" : "http://hl7.org/fhir/StructureDefinition/Questionnaire#item.answerOption"
@@ -927,14 +921,7 @@
           "version" : "4.0.1",
           "name" : "canonical",
           "url" : "http://hl7.org/fhir/StructureDefinition/canonical"
-        },
-        "reference" : [ {
-          "kind" : "resource",
-          "package" : "hl7.fhir.r4.core",
-          "version" : "4.0.1",
-          "name" : "ValueSet",
-          "url" : "http://hl7.org/fhir/StructureDefinition/ValueSet"
-        } ]
+        }
       },
       "code" : {
         "array" : true,
@@ -951,7 +938,7 @@
       "initial" : {
         "type" : {
           "kind" : "nested",
-          "package" : "hl7.fhir.core.r4",
+          "package" : "hl7.fhir.r4.core",
           "version" : "4.0.1",
           "name" : "item.initial",
           "url" : "http://hl7.org/fhir/StructureDefinition/Questionnaire#item.initial"
@@ -1048,7 +1035,7 @@
     "url" : "http://hl7.org/fhir/StructureDefinition/canonical"
   }, {
     "kind" : "nested",
-    "package" : "hl7.fhir.core.r4",
+    "package" : "hl7.fhir.r4.core",
     "version" : "4.0.1",
     "name" : "item",
     "url" : "http://hl7.org/fhir/StructureDefinition/Questionnaire#item"
@@ -1132,19 +1119,19 @@
     "url" : "http://hl7.org/fhir/StructureDefinition/Attachment"
   }, {
     "kind" : "nested",
-    "package" : "hl7.fhir.core.r4",
+    "package" : "hl7.fhir.r4.core",
     "version" : "4.0.1",
     "name" : "item.enableWhen",
     "url" : "http://hl7.org/fhir/StructureDefinition/Questionnaire#item.enableWhen"
   }, {
     "kind" : "nested",
-    "package" : "hl7.fhir.core.r4",
+    "package" : "hl7.fhir.r4.core",
     "version" : "4.0.1",
     "name" : "item.answerOption",
     "url" : "http://hl7.org/fhir/StructureDefinition/Questionnaire#item.answerOption"
   }, {
     "kind" : "nested",
-    "package" : "hl7.fhir.core.r4",
+    "package" : "hl7.fhir.r4.core",
     "version" : "4.0.1",
     "name" : "item.initial",
     "url" : "http://hl7.org/fhir/StructureDefinition/Questionnaire#item.initial"

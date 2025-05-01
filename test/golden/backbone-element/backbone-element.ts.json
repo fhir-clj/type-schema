@@ -1,7 +1,7 @@
 {
   "identifier" : {
     "kind" : "complex-type",
-    "package" : "hl7.fhir.core.r4",
+    "package" : "hl7.fhir.r4.core",
     "version" : "4.0.1",
     "name" : "BackboneElement",
     "url" : "http://hl7.org/fhir/StructureDefinition/BackboneElement"
@@ -13,6 +13,7 @@
     "name" : "Element",
     "url" : "http://hl7.org/fhir/StructureDefinition/Element"
   },
+  "description" : "Base StructureDefinition for BackboneElement Type: Base definition for all elements that are defined inside a resource - but not those in a data type.",
   "fields" : {
     "modifierExtension" : {
       "array" : true,

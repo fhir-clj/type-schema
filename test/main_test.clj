@@ -1,6 +1,7 @@
 (ns main-test
   (:require
    [clojure.test :refer [deftest is]]
+   [fhir.schema.translate :as fhir-schema]
    [golden.core :as golden]
    [main]
    [type-schema.core-test :refer [fhir-schema->type-schemas]]
@@ -10,6 +11,41 @@
   (is (= :ok (main/process-package "hl7.fhir.r4.core@4.0.1" "output")))
   (is (= :ok (main/process-package "hl7.fhir.r5.core" "output")))
   (is (= :ok (main/process-package "hl7.fhir.us.core@6.1.0" "output"))))
+
+(deftest fhir-schemas-actual-tests
+  (package/init-from-package! "hl7.fhir.r4.core")
+
+  (golden/as-json
+   "docs/examples/fhir-schema/coding.fs.json"
+   (fhir-schema/translate (package/index "http://hl7.org/fhir/StructureDefinition/Coding")))
+
+  (golden/as-json
+   "docs/examples/fhir-schema/string.fs.json"
+   (fhir-schema/translate (package/index "http://hl7.org/fhir/StructureDefinition/string")))
+
+  (golden/as-json
+   "test/golden/backbone-element/backbone-element.fs.json"
+   (fhir-schema/translate (package/index "http://hl7.org/fhir/StructureDefinition/BackboneElement")))
+
+  (golden/as-json
+   "test/golden/bundle/bundle.fs.json"
+   (fhir-schema/translate (package/index "http://hl7.org/fhir/StructureDefinition/Bundle")))
+
+  (golden/as-json
+   "test/golden/capability-statement/capability-statement.fs.json"
+   (fhir-schema/translate (package/index "http://hl7.org/fhir/StructureDefinition/CapabilityStatement")))
+
+  (golden/as-json
+   "test/golden/element/element.fs.json"
+   (fhir-schema/translate (package/index "http://hl7.org/fhir/StructureDefinition/Element")))
+
+  (golden/as-json
+   "test/golden/patient/patient.fs.json"
+   (fhir-schema/translate (package/index "http://hl7.org/fhir/StructureDefinition/Patient")))
+
+  (golden/as-json
+   "test/golden/questionnaire/questionnaire.fs.json"
+   (fhir-schema/translate (package/index "http://hl7.org/fhir/StructureDefinition/Questionnaire"))))
 
 (deftest fhir-schema->type-schema-realworld-golden-test
   (package/init-from-package! "hl7.fhir.r4.core")

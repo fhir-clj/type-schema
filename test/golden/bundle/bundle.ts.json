@@ -1,7 +1,7 @@
 {
   "identifier" : {
     "kind" : "resource",
-    "package" : "hl7.fhir.core.r4",
+    "package" : "hl7.fhir.r4.core",
     "version" : "4.0.1",
     "name" : "Bundle",
     "url" : "http://hl7.org/fhir/StructureDefinition/Bundle"
@@ -67,7 +67,7 @@
     "link" : {
       "type" : {
         "kind" : "nested",
-        "package" : "hl7.fhir.core.r4",
+        "package" : "hl7.fhir.r4.core",
         "version" : "4.0.1",
         "name" : "link",
         "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#link"
@@ -79,7 +79,7 @@
     "entry" : {
       "type" : {
         "kind" : "nested",
-        "package" : "hl7.fhir.core.r4",
+        "package" : "hl7.fhir.r4.core",
         "version" : "4.0.1",
         "name" : "entry",
         "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#entry"
@@ -104,7 +104,7 @@
   "nested" : [ {
     "identifier" : {
       "kind" : "nested",
-      "package" : "hl7.fhir.core.r4",
+      "package" : "hl7.fhir.r4.core",
       "version" : "4.0.1",
       "name" : "link",
       "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#link"
@@ -145,7 +145,7 @@
   }, {
     "identifier" : {
       "kind" : "nested",
-      "package" : "hl7.fhir.core.r4",
+      "package" : "hl7.fhir.r4.core",
       "version" : "4.0.1",
       "name" : "entry.search",
       "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#entry.search"
@@ -187,7 +187,7 @@
   }, {
     "identifier" : {
       "kind" : "nested",
-      "package" : "hl7.fhir.core.r4",
+      "package" : "hl7.fhir.r4.core",
       "version" : "4.0.1",
       "name" : "entry.request",
       "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#entry.request"
@@ -277,7 +277,7 @@
   }, {
     "identifier" : {
       "kind" : "nested",
-      "package" : "hl7.fhir.core.r4",
+      "package" : "hl7.fhir.r4.core",
       "version" : "4.0.1",
       "name" : "entry.response",
       "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#entry.response"
@@ -354,7 +354,7 @@
   }, {
     "identifier" : {
       "kind" : "nested",
-      "package" : "hl7.fhir.core.r4",
+      "package" : "hl7.fhir.r4.core",
       "version" : "4.0.1",
       "name" : "entry",
       "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#entry"
@@ -373,7 +373,7 @@
         "excluded" : false,
         "type" : {
           "kind" : "nested",
-          "package" : "hl7.fhir.core.r4",
+          "package" : "hl7.fhir.r4.core",
           "version" : "4.0.1",
           "name" : "link",
           "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#link"
@@ -406,7 +406,7 @@
       "search" : {
         "type" : {
           "kind" : "nested",
-          "package" : "hl7.fhir.core.r4",
+          "package" : "hl7.fhir.r4.core",
           "version" : "4.0.1",
           "name" : "entry.search",
           "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#entry.search"
@@ -418,7 +418,7 @@
       "request" : {
         "type" : {
           "kind" : "nested",
-          "package" : "hl7.fhir.core.r4",
+          "package" : "hl7.fhir.r4.core",
           "version" : "4.0.1",
           "name" : "entry.request",
           "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#entry.request"
@@ -430,7 +430,7 @@
       "response" : {
         "type" : {
           "kind" : "nested",
-          "package" : "hl7.fhir.core.r4",
+          "package" : "hl7.fhir.r4.core",
           "version" : "4.0.1",
           "name" : "entry.response",
           "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#entry.response"
@@ -473,13 +473,13 @@
     "url" : "http://hl7.org/fhir/StructureDefinition/unsignedInt"
   }, {
     "kind" : "nested",
-    "package" : "hl7.fhir.core.r4",
+    "package" : "hl7.fhir.r4.core",
     "version" : "4.0.1",
     "name" : "link",
     "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#link"
   }, {
     "kind" : "nested",
-    "package" : "hl7.fhir.core.r4",
+    "package" : "hl7.fhir.r4.core",
     "version" : "4.0.1",
     "name" : "entry",
     "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#entry"
@@ -509,19 +509,19 @@
     "url" : "http://hl7.org/fhir/StructureDefinition/decimal"
   }, {
     "kind" : "nested",
-    "package" : "hl7.fhir.core.r4",
+    "package" : "hl7.fhir.r4.core",
     "version" : "4.0.1",
     "name" : "entry.search",
     "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#entry.search"
   }, {
     "kind" : "nested",
-    "package" : "hl7.fhir.core.r4",
+    "package" : "hl7.fhir.r4.core",
     "version" : "4.0.1",
     "name" : "entry.request",
     "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#entry.request"
   }, {
     "kind" : "nested",
-    "package" : "hl7.fhir.core.r4",
+    "package" : "hl7.fhir.r4.core",
     "version" : "4.0.1",
     "name" : "entry.response",
     "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#entry.response"

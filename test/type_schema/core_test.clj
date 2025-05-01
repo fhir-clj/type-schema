@@ -1,9 +1,12 @@
 (ns type-schema.core-test
-  (:require [cheshire.core :as json]
-            [clojure.test :refer [deftest is]]
-            [golden.core :as golden]
-            [type-schema.core :as type-schema]
-            [type-schema.package-index :as package]))
+  (:require
+   [cheshire.core :as json]
+   [clojure.test :refer [deftest is]]
+   [fhir.schema.translate :as fhir-schema]
+   [golden.core :as golden]
+   [matcho.core :as matcho]
+   [type-schema.core :as type-schema]
+   [type-schema.package-index :as package]))
 
 (deftest build-field-test
   (is (= {:array false
