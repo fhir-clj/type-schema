@@ -89,17 +89,27 @@
         value-set (package/index (split-url-version value-set-url))
         concepts (value-set/value-set->concepts (package/index) value-set)]
     (when (and (= strength "required") (= type "code") value-set)
-      (map (fn [concept] (:code concept)) concepts))))
+      (mapv (fn [concept] (:code concept)) concepts))))
 
-(defn build-binding [element]
-  (when (:binding element)
-    (let [strength (get-in element [:binding :strength])
-          value-set-url (get-in element [:binding :valueSet])
-          value-set (package/index (split-url-version value-set-url))]
-      (if (nil? value-set)
-        (println "WARN: unknown value set:" value-set-url)
-        {:strength strength
-         :valueset (get-value-set-identifier value-set)}))))
+(defn get-binding-identifier [fhir-schema path element]
+  (let [package-meta (package-meta fhir-schema)
+        binding (:binding element)
+        name (or (:bindingName binding)
+                 (build-nested-name path))]
+    {:kind    "binding"
+     :package (:name package-meta)
+     :version (:version package-meta)
+     :name    name
+     :url     (str "urn:fhir:binding:" name)}))
+
+(defn build-binding [fhir-schema path element]
+  (let [binding (:binding element)]
+    (when (not (empty? binding))
+      (let [value-set-url (:valueSet binding)
+            value-set (package/index (split-url-version value-set-url))]
+        (if (nil? value-set)
+          (println "WARN: unknown value set:" value-set-url)
+          (get-binding-identifier fhir-schema path element))))))
 
 (defn build-reference [element]
   (when (:refers element)
@@ -116,28 +126,32 @@
                    (empty? v))))
        (into {})))
 
+(defn build-field-type [fhir-schema element]
+  (or (some-> (type-to-url (:type element))
+              (package/fhir-schema-index)
+              (get-identifier))
+      (when-let [fhir-schema-path (:elementReference element)]
+        (get-nested-identifier fhir-schema
+                               (->> fhir-schema-path
+                                    (drop 1)
+                                    (keep-indexed (fn [i key]
+                                                    (when (odd? i)
+                                                      key)))
+                                    (map keyword)
+                                    (into []))))))
+
 (defn build-field [fhir-schema path element]
-  (let [type (or (some-> (type-to-url (:type element))
-                         (package/fhir-schema-index)
-                         (get-identifier))
-                 (when-let [fhir-schema-path (:elementReference element)]
-                   (get-nested-identifier fhir-schema
-                                          (->> fhir-schema-path
-                                               (drop 1)
-                                               (keep-indexed (fn [i key]
-                                                               (when (odd? i)
-                                                                 key)))
-                                               (map keyword)
-                                               (into [])))))]
-    (remove-empty-vals {:array     (true? (:array element))
+  (let [type (build-field-type fhir-schema element)]
+    (remove-empty-vals {:type      type
+                        :array     (true? (:array element))
                         :required  (is-required? fhir-schema path element)
                         :excluded  (is-excluded? fhir-schema path element)
-                        :type      type
+
                         :choices   (:choices element)
                         :choiceOf  (:choiceOf element)
 
                         :enum      (build-enum element)
-                        ;; :binding   (build-binding element)
+                        :binding   (build-binding fhir-schema path element)
                         :reference (build-reference element)})))
 
 (defn build-nested-field [fhir-schema path element]
@@ -184,7 +198,7 @@
                (remove (fn [[_key element]] (= "nested" (:kind element))))
                (keep (fn [[_key element]] (:type element))))
           (->> fields
-               (keep (fn [[_key element]] (get-in element [:binding :valueset]))))))
+               (keep (fn [[_key element]] (get-in element [:binding]))))))
 
 (defn extract-dependencies-from-nested [nested-types]
   (concat
@@ -194,6 +208,19 @@
         (apply concat))
    (when-let [base (get-in (first nested-types) [:base])]
      [base])))
+
+(defn translate-binding [fhir-schema path element]
+  (let [type          (build-field-type fhir-schema element)
+        value-set-url (get-in element [:binding :valueSet])
+        valueset (-> (package/index (split-url-version value-set-url))
+                     (get-value-set-identifier))]
+    (remove-empty-vals
+     {:identifier (get-binding-identifier fhir-schema path element)
+      :type type
+      :valueset valueset
+      :strength (get-in element [:binding :strength])
+      :enum (build-enum element)
+      :dependencies [type valueset]})))
 
 (defn translate-fhir-schema [fhir-schema]
   (let [parent      (-> fhir-schema :base (package/fhir-schema-index))
@@ -208,20 +235,33 @@
 
         nested      (iterate-over-backbone-element fhir-schema [] elements)
 
+        binding-type-schemas
+        (->> elements
+             ;; FIXME: nested binding?
+             (filter (fn [[_ename element]] (some? (:binding element))))
+             (map (fn [[ename element]]
+                    (translate-binding fhir-schema
+                                       [(:name identifier) ename] element)))
+             (sort-by #(get-in % [:identifier :name]))
+             (distinct))
+
         depends
         (->> (concat (when base [base])
                      (extract-dependencies fields)
                      (extract-dependencies-from-nested nested))
              (distinct)
              (sort-by #(get-in % [:idetifier :name]))
-             (into []))]
+             (into []))
 
-    [(remove-empty-vals {:identifier identifier
-                         :base base
-                         :description description
-                         :fields fields
-                         :nested nested
-                         :dependencies depends})]))
+        resource-type-schema
+        (remove-empty-vals {:identifier identifier
+                            :base base
+                            :description description
+                            :fields fields
+                            :nested nested
+                            :dependencies depends})]
+    (cons resource-type-schema
+          binding-type-schemas)))
 
 (defn translate-value-set [value-set]
   (let [identifier  (get-value-set-identifier value-set)

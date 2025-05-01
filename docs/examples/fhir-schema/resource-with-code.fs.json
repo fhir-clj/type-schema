@@ -16,7 +16,8 @@
       "type": "code",
       "binding": {
         "strength": "required",
-        "valueSet": "http://hl7.org/fhir/ValueSet/administrative-gender|4.0.1"
+        "valueSet": "http://hl7.org/fhir/ValueSet/administrative-gender|4.0.1",
+        "bindingName": "AdministrativeGender"
       },
       "isSummary": true,
       "index": 1

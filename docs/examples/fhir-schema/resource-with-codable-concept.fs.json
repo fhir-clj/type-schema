@@ -16,7 +16,8 @@
       "type": "CodeableConcept",
       "binding": {
         "strength": "extensible",
-        "valueSet": "http://hl7.org/fhir/ValueSet/marital-status"
+        "valueSet": "http://hl7.org/fhir/ValueSet/marital-status",
+        "bindingName": "MaritalStatus"
       },
       "index": 1
     }

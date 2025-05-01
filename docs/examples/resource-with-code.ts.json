@@ -16,8 +16,7 @@
   "description": "description",
   "fields": {
     "gender": {
-      "array": false,
-      "required": false,
+      "enum": ["male", "female", "other", "unknown"],
       "excluded": false,
       "type": {
         "kind": "primitive-type",
@@ -26,7 +25,15 @@
         "name": "code",
         "url": "http://hl7.org/fhir/StructureDefinition/code"
       },
-      "enum": ["male", "female", "other", "unknown"]
+      "array": false,
+      "binding": {
+        "kind": "binding",
+        "package": "hl7.fhir.core.r4",
+        "version": "4.0.1",
+        "name": "AdministrativeGender",
+        "url": "urn:fhir:binding:AdministrativeGender"
+      },
+      "required": false
     }
   },
   "dependencies": [
@@ -43,6 +50,13 @@
       "version": "4.0.1",
       "name": "code",
       "url": "http://hl7.org/fhir/StructureDefinition/code"
+    },
+    {
+      "kind": "binding",
+      "package": "hl7.fhir.core.r4",
+      "version": "4.0.1",
+      "name": "AdministrativeGender",
+      "url": "urn:fhir:binding:AdministrativeGender"
     }
   ]
 }

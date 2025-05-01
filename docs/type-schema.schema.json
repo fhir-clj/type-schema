@@ -8,35 +8,18 @@
   "definitions": {
     "type-schema-identifier": {
       "type": "object",
+      "oneOf": [
+        { "$ref": "#/definitions/with-primitive-type-kind" },
+        { "$ref": "#/definitions/with-valueset-kind" },
+        { "$ref": "#/definitions/with-complex-type-kind" },
+        { "$ref": "#/definitions/with-resource-kind" },
+        { "$ref": "#/definitions/with-nested-kind" },
+        { "$ref": "#/definitions/with-logical-kind" },
+        { "$ref": "#/definitions/with-binding-kind" }
+      ],
       "properties": {
         "kind": {
-          "oneOf": [
-            {
-              "const": "primitive-type",
-              "description": "Basic FHIR data types like string, boolean, decimal"
-            },
-            {
-              "const": "value-set",
-              "description": "A set of coded values that can be used for a field"
-            },
-            {
-              "const": "complex-type",
-              "description": "Composite data types like Address, HumanName, CodeableConcept"
-            },
-            {
-              "const": "resource",
-              "description": "Top-level FHIR resources like Patient, Observation, Encounter"
-            },
-            {
-              "const": "nested",
-              "description": "A complex type embedded within a resource or another type"
-            },
-            {
-              "const": "logical",
-              "description": "Abstract types used for inheritance and specialization"
-            }
-          ],
-          "description": "The category of FHIR element this identifier represents"
+          "type": "string"
         },
         "package": {
           "type": "string",
@@ -73,6 +56,13 @@
         "kind": { "const": "value-set" }
       }
     },
+    "with-binding-kind": {
+      "type": "object",
+      "description": "Constraint helper to ensure the kind is value-set",
+      "properties": {
+        "kind": { "const": "binding" }
+      }
+    },
     "with-complex-type-kind": {
       "type": "object",
       "description": "Constraint helper to ensure the kind is complex-type",
@@ -101,29 +91,6 @@
         "kind": { "const": "logical" }
       }
     },
-
-    "field.*.binding": {
-      "type": "object",
-      "description": "Defines how a field is bound to a terminology value set",
-      "$comment": "https://build.fhir.org/terminologies-binding-examples.html",
-      "properties": {
-        "strength": {
-          "type": "string",
-          "enum": ["required", "extensible", "preferred", "example"],
-          "description": "The binding strength: required (must be from valueset), extensible (should be from valueset), preferred (encouraged), example (illustration only)"
-        },
-        "valueset": {
-          "allOf": [
-            { "$ref": "#/definitions/type-schema-identifier" },
-            { "$ref": "#/definitions/with-valueset-kind" }
-          ],
-          "description": "Reference to the value set containing allowed values"
-        }
-      },
-      "required": ["strength", "valueset"],
-      "additionalProperties": false
-    },
-
     "field.regular": {
       "title": "Regular field",
       "description": "A standard field with a single type",
@@ -156,8 +123,10 @@
           "description": "Whether this field can contain multiple values (cardinality > 1)"
         },
         "binding": {
-          "$ref": "#/definitions/field.*.binding",
-          "description": "For coded fields, information about the value set binding"
+          "allOf": [
+            { "$ref": "#/definitions/type-schema-identifier" },
+            { "$ref": "#/definitions/with-binding-kind" }
+          ]
         },
         "enum": {
           "type": "array",
@@ -235,7 +204,10 @@
           }
         },
         "binding": {
-          "$ref": "#/definitions/field.*.binding",
+          "allOf": [
+            { "$ref": "#/definitions/type-schema-identifier" },
+            { "$ref": "#/definitions/with-binding-kind" }
+          ],
           "description": "For coded choices, information about the value set binding"
         },
         "enum": {
@@ -410,6 +382,53 @@
         "compose": {
           "type": "object",
           "description": "Complex value set composition rules when the value set is defined as a composition of other value sets"
+        }
+      },
+      "required": ["identifier"],
+      "additionalProperties": false
+    },
+
+    {
+      "title": "Type Schema for Binding",
+      "type": "object",
+      "properties": {
+        "identifier": {
+          "allOf": [
+            { "$ref": "#/definitions/type-schema-identifier" },
+            { "$ref": "#/definitions/with-binding-kind" }
+          ],
+          "description": "The unique identifier for this value set"
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of the value set"
+        },
+        "type": {
+          "$ref": "#/definitions/type-schema-identifier"
+        },
+        "strength": {
+          "type": "string",
+          "description": "The strength of the binding"
+        },
+        "enum": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The enumeration of values for the binding"
+        },
+        "valueset": {
+          "allOf": [
+            { "$ref": "#/definitions/type-schema-identifier" },
+            { "$ref": "#/definitions/with-valueset-kind" }
+          ]
+        },
+        "dependencies": {
+          "type": "array",
+          "description": "Other types that this resource or type depends on",
+          "items": {
+            "$ref": "#/definitions/type-schema-identifier"
+          }
         }
       },
       "required": ["identifier"],

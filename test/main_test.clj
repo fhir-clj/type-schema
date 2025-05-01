@@ -56,14 +56,26 @@
   (golden/as-jsons ["test/golden/backbone-element/backbone-element.ts.json"]
                    (fhir-schema->type-schemas "test/golden/backbone-element/backbone-element.fs.json"))
 
-  (golden/as-jsons ["test/golden/bundle/bundle.ts.json"]
+  (golden/as-jsons ["test/golden/bundle/bundle.ts.json"
+                    "test/golden/bundle/binding-BundleType.ts.json"]
                    (fhir-schema->type-schemas "test/golden/bundle/bundle.fs.json"))
 
-  (golden/as-jsons ["test/golden/patient/patient.ts.json"]
+  (golden/as-jsons ["test/golden/patient/patient.ts.json"
+                    "test/golden/patient/binding-AdministrativeGender.ts.json"
+                    "test/golden/patient/binding-MaritalStatus.ts.json"]
                    (fhir-schema->type-schemas "test/golden/patient/patient.fs.json"))
 
-  (golden/as-jsons ["test/golden/capability-statement/capability-statement.ts.json"]
+  (golden/as-jsons ["test/golden/capability-statement/capability-statement.ts.json"
+                    "test/golden/capability-statement/binding-CapabilityStatementKind.ts.json"
+                    "test/golden/capability-statement/binding-FHIRVersion.ts.json"
+                    "test/golden/capability-statement/binding-Jurisdiction.ts.json"
+                    "test/golden/capability-statement/binding-MimeType.ts.json"
+                    "test/golden/capability-statement/binding-PublicationStatus.ts.json"]
                    (fhir-schema->type-schemas "test/golden/capability-statement/capability-statement.fs.json"))
 
-  (golden/as-jsons ["test/golden/questionnaire/questionnaire.ts.json"]
+  (golden/as-jsons ["test/golden/questionnaire/questionnaire.ts.json"
+                    "test/golden/questionnaire/binding-Jurisdiction.ts.json"
+                    "test/golden/questionnaire/binding-PublicationStatus.ts.json"
+                    "test/golden/questionnaire/binding-QuestionnaireConcept.ts.json"
+                    "test/golden/questionnaire/binding-ResourceType.ts.json"]
                    (fhir-schema->type-schemas "test/golden/questionnaire/questionnaire.fs.json")))

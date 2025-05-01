@@ -16,8 +16,6 @@
   "description": "description",
   "fields": {
     "maritalStatus": {
-      "array": false,
-      "required": false,
       "excluded": false,
       "type": {
         "kind": "complex-type",
@@ -25,7 +23,16 @@
         "version": "4.0.1",
         "name": "CodeableConcept",
         "url": "http://hl7.org/fhir/StructureDefinition/CodeableConcept"
-      }
+      },
+      "array": false,
+      "binding": {
+        "kind": "binding",
+        "package": "hl7.fhir.core.r4",
+        "version": "4.0.1",
+        "name": "MaritalStatus",
+        "url": "urn:fhir:binding:MaritalStatus"
+      },
+      "required": false
     }
   },
   "dependencies": [
@@ -42,6 +49,13 @@
       "version": "4.0.1",
       "name": "CodeableConcept",
       "url": "http://hl7.org/fhir/StructureDefinition/CodeableConcept"
+    },
+    {
+      "kind": "binding",
+      "package": "hl7.fhir.core.r4",
+      "version": "4.0.1",
+      "name": "MaritalStatus",
+      "url": "urn:fhir:binding:MaritalStatus"
     }
   ]
 }

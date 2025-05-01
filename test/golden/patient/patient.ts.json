@@ -16,8 +16,6 @@
   "description" : "Demographics and other administrative information about an individual or animal receiving care or other health-related services.",
   "fields" : {
     "multipleBirthBoolean" : {
-      "array" : false,
-      "required" : false,
       "excluded" : false,
       "type" : {
         "kind" : "primitive-type",
@@ -26,11 +24,11 @@
         "name" : "boolean",
         "url" : "http://hl7.org/fhir/StructureDefinition/boolean"
       },
-      "choiceOf" : "multipleBirth"
+      "array" : false,
+      "choiceOf" : "multipleBirth",
+      "required" : false
     },
     "address" : {
-      "array" : true,
-      "required" : false,
       "excluded" : false,
       "type" : {
         "kind" : "complex-type",
@@ -38,11 +36,11 @@
         "version" : "4.0.1",
         "name" : "Address",
         "url" : "http://hl7.org/fhir/StructureDefinition/Address"
-      }
+      },
+      "array" : true,
+      "required" : false
     },
     "deceasedDateTime" : {
-      "array" : false,
-      "required" : false,
       "excluded" : false,
       "type" : {
         "kind" : "primitive-type",
@@ -51,11 +49,11 @@
         "name" : "dateTime",
         "url" : "http://hl7.org/fhir/StructureDefinition/dateTime"
       },
-      "choiceOf" : "deceased"
+      "array" : false,
+      "choiceOf" : "deceased",
+      "required" : false
     },
     "managingOrganization" : {
-      "array" : false,
-      "required" : false,
       "excluded" : false,
       "type" : {
         "kind" : "complex-type",
@@ -64,17 +62,17 @@
         "name" : "Reference",
         "url" : "http://hl7.org/fhir/StructureDefinition/Reference"
       },
+      "array" : false,
       "reference" : [ {
         "kind" : "resource",
         "package" : "hl7.fhir.r4.core",
         "version" : "4.0.1",
         "name" : "Organization",
         "url" : "http://hl7.org/fhir/StructureDefinition/Organization"
-      } ]
+      } ],
+      "required" : false
     },
     "deceasedBoolean" : {
-      "array" : false,
-      "required" : false,
       "excluded" : false,
       "type" : {
         "kind" : "primitive-type",
@@ -83,11 +81,11 @@
         "name" : "boolean",
         "url" : "http://hl7.org/fhir/StructureDefinition/boolean"
       },
-      "choiceOf" : "deceased"
+      "array" : false,
+      "choiceOf" : "deceased",
+      "required" : false
     },
     "name" : {
-      "array" : true,
-      "required" : false,
       "excluded" : false,
       "type" : {
         "kind" : "complex-type",
@@ -95,11 +93,11 @@
         "version" : "4.0.1",
         "name" : "HumanName",
         "url" : "http://hl7.org/fhir/StructureDefinition/HumanName"
-      }
+      },
+      "array" : true,
+      "required" : false
     },
     "birthDate" : {
-      "array" : false,
-      "required" : false,
       "excluded" : false,
       "type" : {
         "kind" : "primitive-type",
@@ -107,11 +105,11 @@
         "version" : "4.0.1",
         "name" : "date",
         "url" : "http://hl7.org/fhir/StructureDefinition/date"
-      }
+      },
+      "array" : false,
+      "required" : false
     },
     "multipleBirthInteger" : {
-      "array" : false,
-      "required" : false,
       "excluded" : false,
       "type" : {
         "kind" : "primitive-type",
@@ -120,23 +118,23 @@
         "name" : "integer",
         "url" : "http://hl7.org/fhir/StructureDefinition/integer"
       },
-      "choiceOf" : "multipleBirth"
+      "array" : false,
+      "choiceOf" : "multipleBirth",
+      "required" : false
     },
     "multipleBirth" : {
-      "array" : false,
-      "required" : false,
       "excluded" : false,
-      "choices" : [ "multipleBirthBoolean", "multipleBirthInteger" ]
+      "choices" : [ "multipleBirthBoolean", "multipleBirthInteger" ],
+      "array" : false,
+      "required" : false
     },
     "deceased" : {
-      "array" : false,
-      "required" : false,
       "excluded" : false,
-      "choices" : [ "deceasedBoolean", "deceasedDateTime" ]
+      "choices" : [ "deceasedBoolean", "deceasedDateTime" ],
+      "array" : false,
+      "required" : false
     },
     "photo" : {
-      "array" : true,
-      "required" : false,
       "excluded" : false,
       "type" : {
         "kind" : "complex-type",
@@ -144,7 +142,9 @@
         "version" : "4.0.1",
         "name" : "Attachment",
         "url" : "http://hl7.org/fhir/StructureDefinition/Attachment"
-      }
+      },
+      "array" : true,
+      "required" : false
     },
     "link" : {
       "type" : {
@@ -159,8 +159,6 @@
       "excluded" : false
     },
     "active" : {
-      "array" : false,
-      "required" : false,
       "excluded" : false,
       "type" : {
         "kind" : "primitive-type",
@@ -168,7 +166,9 @@
         "version" : "4.0.1",
         "name" : "boolean",
         "url" : "http://hl7.org/fhir/StructureDefinition/boolean"
-      }
+      },
+      "array" : false,
+      "required" : false
     },
     "communication" : {
       "type" : {
@@ -183,8 +183,6 @@
       "excluded" : false
     },
     "identifier" : {
-      "array" : true,
-      "required" : false,
       "excluded" : false,
       "type" : {
         "kind" : "complex-type",
@@ -192,11 +190,11 @@
         "version" : "4.0.1",
         "name" : "Identifier",
         "url" : "http://hl7.org/fhir/StructureDefinition/Identifier"
-      }
+      },
+      "array" : true,
+      "required" : false
     },
     "telecom" : {
-      "array" : true,
-      "required" : false,
       "excluded" : false,
       "type" : {
         "kind" : "complex-type",
@@ -204,11 +202,11 @@
         "version" : "4.0.1",
         "name" : "ContactPoint",
         "url" : "http://hl7.org/fhir/StructureDefinition/ContactPoint"
-      }
+      },
+      "array" : true,
+      "required" : false
     },
     "generalPractitioner" : {
-      "array" : true,
-      "required" : false,
       "excluded" : false,
       "type" : {
         "kind" : "complex-type",
@@ -217,6 +215,7 @@
         "name" : "Reference",
         "url" : "http://hl7.org/fhir/StructureDefinition/Reference"
       },
+      "array" : true,
       "reference" : [ {
         "kind" : "resource",
         "package" : "hl7.fhir.r4.core",
@@ -235,11 +234,11 @@
         "version" : "4.0.1",
         "name" : "PractitionerRole",
         "url" : "http://hl7.org/fhir/StructureDefinition/PractitionerRole"
-      } ]
+      } ],
+      "required" : false
     },
     "gender" : {
-      "array" : false,
-      "required" : false,
+      "enum" : [ "male", "female", "other", "unknown" ],
       "excluded" : false,
       "type" : {
         "kind" : "primitive-type",
@@ -248,11 +247,17 @@
         "name" : "code",
         "url" : "http://hl7.org/fhir/StructureDefinition/code"
       },
-      "enum" : [ "male", "female", "other", "unknown" ]
+      "array" : false,
+      "binding" : {
+        "kind" : "binding",
+        "package" : "hl7.fhir.r4.core",
+        "version" : "4.0.1",
+        "name" : "AdministrativeGender",
+        "url" : "urn:fhir:binding:AdministrativeGender"
+      },
+      "required" : false
     },
     "maritalStatus" : {
-      "array" : false,
-      "required" : false,
       "excluded" : false,
       "type" : {
         "kind" : "complex-type",
@@ -260,7 +265,16 @@
         "version" : "4.0.1",
         "name" : "CodeableConcept",
         "url" : "http://hl7.org/fhir/StructureDefinition/CodeableConcept"
-      }
+      },
+      "array" : false,
+      "binding" : {
+        "kind" : "binding",
+        "package" : "hl7.fhir.r4.core",
+        "version" : "4.0.1",
+        "name" : "MaritalStatus",
+        "url" : "urn:fhir:binding:MaritalStatus"
+      },
+      "required" : false
     },
     "contact" : {
       "type" : {
@@ -292,8 +306,6 @@
     },
     "fields" : {
       "other" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "complex-type",
@@ -302,6 +314,7 @@
           "name" : "Reference",
           "url" : "http://hl7.org/fhir/StructureDefinition/Reference"
         },
+        "array" : false,
         "reference" : [ {
           "kind" : "resource",
           "package" : "hl7.fhir.r4.core",
@@ -314,11 +327,11 @@
           "version" : "4.0.1",
           "name" : "RelatedPerson",
           "url" : "http://hl7.org/fhir/StructureDefinition/RelatedPerson"
-        } ]
+        } ],
+        "required" : false
       },
       "type" : {
-        "array" : false,
-        "required" : false,
+        "enum" : [ "replaced-by", "replaces", "refer", "seealso" ],
         "excluded" : false,
         "type" : {
           "kind" : "primitive-type",
@@ -327,7 +340,15 @@
           "name" : "code",
           "url" : "http://hl7.org/fhir/StructureDefinition/code"
         },
-        "enum" : [ "replaced-by", "replaces", "refer", "seealso" ]
+        "array" : false,
+        "binding" : {
+          "kind" : "binding",
+          "package" : "hl7.fhir.r4.core",
+          "version" : "4.0.1",
+          "name" : "LinkType",
+          "url" : "urn:fhir:binding:LinkType"
+        },
+        "required" : false
       }
     }
   }, {
@@ -347,8 +368,6 @@
     },
     "fields" : {
       "language" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "complex-type",
@@ -356,11 +375,18 @@
           "version" : "4.0.1",
           "name" : "CodeableConcept",
           "url" : "http://hl7.org/fhir/StructureDefinition/CodeableConcept"
-        }
+        },
+        "array" : false,
+        "binding" : {
+          "kind" : "binding",
+          "package" : "hl7.fhir.r4.core",
+          "version" : "4.0.1",
+          "name" : "Language",
+          "url" : "urn:fhir:binding:Language"
+        },
+        "required" : false
       },
       "preferred" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "primitive-type",
@@ -368,7 +394,9 @@
           "version" : "4.0.1",
           "name" : "boolean",
           "url" : "http://hl7.org/fhir/StructureDefinition/boolean"
-        }
+        },
+        "array" : false,
+        "required" : false
       }
     }
   }, {
@@ -388,8 +416,6 @@
     },
     "fields" : {
       "relationship" : {
-        "array" : true,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "complex-type",
@@ -397,11 +423,18 @@
           "version" : "4.0.1",
           "name" : "CodeableConcept",
           "url" : "http://hl7.org/fhir/StructureDefinition/CodeableConcept"
-        }
+        },
+        "array" : true,
+        "binding" : {
+          "kind" : "binding",
+          "package" : "hl7.fhir.r4.core",
+          "version" : "4.0.1",
+          "name" : "ContactRelationship",
+          "url" : "urn:fhir:binding:ContactRelationship"
+        },
+        "required" : false
       },
       "name" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "complex-type",
@@ -409,11 +442,11 @@
           "version" : "4.0.1",
           "name" : "HumanName",
           "url" : "http://hl7.org/fhir/StructureDefinition/HumanName"
-        }
+        },
+        "array" : false,
+        "required" : false
       },
       "telecom" : {
-        "array" : true,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "complex-type",
@@ -421,11 +454,11 @@
           "version" : "4.0.1",
           "name" : "ContactPoint",
           "url" : "http://hl7.org/fhir/StructureDefinition/ContactPoint"
-        }
+        },
+        "array" : true,
+        "required" : false
       },
       "address" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "complex-type",
@@ -433,11 +466,12 @@
           "version" : "4.0.1",
           "name" : "Address",
           "url" : "http://hl7.org/fhir/StructureDefinition/Address"
-        }
+        },
+        "array" : false,
+        "required" : false
       },
       "gender" : {
-        "array" : false,
-        "required" : false,
+        "enum" : [ "male", "female", "other", "unknown" ],
         "excluded" : false,
         "type" : {
           "kind" : "primitive-type",
@@ -446,11 +480,17 @@
           "name" : "code",
           "url" : "http://hl7.org/fhir/StructureDefinition/code"
         },
-        "enum" : [ "male", "female", "other", "unknown" ]
+        "array" : false,
+        "binding" : {
+          "kind" : "binding",
+          "package" : "hl7.fhir.r4.core",
+          "version" : "4.0.1",
+          "name" : "AdministrativeGender",
+          "url" : "urn:fhir:binding:AdministrativeGender"
+        },
+        "required" : false
       },
       "organization" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "complex-type",
@@ -459,17 +499,17 @@
           "name" : "Reference",
           "url" : "http://hl7.org/fhir/StructureDefinition/Reference"
         },
+        "array" : false,
         "reference" : [ {
           "kind" : "resource",
           "package" : "hl7.fhir.r4.core",
           "version" : "4.0.1",
           "name" : "Organization",
           "url" : "http://hl7.org/fhir/StructureDefinition/Organization"
-        } ]
+        } ],
+        "required" : false
       },
       "period" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "complex-type",
@@ -477,7 +517,9 @@
           "version" : "4.0.1",
           "name" : "Period",
           "url" : "http://hl7.org/fhir/StructureDefinition/Period"
-        }
+        },
+        "array" : false,
+        "required" : false
       }
     }
   } ],
@@ -578,11 +620,41 @@
     "name" : "contact",
     "url" : "http://hl7.org/fhir/StructureDefinition/Patient#contact"
   }, {
+    "kind" : "binding",
+    "package" : "hl7.fhir.r4.core",
+    "version" : "4.0.1",
+    "name" : "AdministrativeGender",
+    "url" : "urn:fhir:binding:AdministrativeGender"
+  }, {
+    "kind" : "binding",
+    "package" : "hl7.fhir.r4.core",
+    "version" : "4.0.1",
+    "name" : "MaritalStatus",
+    "url" : "urn:fhir:binding:MaritalStatus"
+  }, {
+    "kind" : "binding",
+    "package" : "hl7.fhir.r4.core",
+    "version" : "4.0.1",
+    "name" : "LinkType",
+    "url" : "urn:fhir:binding:LinkType"
+  }, {
+    "kind" : "binding",
+    "package" : "hl7.fhir.r4.core",
+    "version" : "4.0.1",
+    "name" : "Language",
+    "url" : "urn:fhir:binding:Language"
+  }, {
     "kind" : "complex-type",
     "package" : "hl7.fhir.r4.core",
     "version" : "4.0.1",
     "name" : "Period",
     "url" : "http://hl7.org/fhir/StructureDefinition/Period"
+  }, {
+    "kind" : "binding",
+    "package" : "hl7.fhir.r4.core",
+    "version" : "4.0.1",
+    "name" : "ContactRelationship",
+    "url" : "urn:fhir:binding:ContactRelationship"
   }, {
     "kind" : "complex-type",
     "package" : "hl7.fhir.r4.core",

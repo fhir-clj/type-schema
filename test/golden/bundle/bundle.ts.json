@@ -16,8 +16,6 @@
   "description" : "A container for a collection of resources.",
   "fields" : {
     "identifier" : {
-      "array" : false,
-      "required" : false,
       "excluded" : false,
       "type" : {
         "kind" : "complex-type",
@@ -25,11 +23,12 @@
         "version" : "4.0.1",
         "name" : "Identifier",
         "url" : "http://hl7.org/fhir/StructureDefinition/Identifier"
-      }
+      },
+      "array" : false,
+      "required" : false
     },
     "type" : {
-      "array" : false,
-      "required" : false,
+      "enum" : [ "document", "message", "transaction", "transaction-response", "batch", "batch-response", "history", "searchset", "collection" ],
       "excluded" : false,
       "type" : {
         "kind" : "primitive-type",
@@ -38,11 +37,17 @@
         "name" : "code",
         "url" : "http://hl7.org/fhir/StructureDefinition/code"
       },
-      "enum" : [ "document", "message", "transaction", "transaction-response", "batch", "batch-response", "history", "searchset", "collection" ]
+      "array" : false,
+      "binding" : {
+        "kind" : "binding",
+        "package" : "hl7.fhir.r4.core",
+        "version" : "4.0.1",
+        "name" : "BundleType",
+        "url" : "urn:fhir:binding:BundleType"
+      },
+      "required" : false
     },
     "timestamp" : {
-      "array" : false,
-      "required" : false,
       "excluded" : false,
       "type" : {
         "kind" : "primitive-type",
@@ -50,11 +55,11 @@
         "version" : "4.0.1",
         "name" : "instant",
         "url" : "http://hl7.org/fhir/StructureDefinition/instant"
-      }
+      },
+      "array" : false,
+      "required" : false
     },
     "total" : {
-      "array" : false,
-      "required" : false,
       "excluded" : false,
       "type" : {
         "kind" : "primitive-type",
@@ -62,7 +67,9 @@
         "version" : "4.0.1",
         "name" : "unsignedInt",
         "url" : "http://hl7.org/fhir/StructureDefinition/unsignedInt"
-      }
+      },
+      "array" : false,
+      "required" : false
     },
     "link" : {
       "type" : {
@@ -89,8 +96,6 @@
       "excluded" : false
     },
     "signature" : {
-      "array" : false,
-      "required" : false,
       "excluded" : false,
       "type" : {
         "kind" : "complex-type",
@@ -98,7 +103,9 @@
         "version" : "4.0.1",
         "name" : "Signature",
         "url" : "http://hl7.org/fhir/StructureDefinition/Signature"
-      }
+      },
+      "array" : false,
+      "required" : false
     }
   },
   "nested" : [ {
@@ -118,8 +125,6 @@
     },
     "fields" : {
       "relation" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "primitive-type",
@@ -127,11 +132,11 @@
           "version" : "4.0.1",
           "name" : "string",
           "url" : "http://hl7.org/fhir/StructureDefinition/string"
-        }
+        },
+        "array" : false,
+        "required" : false
       },
       "url" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "primitive-type",
@@ -139,7 +144,9 @@
           "version" : "4.0.1",
           "name" : "uri",
           "url" : "http://hl7.org/fhir/StructureDefinition/uri"
-        }
+        },
+        "array" : false,
+        "required" : false
       }
     }
   }, {
@@ -159,8 +166,7 @@
     },
     "fields" : {
       "mode" : {
-        "array" : false,
-        "required" : false,
+        "enum" : [ "match", "include", "outcome" ],
         "excluded" : false,
         "type" : {
           "kind" : "primitive-type",
@@ -169,11 +175,17 @@
           "name" : "code",
           "url" : "http://hl7.org/fhir/StructureDefinition/code"
         },
-        "enum" : [ "match", "include", "outcome" ]
+        "array" : false,
+        "binding" : {
+          "kind" : "binding",
+          "package" : "hl7.fhir.r4.core",
+          "version" : "4.0.1",
+          "name" : "SearchEntryMode",
+          "url" : "urn:fhir:binding:SearchEntryMode"
+        },
+        "required" : false
       },
       "score" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "primitive-type",
@@ -181,7 +193,9 @@
           "version" : "4.0.1",
           "name" : "decimal",
           "url" : "http://hl7.org/fhir/StructureDefinition/decimal"
-        }
+        },
+        "array" : false,
+        "required" : false
       }
     }
   }, {
@@ -201,8 +215,7 @@
     },
     "fields" : {
       "method" : {
-        "array" : false,
-        "required" : false,
+        "enum" : [ "GET", "HEAD", "POST", "PUT", "DELETE", "PATCH" ],
         "excluded" : false,
         "type" : {
           "kind" : "primitive-type",
@@ -211,11 +224,17 @@
           "name" : "code",
           "url" : "http://hl7.org/fhir/StructureDefinition/code"
         },
-        "enum" : [ "GET", "HEAD", "POST", "PUT", "DELETE", "PATCH" ]
+        "array" : false,
+        "binding" : {
+          "kind" : "binding",
+          "package" : "hl7.fhir.r4.core",
+          "version" : "4.0.1",
+          "name" : "HTTPVerb",
+          "url" : "urn:fhir:binding:HTTPVerb"
+        },
+        "required" : false
       },
       "url" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "primitive-type",
@@ -223,11 +242,11 @@
           "version" : "4.0.1",
           "name" : "uri",
           "url" : "http://hl7.org/fhir/StructureDefinition/uri"
-        }
+        },
+        "array" : false,
+        "required" : false
       },
       "ifNoneMatch" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "primitive-type",
@@ -235,11 +254,11 @@
           "version" : "4.0.1",
           "name" : "string",
           "url" : "http://hl7.org/fhir/StructureDefinition/string"
-        }
+        },
+        "array" : false,
+        "required" : false
       },
       "ifModifiedSince" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "primitive-type",
@@ -247,11 +266,11 @@
           "version" : "4.0.1",
           "name" : "instant",
           "url" : "http://hl7.org/fhir/StructureDefinition/instant"
-        }
+        },
+        "array" : false,
+        "required" : false
       },
       "ifMatch" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "primitive-type",
@@ -259,11 +278,11 @@
           "version" : "4.0.1",
           "name" : "string",
           "url" : "http://hl7.org/fhir/StructureDefinition/string"
-        }
+        },
+        "array" : false,
+        "required" : false
       },
       "ifNoneExist" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "primitive-type",
@@ -271,7 +290,9 @@
           "version" : "4.0.1",
           "name" : "string",
           "url" : "http://hl7.org/fhir/StructureDefinition/string"
-        }
+        },
+        "array" : false,
+        "required" : false
       }
     }
   }, {
@@ -291,8 +312,6 @@
     },
     "fields" : {
       "status" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "primitive-type",
@@ -300,11 +319,11 @@
           "version" : "4.0.1",
           "name" : "string",
           "url" : "http://hl7.org/fhir/StructureDefinition/string"
-        }
+        },
+        "array" : false,
+        "required" : false
       },
       "location" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "primitive-type",
@@ -312,11 +331,11 @@
           "version" : "4.0.1",
           "name" : "uri",
           "url" : "http://hl7.org/fhir/StructureDefinition/uri"
-        }
+        },
+        "array" : false,
+        "required" : false
       },
       "etag" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "primitive-type",
@@ -324,11 +343,11 @@
           "version" : "4.0.1",
           "name" : "string",
           "url" : "http://hl7.org/fhir/StructureDefinition/string"
-        }
+        },
+        "array" : false,
+        "required" : false
       },
       "lastModified" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "primitive-type",
@@ -336,11 +355,11 @@
           "version" : "4.0.1",
           "name" : "instant",
           "url" : "http://hl7.org/fhir/StructureDefinition/instant"
-        }
+        },
+        "array" : false,
+        "required" : false
       },
       "outcome" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "resource",
@@ -348,7 +367,9 @@
           "version" : "4.0.1",
           "name" : "Resource",
           "url" : "http://hl7.org/fhir/StructureDefinition/Resource"
-        }
+        },
+        "array" : false,
+        "required" : false
       }
     }
   }, {
@@ -368,8 +389,6 @@
     },
     "fields" : {
       "link" : {
-        "array" : true,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "nested",
@@ -377,11 +396,11 @@
           "version" : "4.0.1",
           "name" : "link",
           "url" : "http://hl7.org/fhir/StructureDefinition/Bundle#link"
-        }
+        },
+        "array" : true,
+        "required" : false
       },
       "fullUrl" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "primitive-type",
@@ -389,11 +408,11 @@
           "version" : "4.0.1",
           "name" : "uri",
           "url" : "http://hl7.org/fhir/StructureDefinition/uri"
-        }
+        },
+        "array" : false,
+        "required" : false
       },
       "resource" : {
-        "array" : false,
-        "required" : false,
         "excluded" : false,
         "type" : {
           "kind" : "resource",
@@ -401,7 +420,9 @@
           "version" : "4.0.1",
           "name" : "Resource",
           "url" : "http://hl7.org/fhir/StructureDefinition/Resource"
-        }
+        },
+        "array" : false,
+        "required" : false
       },
       "search" : {
         "type" : {
@@ -490,6 +511,12 @@
     "name" : "Signature",
     "url" : "http://hl7.org/fhir/StructureDefinition/Signature"
   }, {
+    "kind" : "binding",
+    "package" : "hl7.fhir.r4.core",
+    "version" : "4.0.1",
+    "name" : "BundleType",
+    "url" : "urn:fhir:binding:BundleType"
+  }, {
     "kind" : "primitive-type",
     "package" : "hl7.fhir.r4.core",
     "version" : "4.0.1",
@@ -507,6 +534,18 @@
     "version" : "4.0.1",
     "name" : "decimal",
     "url" : "http://hl7.org/fhir/StructureDefinition/decimal"
+  }, {
+    "kind" : "binding",
+    "package" : "hl7.fhir.r4.core",
+    "version" : "4.0.1",
+    "name" : "SearchEntryMode",
+    "url" : "urn:fhir:binding:SearchEntryMode"
+  }, {
+    "kind" : "binding",
+    "package" : "hl7.fhir.r4.core",
+    "version" : "4.0.1",
+    "name" : "HTTPVerb",
+    "url" : "urn:fhir:binding:HTTPVerb"
   }, {
     "kind" : "nested",
     "package" : "hl7.fhir.r4.core",
