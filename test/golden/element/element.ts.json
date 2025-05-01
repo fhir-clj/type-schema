@@ -1,49 +1,52 @@
 {
-  "identifier" : {
-    "kind" : "complex-type",
-    "package" : "hl7.fhir.r4.core",
-    "version" : "4.0.1",
-    "name" : "Element",
-    "url" : "http://hl7.org/fhir/StructureDefinition/Element"
+  "identifier": {
+    "kind": "complex-type",
+    "package": "hl7.fhir.r4.core",
+    "version": "4.0.1",
+    "name": "Element",
+    "url": "http://hl7.org/fhir/StructureDefinition/Element"
   },
-  "description" : "Base StructureDefinition for Element Type: Base definition for all elements in a resource.",
-  "fields" : {
-    "id" : {
-      "array" : false,
-      "required" : false,
-      "excluded" : false,
-      "type" : {
-        "kind" : "primitive-type",
-        "package" : "hl7.fhir.r4.core",
-        "version" : "4.0.1",
-        "name" : "string",
-        "url" : "http://hl7.org/fhir/StructureDefinition/string"
+  "description": "Base StructureDefinition for Element Type: Base definition for all elements in a resource.",
+  "fields": {
+    "id": {
+      "array": false,
+      "required": false,
+      "excluded": false,
+      "type": {
+        "kind": "primitive-type",
+        "package": "hl7.fhir.r4.core",
+        "version": "4.0.1",
+        "name": "string",
+        "url": "http://hl7.org/fhir/StructureDefinition/string"
       }
     },
-    "extension" : {
-      "array" : true,
-      "required" : false,
-      "excluded" : false,
-      "type" : {
-        "kind" : "complex-type",
-        "package" : "hl7.fhir.r4.core",
-        "version" : "4.0.1",
-        "name" : "Extension",
-        "url" : "http://hl7.org/fhir/StructureDefinition/Extension"
+    "extension": {
+      "array": true,
+      "required": false,
+      "excluded": false,
+      "type": {
+        "kind": "complex-type",
+        "package": "hl7.fhir.r4.core",
+        "version": "4.0.1",
+        "name": "Extension",
+        "url": "http://hl7.org/fhir/StructureDefinition/Extension"
       }
     }
   },
-  "dependencies" : [ {
-    "kind" : "primitive-type",
-    "package" : "hl7.fhir.r4.core",
-    "version" : "4.0.1",
-    "name" : "string",
-    "url" : "http://hl7.org/fhir/StructureDefinition/string"
-  }, {
-    "kind" : "complex-type",
-    "package" : "hl7.fhir.r4.core",
-    "version" : "4.0.1",
-    "name" : "Extension",
-    "url" : "http://hl7.org/fhir/StructureDefinition/Extension"
-  } ]
+  "dependencies": [
+    {
+      "kind": "primitive-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "string",
+      "url": "http://hl7.org/fhir/StructureDefinition/string"
+    },
+    {
+      "kind": "complex-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "Extension",
+      "url": "http://hl7.org/fhir/StructureDefinition/Extension"
+    }
+  ]
 }

@@ -1,6 +1,6 @@
 .PHONY: install-hooks repl test clean build run format lint check fix check-json update-golden deps
 
-all: test format lint format-example-json check-json
+all: format test lint update-golden format-json check-json
 
 install-hooks:
 	@bash scripts/install-hooks.sh
@@ -13,8 +13,6 @@ repl:
 
 check: test lint format-check
 
-fix: format update-golden
-
 ###########################################################
 
 test:
@@ -22,7 +20,7 @@ test:
 
 update-golden:
 	UPDATE_GOLDEN=true clj -M:test
-	make format-example-json
+	make format-golden-json
 
 lint:
 	clj -M:lint
@@ -43,6 +41,7 @@ build:
 
 clean:
 	rm -rf target .cpcache output
+	find . -name "*.ts.json"| xargs -P0 -n 1 rm
 
 ###########################################################
 
@@ -79,5 +78,10 @@ check-output-json:
 check-output-json-fail-fast:
 	find output -name "*.json" | grep -v ndjson | xargs -P1 -n 1 sh -c 'ajv test -s docs/type-schema.schema.json --valid -d $$0 || exit 255'
 
+format-json: format-golden-json format-example-json
+
 format-example-json:
 	prettier -w docs/**/*.json
+
+format-golden-json:
+	find test/golden -name "*.json" -type f -exec sh -c 'jq . "{}" > "{}.tmp" && mv "{}.tmp" "{}"' \;
