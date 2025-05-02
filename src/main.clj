@@ -8,6 +8,8 @@
    [type-schema.package-index :as package])
   (:gen-class))
 
+(def version "0.0.7")
+
 (defn- fhir-schema->type-schema [fhir-schema-index]
   (->> fhir-schema-index
        (map (fn [[url fhir-schema]]
@@ -43,11 +45,21 @@
         (println (cheshire.core/generate-string item)))) :ok))
 
 (defn -main [& args]
-  (if (and (not= (count args) 1) (not= (count args) 2))
+  (cond
+    (or (= (first args) "--version") (= (first args) "-v"))
     (do
-      (println "Usage: java -jar program.jar <package-name> <output-dir>")
+      (println (str "type-schema version " version))
+      (System/exit 0))
+
+    (and (not= (count args) 1) (not= (count args) 2))
+    (do
+      (println "Usage: java -jar program.jar [options] <package-name> [<output-dir>]")
+      (println "Options:")
+      (println "  --version, -v   Print the current version")
       (println "Example: java -jar program.jar hl7.fhir.r4.core@4.0.1 output")
       (System/exit 1))
+
+    :else
     (let [[package-name output-dir] args]
       (try
         (process-package package-name output-dir)
