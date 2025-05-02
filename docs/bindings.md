@@ -1,6 +1,6 @@
 # Bindings to ValueSet
 
-**Status**: In progress
+**Status**: Prototyped
 
 <!-- TODO: codable concept examples -->
 <!-- TODO: Use & Example: http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName -->
@@ -86,7 +86,8 @@ The same thing in FHIR Schema, `elements`:
     "type": "code",
     "binding": {
       "strength": "required",
-      "valueSet": "http://hl7.org/fhir/ValueSet/administrative-gender|4.0.1"
+      "valueSet": "http://hl7.org/fhir/ValueSet/administrative-gender|4.0.1",
+      "bindingName": "AdministrativeGender"
     },
     "isSummary": true,
     "index": 1
@@ -111,14 +112,14 @@ We will write both examples in TypeScript and Python.
 Some programming languages allow the use of type level literals and permit the following constructs:
 
 ```typescript
-type MaritalStatus = "single" | "married" | "divorced" | "widowed";
-const status: MaritalStatus = "married";
+type AdministrativeGender = "male" | "female" | "other" | "unknown";
+const gender: AdministrativeGender = "female";
 ```
 
 ```python
 from typing import Literal
-MaritalStatus = Literal['single', 'married', 'divorced', 'widowed']
-status: MaritalStatus = 'married'
+AdministrativeGender = Literal['male', 'female', 'other', 'unknown']
+gender: AdministrativeGender = 'female'
 ```
 
 For simple and fast generation of such code, Type Schema provides an `enum` field with pregenerated values:
@@ -152,7 +153,12 @@ For simple and fast generation of such code, Type Schema provides an `enum` fiel
         "name": "code",
         "url": "http://hl7.org/fhir/StructureDefinition/code"
       },
-      "enum": ["male", "female", "other", "unknown"]
+      "enum": ["male", "female", "other", "unknown"],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/administrative-gender",
+        "bindingName": "AdministrativeGender"
+      }
     }
   },
   "dependencies": [
@@ -255,6 +261,7 @@ Proposed:
   ]
 }
 ```
+
 Why do we separate type and binding in a field? The underlying entities have different shapes. It can be a string (code) or an object (CodeableConcept), and we should know this without introducing additional concepts.
 
 ## Code Generation
