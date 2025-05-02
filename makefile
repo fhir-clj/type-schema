@@ -1,4 +1,4 @@
-.PHONY: install-hooks repl test clean build run format lint check fix check-json update-golden deps
+.PHONY: install-hooks repl test clean build run format lint check fix check-json update-golden deps release
 
 all: format test lint update-golden format-json check-json
 
@@ -85,3 +85,18 @@ format-example-json:
 
 format-golden-json:
 	find test/golden -name "*.json" -type f -exec sh -c 'jq . "{}" > "{}.tmp" && mv "{}.tmp" "{}"' \;
+
+###########################################################
+
+release: lint test format-check
+	@VERSION=$$(grep -E '^\(def version "[^"]+"\)' src/main.clj | sed -E 's/^\(def version "([^"]+)"\)/\1/'); \
+	TAG="v$$VERSION"; \
+	COMMIT_VERSION=$$(git rev-parse --short HEAD); \
+	if git rev-parse "$$TAG" >/dev/null 2>&1; then \
+		echo "Error: Tag $$TAG already exists. Please update the version in src/main.clj."; \
+		exit 1; \
+	fi; \
+	echo "Creating release $$VERSION with tag $$TAG (commit $$COMMIT_VERSION)"; \
+	git tag -a "$$TAG" -m "Release $$VERSION ($$COMMIT_VERSION)"; \
+	git push origin "$$TAG"; \
+	echo "Tag $$TAG created and pushed to remote origin"
