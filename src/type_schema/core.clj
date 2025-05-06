@@ -108,7 +108,8 @@
       (let [value-set-url (:valueSet binding)
             value-set (package/index (split-url-version value-set-url))]
         (if (nil? value-set)
-          (println "WARN: unknown value set:" value-set-url)
+          (binding [*out* *err*]
+            (println "WARN: unknown value set:" value-set-url))
           (get-binding-identifier fhir-schema path element))))))
 
 (defn build-reference [element]
