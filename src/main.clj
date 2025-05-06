@@ -2,6 +2,7 @@
   (:require
    [cheshire.core]
    [clojure.java.io :as io]
+   [clojure.string :as str]
    [extract-enum]
    [fhir.package]
    [type-schema.core :as type-schema]
@@ -12,21 +13,15 @@
 
 (defn- fhir-schema->type-schema [fhir-schema-index]
   (->> fhir-schema-index
-       (map (fn [[url fhir-schema]]
-              [url (type-schema/translate fhir-schema)]))
-       (into {})))
-
-(defn- value-set->type-schema [index]
-  (->> index
-       (filter (fn [[_ value-set]] (package/is-value-set? value-set)))
-       (map (fn [[url value-set]] [url (type-schema/translate value-set)]))
-       (into {})))
+       (map (fn [[_url fhir-schema]]
+              (type-schema/translate fhir-schema)))
+       (apply concat)))
 
 (defn- save-as-ndjson [data output-file]
   (let [file (java.io.File. output-file)]
     (io/make-parents output-file)
     (with-open [writer (java.io.BufferedWriter. (java.io.FileWriter. file))]
-      (doseq [item (vals data)]
+      (doseq [item data]
         (.write writer (cheshire.core/generate-string item))
         (.newLine writer)))))
 
@@ -37,12 +32,15 @@
   (package/init-from-package! package-name)
   (let [fhir-schemas (package/fhir-schema-index)
         type-schemas (fhir-schema->type-schema fhir-schemas)
-        type-schemas-valuesets (value-set->type-schema (package/index))
-        output-file (str output-dir "/" package-name ".ndjson")]
+        output-file (if (str/ends-with? output-dir ".ndjson")
+                      output-dir
+                      (str output-dir "/" package-name ".ndjson"))]
     (if output-dir
-      (save-as-ndjson (merge type-schemas type-schemas-valuesets) output-file)
-      (doseq [item (vals (merge type-schemas type-schemas-valuesets))]
-        (println (cheshire.core/generate-string item)))) :ok))
+      (save-as-ndjson type-schemas output-file)
+      (doseq [item type-schemas]
+        ;; FIXME: for some reason error messages send to stdout instead of stderr
+        (println (cheshire.core/generate-string item))))
+    :ok))
 
 (defn -main [& args]
   (cond
@@ -53,7 +51,7 @@
 
     (and (not= (count args) 1) (not= (count args) 2))
     (do
-      (println "Usage: java -jar program.jar [options] <package-name> [<output-dir>]")
+      (println "Usage: java -jar program.jar [options] <package-name> [<output-dir>|<ndjson-file>]")
       (println "Options:")
       (println "  --version, -v   Print the current version")
       (println "Example: java -jar program.jar hl7.fhir.r4.core@4.0.1 output")
