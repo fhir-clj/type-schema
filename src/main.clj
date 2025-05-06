@@ -9,7 +9,7 @@
    [type-schema.package-index :as package])
   (:gen-class))
 
-(def version "0.0.7")
+(def version "0.0.8")
 
 (defn- fhir-schema->type-schema [fhir-schema-index]
   (->> fhir-schema-index
