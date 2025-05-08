@@ -18,30 +18,25 @@ Recommended file extension for the FHIR Type Schema is `.ts.json`.
     - [`"primitive-type"`](#primitive-type)
     - [`"resource"`, `"complex-type"`](#resource-complex-type)
     - [`"nested"`](#nested)
+    - [Snippet of the Patient resource from hl7.fhir.r4.core](#snippet-of-the-patient-resource-from-hl7fhirr4core)
     - [Validation by JSON Schema](#validation-by-json-schema)
   - [SDK Pipeline](#sdk-pipeline)
   - [TODO](#todo)
   - [Installation](#installation)
     - [Using the Released JAR](#using-the-released-jar)
+    - [Command Line Usage](#command-line-usage)
   - [Local Build & Run](#local-build--run)
 
 <!-- markdown-toc end -->
 
 ## Motivation
 
-Creating a universal SDK for FHIR would be extremely complex due to the vast scope of FHIR and the diverse requirements of healthcare applications. Furthermore, most projects have specific requirements that would not be adequately addressed by a one-size-fits-all approach. Type Schema provides a simplified, normalized representation of these FHIR entities that is specifically designed for easy consumption by code generators.
+Long story short:
 
-The FHIR Type Schema aims to:
+- Custom FHIR SDK is better than a universal one
+- Type Schema makes it simple.
 
-1. Provide a consistent representation of FHIR types across different FHIR versions
-2. Simplify the complex nesting and references in FHIR Structure Definitions or FHIR Schema
-3. Normalize value sets and code systems for easier binding validation
-4. Support efficient code generation in multiple programming languages
-5. Enable better tooling for FHIR implementation with strong type safety
-6. Support for custom resources described in FHIR Schema
-7. Serve as a foundation for project-specific SDK customizations
-
-By using Type Schema as an intermediate representation, we can separate the concerns of parsing FHIR packages from the language-specific code generation, making both processes more maintainable and extensible.
+For the long story, take a look at: [Type Schema: a Pragmatic Approach to Build FHIR SDK](https://www.health-samurai.io/articles/type-schema-a-pragmatic-approach-to-build-fhir-sdk)
 
 ## Overview
 
