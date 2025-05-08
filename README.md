@@ -236,7 +236,7 @@ You can download the latest release jar from the [GitHub Releases page](https://
 
 ### Command Line Usage
 
-```bash
+```console
 $ ./type-schema --help
 Type Schema Generator for FHIR packages
 
@@ -262,14 +262,14 @@ Examples:
 
 #### Using Clojure directly
 
-```bash
-clj -M -m main --version
+```console
+$ clj -M -m main --version
 type-schema version 0.0.8
 ```
 
 #### Build & Use the JAR file
 
-```bash
+```console
 $ make build
 target/type-schema.jar
 $ java -jar target/type-schema.jar --version
@@ -278,8 +278,8 @@ type-schema version 0.0.8
 
 #### Using the downloaded native binary
 
-```bash
-./type-schema --version
+```console
+$ ./type-schema --version
 type-schema version 0.0.8
 ```
 
@@ -287,12 +287,12 @@ type-schema version 0.0.8
 
 - Generate Type Schemas for hl7.fhir.r4.core to ndjson file:
 
-    ```bash
+    ```console
     $ clj -M -m main hl7.fhir.r4.core@4.0.1 -o ./fhir.r4.ndjson
     ```
 
 - Generate Type Schemas for Patient resource from hl7.fhir.r4.core and its dependencies:
 
-    ```bash
+    ```console
     $ clj -M -m main hl7.fhir.r4.core@4.0.1 --treeshake Patient -o output --separated-files
     ```
