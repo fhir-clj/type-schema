@@ -1,4 +1,4 @@
-.PHONY: install-hooks repl test clean build run format lint check fix check-json update-golden deps release
+.PHONY: install-hooks repl test clean build run format lint check fix check-json update-golden deps release test-cli
 
 all: format test lint update-golden format-json check-json
 
@@ -11,12 +11,32 @@ deps:
 repl:
 	clj -M:dev -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware]"
 
-check: test lint format-check
+check: test test-cli lint format-check
 
 ###########################################################
 
 test:
 	clj -M:test
+
+test-cli: build
+	@echo "> Test 1: Version check"
+	java -jar target/type-schema.jar --version
+	@echo "> Test 2: Help display"
+	java -jar target/type-schema.jar --help
+	@echo "> Test 3: Basic package processing (redirecting output)"
+	java -jar target/type-schema.jar hl7.fhir.r4.core@4.0.1 > /dev/null
+	@echo "> Test 4: Verbose output"
+	java -jar target/type-schema.jar -v hl7.fhir.r4.core@4.0.1 > /dev/null
+	@echo "> Test 5: Output to NDJSON file"
+	java -jar target/type-schema.jar -o target/test-output.ndjson hl7.fhir.r4.core@4.0.1
+	@echo "> Test 6: Output to directory"
+	java -jar target/type-schema.jar -o target/test-output hl7.fhir.r4.core@4.0.1
+	@echo "> Test 7: Output separate files"
+	java -jar target/type-schema.jar -o target/test-output-separate --separated-files hl7.fhir.r4.core@4.0.1
+	@echo "> Test 8: Error case - missing package"
+	java -jar target/type-schema.jar 2>/dev/null || echo "Error case correctly handled"
+	@echo "> Test 9: Error case - separated files without output directory"
+	java -jar target/type-schema.jar --separated-files hl7.fhir.r4.core@4.0.1 2>/dev/null || echo "Error case correctly handled"
 
 update-golden:
 	UPDATE_GOLDEN=true clj -M:test
@@ -67,10 +87,10 @@ check-example-json:
 	find docs/examples -name "*.ts.json" | xargs -P4 -n 1 ajv test -s docs/type-schema.schema.json --valid -d
 
 check-json:
-	find . -name "*.ts.json" | xargs -P4 -n 1 ajv test -s docs/type-schema.schema.json --valid -d
+	find test docs -name "*.ts.json" | xargs -P4 -n 1 ajv test -s docs/type-schema.schema.json --valid -d
 
 check-json-fail-fast:
-	find . -name "*.ts.json" | xargs -n 1 sh -c 'ajv test -s docs/type-schema.schema.json --valid -d $$0 || exit 255'
+	find test docs -name "*.ts.json" | xargs -n 1 sh -c 'ajv test -s docs/type-schema.schema.json --valid -d $$0 || exit 255'
 
 check-output-json:
 	find output -name "*.json" | grep -v ndjson | xargs -P0 -n 1 ajv test -s docs/type-schema.schema.json --valid -d

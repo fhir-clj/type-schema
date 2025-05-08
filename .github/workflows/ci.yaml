@@ -35,6 +35,9 @@ jobs:
       - name: Tests
         run: make test
 
+      - name: Test CLI
+        run: make test-cli
+
       - name: Check formatting
         run: make format-check
 

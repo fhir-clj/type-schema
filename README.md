@@ -22,10 +22,12 @@ Recommended file extension for the FHIR Type Schema is `.ts.json`.
     - [Validation by JSON Schema](#validation-by-json-schema)
   - [SDK Pipeline](#sdk-pipeline)
   - [TODO](#todo)
-  - [Installation](#installation)
-    - [Using the Released JAR](#using-the-released-jar)
+  - [Installation & Usages](#installation--usages)
     - [Command Line Usage](#command-line-usage)
-  - [Local Build & Run](#local-build--run)
+      - [Using Clojure directly](#using-clojure-directly)
+      - [Build & Use the JAR file](#build--use-the-jar-file)
+      - [Using the downloaded native binary](#using-the-downloaded-native-binary)
+      - [How to generate Type Schema for package](#how-to-generate-type-schema-for-package)
 
 <!-- markdown-toc end -->
 
@@ -228,52 +230,57 @@ This pipeline separates concerns between parsing FHIR packages, transforming int
 - [ ] Search Parameters
 - [ ] Operations
 
-## Installation
-
-### Using the Released JAR
+## Installation & Usages
 
 You can download the latest release jar from the [GitHub Releases page](https://github.com/fhir-clj/type-schema/releases). Or native standalone binaries that don't require a Java runtime. Simply download the appropriate binary for your operating system and architecture.
 
 ### Command Line Usage
 
-The type-schema tool can be used directly from the command line to process FHIR packages and generate Type Schema files.
+```bash
+$ ./type-schema --help
+Type Schema Generator for FHIR packages
+
+Usage: program [options] <package-name>
+
+Options:
+  -o, --output DIR  Output directory or .ndjson file
+  -v, --verbose     Enable verbose output
+      --version     Print version information and exit
+  -h, --help        Show this help message
+
+Examples:
+  program hl7.fhir.r4.core@4.0.1                   # Output to stdout
+  program -v hl7.fhir.r4.core@4.0.1                # Verbose mode
+  program -o output hl7.fhir.r4.core@4.0.1         # Output to directory
+  program -o result.ndjson hl7.fhir.r4.core@4.0.1  # Output to file
+  program --version                                # Show version
+```
+
+#### Using Clojure directly
 
 ```bash
-java -jar type-schema.jar <fhir-package-name> <output-dir>
+clj -M -m main --version
+type-schema version 0.0.8
 ```
 
-Example:
+#### Build & Use the JAR file
+
 ```bash
-java -jar type-schema.jar hl7.fhir.r4.core@4.0.1 ./output
+$ make build
+target/type-schema.jar
+$ java -jar target/type-schema.jar --version
+type-schema version 0.0.8
 ```
 
-This will:
-1. Process the specified FHIR package (e.g., hl7.fhir.r4.core@4.0.1)
-2. Generate a .ndjson file containing all the type schemas
-3. Save it to `<output-dir>/<package-name>.ndjson`
+#### Using the downloaded native binary
 
-
-## Local Build & Run
-
-```shell
-make build && java -jar target/type-schema.jar hl7.fhir.r4.core@4.0.1 ./output
-
-bash -c '
-    PACKAGE=hl7.fhir.r4.core@4.0.1
-    OUTPUT_DIR=output
-    mkdir -p "$OUTPUT_DIR/$PACKAGE"
-    cat "$OUTPUT_DIR/$PACKAGE.ndjson" | jq -c "." | while read -r line; do
-        name=$(echo "$line" | jq -r ".identifier.name")
-        out_file=$OUTPUT_DIR/$PACKAGE/${name}.ts.json
-        echo $out_file
-        echo "$line" | jq "." > "$out_file"
-    done
-'
-
-make clean r4-ts-json check-output-json
+```bash
+./type-schema --version
+type-schema version 0.0.8
 ```
 
-Generate r4 package and check the output JSON files in accordance with JSON Schema.
+#### How to generate Type Schema for package
 
-<!-- FIXME: support ndjson/path output to avoid bash inlines. -->
-<!-- FIXME: required, array consistency with field declaration (name in choiceOf). -->
+```bash
+$ clj -M -m main hl7.fhir.r4.core@4.0.1 -o ./fhir.r4.ndjson
+```
