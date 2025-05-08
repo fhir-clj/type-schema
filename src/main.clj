@@ -2,6 +2,7 @@
   (:require
    [cheshire.core]
    [clojure.java.io :as io]
+   [clojure.set :as set]
    [clojure.string :as str]
    [clojure.tools.cli :as cli]
    [extract-enum]
@@ -17,6 +18,8 @@
     :id :output-dir]
    [nil "--separated-files" "Output each type schema to a separate file (requires -o to be set to a directory)"
     :id :separated-files]
+   [nil "--treeshake TYPES" "List of required types to include in output (comma-separated)"
+    :id :treeshake]
    ["-v" "--verbose" "Enable verbose output"
     :id :verbose]
    [nil "--version" "Print version information and exit"]
@@ -28,6 +31,38 @@
               (type-schema/translate fhir-schema)))
        (apply concat)))
 
+(defn- extract-dependencies [type-schema]
+  (let [deps (get type-schema :dependencies)]
+    (if (seq deps) deps [])))
+
+(defn- treeshake-type-schemas [type-schemas required-types verbose]
+  (let [required-types-set (into #{} (str/split required-types #"\s*,\s*"))
+        id-to-schema (into {} (map (fn [schema] [(get-in schema [:identifier :name]) schema]) type-schemas))
+        required-types-schemas (filter (fn [schema] (contains? required-types-set (get-in schema [:identifier :name]))) type-schemas)]
+
+    (when verbose (println "Starting treeshaking process for types:" required-types))
+
+    (loop [result {}
+           to-process (into #{} (map (fn [schema] (get-in schema [:identifier :name])) required-types-schemas))]
+      (if (empty? to-process)
+        (vals result)
+        (let [current-type (first to-process)
+              current-schema (get id-to-schema current-type)
+              dependencies (if current-schema
+                             (->> (extract-dependencies current-schema)
+                                  (map (fn [dep] (get-in dep [:name])))
+                                  (filter (fn [dep] (and dep (not (contains? result dep)))))
+                                  (into #{}))
+                             #{})]
+          (if (nil? current-schema)
+            (do
+              (when verbose (println "Warning: Required type not found:" current-type))
+              (recur result (disj to-process current-type)))
+            (do
+              (when verbose (println "Including type:" current-type "with" (count dependencies) "dependencies"))
+              (recur (assoc result current-type current-schema)
+                     (set/union (disj to-process current-type) dependencies)))))))))
+
 (defn- save-as-ndjson [data output-file]
   (let [file (java.io.File. output-file)]
     (io/make-parents output-file)
@@ -38,37 +73,42 @@
 
 (defn- save-as-separate-files [data output-dir verbose]
   (doseq [item data]
-    (let [identifier (get item :identifier)
-          name (get identifier :name)
+    (let [name      (get-in item [:identifier :name])
           file-path (str output-dir "/" name ".ts.json")]
       (when verbose (println "Saving type schema:" name "to" file-path))
       (let [file (java.io.File. file-path)]
         (io/make-parents file-path)
         (with-open [writer (java.io.BufferedWriter. (java.io.FileWriter. file))]
-          (.write writer (cheshire.core/generate-string item)))))))
+          (.write writer (cheshire.core/generate-string item {:pretty true})))))))
 
 (defn process-package [package-name & [{output-dir :output-dir
                                         verbose :verbose
-                                        separated-files :separated-files}]]
+                                        separated-files :separated-files
+                                        treeshake :treeshake}]]
   (when verbose (println "Processing package:" package-name))
   (package/init-from-package! package-name)
   (when verbose (println "Package initialized, generating schema..."))
   (let [fhir-schemas (package/fhir-schema-index)
-        type-schemas (fhir-schema->type-schema fhir-schemas)]
+        type-schemas (fhir-schema->type-schema fhir-schemas)
+        final-schemas (if treeshake
+                        (do
+                          (when verbose (println "Treeshaking output based on required types:" treeshake))
+                          (treeshake-type-schemas type-schemas treeshake verbose))
+                        type-schemas)]
     (cond
       (and output-dir separated-files)
       (do (when verbose (println "Saving each type schema to separate files in:" output-dir))
-          (save-as-separate-files type-schemas output-dir verbose))
+          (save-as-separate-files final-schemas output-dir verbose))
 
       output-dir
       (let [output-file (if (str/ends-with? output-dir ".ndjson")
                           output-dir
                           (str output-dir "/" package-name ".ndjson"))]
         (when verbose (println "Saving output to:" output-file))
-        (save-as-ndjson type-schemas output-file))
+        (save-as-ndjson final-schemas output-file))
 
       :else
-      (doseq [item type-schemas]
+      (doseq [item final-schemas]
         (println (cheshire.core/generate-string item))))
 
     (when verbose (println "Processing completed successfully"))
@@ -88,6 +128,7 @@
         "  program -o output hl7.fhir.r4.core@4.0.1                    # Output to directory"
         "  program -o result.ndjson hl7.fhir.r4.core@4.0.1             # Output to file"
         "  program -o output --separated-files hl7.fhir.r4.core@4.0.1  # Output each type schema to a separate file"
+        "  program --treeshake Patient,Observation hl7.fhir.r4.core@4.0.1  # Only include specified types and dependencies"
         "  program --version                                           # Show version"]
        (str/join "\n")))
 

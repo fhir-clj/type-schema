@@ -27,7 +27,7 @@ Recommended file extension for the FHIR Type Schema is `.ts.json`.
       - [Using Clojure directly](#using-clojure-directly)
       - [Build & Use the JAR file](#build--use-the-jar-file)
       - [Using the downloaded native binary](#using-the-downloaded-native-binary)
-      - [How to generate Type Schema for package](#how-to-generate-type-schema-for-package)
+      - [Examples](#examples)
 
 <!-- markdown-toc end -->
 
@@ -243,17 +243,21 @@ Type Schema Generator for FHIR packages
 Usage: program [options] <package-name>
 
 Options:
-  -o, --output DIR  Output directory or .ndjson file
-  -v, --verbose     Enable verbose output
-      --version     Print version information and exit
-  -h, --help        Show this help message
+  -o, --output DIR     Output directory or .ndjson file
+      --separated-files Output each type schema to a separate file (requires -o to be set to a directory)
+      --treeshake TYPES List of required types to include in output (comma-separated); output will only include these types and their dependencies
+  -v, --verbose        Enable verbose output
+      --version        Print version information and exit
+  -h, --help           Show this help message
 
 Examples:
-  program hl7.fhir.r4.core@4.0.1                   # Output to stdout
-  program -v hl7.fhir.r4.core@4.0.1                # Verbose mode
-  program -o output hl7.fhir.r4.core@4.0.1         # Output to directory
-  program -o result.ndjson hl7.fhir.r4.core@4.0.1  # Output to file
-  program --version                                # Show version
+  program hl7.fhir.r4.core@4.0.1                              # Output to stdout
+  program -v hl7.fhir.r4.core@4.0.1                           # Verbose mode
+  program -o output hl7.fhir.r4.core@4.0.1                    # Output to directory
+  program -o result.ndjson hl7.fhir.r4.core@4.0.1             # Output to file
+  program -o output --separated-files hl7.fhir.r4.core@4.0.1  # Output each type schema to a separate file
+  program --treeshake Patient,Observation hl7.fhir.r4.core@4.0.1  # Only include specified types and dependencies
+  program --version                                           # Show version
 ```
 
 #### Using Clojure directly
@@ -279,8 +283,16 @@ type-schema version 0.0.8
 type-schema version 0.0.8
 ```
 
-#### How to generate Type Schema for package
+#### Examples
 
-```bash
-$ clj -M -m main hl7.fhir.r4.core@4.0.1 -o ./fhir.r4.ndjson
-```
+- Generate Type Schemas for hl7.fhir.r4.core to ndjson file:
+
+    ```bash
+    $ clj -M -m main hl7.fhir.r4.core@4.0.1 -o ./fhir.r4.ndjson
+    ```
+
+- Generate Type Schemas for Patient resource from hl7.fhir.r4.core and its dependencies:
+
+    ```bash
+    $ clj -M -m main hl7.fhir.r4.core@4.0.1 --treeshake Patient -o output --separated-files
+    ```
