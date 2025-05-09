@@ -240,7 +240,7 @@ You can download the latest release jar from the [GitHub Releases page](https://
 $ ./type-schema --help
 Type Schema Generator for FHIR packages
 
-Usage: program [options] <package-name>
+Usage: type-schema [options] <package-name>
 
 Options:
   -o, --output DIR     Output directory or .ndjson file
@@ -251,13 +251,13 @@ Options:
   -h, --help           Show this help message
 
 Examples:
-  program hl7.fhir.r4.core@4.0.1                              # Output to stdout
-  program -v hl7.fhir.r4.core@4.0.1                           # Verbose mode
-  program -o output hl7.fhir.r4.core@4.0.1                    # Output to directory
-  program -o result.ndjson hl7.fhir.r4.core@4.0.1             # Output to file
-  program -o output --separated-files hl7.fhir.r4.core@4.0.1  # Output each type schema to a separate file
-  program --treeshake Patient,Observation hl7.fhir.r4.core@4.0.1  # Only include specified types and dependencies
-  program --version                                           # Show version
+  type-schema hl7.fhir.r4.core@4.0.1                              # Output to stdout
+  type-schema -v hl7.fhir.r4.core@4.0.1                           # Verbose mode
+  type-schema -o output hl7.fhir.r4.core@4.0.1                    # Output to directory
+  type-schema -o result.ndjson hl7.fhir.r4.core@4.0.1             # Output to file
+  type-schema -o output --separated-files hl7.fhir.r4.core@4.0.1  # Output each type schema to a separate file
+  type-schema --treeshake Patient,Observation hl7.fhir.r4.core@4.0.1  # Only include specified types and dependencies
+  type-schema --version                                           # Show version
 ```
 
 #### Using Clojure directly
