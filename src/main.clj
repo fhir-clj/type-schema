@@ -18,7 +18,9 @@
     :id :output-dir]
    [nil "--separated-files" "Output each type schema to a separate file (requires -o to be set to a directory)"
     :id :separated-files]
-   [nil "--treeshake TYPES" "List of required types to include in output (comma-separated)"
+   [nil "--treeshake TYPES" "Required type(s) to include in output"
+    :multi true
+    :update-fn (fnil conj [])
     :id :treeshake]
    ["-v" "--verbose" "Enable verbose output"
     :id :verbose]
@@ -36,7 +38,7 @@
     (if (seq deps) deps [])))
 
 (defn- treeshake-type-schemas [type-schemas required-types verbose]
-  (let [required-types-set (into #{} (str/split required-types #"\s*,\s*"))
+  (let [required-types-set (into #{} required-types)
         id-to-schema (into {} (map (fn [schema] [(get-in schema [:identifier :name]) schema]) type-schemas))
         required-types-schemas (filter (fn [schema] (contains? required-types-set (get-in schema [:identifier :name]))) type-schemas)]
 
@@ -81,10 +83,10 @@
         (with-open [writer (java.io.BufferedWriter. (java.io.FileWriter. file))]
           (.write writer (cheshire.core/generate-string item {:pretty true})))))))
 
-(defn process-package [package-name & [{output-dir :output-dir
-                                        verbose :verbose
-                                        separated-files :separated-files
-                                        treeshake :treeshake}]]
+(defn process-package [package-name {output-dir :output-dir
+                                     verbose :verbose
+                                     separated-files :separated-files
+                                     treeshake :treeshake}]
   (when verbose (println "Processing package:" package-name))
   (package/init-from-package! package-name)
   (when verbose (println "Package initialized, generating schema..."))
