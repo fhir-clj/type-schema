@@ -80,6 +80,9 @@
 (deftest fhir-schema->type-schema-small-golden-test
   (package/init-from-package! "hl7.fhir.r4.core")
 
+  (golden/as-json "test/golden/custom/custom.ts.json"
+                  (fhir-schema->type-schema "test/golden/custom/custom.fs.json"))
+
   (golden/as-json "docs/examples/string.ts.json"
                   (fhir-schema->type-schema "docs/examples/fhir-schema/string.fs.json"))
 

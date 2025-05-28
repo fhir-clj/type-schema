@@ -98,25 +98,24 @@
 
   (let [fhir-schemas (package/fhir-schema-index)
         type-schemas (fhir-schema->type-schema fhir-schemas)
-        final-schemas (if treeshake
-                        (do
-                          (when verbose (println "Treeshaking output based on required types:" treeshake))
-                          (treeshake-type-schemas type-schemas treeshake verbose))
-                        type-schemas)]
+        type-schemas (if treeshake
+                       (do (when verbose (println "Treeshaking output based on required types:" treeshake))
+                           (treeshake-type-schemas type-schemas treeshake verbose))
+                       type-schemas)]
     (cond
       (and output-dir separated-files)
       (do (when verbose (println "Saving each type schema to separate files in:" output-dir))
-          (save-as-separate-files final-schemas output-dir verbose))
+          (save-as-separate-files type-schemas output-dir verbose))
 
       output-dir
       (let [output-file (if (str/ends-with? output-dir ".ndjson")
                           output-dir
                           (str output-dir "/" package-name ".ndjson"))]
         (when verbose (println "Saving output to:" output-file))
-        (save-as-ndjson final-schemas output-file))
+        (save-as-ndjson type-schemas output-file))
 
       :else
-      (doseq [item final-schemas]
+      (doseq [item type-schemas]
         (println (json/generate-string item))))
 
     (when verbose (println "Processing completed successfully"))

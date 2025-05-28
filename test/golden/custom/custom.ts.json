@@ -1,0 +1,46 @@
+{
+  "identifier": {
+    "kind": "resource",
+    "package": "custom-package",
+    "version": "0.0.1",
+    "name": "Custom",
+    "url": "http://example.com/StructureDefinition/Custom"
+  },
+  "base": {
+    "kind": "resource",
+    "package": "hl7.fhir.r4.core",
+    "version": "4.0.1",
+    "name": "Resource",
+    "url": "http://hl7.org/fhir/StructureDefinition/Resource"
+  },
+  "fields": {
+    "stringField": {
+      "excluded": false,
+      "type": {
+        "kind": "primitive-type",
+        "package": "hl7.fhir.r4.core",
+        "version": "4.0.1",
+        "name": "string",
+        "url": "http://hl7.org/fhir/StructureDefinition/string"
+      },
+      "array": false,
+      "required": false
+    }
+  },
+  "dependencies": [
+    {
+      "kind": "resource",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "Resource",
+      "url": "http://hl7.org/fhir/StructureDefinition/Resource"
+    },
+    {
+      "kind": "primitive-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "string",
+      "url": "http://hl7.org/fhir/StructureDefinition/string"
+    }
+  ]
+}

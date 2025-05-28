@@ -11,7 +11,8 @@
 (defn derive-kind-from-schema [schema]
   (cond (= (:resourceType schema) "ValueSet") "valueset"
         (= (:derivation schema) "constraint") "constraint"
-        :else (:kind schema)))
+        (some? (:kind schema)) (:kind schema)
+        :else "resource"))
 
 (defn split-url-version [url-with-version]
   (if (string? url-with-version)
