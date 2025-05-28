@@ -33,11 +33,11 @@
   (fhir.package/reduce-package (fhir.package/pkg-info package-name)
                                keep-fhir-resource-file))
 
-(defn is-structure-definition? [resource]
-  (= "StructureDefinition" (:resourceType resource)))
+(defn is-structure-definition? [fhir-schema]
+  (= "StructureDefinition" (:resourceType fhir-schema)))
 
-(defn is-value-set? [resource]
-  (= "ValueSet" (:resourceType resource)))
+(defn is-value-set? [fhir-schema]
+  (= "ValueSet" (:resourceType fhir-schema)))
 
 (defn clean! []
   (reset! *index nil)

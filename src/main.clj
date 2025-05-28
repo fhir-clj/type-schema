@@ -74,7 +74,7 @@
     (io/make-parents output-file)
     (with-open [writer (java.io.BufferedWriter. (java.io.FileWriter. file))]
       (doseq [item data]
-        (.write writer (cheshire.core/generate-string item))
+        (.write writer (json/generate-string item))
         (.newLine writer)))))
 
 (defn- save-as-separate-files [data output-dir verbose]
@@ -85,7 +85,7 @@
       (let [file (java.io.File. file-path)]
         (io/make-parents file-path)
         (with-open [writer (java.io.BufferedWriter. (java.io.FileWriter. file))]
-          (.write writer (cheshire.core/generate-string item {:pretty true})))))))
+          (.write writer (json/generate-string item {:pretty true})))))))
 
 (defn process-package [package-name {output-dir :output-dir
                                      fhir-schemas :fhir-schemas
@@ -117,7 +117,7 @@
 
       :else
       (doseq [item final-schemas]
-        (println (cheshire.core/generate-string item))))
+        (println (json/generate-string item))))
 
     (when verbose (println "Processing completed successfully"))
     :ok))
