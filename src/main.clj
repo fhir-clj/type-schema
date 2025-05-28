@@ -1,6 +1,6 @@
 (ns main
   (:require
-   [cheshire.core]
+   [cheshire.core :as json]
    [clojure.java.io :as io]
    [clojure.set :as set]
    [clojure.string :as str]
@@ -22,6 +22,10 @@
     :multi true
     :update-fn (fnil conj [])
     :id :treeshake]
+   [nil "--fhir-schema FILE" "Add specific FHIR schema to be processed. Can be used multiple times"
+    :multi true
+    :update-fn (fnil conj [])
+    :id :fhir-schemas]
    ["-v" "--verbose" "Enable verbose output"
     :id :verbose]
    [nil "--version" "Print version information and exit"]
@@ -84,12 +88,14 @@
           (.write writer (cheshire.core/generate-string item {:pretty true})))))))
 
 (defn process-package [package-name {output-dir :output-dir
+                                     fhir-schemas :fhir-schemas
                                      verbose :verbose
                                      separated-files :separated-files
                                      treeshake :treeshake}]
-  (when verbose (println "Processing package:" package-name))
-  (package/init-from-package! package-name)
-  (when verbose (println "Package initialized, generating schema..."))
+  (package/initialize! {:package-name package-name
+                        :fhir-schemas fhir-schemas
+                        :verbose verbose})
+
   (let [fhir-schemas (package/fhir-schema-index)
         type-schemas (fhir-schema->type-schema fhir-schemas)
         final-schemas (if treeshake

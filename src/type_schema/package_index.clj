@@ -1,5 +1,6 @@
 (ns type-schema.package-index
   (:require
+   [cheshire.core :as json]
    [clojure.string :as str]
    [fhir.package]
    [fhir.schema.translate :as fhir-schema]))
@@ -38,6 +39,10 @@
 (defn is-value-set? [resource]
   (= "ValueSet" (:resourceType resource)))
 
+(defn clean! []
+  (reset! *index nil)
+  (reset! *fhir-schema-index nil))
+
 (defn init-from-package! [package-name]
   (let [;; NOTE: not a part of SD till 5.2.0-ballot
         ;; https://build.fhir.org/ig/HL7/fhir-extensions/StructureDefinition-package-source.html
@@ -61,3 +66,24 @@
     (reset! *index package-index)
     (reset! *fhir-schema-index fhir-schemas-index)
     :ok))
+
+(defn append-fhir-schema! [fhir-schema]
+  (swap! *fhir-schema-index
+         assoc (:url fhir-schema) fhir-schema))
+
+(defn initialize! [{package-name :package-name
+                    fhir-schemas :fhir-schemas
+                    verbose      :verbose}]
+  (clean!)
+  (when package-name
+    (when verbose
+      (println "Processing package:" package-name))
+    (init-from-package! package-name))
+
+  (doseq [fhir-schema fhir-schemas]
+    (when verbose (println "Processing FHIR schema file:" fhir-schema))
+    (append-fhir-schema! (-> fhir-schema
+                             (slurp)
+                             (json/parse-string true))))
+
+  (when verbose (println "Package initialized, generating schema...")))
