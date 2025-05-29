@@ -57,25 +57,46 @@
                    (fhir-schema->type-schemas "test/golden/backbone-element/backbone-element.fs.json"))
 
   (golden/as-jsons ["test/golden/bundle/bundle.ts.json"
-                    "test/golden/bundle/binding-BundleType.ts.json"]
+                    "test/golden/bundle/binding-BundleType.ts.json"
+                    "test/golden/bundle/binding-HTTPVerb.ts.json"
+                    "test/golden/bundle/binding-SearchEntryMode.ts.json"]
                    (fhir-schema->type-schemas "test/golden/bundle/bundle.fs.json"))
 
   (golden/as-jsons ["test/golden/patient/patient.ts.json"
                     "test/golden/patient/binding-AdministrativeGender.ts.json"
+                    "test/golden/patient/binding-ContactRelationship.ts.json"
+                    "test/golden/patient/binding-Language.ts.json"
+                    "test/golden/patient/binding-LinkType.ts.json"
                     "test/golden/patient/binding-MaritalStatus.ts.json"]
                    (fhir-schema->type-schemas "test/golden/patient/patient.fs.json"))
 
   (golden/as-jsons ["test/golden/capability-statement/capability-statement.ts.json"
                     "test/golden/capability-statement/binding-CapabilityStatementKind.ts.json"
+                    "test/golden/capability-statement/binding-ConditionalDeleteStatus.ts.json"
+                    "test/golden/capability-statement/binding-ConditionalReadStatus.ts.json"
+                    "test/golden/capability-statement/binding-DocumentMode.ts.json"
+                    "test/golden/capability-statement/binding-EventCapabilityMode.ts.json"
                     "test/golden/capability-statement/binding-FHIRVersion.ts.json"
                     "test/golden/capability-statement/binding-Jurisdiction.ts.json"
+                    "test/golden/capability-statement/binding-MessageTransport.ts.json"
                     "test/golden/capability-statement/binding-MimeType.ts.json"
-                    "test/golden/capability-statement/binding-PublicationStatus.ts.json"]
+                    "test/golden/capability-statement/binding-PublicationStatus.ts.json"
+                    "test/golden/capability-statement/binding-ReferenceHandlingPolicy.ts.json"
+                    "test/golden/capability-statement/binding-ResourceType.ts.json"
+                    "test/golden/capability-statement/binding-ResourceVersionPolicy.ts.json"
+                    "test/golden/capability-statement/binding-RestfulCapabilityMode.ts.json"
+                    "test/golden/capability-statement/binding-RestfulSecurityService.ts.json"
+                    "test/golden/capability-statement/binding-SearchParamType.ts.json"
+                    "test/golden/capability-statement/binding-SystemRestfulInteraction.ts.json"
+                    "test/golden/capability-statement/binding-TypeRestfulInteraction.ts.json"]
                    (fhir-schema->type-schemas "test/golden/capability-statement/capability-statement.fs.json"))
 
   (golden/as-jsons ["test/golden/questionnaire/questionnaire.ts.json"
+                    "test/golden/questionnaire/binding-EnableWhenBehavior.ts.json"
                     "test/golden/questionnaire/binding-Jurisdiction.ts.json"
                     "test/golden/questionnaire/binding-PublicationStatus.ts.json"
                     "test/golden/questionnaire/binding-QuestionnaireConcept.ts.json"
+                    "test/golden/questionnaire/binding-QuestionnaireItemOperator.ts.json"
+                    "test/golden/questionnaire/binding-QuestionnaireItemType.ts.json"
                     "test/golden/questionnaire/binding-ResourceType.ts.json"]
                    (fhir-schema->type-schemas "test/golden/questionnaire/questionnaire.fs.json")))

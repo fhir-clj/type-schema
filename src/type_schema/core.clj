@@ -242,12 +242,10 @@
                          (sort-by #(-> % :identifier :url)))
 
         binding-type-schemas
-        (->> elements
-             ;; FIXME: nested binding?
-             (filter (fn [[_ename element]] (some? (:binding element))))
-             (map (fn [[ename element]]
-                    (translate-binding fhir-schema
-                                       [(:name identifier) ename] element)))
+        (->> (deep-nested-elements fhir-schema [] elements)
+             (keep (fn [[path element]]
+                     (when (some? (:binding element))
+                       (translate-binding fhir-schema path element))))
              (sort-by #(get-in % [:identifier :name]))
              (distinct))
 
