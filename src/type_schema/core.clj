@@ -289,3 +289,5 @@
 
     :else
     (translate-fhir-schema resource)))
+
+#_(main/process-package "hl7.fhir.r4.core@4.0.1" "output")

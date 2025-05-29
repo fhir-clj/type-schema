@@ -1,5 +1,6 @@
 (ns main
   (:require
+   #_[type-schema.sanity :as sanity]
    [cheshire.core :as json]
    [clojure.java.io :as io]
    [clojure.set :as set]
@@ -118,7 +119,12 @@
       (doseq [item type-schemas]
         (println (json/generate-string item))))
 
-    (when verbose (println "Processing completed successfully"))
+    #_(let [unresolvable-deps (sanity/find-unresolvable-deps type-schemas)]
+        (if (empty? unresolvable-deps)
+          (when verbose (println "Processing completed successfully"))
+          (doseq [dep unresolvable-deps]
+            (println "Warning: Unresolvable dependency found:" dep))))
+
     :ok))
 
 (defn usage [options-summary]
