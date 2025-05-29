@@ -10,7 +10,7 @@
         io.github.fhir-clj/valueset-to-enum {:git/url "https://github.com/fhir-clj/valueset-to-enum"
                                              :git/sha "6081380400170e7138b28ab523b7077d6d1b725f"}
         io.github.HealthSamurai/golden-clj {:git/url "https://github.com/HealthSamurai/golden-clj.git"
-                                            :git/sha "bd8824698c5c8c7a0559a9e0ff8224d2d9c9b7ae"}}
+                                            :git/sha "64222491794d1119df70b18cce623f5dee169f25"}}
 
  :aliases
  {:dev
