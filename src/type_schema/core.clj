@@ -235,7 +235,8 @@
         elements    (:elements fhir-schema)
         fields      (iterate-over-elements fhir-schema [] elements)
 
-        nested      (iterate-over-backbone-element fhir-schema [] elements)
+        nested      (->> (iterate-over-backbone-element fhir-schema [] elements)
+                         (sort-by #(-> % :identifier :url)))
 
         binding-type-schemas
         (->> elements

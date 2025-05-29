@@ -312,77 +312,6 @@
         "kind": "nested",
         "package": "hl7.fhir.r4.core",
         "version": "4.0.1",
-        "name": "link",
-        "url": "http://hl7.org/fhir/StructureDefinition/Patient#link"
-      },
-      "base": {
-        "kind": "complex-type",
-        "package": "hl7.fhir.r4.core",
-        "version": "4.0.1",
-        "name": "BackboneElement",
-        "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
-      },
-      "fields": {
-        "other": {
-          "excluded": false,
-          "type": {
-            "kind": "complex-type",
-            "package": "hl7.fhir.r4.core",
-            "version": "4.0.1",
-            "name": "Reference",
-            "url": "http://hl7.org/fhir/StructureDefinition/Reference"
-          },
-          "array": false,
-          "reference": [
-            {
-              "kind": "resource",
-              "package": "hl7.fhir.r4.core",
-              "version": "4.0.1",
-              "name": "Patient",
-              "url": "http://hl7.org/fhir/StructureDefinition/Patient"
-            },
-            {
-              "kind": "resource",
-              "package": "hl7.fhir.r4.core",
-              "version": "4.0.1",
-              "name": "RelatedPerson",
-              "url": "http://hl7.org/fhir/StructureDefinition/RelatedPerson"
-            }
-          ],
-          "required": false
-        },
-        "type": {
-          "enum": [
-            "replaced-by",
-            "replaces",
-            "refer",
-            "seealso"
-          ],
-          "excluded": false,
-          "type": {
-            "kind": "primitive-type",
-            "package": "hl7.fhir.r4.core",
-            "version": "4.0.1",
-            "name": "code",
-            "url": "http://hl7.org/fhir/StructureDefinition/code"
-          },
-          "array": false,
-          "binding": {
-            "kind": "binding",
-            "package": "hl7.fhir.r4.core",
-            "version": "4.0.1",
-            "name": "LinkType",
-            "url": "urn:fhir:binding:LinkType"
-          },
-          "required": false
-        }
-      }
-    },
-    {
-      "identifier": {
-        "kind": "nested",
-        "package": "hl7.fhir.r4.core",
-        "version": "4.0.1",
         "name": "communication",
         "url": "http://hl7.org/fhir/StructureDefinition/Patient#communication"
       },
@@ -557,6 +486,77 @@
           "required": false
         }
       }
+    },
+    {
+      "identifier": {
+        "kind": "nested",
+        "package": "hl7.fhir.r4.core",
+        "version": "4.0.1",
+        "name": "link",
+        "url": "http://hl7.org/fhir/StructureDefinition/Patient#link"
+      },
+      "base": {
+        "kind": "complex-type",
+        "package": "hl7.fhir.r4.core",
+        "version": "4.0.1",
+        "name": "BackboneElement",
+        "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
+      },
+      "fields": {
+        "other": {
+          "excluded": false,
+          "type": {
+            "kind": "complex-type",
+            "package": "hl7.fhir.r4.core",
+            "version": "4.0.1",
+            "name": "Reference",
+            "url": "http://hl7.org/fhir/StructureDefinition/Reference"
+          },
+          "array": false,
+          "reference": [
+            {
+              "kind": "resource",
+              "package": "hl7.fhir.r4.core",
+              "version": "4.0.1",
+              "name": "Patient",
+              "url": "http://hl7.org/fhir/StructureDefinition/Patient"
+            },
+            {
+              "kind": "resource",
+              "package": "hl7.fhir.r4.core",
+              "version": "4.0.1",
+              "name": "RelatedPerson",
+              "url": "http://hl7.org/fhir/StructureDefinition/RelatedPerson"
+            }
+          ],
+          "required": false
+        },
+        "type": {
+          "enum": [
+            "replaced-by",
+            "replaces",
+            "refer",
+            "seealso"
+          ],
+          "excluded": false,
+          "type": {
+            "kind": "primitive-type",
+            "package": "hl7.fhir.r4.core",
+            "version": "4.0.1",
+            "name": "code",
+            "url": "http://hl7.org/fhir/StructureDefinition/code"
+          },
+          "array": false,
+          "binding": {
+            "kind": "binding",
+            "package": "hl7.fhir.r4.core",
+            "version": "4.0.1",
+            "name": "LinkType",
+            "url": "urn:fhir:binding:LinkType"
+          },
+          "required": false
+        }
+      }
     }
   ],
   "dependencies": [
@@ -690,13 +690,6 @@
       "kind": "binding",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "LinkType",
-      "url": "urn:fhir:binding:LinkType"
-    },
-    {
-      "kind": "binding",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
       "name": "Language",
       "url": "urn:fhir:binding:Language"
     },
@@ -713,6 +706,13 @@
       "version": "4.0.1",
       "name": "ContactRelationship",
       "url": "urn:fhir:binding:ContactRelationship"
+    },
+    {
+      "kind": "binding",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "LinkType",
+      "url": "urn:fhir:binding:LinkType"
     },
     {
       "kind": "complex-type",
