@@ -98,6 +98,9 @@
   (golden/as-json "docs/examples/resource-with-nested-type.ts.json"
                   (fhir-schema->type-schema "docs/examples/fhir-schema/resource-with-nested-type.fs.json"))
 
+  (golden/as-json "docs/examples/resource-with-nested-type-2.ts.json"
+                  (fhir-schema->type-schema "docs/examples/fhir-schema/resource-with-nested-type-2.fs.json"))
+
   (golden/as-jsons ["docs/examples/resource-with-codable-concept.ts.json"
                     "docs/examples/binding-MaritalStatus.ts.json"]
                    (fhir-schema->type-schemas "docs/examples/fhir-schema/resource-with-codable-concept.fs.json"))

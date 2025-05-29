@@ -1,0 +1,130 @@
+{
+  "identifier": {
+    "kind": "resource",
+    "package": "hl7.fhir.core.r4",
+    "version": "4.0.1",
+    "name": "Root",
+    "url": "http://example.io/fhir/Root"
+  },
+  "base": {
+    "kind": "resource",
+    "package": "hl7.fhir.r4.core",
+    "version": "4.0.1",
+    "name": "DomainResource",
+    "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+  },
+  "description": "some description",
+  "fields": {
+    "field": {
+      "type": {
+        "kind": "nested",
+        "package": "hl7.fhir.core.r4",
+        "version": "4.0.1",
+        "name": "field",
+        "url": "http://example.io/fhir/Root#field"
+      },
+      "array": true,
+      "required": false,
+      "excluded": false
+    }
+  },
+  "nested": [
+    {
+      "identifier": {
+        "kind": "nested",
+        "package": "hl7.fhir.core.r4",
+        "version": "4.0.1",
+        "name": "field",
+        "url": "http://example.io/fhir/Root#field"
+      },
+      "base": {
+        "kind": "complex-type",
+        "package": "hl7.fhir.r4.core",
+        "version": "4.0.1",
+        "name": "BackboneElement",
+        "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
+      },
+      "fields": {
+        "subfield": {
+          "type": {
+            "kind": "nested",
+            "package": "hl7.fhir.core.r4",
+            "version": "4.0.1",
+            "name": "field.subfield",
+            "url": "http://example.io/fhir/Root#field.subfield"
+          },
+          "array": true,
+          "required": false,
+          "excluded": false
+        }
+      }
+    },
+    {
+      "identifier": {
+        "kind": "nested",
+        "package": "hl7.fhir.core.r4",
+        "version": "4.0.1",
+        "name": "field.subfield",
+        "url": "http://example.io/fhir/Root#field.subfield"
+      },
+      "base": {
+        "kind": "complex-type",
+        "package": "hl7.fhir.r4.core",
+        "version": "4.0.1",
+        "name": "BackboneElement",
+        "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
+      },
+      "fields": {
+        "subsubfield": {
+          "excluded": false,
+          "type": {
+            "kind": "primitive-type",
+            "package": "hl7.fhir.r4.core",
+            "version": "4.0.1",
+            "name": "string",
+            "url": "http://hl7.org/fhir/StructureDefinition/string"
+          },
+          "array": false,
+          "required": false
+        }
+      }
+    }
+  ],
+  "dependencies": [
+    {
+      "kind": "resource",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "DomainResource",
+      "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+    },
+    {
+      "kind": "nested",
+      "package": "hl7.fhir.core.r4",
+      "version": "4.0.1",
+      "name": "field",
+      "url": "http://example.io/fhir/Root#field"
+    },
+    {
+      "kind": "nested",
+      "package": "hl7.fhir.core.r4",
+      "version": "4.0.1",
+      "name": "field.subfield",
+      "url": "http://example.io/fhir/Root#field.subfield"
+    },
+    {
+      "kind": "primitive-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "string",
+      "url": "http://hl7.org/fhir/StructureDefinition/string"
+    },
+    {
+      "kind": "complex-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "BackboneElement",
+      "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
+    }
+  ]
+}
