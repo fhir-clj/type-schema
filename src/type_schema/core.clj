@@ -176,23 +176,26 @@
                   [key (build-field fhir-schema path element)]))))
        (into {})))
 
-(defn iterate-over-backbone-element [fhir-schema path elements]
+(defn deep-nested-elements [fhir-schema path elements]
   (->> elements
-       (filter (fn [[_key element]] (= (:type element) "BackboneElement")))
        (map (fn [[key element]]
               (let [path (conj path key)
-
-                    current
-                    {:identifier (get-nested-identifier fhir-schema path)
-                     :base       (some-> (type-to-url "BackboneElement")
-                                         (package/fhir-schema-index)
-                                         (get-identifier))
-                     :fields     (iterate-over-elements fhir-schema path (:elements element))}
-
-                    nested
-                    (iterate-over-backbone-element fhir-schema path (:elements element))]
-                (conj nested current))))
+                    nested (when (= (:type element) "BackboneElement")
+                             (deep-nested-elements fhir-schema path (:elements element)))]
+                (cons [path element] nested))))
        (apply concat)
+       (into [])))
+
+(defn iterate-over-backbone-element [fhir-schema path elements]
+  (->> (deep-nested-elements fhir-schema path elements)
+       (filter (fn [[_path element]] (= (:type element) "BackboneElement")))
+       (map (fn [[path element]]
+              {:identifier (get-nested-identifier fhir-schema path)
+               :base       (some-> (type-to-url "BackboneElement")
+                                   (package/fhir-schema-index)
+                                   (get-identifier))
+               :fields     (iterate-over-elements fhir-schema path (:elements element))}))
+
        (into [])))
 
 (defn extract-dependencies [fields]
