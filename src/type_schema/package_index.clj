@@ -29,9 +29,8 @@
                       " error: " (str/replace (.getMessage e) #"\n" " ")))
            acc)) acc))
 
-(defn- get-package-index [package-name]
-  (fhir.package/reduce-package (fhir.package/pkg-info package-name)
-                               keep-fhir-resource-file))
+(defn- get-package-index [package-info]
+  (fhir.package/reduce-package package-info keep-fhir-resource-file))
 
 (defn is-structure-definition? [fhir-schema]
   (= "StructureDefinition" (:resourceType fhir-schema)))
@@ -43,18 +42,21 @@
   (reset! *index nil)
   (reset! *fhir-schema-index nil))
 
+;; NOTE: to avoid multiple calls during tests
+(def pkg-info (memoize fhir.package/pkg-info))
+
 (defn init-from-package! [package-name]
   (let [;; NOTE: not a part of SD till 5.2.0-ballot
         ;; https://build.fhir.org/ig/HL7/fhir-extensions/StructureDefinition-package-source.html
         ;; So we add that info manually to fhir-schema in :package-meta, like in
         ;; custom Aidbox resources.
-        pkg-info (fhir.package/pkg-info package-name)
+        pkg-info (pkg-info package-name)
         package-meta {:name (:name pkg-info)
                       :version (or (:version pkg-info)
                                    (get-in pkg-info [:dist-tags :latest])
                                    (-> pkg-info :versions first :version))}
 
-        package-index (get-package-index package-name)
+        package-index (get-package-index pkg-info)
 
         fhir-schemas-index (->> package-index
                                 (filter (fn [[_ res]] (is-structure-definition? res)))
