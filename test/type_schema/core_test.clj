@@ -24,7 +24,7 @@
           :version "0.0.0"}
          (type-schema/build-binding
           {:package-meta {:name "TEST" :version "0.0.0"}}
-          ["Patient" "gender"]
+          ["gender"]
           {:type "code",
            :binding {:strength "required",
                      :valueSet "http://hl7.org/fhir/ValueSet/administrative-gender|4.0.1",
@@ -33,11 +33,13 @@
   (is (= {:kind "binding",
           :package "TEST",
           :version "0.0.0",
-          :name "Patient.gender",
-          :url "urn:fhir:binding:Patient.gender"}
+          :name "Patient.gender_binding",
+          :url "http://hl7.org/fhir/StructureDefinition/Patient#gender_binding"}
          (type-schema/build-binding
-          {:package-meta {:name "TEST" :version "0.0.0"}}
-          ["Patient" "gender"]
+          {:package-meta {:name "TEST" :version "0.0.0"}
+           :name "Patient"
+           :url "http://hl7.org/fhir/StructureDefinition/Patient"}
+          ["gender"]
           {:type "code",
            :binding {:strength "required",
                      :valueSet "http://hl7.org/fhir/ValueSet/administrative-gender|4.0.1"}})))
@@ -80,9 +82,6 @@
 (deftest fhir-schema->type-schema-small-golden-test
   (package/init-from-package! "hl7.fhir.r4.core")
 
-  (golden/as-json "test/golden/custom/custom.ts.json"
-                  (fhir-schema->type-schema "test/golden/custom/custom.fs.json"))
-
   (golden/as-json "docs/examples/string.ts.json"
                   (fhir-schema->type-schema "docs/examples/fhir-schema/string.fs.json"))
 
@@ -107,7 +106,15 @@
 
   (golden/as-jsons ["docs/examples/resource-with-code.ts.json"
                     "docs/examples/binding-AdministrativeGender.ts.json"]
-                   (fhir-schema->type-schemas "docs/examples/fhir-schema/resource-with-code.fs.json")))
+                   (fhir-schema->type-schemas "docs/examples/fhir-schema/resource-with-code.fs.json"))
+
+  (golden/as-json "test/golden/custom/TutorNotificationTemplate.ts.json"
+                  (fhir-schema->type-schema "test/golden/custom/TutorNotificationTemplate.fs.json"))
+
+  (golden/as-jsons ["test/golden/custom/TutorNotification.ts.json"
+                    "test/golden/custom/binding-TutorNotification#status.ts.json"
+                    "test/golden/custom/binding-TutorNotification#type.ts.json"]
+                   (fhir-schema->type-schemas "test/golden/custom/TutorNotification.fs.json")))
 
 (defn value-set->json [fhir-schema-file]
   (-> (slurp fhir-schema-file)

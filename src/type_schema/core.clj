@@ -20,17 +20,20 @@
     url-with-version))
 
 (defn- package-meta-fallback [fhir-schema]
-  {:name (cond
-           (and (some-> fhir-schema :url (str/starts-with? "http://hl7.org/fhir"))
-                (some-> fhir-schema :version (str/starts-with? "4.")))
-           "hl7.fhir.r4.core"
+  (cond
+    (and (some-> fhir-schema :url (str/starts-with? "http://hl7.org/fhir"))
+         (some-> fhir-schema :version (str/starts-with? "4.")))
+    {:name    "hl7.fhir.r4.core"
+     :version (:version fhir-schema)}
 
-           (and (some-> fhir-schema :url (str/starts-with? "http://hl7.org/fhir"))
-                (some-> fhir-schema :version (str/starts-with? "5.")))
-           "hl7.fhir.r5.core"
+    (and (some-> fhir-schema :url (str/starts-with? "http://hl7.org/fhir"))
+         (some-> fhir-schema :version (str/starts-with? "5.")))
+    {:name    "hl7.fhir.r5.core"
+     :version (:version fhir-schema)}
 
-           :else "undefined")
-   :version (:version fhir-schema)})
+    :else
+    {:name    "not-specified"
+     :version "not-specified"}))
 
 (defn package-meta [fhir-schema]
   (or (:package-meta fhir-schema)
@@ -100,12 +103,14 @@
   (let [package-meta (package-meta fhir-schema)
         binding (:binding element)
         name (or (:bindingName binding)
-                 (build-nested-name path))]
+                 (str (:name fhir-schema) "." (build-nested-name path) "_binding"))]
     {:kind    "binding"
      :package (:name package-meta)
      :version (:version package-meta)
      :name    name
-     :url     (str "urn:fhir:binding:" name)}))
+     :url     (if (:bindingName binding)
+                (str "urn:fhir:binding:" name)
+                (str (:url fhir-schema) "#" (build-nested-name path) "_binding"))}))
 
 (defn build-binding [fhir-schema path element]
   (let [binding (:binding element)]
@@ -121,9 +126,11 @@
   (when (:refers element)
     (let [references (get-in element [:refers])]
       (->> references
-           (map #(-> %
-                     (package/fhir-schema-index)
-                     (get-identifier)))))))
+           (map (fn [refer]
+                  (if-let [fhir-schema (package/fhir-schema-index refer)]
+                    (get-identifier fhir-schema)
+                    (get-identifier {:url  refer
+                                     :name refer}))))))))
 
 (defn remove-empty-vals [m]
   (->> m

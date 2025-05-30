@@ -20,7 +20,12 @@
 
 (defn fhir-schema-index
   ([] @*fhir-schema-index)
-  ([url] (get @*fhir-schema-index url)))
+  ([url-or-name]
+   (or (get @*fhir-schema-index url-or-name)
+       (some (fn [[_ res]]
+               (when (= url-or-name (:name res))
+                 res))
+             @*fhir-schema-index))))
 
 (defn- keep-fhir-resource-file [acc file-name read-fn]
   (if (str/ends-with? file-name ".json")
