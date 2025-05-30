@@ -98,7 +98,11 @@
                         :verbose verbose})
 
   (let [fhir-schemas (package/fhir-schema-index)
-        type-schemas (fhir-schema->type-schema fhir-schemas)
+        type-schemas (concat (fhir-schema->type-schema fhir-schemas)
+                             (->> (package/index)
+                                  vals
+                                  (filter package/is-value-set?)
+                                  (map type-schema/translate-value-set)))
         type-schemas (if treeshake
                        (do (when verbose (println "Treeshaking output based on required types:" treeshake))
                            (treeshake-type-schemas type-schemas treeshake verbose))

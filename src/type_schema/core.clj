@@ -14,6 +14,7 @@
         (some? (:kind schema)) (:kind schema)
         :else "resource"))
 
+;; FIXME: rename to drop-url-version
 (defn split-url-version [url-with-version]
   (if (string? url-with-version)
     (first (str/split url-with-version #"\|"))
@@ -53,14 +54,17 @@
      :name    (:name fhir-schema)
      :url     (:url fhir-schema)}))
 
-(defn get-value-set-identifier [value-set]
+(defn get-value-set-identifier [value-set-url]
   #_(assert (some? (:url value-set)))
-  (let [package-meta (package-meta value-set)]
-    {:kind    "value-set"
-     :package (:name package-meta)
-     :version (:version package-meta)
-     :name    (:id value-set)
-     :url     (:url value-set)}))
+  (let [value-set-sd (package/index (split-url-version value-set-url))
+        {pname :name pver :version} (when (some? value-set-sd)
+                                      (package-meta-fallback value-set-sd))
+        name (:id value-set-sd)]
+    (cond-> {:kind    "value-set"
+             :url     (:url value-set-sd)}
+      name (assoc :name name)
+      pname (assoc :package pname)
+      pver (assoc :version pver))))
 
 (defn get-nested-identifier [fhir-schema path]
   #_(assert (some? (:url fhir-schema)))
@@ -108,10 +112,10 @@
     (when (not (empty? binding))
       (let [value-set-url (:valueSet binding)
             value-set (package/index (split-url-version value-set-url))]
-        (if (nil? value-set)
+        (when (nil? value-set)
           (binding [*out* *err*]
-            (println "WARN: unknown value set:" value-set-url))
-          (get-binding-identifier fhir-schema path element))))))
+            (println "WARN: unknown value set:" value-set-url)))
+        (get-binding-identifier fhir-schema path element)))))
 
 (defn build-reference [element]
   (when (:refers element)
@@ -208,8 +212,8 @@
 (defn extract-dependencies-from-nested [nested-types]
   (concat
    (->> nested-types
-        (map (fn [nested-type]
-               (extract-dependencies (:fields nested-type))))
+        (keep (fn [nested-type]
+                (extract-dependencies (:fields nested-type))))
         (apply concat))
    (when-let [base (get-in (first nested-types) [:base])]
      [base])))
@@ -217,15 +221,20 @@
 (defn translate-binding [fhir-schema path element]
   (let [type          (build-field-type fhir-schema element)
         value-set-url (get-in element [:binding :valueSet])
-        valueset (-> (package/index (split-url-version value-set-url))
-                     (get-value-set-identifier))]
+        valueset (if (package/index (split-url-version value-set-url))
+                   (get-value-set-identifier value-set-url)
+                   {:kind "value-set",
+                    :url value-set-url})]
+
     (remove-empty-vals
      {:identifier (get-binding-identifier fhir-schema path element)
       :type type
       :valueset valueset
       :strength (get-in element [:binding :strength])
       :enum (build-enum element)
-      :dependencies [type valueset]})))
+      :dependencies (->> (concat (when (some? type) [type])
+                                 [valueset])
+                         (sort-by #(-> % :identifier :name)))})))
 
 (defn translate-fhir-schema [fhir-schema]
   (let [parent      (-> fhir-schema :base (package/fhir-schema-index))
@@ -267,14 +276,14 @@
     (cons resource-type-schema
           binding-type-schemas)))
 
-(defn translate-value-set [value-set]
-  (let [identifier  (get-value-set-identifier value-set)
-        description (:description value-set)
+(defn translate-value-set [value-set-sd]
+  (let [identifier  (get-value-set-identifier (:url value-set-sd))
+        description (:description value-set-sd)
 
-        concepts    (value-set/value-set->concepts (package/index) value-set)
+        concepts    (value-set/value-set->concepts (package/index) value-set-sd)
 
         compose     (when (empty? concepts)
-                      (:compose value-set))
+                      (:compose value-set-sd))
         ;; FIXME: collect deps
         depends     []]
 
@@ -286,6 +295,7 @@
 
 (defn translate [resource]
   (cond
+    ;; FIXME: remove it
     (package/is-value-set? resource)
     [(translate-value-set resource)]
 
