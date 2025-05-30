@@ -11,6 +11,11 @@
   ([] @*index)
   ([id] (get @*index id)))
 
+(def *package-meta (atom nil))
+
+(defn package-meta [_url]
+  @*package-meta)
+
 (def *fhir-schema-index (atom nil))
 
 (defn fhir-schema-index
@@ -39,6 +44,7 @@
   (= "ValueSet" (:resourceType fhir-schema)))
 
 (defn clean! []
+  (reset! *package-meta nil)
   (reset! *index nil)
   (reset! *fhir-schema-index nil))
 
@@ -51,7 +57,8 @@
         ;; So we add that info manually to fhir-schema in :package-meta, like in
         ;; custom Aidbox resources.
         pkg-info (pkg-info package-name)
-        package-meta {:name (:name pkg-info)
+
+        package-meta {:name    (:name pkg-info)
                       :version (or (:version pkg-info)
                                    (get-in pkg-info [:dist-tags :latest])
                                    (-> pkg-info :versions first :version))}
@@ -64,7 +71,7 @@
                                        [url (fhir-schema/translate {:package-meta package-meta}
                                                                    structure-definition)]))
                                 (into {}))]
-
+    (reset! *package-meta package-meta)
     (reset! *index package-index)
     (reset! *fhir-schema-index fhir-schemas-index)
     :ok))
@@ -74,17 +81,24 @@
          assoc (:url fhir-schema) fhir-schema))
 
 (defn initialize! [{package-name :package-name
-                    fhir-schemas :fhir-schemas
-                    verbose      :verbose}]
+                    fhir-schema-fns :fhir-schema-fns
+                    default-package-meta :default-package-meta
+                    verbose :verbose}]
   (clean!)
   (when package-name
     (when verbose (println "Processing package:" package-name))
     (init-from-package! package-name))
 
-  (doseq [fhir-schema fhir-schemas]
-    (when verbose (println "Processing FHIR schema file:" fhir-schema))
-    (append-fhir-schema! (-> fhir-schema
-                             (slurp)
-                             (json/parse-string true))))
+  (doseq [fhir-schema-fn fhir-schema-fns]
+    (when verbose (println "Processing FHIR schema file:" fhir-schema-fn))
+    (let [fhir-schema (-> fhir-schema-fn
+                          (slurp)
+                          (json/parse-string true))
+
+          fhir-schema (cond-> fhir-schema
+                        (:package-meta fhir-schema)
+                        (assoc :package-meta default-package-meta))]
+
+      (append-fhir-schema! fhir-schema)))
 
   (when verbose (println "Package initialized, generating schema...")))

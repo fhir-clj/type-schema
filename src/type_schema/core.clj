@@ -56,8 +56,8 @@
 (defn get-value-set-identifier [value-set-url]
   #_(assert (some? (:url value-set)))
   (let [value-set-sd (package/index (drop-version-from-url value-set-url))
-        {pname :name pver :version} (when (some? value-set-sd)
-                                      (package-meta-fallback value-set-sd))
+        {pname :name pver :version} (or (package/package-meta value-set-url)
+                                        (package-meta-fallback value-set-sd))
         name (:id value-set-sd)]
     (cond-> {:kind    "value-set"
              :url     (:url value-set-sd)}

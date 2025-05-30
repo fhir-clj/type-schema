@@ -88,7 +88,7 @@
                                      separated-files :separated-files
                                      treeshake :treeshake}]
   (package/initialize! {:package-name package-name
-                        :fhir-schemas fhir-schemas
+                        :fhir-schema-fns fhir-schemas
                         :verbose verbose})
 
   (let [fhir-schemas (package/fhir-schema-index)
