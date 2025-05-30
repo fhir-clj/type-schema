@@ -68,7 +68,7 @@
           "package": "not-specified",
           "version": "not-specified",
           "name": "TutorNotificationTemplate",
-          "url": "TutorNotificationTemplate"
+          "url": "http://example.com/aidbox-sms-tutor/TutorNotificationTemplate"
         }
       ],
       "required": false

@@ -80,7 +80,9 @@
    (fhir-schema/translate (package/index "http://hl7.org/fhir/StructureDefinition/string"))))
 
 (deftest fhir-schema->type-schema-small-golden-test
-  (package/init-from-package! "hl7.fhir.r4.core")
+  (package/initialize! {:package-name "hl7.fhir.r4.core"
+                        :fhir-schema-fns ["test/golden/custom/TutorNotification.fs.json"
+                                          "test/golden/custom/TutorNotificationTemplate.fs.json"]})
 
   (golden/as-json "docs/examples/string.ts.json"
                   (fhir-schema->type-schema "docs/examples/fhir-schema/string.fs.json"))
