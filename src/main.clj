@@ -1,6 +1,5 @@
 (ns main
   (:require
-   #_[type-schema.sanity :as sanity]
    [cheshire.core :as json]
    [clojure.java.io :as io]
    [clojure.set :as set]
@@ -9,7 +8,8 @@
    [extract-enum]
    [fhir.package]
    [type-schema.core :as type-schema]
-   [type-schema.package-index :as package])
+   [type-schema.package-index :as package]
+   [type-schema.sanity :as sanity])
   (:gen-class))
 
 (def version "0.0.9")
@@ -119,11 +119,11 @@
       (doseq [item type-schemas]
         (println (json/generate-string item))))
 
-    #_(let [unresolvable-deps (sanity/find-unresolvable-deps type-schemas)]
-        (if (empty? unresolvable-deps)
-          (when verbose (println "Processing completed successfully"))
-          (doseq [dep unresolvable-deps]
-            (println "Warning: Unresolvable dependency found:" dep))))
+    (let [unresolvable-deps (sanity/find-unresolvable-deps type-schemas)]
+      (if (empty? unresolvable-deps)
+        (when verbose (println "Processing completed successfully"))
+        (doseq [dep unresolvable-deps]
+          (println "Warning: Unresolvable dependency found:" dep))))
 
     :ok))
 
