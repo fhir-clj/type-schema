@@ -54,16 +54,17 @@
      :url     (:url fhir-schema)}))
 
 (defn get-value-set-identifier [value-set-url]
-  #_(assert (some? (:url value-set)))
-  (let [value-set-sd (package/index (drop-version-from-url value-set-url))
-        {pname :name pver :version} (or (package/package-meta value-set-url)
-                                        (package-meta-fallback value-set-sd))
-        name (:id value-set-sd)]
-    (cond-> {:kind    "value-set"
-             :url     (:url value-set-sd)}
-      name (assoc :name name)
-      pname (assoc :package pname)
-      pver (assoc :version pver))))
+  (let [value-set-url (drop-version-from-url value-set-url)
+        value-set-sd (package/index value-set-url)
+        package-meta (package/package-meta value-set-url)]
+    (if (some? value-set-sd)
+      {:kind    "value-set"
+       :url     value-set-url
+       :name    (:id value-set-sd)
+       :package (:name package-meta)
+       :version (:version package-meta)}
+      {:kind "value-set"
+       :url  value-set-url})))
 
 (defn get-nested-identifier [fhir-schema path]
   #_(assert (some? (:url fhir-schema)))
@@ -220,10 +221,7 @@
 (defn translate-binding [fhir-schema path element]
   (let [type          (build-field-type fhir-schema element)
         value-set-url (get-in element [:binding :valueSet])
-        valueset (if (package/index (drop-version-from-url value-set-url))
-                   (get-value-set-identifier value-set-url)
-                   {:kind "value-set",
-                    :url value-set-url})]
+        valueset      (get-value-set-identifier value-set-url)]
 
     (remove-empty-vals
      {:identifier (get-binding-identifier fhir-schema path element)
