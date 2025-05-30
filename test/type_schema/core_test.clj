@@ -60,7 +60,7 @@
 (defn fhir-schema->type-schemas [fhir-schema-file]
   (-> (slurp fhir-schema-file)
       (json/parse-string true)
-      (type-schema/translate)))
+      (type-schema/translate-fhir-schema)))
 
 (defn fhir-schema->type-schema [fhir-schema-file]
   (let [type-schemas (fhir-schema->type-schemas fhir-schema-file)]

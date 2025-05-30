@@ -14,8 +14,7 @@
         (some? (:kind schema)) (:kind schema)
         :else "resource"))
 
-;; FIXME: rename to drop-url-version
-(defn split-url-version [url-with-version]
+(defn drop-version-from-url [url-with-version]
   (if (string? url-with-version)
     (first (str/split url-with-version #"\|"))
     url-with-version))
@@ -56,7 +55,7 @@
 
 (defn get-value-set-identifier [value-set-url]
   #_(assert (some? (:url value-set)))
-  (let [value-set-sd (package/index (split-url-version value-set-url))
+  (let [value-set-sd (package/index (drop-version-from-url value-set-url))
         {pname :name pver :version} (when (some? value-set-sd)
                                       (package-meta-fallback value-set-sd))
         name (:id value-set-sd)]
@@ -91,7 +90,7 @@
   (let [value-set-url (get-in element [:binding :valueSet])
         strength (get-in element [:binding :strength])
         type (get-in element [:type])
-        value-set (package/index (split-url-version value-set-url))
+        value-set (package/index (drop-version-from-url value-set-url))
         concepts (value-set/value-set->concepts (package/index) value-set)]
     (when (and (= strength "required") (= type "code") value-set)
       (mapv (fn [concept] (:code concept)) concepts))))
@@ -111,7 +110,7 @@
   (let [binding (:binding element)]
     (when (not (empty? binding))
       (let [value-set-url (:valueSet binding)
-            value-set (package/index (split-url-version value-set-url))]
+            value-set (package/index (drop-version-from-url value-set-url))]
         (when (nil? value-set)
           (binding [*out* *err*]
             (println "WARN: unknown value set:" value-set-url)))
@@ -221,7 +220,7 @@
 (defn translate-binding [fhir-schema path element]
   (let [type          (build-field-type fhir-schema element)
         value-set-url (get-in element [:binding :valueSet])
-        valueset (if (package/index (split-url-version value-set-url))
+        valueset (if (package/index (drop-version-from-url value-set-url))
                    (get-value-set-identifier value-set-url)
                    {:kind "value-set",
                     :url value-set-url})]
@@ -292,14 +291,5 @@
                         :concept      concepts
                         :compose      compose
                         :dependencies depends})))
-
-(defn translate [resource]
-  (cond
-    ;; FIXME: remove it
-    (package/is-value-set? resource)
-    [(translate-value-set resource)]
-
-    :else
-    (translate-fhir-schema resource)))
 
 #_(main/process-package "hl7.fhir.r4.core@4.0.1" "output")

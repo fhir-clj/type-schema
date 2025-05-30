@@ -32,12 +32,6 @@
    [nil "--version" "Print version information and exit"]
    ["-h" "--help" "Show this help message"]])
 
-(defn- fhir-schema->type-schema [fhir-schema-index]
-  (->> fhir-schema-index
-       (map (fn [[_url fhir-schema]]
-              (type-schema/translate fhir-schema)))
-       (apply concat)))
-
 (defn- extract-dependencies [type-schema]
   (let [deps (get type-schema :dependencies)]
     (if (seq deps) deps [])))
@@ -98,9 +92,11 @@
                         :verbose verbose})
 
   (let [fhir-schemas (package/fhir-schema-index)
-        type-schemas (concat (fhir-schema->type-schema fhir-schemas)
-                             (->> (package/index)
-                                  vals
+        type-schemas (concat (->> fhir-schemas
+                                  (map (fn [[_url fhir-schema]]
+                                         (type-schema/translate-fhir-schema fhir-schema)))
+                                  (apply concat))
+                             (->> (package/index) vals
                                   (filter package/is-value-set?)
                                   (map type-schema/translate-value-set)))
         type-schemas (if treeshake
@@ -213,13 +209,13 @@
       (get "http://hl7.org/fhir/StructureDefinition/string"))
   (-> fhir-schemas0
       (get "http://hl7.org/fhir/StructureDefinition/string")
-      (type-schema/translate))
+      (type-schema/translate-fhir-schema))
 
   (-> fhir-schemas0
       (get "http://hl7.org/fhir/StructureDefinition/Coding"))
   (-> fhir-schemas0
       (get "http://hl7.org/fhir/StructureDefinition/Coding")
-      (type-schema/translate))
+      (type-schema/translate-fhir-schema))
 
   (-> fhir-schemas0
       (get "http://hl7.org/fhir/StructureDefinition/Patient"))

@@ -78,8 +78,7 @@
                     verbose      :verbose}]
   (clean!)
   (when package-name
-    (when verbose
-      (println "Processing package:" package-name))
+    (when verbose (println "Processing package:" package-name))
     (init-from-package! package-name))
 
   (doseq [fhir-schema fhir-schemas]
