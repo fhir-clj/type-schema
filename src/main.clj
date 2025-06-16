@@ -28,6 +28,8 @@
     :multi true
     :update-fn (fnil conj [])
     :id :fhir-schemas]
+   [nil "--drop-cache" "Drop all package caches before processing"
+    :id :drop-cache]
    ["-v" "--verbose" "Enable verbose output"
     :id :verbose]
    [nil "--version" "Print version information and exit"]
@@ -87,7 +89,12 @@
                                      fhir-schemas :fhir-schemas
                                      verbose :verbose
                                      separated-files :separated-files
-                                     treeshake :treeshake}]
+                                     treeshake  :treeshake
+                                     drop-cache :drop-cache}]
+  (when drop-cache
+    (when verbose (println "Dropping package cache"))
+    (fhir.package/drop-cache))
+
   (package/initialize! {:package-name package-name
                         :fhir-schema-fns fhir-schemas
                         :verbose verbose})
@@ -143,6 +150,7 @@
         "  type-schema -o result.ndjson hl7.fhir.r4.core@4.0.1          # Output to file"
         "  type-schema -o output --separated-files hl7.fhir.r4.core     # Output each type schema to a separate file"
         "  type-schema --treeshake Patient,Observation hl7.fhir.r4.core # Only include specified types and dependencies"
+        "  type-schema --drop-cache                                     # Drop all package caches"
         "  type-schema --version                                        # Show version"]
        (str/join "\n")))
 
@@ -159,10 +167,14 @@
       (get options :version)
       {:exit-message (str "type-schema version " version) :ok? true}
 
+      (and (get options :drop-cache)
+           (nil? (first arguments)))
+      {:drop-cache true :options options :ok? true}
+
       errors
       {:exit-message (str/join "\n" errors)}
 
-      (not= (count arguments) 1)
+      (and (not= (count arguments) 1) (not (get options :drop-cache)) (not (get options :help)) (not (get options :version)))
       {:exit-message (str "Error: Exactly one package name is required.\n\n" (usage summary))}
 
       (and (get options :separated-files) (not (get options :output-dir)))
@@ -173,7 +185,8 @@
 
       :else
       {:package-name (first arguments)
-       :options options})))
+       :options options
+       :drop-cache (get options :drop-cache)})))
 
 (defn exit [status msg]
   (if (= status 0)
@@ -188,8 +201,18 @@
         options (get parsed :options)
         exit-message (get parsed :exit-message)
         ok? (get parsed :ok?)]
-    (if exit-message
+    (cond
+      exit-message
       (exit (if ok? 0 1) exit-message)
+
+      (and (:drop-cache parsed)
+           (nil? package-name))
+      (do (when (:verbose options)
+            (println "Dropping package cache"))
+          (fhir.package/drop-cache)
+          (System/exit 0))
+
+      :else
       (try
         (process-package package-name options)
         (System/exit 0)

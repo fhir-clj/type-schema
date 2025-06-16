@@ -240,12 +240,13 @@ You can download the latest release jar from the [GitHub Releases page](https://
 $ ./type-schema --help
 Type Schema Generator for FHIR packages
 
-Usage: type-schema [options] <package-name>
+Usage: type-schema [options] [<package-name>]
 
 Options:
   -o, --output DIR     Output directory or .ndjson file
       --separated-files Output each type schema to a separate file (requires -o to be set to a directory)
       --treeshake TYPES List of required types to include in output (comma-separated); output will only include these types and their dependencies
+      --drop-cache     Drop all package caches
   -v, --verbose        Enable verbose output
       --version        Print version information and exit
   -h, --help           Show this help message
@@ -257,6 +258,7 @@ Examples:
   type-schema -o result.ndjson hl7.fhir.r4.core@4.0.1             # Output to file
   type-schema -o output --separated-files hl7.fhir.r4.core@4.0.1  # Output each type schema to a separate file
   type-schema --treeshake Patient,Observation hl7.fhir.r4.core@4.0.1  # Only include specified types and dependencies
+  type-schema --drop-cache                                        # Drop all package caches
   type-schema --version                                           # Show version
 ```
 
