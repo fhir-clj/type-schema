@@ -3,6 +3,7 @@
    [cheshire.core :as json]
    [clojure.java.io :as io]
    [clojure.set :as set]
+   [clojure.stacktrace :as stacktrace]
    [clojure.string :as str]
    [clojure.tools.cli :as cli]
    [extract-enum]
@@ -194,7 +195,9 @@
         (System/exit 0)
         (catch Exception e
           (binding [*out* *err*]
-            (println "Error:" (.getMessage e)))
+            (println "Error:" (.getMessage e))
+            (when (:verbose options)
+              (stacktrace/print-stack-trace e)))
           (System/exit 1))))))
 
 (comment

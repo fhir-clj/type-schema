@@ -36,7 +36,8 @@
          (catch Exception e
            (binding [*out* *err*]
              (println "SKIP: " file-name
-                      " error: " (str/replace (.getMessage e) #"\n" " ")))
+                      " error: " (some-> (.getMessage e)
+                                         (str/replace #"\n" " "))))
            acc)) acc))
 
 (defn- get-package-index [package-info]
