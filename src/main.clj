@@ -226,8 +226,6 @@
 (comment
   (fhir.package/pkg-info "hl7.fhir.r4.core@4.0.1")
 
-  (process-package "hl7.fhir.r4.core@4.0.1" "output")
-
   (declare type-schemas0 fhir-schemas0)
 
   (-> type-schemas0 (get "http://hl7.org/fhir/StructureDefinition/Patient"))
@@ -246,6 +244,7 @@
   (-> fhir-schemas0
       (get "http://hl7.org/fhir/StructureDefinition/Patient"))
 
+  (process-package "hl7.cda.uv.core@2.0.1-sd" "output")
   (process-package "hl7.fhir.r5.core" "output")
   (process-package "hl7.fhir.r6.core" "output")
   (process-package "hl7.fhir.us.core@6.1.0" "output")

@@ -140,7 +140,8 @@
        (into {})))
 
 (defn build-field-type [fhir-schema element]
-  (or (some-> (type-to-url (:type element))
+  (or (some-> (or (type-to-url (:type element))
+                  (:defaultType element))
               (package/fhir-schema-index)
               (get-identifier))
       (when-let [fhir-schema-path (:elementReference element)]
