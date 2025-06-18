@@ -1,12 +1,16 @@
 (ns type-schema.core
-  (:require [clojure.string :as str]
-            [extract-enum]
-            [type-schema.package-index :as package]
-            [type-schema.value-set :as value-set]))
+  (:require
+   [clojure.string :as str]
+   [extract-enum]
+   [type-schema.package-index :as package]
+   [type-schema.primitive-types :as primitive-types]
+   [type-schema.value-set :as value-set]))
 
-(defn type-to-url [type]
-  ;; TODO: why don't we keep type as url? what if we reference type from another IG?
-  (str "http://hl7.org/fhir/StructureDefinition/" type))
+(defn ensure-url [type-name]
+  (if (re-matches #".*/.*" type-name)
+    type-name
+    (or (:url (package/fhir-schema-index type-name))
+        (str "http://hl7.org/fhir/StructureDefinition/" type-name))))
 
 (defn derive-kind-from-schema [schema]
   (cond (= (:resourceType schema) "ValueSet") "valueset"
@@ -140,19 +144,25 @@
        (into {})))
 
 (defn build-field-type [fhir-schema element]
-  (or (some-> (or (type-to-url (:type element))
-                  (:defaultType element))
-              (package/fhir-schema-index)
-              (get-identifier))
-      (when-let [fhir-schema-path (:elementReference element)]
-        (get-nested-identifier fhir-schema
-                               (->> fhir-schema-path
-                                    (drop 1)
-                                    (keep-indexed (fn [i key]
-                                                    (when (odd? i)
-                                                      key)))
-                                    (map keyword)
-                                    (into []))))))
+  (let [url (some-> element :type (ensure-url))]
+    (or (some-> (or url
+                    (:defaultType element))
+                (package/fhir-schema-index)
+                (get-identifier))
+        (when-let [fhir-schema-path (:elementReference element)]
+          (get-nested-identifier fhir-schema
+                                 (->> fhir-schema-path
+                                      (drop 1)
+                                      (keep-indexed (fn [i key]
+                                                      (when (odd? i)
+                                                        key)))
+                                      (map keyword)
+                                      (into []))))
+        ;; HACK: due to single package usage
+        (primitive-types/default-identifier (-> element :type))
+
+        (when (= (:kind fhir-schema) "logical")
+          (primitive-types/default-identifier "string")))))
 
 (defn build-field [fhir-schema path element]
   (let [type (build-field-type fhir-schema element)]
@@ -203,7 +213,7 @@
        (filter (fn [[_path element]] (= (:type element) "BackboneElement")))
        (map (fn [[path element]]
               {:identifier (get-nested-identifier fhir-schema path)
-               :base       (some-> (type-to-url "BackboneElement")
+               :base       (some-> (ensure-url "BackboneElement")
                                    (package/fhir-schema-index)
                                    (get-identifier))
                :fields     (iterate-over-elements fhir-schema path (:elements element))}))
