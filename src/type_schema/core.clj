@@ -158,10 +158,11 @@
                                                         key)))
                                       (map keyword)
                                       (into []))))
+
         ;; HACK: due to single package usage
         (primitive-types/default-identifier (-> element :type))
-
-        (when (= (:kind fhir-schema) "logical")
+        (when (and (= (:kind fhir-schema) "logical")
+                   (nil? (:type element)))
           (primitive-types/default-identifier "string")))))
 
 (defn build-field [fhir-schema path element]
@@ -189,11 +190,15 @@
              :required (is-required? fhir-schema path element)
              :excluded (is-excluded? fhir-schema path element)})))
 
+(defn is-nested-element? [element]
+  (or (= (:type element) "BackboneElement")
+      (< 0 (count (:elements element)))))
+
 (defn iterate-over-elements [fhir-schema path elements]
   (->> elements
        (map (fn [[key element]]
               (let [path (conj path key)]
-                (if (= (:type element) "BackboneElement")
+                (if (is-nested-element? element)
                   [key (build-nested-field fhir-schema path element)]
                   [key (build-field fhir-schema path element)]))))
        (into {})))
@@ -202,7 +207,7 @@
   (->> elements
        (map (fn [[key element]]
               (let [path (conj path key)
-                    nested (when (= (:type element) "BackboneElement")
+                    nested (when (is-nested-element? element)
                              (deep-nested-elements fhir-schema path (:elements element)))]
                 (cons [path element] nested))))
        (apply concat)
@@ -210,14 +215,13 @@
 
 (defn iterate-over-backbone-element [fhir-schema path elements]
   (->> (deep-nested-elements fhir-schema path elements)
-       (filter (fn [[_path element]] (= (:type element) "BackboneElement")))
+       (filter (fn [[_path element]] (is-nested-element? element)))
        (map (fn [[path element]]
               {:identifier (get-nested-identifier fhir-schema path)
                :base       (some-> (ensure-url "BackboneElement")
                                    (package/fhir-schema-index)
                                    (get-identifier))
                :fields     (iterate-over-elements fhir-schema path (:elements element))}))
-
        (into [])))
 
 (defn extract-dependencies [fields]
