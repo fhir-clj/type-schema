@@ -6,6 +6,10 @@
    [type-schema.primitive-types :as primitive-types]
    [type-schema.value-set :as value-set]))
 
+(defn warn [& msg]
+  (binding [*out* *err*]
+    (apply println "WARN:" msg)))
+
 (defn ensure-url [type-name]
   (if (re-matches #".*/.*" type-name)
     type-name
@@ -122,8 +126,7 @@
       (let [value-set-url (:valueSet binding)
             value-set (package/index (drop-version-from-url value-set-url))]
         (when (nil? value-set)
-          (binding [*out* *err*]
-            (println "WARN: unknown value set:" value-set-url)))
+          (warn "unknown value set:" value-set-url))
         (get-binding-identifier fhir-schema path element)))))
 
 (defn build-reference [element]
@@ -143,7 +146,7 @@
                    (empty? v))))
        (into {})))
 
-(defn build-field-type [fhir-schema element]
+(defn build-field-type [fhir-schema path element]
   (let [url (some-> element :type (ensure-url))]
     (or (some-> (or url
                     (:defaultType element))
@@ -160,13 +163,41 @@
                                       (into []))))
 
         ;; HACK: due to single package usage
-        (primitive-types/default-identifier (-> element :type))
+        (do (when (and (some? (-> element :type))
+                       (nil? (primitive-types/default-identifier (-> element :type))))
+              (warn :no-default-identifier (:name fhir-schema) (-> element :type)))
+            (primitive-types/default-identifier (-> element :type)))
+
+        (when (and (nil? (:type element))
+                   (some? (:base fhir-schema)))
+          (let [bases ((fn collect-bases [fs]
+                         (when-let [base (some-> fs
+                                                 :base
+                                                 package/fhir-schema-index)]
+                           (cons base (collect-bases base))))
+                       fhir-schema)
+                base-elems (->> bases
+                                (keep (fn [base]
+                                        {:fs base
+                                         :e (reduce (fn [st elem-name] (get-in st [:elements elem-name]))
+                                                    base
+                                                    path)}))
+                                (filter #(-> % :e :type)))
+                base-elem (first base-elems)]
+            (when (< 1 (count (distinct base-elems)))
+              (warn :multiple-base-types (:name fhir-schema) path (distinct base-elems)))
+
+            (when (some? base-elem)
+              (build-field-type (:fs base-elem) path (:e base-elem)))))
+
         (when (and (= (:kind fhir-schema) "logical")
-                   (nil? (:type element)))
+                   (nil? (:type element))
+                   (not (contains? element :choices)))
+          (warn :force-default-type-for-logic-model (:name fhir-schema) path element)
           (primitive-types/default-identifier "string")))))
 
 (defn build-field [fhir-schema path element]
-  (let [type (build-field-type fhir-schema element)]
+  (let [type (build-field-type fhir-schema path element)]
     (remove-empty-vals {:type      type
                         :array     (true? (:array element))
                         :required  (is-required? fhir-schema path element)
@@ -241,7 +272,7 @@
      [base])))
 
 (defn translate-binding [fhir-schema path element]
-  (let [type          (build-field-type fhir-schema element)
+  (let [type          (build-field-type fhir-schema path element)
         value-set-url (get-in element [:binding :valueSet])
         valueset      (get-value-set-identifier value-set-url)]
 

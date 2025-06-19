@@ -8,6 +8,7 @@
    [clojure.tools.cli :as cli]
    [extract-enum]
    [fhir.package]
+   [fhir.schema.translate]
    [type-schema.core :as type-schema]
    [type-schema.package-index :as package]
    [type-schema.sanity :as sanity])
@@ -226,23 +227,11 @@
 (comment
   (fhir.package/pkg-info "hl7.fhir.r4.core@4.0.1")
 
-  (declare type-schemas0 fhir-schemas0)
+  (-> (package/index "http://hl7.org/cda/stds/core/StructureDefinition/PIVL-TS")
+      (fhir.schema.translate/translate))
 
-  (-> type-schemas0 (get "http://hl7.org/fhir/StructureDefinition/Patient"))
-  (-> fhir-schemas0
-      (get "http://hl7.org/fhir/StructureDefinition/string"))
-  (-> fhir-schemas0
-      (get "http://hl7.org/fhir/StructureDefinition/string")
+  (-> (package/fhir-schema-index "PN")
       (type-schema/translate-fhir-schema))
-
-  (-> fhir-schemas0
-      (get "http://hl7.org/fhir/StructureDefinition/Coding"))
-  (-> fhir-schemas0
-      (get "http://hl7.org/fhir/StructureDefinition/Coding")
-      (type-schema/translate-fhir-schema))
-
-  (-> fhir-schemas0
-      (get "http://hl7.org/fhir/StructureDefinition/Patient"))
 
   (process-package "hl7.cda.uv.core@2.0.1-sd" "output")
   (process-package "hl7.fhir.r5.core" "output")
