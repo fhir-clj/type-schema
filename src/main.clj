@@ -14,7 +14,7 @@
    [type-schema.sanity :as sanity])
   (:gen-class))
 
-(def version "0.0.10")
+(def version "0.0.11")
 
 (def cli-options
   [["-o" "--output DIR" "Output directory or .ndjson file"
