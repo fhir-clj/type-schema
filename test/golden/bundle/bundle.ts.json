@@ -491,11 +491,25 @@
   ],
   "dependencies": [
     {
-      "kind": "resource",
+      "kind": "complex-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "Resource",
-      "url": "http://hl7.org/fhir/StructureDefinition/Resource"
+      "name": "BackboneElement",
+      "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
+    },
+    {
+      "kind": "binding",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "BundleType",
+      "url": "urn:fhir:binding:BundleType"
+    },
+    {
+      "kind": "binding",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "HTTPVerb",
+      "url": "urn:fhir:binding:HTTPVerb"
     },
     {
       "kind": "complex-type",
@@ -503,6 +517,27 @@
       "version": "4.0.1",
       "name": "Identifier",
       "url": "http://hl7.org/fhir/StructureDefinition/Identifier"
+    },
+    {
+      "kind": "resource",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "Resource",
+      "url": "http://hl7.org/fhir/StructureDefinition/Resource"
+    },
+    {
+      "kind": "binding",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "SearchEntryMode",
+      "url": "urn:fhir:binding:SearchEntryMode"
+    },
+    {
+      "kind": "complex-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "Signature",
+      "url": "http://hl7.org/fhir/StructureDefinition/Signature"
     },
     {
       "kind": "primitive-type",
@@ -515,22 +550,8 @@
       "kind": "primitive-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "instant",
-      "url": "http://hl7.org/fhir/StructureDefinition/instant"
-    },
-    {
-      "kind": "primitive-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "unsignedInt",
-      "url": "http://hl7.org/fhir/StructureDefinition/unsignedInt"
-    },
-    {
-      "kind": "nested",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "link",
-      "url": "http://hl7.org/fhir/StructureDefinition/Bundle#link"
+      "name": "decimal",
+      "url": "http://hl7.org/fhir/StructureDefinition/decimal"
     },
     {
       "kind": "nested",
@@ -538,34 +559,6 @@
       "version": "4.0.1",
       "name": "entry",
       "url": "http://hl7.org/fhir/StructureDefinition/Bundle#entry"
-    },
-    {
-      "kind": "complex-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "Signature",
-      "url": "http://hl7.org/fhir/StructureDefinition/Signature"
-    },
-    {
-      "kind": "binding",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "BundleType",
-      "url": "urn:fhir:binding:BundleType"
-    },
-    {
-      "kind": "primitive-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "uri",
-      "url": "http://hl7.org/fhir/StructureDefinition/uri"
-    },
-    {
-      "kind": "nested",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "entry.search",
-      "url": "http://hl7.org/fhir/StructureDefinition/Bundle#entry.search"
     },
     {
       "kind": "nested",
@@ -582,6 +575,27 @@
       "url": "http://hl7.org/fhir/StructureDefinition/Bundle#entry.response"
     },
     {
+      "kind": "nested",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "entry.search",
+      "url": "http://hl7.org/fhir/StructureDefinition/Bundle#entry.search"
+    },
+    {
+      "kind": "primitive-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "instant",
+      "url": "http://hl7.org/fhir/StructureDefinition/instant"
+    },
+    {
+      "kind": "nested",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "link",
+      "url": "http://hl7.org/fhir/StructureDefinition/Bundle#link"
+    },
+    {
       "kind": "primitive-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
@@ -589,32 +603,18 @@
       "url": "http://hl7.org/fhir/StructureDefinition/string"
     },
     {
-      "kind": "binding",
+      "kind": "primitive-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "HTTPVerb",
-      "url": "urn:fhir:binding:HTTPVerb"
+      "name": "unsignedInt",
+      "url": "http://hl7.org/fhir/StructureDefinition/unsignedInt"
     },
     {
       "kind": "primitive-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "decimal",
-      "url": "http://hl7.org/fhir/StructureDefinition/decimal"
-    },
-    {
-      "kind": "binding",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "SearchEntryMode",
-      "url": "urn:fhir:binding:SearchEntryMode"
-    },
-    {
-      "kind": "complex-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "BackboneElement",
-      "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
+      "name": "uri",
+      "url": "http://hl7.org/fhir/StructureDefinition/uri"
     }
   ]
 }

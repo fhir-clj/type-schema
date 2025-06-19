@@ -16,8 +16,6 @@
   "description": "description",
   "fields": {
     "deceasedDateTime": {
-      "array": false,
-      "required": false,
       "excluded": false,
       "type": {
         "kind": "primitive-type",
@@ -26,11 +24,11 @@
         "name": "dateTime",
         "url": "http://hl7.org/fhir/StructureDefinition/dateTime"
       },
-      "choiceOf": "deceased"
+      "array": false,
+      "choiceOf": "deceased",
+      "required": false
     },
     "deceasedBoolean": {
-      "array": false,
-      "required": false,
       "excluded": false,
       "type": {
         "kind": "primitive-type",
@@ -39,13 +37,15 @@
         "name": "boolean",
         "url": "http://hl7.org/fhir/StructureDefinition/boolean"
       },
-      "choiceOf": "deceased"
+      "array": false,
+      "choiceOf": "deceased",
+      "required": false
     },
     "deceased": {
-      "array": false,
-      "required": false,
       "excluded": false,
-      "choices": ["deceasedBoolean", "deceasedDateTime"]
+      "choices": ["deceasedBoolean", "deceasedDateTime"],
+      "array": false,
+      "required": false
     }
   },
   "dependencies": [
@@ -60,15 +60,15 @@
       "kind": "primitive-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "dateTime",
-      "url": "http://hl7.org/fhir/StructureDefinition/dateTime"
+      "name": "boolean",
+      "url": "http://hl7.org/fhir/StructureDefinition/boolean"
     },
     {
       "kind": "primitive-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "boolean",
-      "url": "http://hl7.org/fhir/StructureDefinition/boolean"
+      "name": "dateTime",
+      "url": "http://hl7.org/fhir/StructureDefinition/dateTime"
     }
   ]
 }

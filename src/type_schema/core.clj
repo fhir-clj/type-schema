@@ -313,7 +313,7 @@
                      (extract-dependencies fields)
                      (extract-dependencies-from-nested nested))
              (distinct)
-             (sort-by #(get-in % [:idetifier :name]))
+             (sort-by #(get-in % [:name]))
              (remove #(-> % :name (= (:name identifier))))
              (into []))
 

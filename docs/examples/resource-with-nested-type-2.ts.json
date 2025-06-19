@@ -92,6 +92,13 @@
   ],
   "dependencies": [
     {
+      "kind": "complex-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "BackboneElement",
+      "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
+    },
+    {
       "kind": "resource",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
@@ -118,13 +125,6 @@
       "version": "4.0.1",
       "name": "string",
       "url": "http://hl7.org/fhir/StructureDefinition/string"
-    },
-    {
-      "kind": "complex-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "BackboneElement",
-      "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
     }
   ]
 }

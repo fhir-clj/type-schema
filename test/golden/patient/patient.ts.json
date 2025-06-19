@@ -561,20 +561,6 @@
   ],
   "dependencies": [
     {
-      "kind": "resource",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "DomainResource",
-      "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
-    },
-    {
-      "kind": "primitive-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "boolean",
-      "url": "http://hl7.org/fhir/StructureDefinition/boolean"
-    },
-    {
       "kind": "complex-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
@@ -582,11 +568,95 @@
       "url": "http://hl7.org/fhir/StructureDefinition/Address"
     },
     {
-      "kind": "primitive-type",
+      "kind": "binding",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "dateTime",
-      "url": "http://hl7.org/fhir/StructureDefinition/dateTime"
+      "name": "AdministrativeGender",
+      "url": "urn:fhir:binding:AdministrativeGender"
+    },
+    {
+      "kind": "complex-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "Attachment",
+      "url": "http://hl7.org/fhir/StructureDefinition/Attachment"
+    },
+    {
+      "kind": "complex-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "BackboneElement",
+      "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
+    },
+    {
+      "kind": "complex-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "CodeableConcept",
+      "url": "http://hl7.org/fhir/StructureDefinition/CodeableConcept"
+    },
+    {
+      "kind": "complex-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "ContactPoint",
+      "url": "http://hl7.org/fhir/StructureDefinition/ContactPoint"
+    },
+    {
+      "kind": "binding",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "ContactRelationship",
+      "url": "urn:fhir:binding:ContactRelationship"
+    },
+    {
+      "kind": "resource",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "DomainResource",
+      "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+    },
+    {
+      "kind": "complex-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "HumanName",
+      "url": "http://hl7.org/fhir/StructureDefinition/HumanName"
+    },
+    {
+      "kind": "complex-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "Identifier",
+      "url": "http://hl7.org/fhir/StructureDefinition/Identifier"
+    },
+    {
+      "kind": "binding",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "Language",
+      "url": "urn:fhir:binding:Language"
+    },
+    {
+      "kind": "binding",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "LinkType",
+      "url": "urn:fhir:binding:LinkType"
+    },
+    {
+      "kind": "binding",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "MaritalStatus",
+      "url": "urn:fhir:binding:MaritalStatus"
+    },
+    {
+      "kind": "complex-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "Period",
+      "url": "http://hl7.org/fhir/StructureDefinition/Period"
     },
     {
       "kind": "complex-type",
@@ -596,11 +666,32 @@
       "url": "http://hl7.org/fhir/StructureDefinition/Reference"
     },
     {
-      "kind": "complex-type",
+      "kind": "primitive-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "HumanName",
-      "url": "http://hl7.org/fhir/StructureDefinition/HumanName"
+      "name": "boolean",
+      "url": "http://hl7.org/fhir/StructureDefinition/boolean"
+    },
+    {
+      "kind": "primitive-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "code",
+      "url": "http://hl7.org/fhir/StructureDefinition/code"
+    },
+    {
+      "kind": "nested",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "communication",
+      "url": "http://hl7.org/fhir/StructureDefinition/Patient#communication"
+    },
+    {
+      "kind": "nested",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "contact",
+      "url": "http://hl7.org/fhir/StructureDefinition/Patient#contact"
     },
     {
       "kind": "primitive-type",
@@ -613,15 +704,15 @@
       "kind": "primitive-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "integer",
-      "url": "http://hl7.org/fhir/StructureDefinition/integer"
+      "name": "dateTime",
+      "url": "http://hl7.org/fhir/StructureDefinition/dateTime"
     },
     {
-      "kind": "complex-type",
+      "kind": "primitive-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "Attachment",
-      "url": "http://hl7.org/fhir/StructureDefinition/Attachment"
+      "name": "integer",
+      "url": "http://hl7.org/fhir/StructureDefinition/integer"
     },
     {
       "kind": "nested",
@@ -629,97 +720,6 @@
       "version": "4.0.1",
       "name": "link",
       "url": "http://hl7.org/fhir/StructureDefinition/Patient#link"
-    },
-    {
-      "kind": "nested",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "communication",
-      "url": "http://hl7.org/fhir/StructureDefinition/Patient#communication"
-    },
-    {
-      "kind": "complex-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "Identifier",
-      "url": "http://hl7.org/fhir/StructureDefinition/Identifier"
-    },
-    {
-      "kind": "complex-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "ContactPoint",
-      "url": "http://hl7.org/fhir/StructureDefinition/ContactPoint"
-    },
-    {
-      "kind": "primitive-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "code",
-      "url": "http://hl7.org/fhir/StructureDefinition/code"
-    },
-    {
-      "kind": "complex-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "CodeableConcept",
-      "url": "http://hl7.org/fhir/StructureDefinition/CodeableConcept"
-    },
-    {
-      "kind": "nested",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "contact",
-      "url": "http://hl7.org/fhir/StructureDefinition/Patient#contact"
-    },
-    {
-      "kind": "binding",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "AdministrativeGender",
-      "url": "urn:fhir:binding:AdministrativeGender"
-    },
-    {
-      "kind": "binding",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "MaritalStatus",
-      "url": "urn:fhir:binding:MaritalStatus"
-    },
-    {
-      "kind": "binding",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "Language",
-      "url": "urn:fhir:binding:Language"
-    },
-    {
-      "kind": "complex-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "Period",
-      "url": "http://hl7.org/fhir/StructureDefinition/Period"
-    },
-    {
-      "kind": "binding",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "ContactRelationship",
-      "url": "urn:fhir:binding:ContactRelationship"
-    },
-    {
-      "kind": "binding",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "LinkType",
-      "url": "urn:fhir:binding:LinkType"
-    },
-    {
-      "kind": "complex-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "BackboneElement",
-      "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
     }
   ]
 }

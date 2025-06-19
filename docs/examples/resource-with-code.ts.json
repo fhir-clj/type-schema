@@ -38,6 +38,13 @@
   },
   "dependencies": [
     {
+      "kind": "binding",
+      "package": "hl7.fhir.core.r4",
+      "version": "4.0.1",
+      "name": "AdministrativeGender",
+      "url": "urn:fhir:binding:AdministrativeGender"
+    },
+    {
       "kind": "resource",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
@@ -50,13 +57,6 @@
       "version": "4.0.1",
       "name": "code",
       "url": "http://hl7.org/fhir/StructureDefinition/code"
-    },
-    {
-      "kind": "binding",
-      "package": "hl7.fhir.core.r4",
-      "version": "4.0.1",
-      "name": "AdministrativeGender",
-      "url": "urn:fhir:binding:AdministrativeGender"
     }
   ]
 }

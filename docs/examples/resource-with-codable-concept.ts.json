@@ -37,18 +37,18 @@
   },
   "dependencies": [
     {
-      "kind": "resource",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "DomainResource",
-      "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
-    },
-    {
       "kind": "complex-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
       "name": "CodeableConcept",
       "url": "http://hl7.org/fhir/StructureDefinition/CodeableConcept"
+    },
+    {
+      "kind": "resource",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "DomainResource",
+      "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
     },
     {
       "kind": "binding",

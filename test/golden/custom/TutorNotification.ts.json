@@ -128,13 +128,6 @@
       "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
     },
     {
-      "kind": "primitive-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "string",
-      "url": "http://hl7.org/fhir/StructureDefinition/string"
-    },
-    {
       "kind": "complex-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
@@ -142,11 +135,11 @@
       "url": "http://hl7.org/fhir/StructureDefinition/Reference"
     },
     {
-      "kind": "primitive-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "dateTime",
-      "url": "http://hl7.org/fhir/StructureDefinition/dateTime"
+      "kind": "binding",
+      "package": "not-specified",
+      "version": "not-specified",
+      "name": "TutorNotification.status_binding",
+      "url": "http://example.com/aidbox-sms-tutor/TutorNotification#status_binding"
     },
     {
       "kind": "binding",
@@ -156,11 +149,18 @@
       "url": "http://example.com/aidbox-sms-tutor/TutorNotification#type_binding"
     },
     {
-      "kind": "binding",
-      "package": "not-specified",
-      "version": "not-specified",
-      "name": "TutorNotification.status_binding",
-      "url": "http://example.com/aidbox-sms-tutor/TutorNotification#status_binding"
+      "kind": "primitive-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "dateTime",
+      "url": "http://hl7.org/fhir/StructureDefinition/dateTime"
+    },
+    {
+      "kind": "primitive-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "string",
+      "url": "http://hl7.org/fhir/StructureDefinition/string"
     }
   ]
 }

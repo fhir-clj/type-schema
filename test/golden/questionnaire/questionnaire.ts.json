@@ -1254,46 +1254,18 @@
   ],
   "dependencies": [
     {
-      "kind": "resource",
+      "kind": "complex-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "DomainResource",
-      "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+      "name": "Attachment",
+      "url": "http://hl7.org/fhir/StructureDefinition/Attachment"
     },
     {
-      "kind": "primitive-type",
+      "kind": "complex-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "markdown",
-      "url": "http://hl7.org/fhir/StructureDefinition/markdown"
-    },
-    {
-      "kind": "primitive-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "code",
-      "url": "http://hl7.org/fhir/StructureDefinition/code"
-    },
-    {
-      "kind": "primitive-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "dateTime",
-      "url": "http://hl7.org/fhir/StructureDefinition/dateTime"
-    },
-    {
-      "kind": "primitive-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "string",
-      "url": "http://hl7.org/fhir/StructureDefinition/string"
-    },
-    {
-      "kind": "primitive-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "date",
-      "url": "http://hl7.org/fhir/StructureDefinition/date"
+      "name": "BackboneElement",
+      "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
     },
     {
       "kind": "complex-type",
@@ -1303,18 +1275,102 @@
       "url": "http://hl7.org/fhir/StructureDefinition/CodeableConcept"
     },
     {
-      "kind": "primitive-type",
+      "kind": "complex-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "canonical",
-      "url": "http://hl7.org/fhir/StructureDefinition/canonical"
+      "name": "Coding",
+      "url": "http://hl7.org/fhir/StructureDefinition/Coding"
     },
     {
-      "kind": "nested",
+      "kind": "complex-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "item",
-      "url": "http://hl7.org/fhir/StructureDefinition/Questionnaire#item"
+      "name": "ContactDetail",
+      "url": "http://hl7.org/fhir/StructureDefinition/ContactDetail"
+    },
+    {
+      "kind": "resource",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "DomainResource",
+      "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
+    },
+    {
+      "kind": "binding",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "EnableWhenBehavior",
+      "url": "urn:fhir:binding:EnableWhenBehavior"
+    },
+    {
+      "kind": "complex-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "Identifier",
+      "url": "http://hl7.org/fhir/StructureDefinition/Identifier"
+    },
+    {
+      "kind": "binding",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "Jurisdiction",
+      "url": "urn:fhir:binding:Jurisdiction"
+    },
+    {
+      "kind": "complex-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "Period",
+      "url": "http://hl7.org/fhir/StructureDefinition/Period"
+    },
+    {
+      "kind": "binding",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "PublicationStatus",
+      "url": "urn:fhir:binding:PublicationStatus"
+    },
+    {
+      "kind": "complex-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "Quantity",
+      "url": "http://hl7.org/fhir/StructureDefinition/Quantity"
+    },
+    {
+      "kind": "binding",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "QuestionnaireConcept",
+      "url": "urn:fhir:binding:QuestionnaireConcept"
+    },
+    {
+      "kind": "binding",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "QuestionnaireItemOperator",
+      "url": "urn:fhir:binding:QuestionnaireItemOperator"
+    },
+    {
+      "kind": "binding",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "QuestionnaireItemType",
+      "url": "urn:fhir:binding:QuestionnaireItemType"
+    },
+    {
+      "kind": "complex-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "Reference",
+      "url": "http://hl7.org/fhir/StructureDefinition/Reference"
+    },
+    {
+      "kind": "binding",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "ResourceType",
+      "url": "urn:fhir:binding:ResourceType"
     },
     {
       "kind": "complex-type",
@@ -1334,71 +1390,50 @@
       "kind": "primitive-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "uri",
-      "url": "http://hl7.org/fhir/StructureDefinition/uri"
+      "name": "canonical",
+      "url": "http://hl7.org/fhir/StructureDefinition/canonical"
     },
     {
-      "kind": "complex-type",
+      "kind": "primitive-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "Coding",
-      "url": "http://hl7.org/fhir/StructureDefinition/Coding"
+      "name": "code",
+      "url": "http://hl7.org/fhir/StructureDefinition/code"
     },
     {
-      "kind": "complex-type",
+      "kind": "primitive-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "Identifier",
-      "url": "http://hl7.org/fhir/StructureDefinition/Identifier"
+      "name": "date",
+      "url": "http://hl7.org/fhir/StructureDefinition/date"
     },
     {
-      "kind": "complex-type",
+      "kind": "primitive-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "ContactDetail",
-      "url": "http://hl7.org/fhir/StructureDefinition/ContactDetail"
+      "name": "dateTime",
+      "url": "http://hl7.org/fhir/StructureDefinition/dateTime"
     },
     {
-      "kind": "complex-type",
+      "kind": "primitive-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "Period",
-      "url": "http://hl7.org/fhir/StructureDefinition/Period"
+      "name": "decimal",
+      "url": "http://hl7.org/fhir/StructureDefinition/decimal"
     },
     {
-      "kind": "binding",
+      "kind": "primitive-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "ResourceType",
-      "url": "urn:fhir:binding:ResourceType"
-    },
-    {
-      "kind": "binding",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "Jurisdiction",
-      "url": "urn:fhir:binding:Jurisdiction"
-    },
-    {
-      "kind": "binding",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "PublicationStatus",
-      "url": "urn:fhir:binding:PublicationStatus"
-    },
-    {
-      "kind": "binding",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "QuestionnaireConcept",
-      "url": "urn:fhir:binding:QuestionnaireConcept"
+      "name": "integer",
+      "url": "http://hl7.org/fhir/StructureDefinition/integer"
     },
     {
       "kind": "nested",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "item.enableWhen",
-      "url": "http://hl7.org/fhir/StructureDefinition/Questionnaire#item.enableWhen"
+      "name": "item",
+      "url": "http://hl7.org/fhir/StructureDefinition/Questionnaire#item"
     },
     {
       "kind": "nested",
@@ -1411,6 +1446,13 @@
       "kind": "nested",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
+      "name": "item.enableWhen",
+      "url": "http://hl7.org/fhir/StructureDefinition/Questionnaire#item.enableWhen"
+    },
+    {
+      "kind": "nested",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
       "name": "item.initial",
       "url": "http://hl7.org/fhir/StructureDefinition/Questionnaire#item.initial"
     },
@@ -1418,22 +1460,15 @@
       "kind": "primitive-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "integer",
-      "url": "http://hl7.org/fhir/StructureDefinition/integer"
+      "name": "markdown",
+      "url": "http://hl7.org/fhir/StructureDefinition/markdown"
     },
     {
-      "kind": "binding",
+      "kind": "primitive-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "EnableWhenBehavior",
-      "url": "urn:fhir:binding:EnableWhenBehavior"
-    },
-    {
-      "kind": "binding",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "QuestionnaireItemType",
-      "url": "urn:fhir:binding:QuestionnaireItemType"
+      "name": "string",
+      "url": "http://hl7.org/fhir/StructureDefinition/string"
     },
     {
       "kind": "primitive-type",
@@ -1443,46 +1478,11 @@
       "url": "http://hl7.org/fhir/StructureDefinition/time"
     },
     {
-      "kind": "complex-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "Reference",
-      "url": "http://hl7.org/fhir/StructureDefinition/Reference"
-    },
-    {
-      "kind": "complex-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "Quantity",
-      "url": "http://hl7.org/fhir/StructureDefinition/Quantity"
-    },
-    {
       "kind": "primitive-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
-      "name": "decimal",
-      "url": "http://hl7.org/fhir/StructureDefinition/decimal"
-    },
-    {
-      "kind": "binding",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "QuestionnaireItemOperator",
-      "url": "urn:fhir:binding:QuestionnaireItemOperator"
-    },
-    {
-      "kind": "complex-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "Attachment",
-      "url": "http://hl7.org/fhir/StructureDefinition/Attachment"
-    },
-    {
-      "kind": "complex-type",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "BackboneElement",
-      "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement"
+      "name": "uri",
+      "url": "http://hl7.org/fhir/StructureDefinition/uri"
     }
   ]
 }
