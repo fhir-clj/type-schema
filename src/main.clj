@@ -14,7 +14,7 @@
    [type-schema.sanity :as sanity])
   (:gen-class))
 
-(def version "0.0.11")
+(def version "0.0.12")
 
 (def cli-options
   [["-o" "--output DIR" "Output directory or .ndjson file"
@@ -227,8 +227,9 @@
 (comment
   (fhir.package/pkg-info "hl7.fhir.r4.core@4.0.1")
 
-  (-> (package/index "http://hl7.org/cda/stds/core/StructureDefinition/PIVL-TS")
-      (fhir.schema.translate/translate))
+  (-> (package/index "http://hl7.org/cda/stds/core/StructureDefinition/SubstanceAdministration")
+      (fhir.schema.translate/translate)
+      (type-schema/translate-fhir-schema))
 
   (-> (package/fhir-schema-index "PN")
       (type-schema/translate-fhir-schema))
