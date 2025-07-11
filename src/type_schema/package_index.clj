@@ -3,29 +3,39 @@
    [cheshire.core :as json]
    [clojure.string :as str]
    [fhir.package]
-   [fhir.schema.translate :as fhir-schema]))
+   [fhir.schema.translate :as fhir-schema]
+   [type-schema.log :as log]))
 
 (def *index (atom nil))
 
 (defn index
   ([] @*index)
-  ([id] (get @*index id)))
+  ([curl] (get @*index curl)))
 
-(def *package-meta (atom nil))
+(defn package-meta [curl]
+  (get-in @*index [curl :package-meta]))
 
-(defn package-meta [_url]
-  @*package-meta)
+(defn resource [curl]
+  (get-in @*index [curl :resource]))
 
-(def *fhir-schema-index (atom nil))
+(defn fhir-schema
+  ([] (->> @*index
+           (keep (fn [[curl res]]
+                   (when (:fhir-schema res)
+                     [curl (:fhir-schema res)])))
+           (into {})))
+  ([curl-or-name]
+   (or (get-in @*index [curl-or-name :fhir-schema])
+       (->> @*index
+            (some (fn [[_ res]]
+                    (when (= curl-or-name (get-in res [:fhir-schema :name]))
+                      (:fhir-schema res))))))))
 
-(defn fhir-schema-index
-  ([] @*fhir-schema-index)
-  ([url-or-name]
-   (or (get @*fhir-schema-index url-or-name)
-       (some (fn [[_ res]]
-               (when (= url-or-name (:name res))
-                 res))
-             @*fhir-schema-index))))
+(defn structure-definition
+  ([curl] (get-in @*index [curl :structure-definition])))
+
+(defn value-set
+  ([curl] (get-in @*index [curl :value-set])))
 
 (defn- keep-fhir-resource-file [acc file-name read-fn]
   (if (str/ends-with? file-name ".json")
@@ -43,21 +53,16 @@
 (defn- get-package-index [package-info]
   (fhir.package/reduce-package package-info keep-fhir-resource-file))
 
-(defn is-structure-definition? [fhir-schema]
-  (= "StructureDefinition" (:resourceType fhir-schema)))
+(defn is-structure-definition? [resource]
+  (= "StructureDefinition" (:resourceType resource)))
 
-(defn is-value-set? [fhir-schema]
-  (= "ValueSet" (:resourceType fhir-schema)))
-
-(defn clean! []
-  (reset! *package-meta nil)
-  (reset! *index nil)
-  (reset! *fhir-schema-index nil))
+(defn is-value-set? [resource]
+  (= "ValueSet" (:resourceType resource)))
 
 ;; NOTE: to avoid multiple calls during tests
 (def pkg-info (memoize fhir.package/pkg-info))
 
-(defn init-from-package! [package-name]
+(defn load-package! [package-name]
   (let [;; NOTE: not a part of SD till 5.2.0-ballot
         ;; https://build.fhir.org/ig/HL7/fhir-extensions/StructureDefinition-package-source.html
         ;; So we add that info manually to fhir-schema in :package-meta, like in
@@ -69,34 +74,45 @@
                                    (get-in pkg-info [:dist-tags :latest])
                                    (-> pkg-info :versions first :version))}
 
-        package-index (get-package-index pkg-info)
+        index (->> (get-package-index pkg-info)
+                   (map (fn [[url resource]]
+                          [url (cond-> {:package-meta package-meta
+                                        :resource     resource}
+                                 (is-structure-definition? resource)
+                                 (assoc :structure-definition resource
+                                        :fhir-schema
+                                        (fhir-schema/translate {:package-meta package-meta}
+                                                               resource))
 
-        fhir-schemas-index (->> package-index
-                                (filter (fn [[_ res]] (is-structure-definition? res)))
-                                (map (fn [[url structure-definition]]
-                                       [url (fhir-schema/translate {:package-meta package-meta}
-                                                                   structure-definition)]))
-                                (into {}))]
-    (reset! *package-meta package-meta)
-    (reset! *index package-index)
-    (reset! *fhir-schema-index fhir-schemas-index)
+                                 (is-value-set? resource)
+                                 (assoc :value-set resource))]))
+                   (into {}))]
+
+    (doseq [[curl entity] index]
+      (when-let [existed-entity (get @*index curl)]
+        (log/warn (format "Duplicate FHIR resource found: `%s`: `%s` -> `%s`"
+                          curl
+                          (get-in existed-entity [:package-meta :name])
+                          (get-in entity [:package-meta :name]))))
+      (swap! *index assoc curl entity))
     :ok))
 
-(defn append-fhir-schema! [fhir-schema]
-  (swap! *fhir-schema-index
-         assoc (:url fhir-schema) fhir-schema))
+(defn load-fhir-schema! [fhir-schema]
+  (swap! *index
+         assoc (:url fhir-schema) {:fhir-schema fhir-schema}))
 
-(defn initialize! [{package-name :package-name
-                    fhir-schema-fns :fhir-schema-fns
+(defn initialize! [{package-names        :package-names
+                    fhir-schema-fns      :fhir-schema-fns
                     default-package-meta :default-package-meta
-                    verbose :verbose}]
-  (clean!)
-  (when package-name
-    (when verbose (println "Processing package:" package-name))
-    (init-from-package! package-name))
+                    verbose              :verbose}]
+  (reset! *index nil)
+
+  (doseq [package-name package-names]
+    (log/info verbose "Processing package:" package-name)
+    (load-package! package-name))
 
   (doseq [fhir-schema-fn fhir-schema-fns]
-    (when verbose (println "Processing FHIR schema file:" fhir-schema-fn))
+    (log/info verbose "Processing FHIR schema file:" fhir-schema-fn)
     (let [fhir-schema (-> fhir-schema-fn
                           (slurp)
                           (json/parse-string true))
@@ -105,6 +121,6 @@
                         (:package-meta fhir-schema)
                         (assoc :package-meta default-package-meta))]
 
-      (append-fhir-schema! fhir-schema)))
+      (load-fhir-schema! fhir-schema)))
 
-  (when verbose (println "Package initialized, generating schema...")))
+  (log/info verbose "Package initialized, generating schema..."))

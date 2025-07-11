@@ -73,14 +73,14 @@
 (deftest fhir-schemas-tests
   (golden/as-json
    "docs/examples/fhir-schema/coding.fs.json"
-   (fhir-schema/translate (package/index "http://hl7.org/fhir/StructureDefinition/Coding")))
+   (fhir-schema/translate (package/structure-definition "http://hl7.org/fhir/StructureDefinition/Coding")))
 
   (golden/as-json
    "docs/examples/fhir-schema/string.fs.json"
-   (fhir-schema/translate (package/index "http://hl7.org/fhir/StructureDefinition/string"))))
+   (fhir-schema/translate (package/structure-definition "http://hl7.org/fhir/StructureDefinition/string"))))
 
 (deftest fhir-schema->type-schema-small-golden-test
-  (package/initialize! {:package-name "hl7.fhir.r4.core"
+  (package/initialize! {:package-names   ["hl7.fhir.r4.core"]
                         :fhir-schema-fns ["test/golden/custom/TutorNotification.fs.json"
                                           "test/golden/custom/TutorNotificationTemplate.fs.json"]})
 
@@ -124,7 +124,7 @@
       (type-schema/translate-value-set)))
 
 (deftest value-set->type-schema-golden-test
-  (package/init-from-package! "hl7.fhir.r4.core")
+  (package/initialize! {:package-names ["hl7.fhir.r4.core"]})
 
   (golden/as-json "docs/examples/administrative-gender.ts.json"
                   (value-set->json "docs/examples/value-set/administrative-gender.json"))
@@ -134,13 +134,3 @@
 
   (golden/as-json "docs/examples/marital-status.ts.json"
                   (value-set->json "docs/examples/value-set/marital-status.json")))
-
-(comment
-  (clojure.test/run-tests)
-  (package/fhir-schema-index "MolecularSequence")
-  (-> (fhir.schema.translate/translate
-       (package/index "http://hl7.org/fhir/StructureDefinition/MolecularSequence"))
-      (type-schema/translate-fhir-schema))
-
-  (package/init-from-package! "hl7.fhir.r4.core")
-  (package/fhir-schema-index "Coding"))

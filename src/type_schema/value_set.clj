@@ -1,4 +1,6 @@
-(ns type-schema.value-set)
+(ns type-schema.value-set
+  (:require
+   [type-schema.package-index :as index]))
 
 (defn- concat-concepts [& results]
   (cond
@@ -11,8 +13,8 @@
 
     :else (apply concat results)))
 
-(defn- extract-codes-from-system [package-index system-url]
-  (let [code-system (get package-index system-url)]
+(defn- extract-codes-from-system [system-url]
+  (let [code-system (index/resource system-url)]
     (if (= (:resourceType code-system) "CodeSystem")
       (->> (:concept code-system)
            (map #(assoc % :system system-url)))
@@ -20,30 +22,30 @@
 
 (declare value-set->concepts-inner)
 
-(defn- process-include-exclude-item [package-index system-or-value-set]
+(defn- process-include-exclude-item [system-or-value-set]
   (cond
     (:filter system-or-value-set) ::not-expand
 
     :else
     (concat-concepts
      (:concept system-or-value-set)
-     (extract-codes-from-system package-index (:system system-or-value-set))
+     (extract-codes-from-system (:system system-or-value-set))
      ;; FIXME: check keyword spell
-     (value-set->concepts-inner package-index (:valueSet system-or-value-set)))))
+     (value-set->concepts-inner (:valueSet system-or-value-set)))))
 
 (defn- process-include-exclude
   "Process include or exclude elements to extract codes."
-  [package-index items]
+  [items]
   (->> items
-       (map #(process-include-exclude-item package-index %))
+       (map #(process-include-exclude-item %))
        (apply concat-concepts)))
 
 (defn- value-set->concepts-inner
   "Resolve all codes for a ValueSet, handling includes and excludes."
-  [package-index value-set]
+  [value-set]
   (let [compose (:compose value-set)
-        included-codes (process-include-exclude package-index (:include compose))
-        excluded-codes (process-include-exclude package-index (:exclude compose))]
+        included-codes (process-include-exclude (:include compose))
+        excluded-codes (process-include-exclude (:exclude compose))]
     (if (or (= included-codes ::not-expand)
             (= excluded-codes ::not-expand))
       ::not-expand
@@ -54,7 +56,7 @@
 
 (defn value-set->concepts
   "Resolve all codes for a ValueSet, handling includes and excludes."
-  [package-index value-set]
-  (let [concepts (value-set->concepts-inner package-index value-set)]
+  [value-set]
+  (let [concepts (value-set->concepts-inner value-set)]
     (when-not (= ::not-expand concepts)
       concepts)))

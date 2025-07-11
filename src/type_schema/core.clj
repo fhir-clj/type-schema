@@ -2,18 +2,15 @@
   (:require
    [clojure.string :as str]
    [extract-enum]
+   [type-schema.log :as log]
    [type-schema.package-index :as package]
    [type-schema.primitive-types :as primitive-types]
    [type-schema.value-set :as value-set]))
 
-(defn warn [& msg]
-  (binding [*out* *err*]
-    (apply println "WARN:" msg)))
-
 (defn ensure-url [type-name]
   (if (re-matches #".*/.*" type-name)
     type-name
-    (or (:url (package/fhir-schema-index type-name))
+    (or (:url (package/fhir-schema type-name))
         (str "http://hl7.org/fhir/StructureDefinition/" type-name))))
 
 (defn derive-kind-from-schema [schema]
@@ -27,6 +24,7 @@
     (first (str/split url-with-version #"\|"))
     url-with-version))
 
+;; FIXME: Move it to package-index
 (defn- package-meta-fallback [fhir-schema]
   (cond
     (and (some-> fhir-schema :url (str/starts-with? "http://hl7.org/fhir"))
@@ -45,6 +43,7 @@
 
 (defn package-meta [fhir-schema]
   (or (:package-meta fhir-schema)
+      (package/package-meta (:url fhir-schema))
       (package-meta-fallback fhir-schema)))
 
 (defn- build-nested-name [path]
@@ -64,18 +63,18 @@
      :name    (:name fhir-schema)
      :url     (:url fhir-schema)}))
 
-(defn get-value-set-identifier [value-set-url]
-  (let [value-set-url (drop-version-from-url value-set-url)
-        value-set-sd (package/index value-set-url)
-        package-meta (package/package-meta value-set-url)]
-    (if (some? value-set-sd)
+(defn get-value-set-identifier [curl]
+  (let [curl         (drop-version-from-url curl)
+        value-set    (package/value-set curl)
+        package-meta (package-meta value-set)]
+    (if (some? value-set)
       {:kind    "value-set"
-       :url     value-set-url
-       :name    (:id value-set-sd)
+       :url     curl
+       :name    (:id value-set)
        :package (:name package-meta)
        :version (:version package-meta)}
       {:kind "value-set"
-       :url  value-set-url})))
+       :url  curl})))
 
 (defn get-nested-identifier [fhir-schema path]
   #_(assert (some? (:url fhir-schema)))
@@ -100,12 +99,15 @@
 
 (defn build-enum [element]
   (let [value-set-url (get-in element [:binding :valueSet])
-        strength (get-in element [:binding :strength])
-        type (get-in element [:type])
-        value-set (package/index (drop-version-from-url value-set-url))
-        concepts (value-set/value-set->concepts (package/index) value-set)]
-    (when (and (= strength "required") (= type "code") value-set)
-      (mapv (fn [concept] (:code concept)) concepts))))
+        strength      (get-in element [:binding :strength])
+        type          (get-in element [:type])
+        value-set     (package/value-set (drop-version-from-url value-set-url))
+        concepts      (value-set/value-set->concepts value-set)]
+    (when (and (= strength "required")
+               (= type "code")
+               value-set)
+      (->> concepts
+           (mapv (fn [concept] (:code concept)))))))
 
 (defn get-binding-identifier [fhir-schema path element]
   (let [package-meta (package-meta fhir-schema)
@@ -124,9 +126,9 @@
   (let [binding (:binding element)]
     (when (not (empty? binding))
       (let [value-set-url (:valueSet binding)
-            value-set (package/index (drop-version-from-url value-set-url))]
+            value-set (package/value-set (drop-version-from-url value-set-url))]
         (when (nil? value-set)
-          (warn "unknown value set:" value-set-url))
+          (log/warn "unknown value set:" value-set-url))
         (get-binding-identifier fhir-schema path element)))))
 
 (defn build-reference [element]
@@ -134,7 +136,7 @@
     (let [references (get-in element [:refers])]
       (->> references
            (map (fn [refer]
-                  (if-let [fhir-schema (package/fhir-schema-index refer)]
+                  (if-let [fhir-schema (package/fhir-schema refer)]
                     (get-identifier fhir-schema)
                     (get-identifier {:url  refer
                                      :name refer}))))))))
@@ -150,7 +152,7 @@
   (let [url (some-> element :type (ensure-url))]
     (or (some-> (or url
                     (:defaultType element))
-                (package/fhir-schema-index)
+                (package/fhir-schema)
                 (get-identifier))
         (when-let [fhir-schema-path (:elementReference element)]
           (get-nested-identifier fhir-schema
@@ -165,7 +167,7 @@
         ;; HACK: due to single package usage
         (do (when (and (some? (-> element :type))
                        (nil? (primitive-types/default-identifier (-> element :type))))
-              (warn :no-default-identifier (:name fhir-schema) (-> element :type)))
+              (log/warn :no-default-identifier (:name fhir-schema) (-> element :type)))
             (primitive-types/default-identifier (-> element :type)))
 
         (when (and (nil? (:type element))
@@ -173,7 +175,7 @@
           (let [bases ((fn collect-bases [fs]
                          (when-let [base (some-> fs
                                                  :base
-                                                 package/fhir-schema-index)]
+                                                 package/fhir-schema)]
                            (cons base (collect-bases base))))
                        fhir-schema)
                 base-elems (->> bases
@@ -185,7 +187,7 @@
                                 (filter #(-> % :e :type)))
                 base-elem (first base-elems)]
             (when (< 1 (count (distinct base-elems)))
-              (warn :multiple-base-types (:name fhir-schema) path (distinct base-elems)))
+              (log/warn :multiple-base-types (:name fhir-schema) path (distinct base-elems)))
 
             (when (some? base-elem)
               (build-field-type (:fs base-elem) path (:e base-elem)))))
@@ -193,7 +195,7 @@
         (when (and (= (:kind fhir-schema) "logical")
                    (nil? (:type element))
                    (not (contains? element :choices)))
-          (warn :force-default-type-for-logic-model (:name fhir-schema) path element)
+          (log/warn :force-default-type-for-logic-model (:name fhir-schema) path element)
           (primitive-types/default-identifier "string")))))
 
 (defn build-field [fhir-schema path element]
@@ -250,7 +252,7 @@
        (map (fn [[path element]]
               {:identifier (get-nested-identifier fhir-schema path)
                :base       (some-> (ensure-url "BackboneElement")
-                                   (package/fhir-schema-index)
+                                   (package/fhir-schema)
                                    (get-identifier))
                :fields     (iterate-over-elements fhir-schema path (:elements element))}))
        (into [])))
@@ -275,7 +277,6 @@
   (let [type          (build-field-type fhir-schema path element)
         value-set-url (get-in element [:binding :valueSet])
         valueset      (get-value-set-identifier value-set-url)]
-
     (remove-empty-vals
      {:identifier (get-binding-identifier fhir-schema path element)
       :type type
@@ -287,11 +288,11 @@
                          (sort-by #(-> % :identifier :name)))})))
 
 (defn translate-fhir-schema [fhir-schema]
-  (let [parent      (-> fhir-schema :base (package/fhir-schema-index))
+  (let [parent      (-> fhir-schema :base (package/fhir-schema))
 
         identifier  (get-identifier fhir-schema)
-        base        (some-> parent
-                            (get-identifier))
+        base        (when parent
+                      (get-identifier parent))
         description (:description fhir-schema)
 
         elements    (:elements fhir-schema)
@@ -327,14 +328,14 @@
     (cons resource-type-schema
           binding-type-schemas)))
 
-(defn translate-value-set [value-set-sd]
-  (let [identifier  (get-value-set-identifier (:url value-set-sd))
-        description (:description value-set-sd)
+(defn translate-value-set [value-set]
+  (let [identifier  (get-value-set-identifier (:url value-set))
+        description (:description value-set)
 
-        concepts    (value-set/value-set->concepts (package/index) value-set-sd)
+        concepts    (value-set/value-set->concepts value-set)
 
         compose     (when (empty? concepts)
-                      (:compose value-set-sd))
+                      (:compose value-set))
         ;; FIXME: collect deps
         depends     []]
 

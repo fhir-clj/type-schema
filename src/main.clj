@@ -96,11 +96,11 @@
     (when verbose (println "Dropping package cache"))
     (fhir.package/drop-cache))
 
-  (package/initialize! {:package-name package-name
+  (package/initialize! {:package-names   [package-name]
                         :fhir-schema-fns fhir-schemas
                         :verbose verbose})
 
-  (let [fhir-schemas (package/fhir-schema-index)
+  (let [fhir-schemas (package/fhir-schema)
         type-schemas (concat (->> fhir-schemas
                                   (map (fn [[_url fhir-schema]]
                                          (type-schema/translate-fhir-schema fhir-schema)))
@@ -229,9 +229,6 @@
 
   (-> (package/index "http://hl7.org/cda/stds/core/StructureDefinition/SubstanceAdministration")
       (fhir.schema.translate/translate)
-      (type-schema/translate-fhir-schema))
-
-  (-> (package/fhir-schema-index "PN")
       (type-schema/translate-fhir-schema))
 
   (process-package "hl7.cda.uv.core@2.0.1-sd" "output")

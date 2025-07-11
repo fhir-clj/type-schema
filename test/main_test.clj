@@ -13,42 +13,58 @@
   (is (= :ok (main/process-package "hl7.fhir.us.core@6.1.0" {:output-dir "output"}))))
 
 (deftest fhir-schemas-actual-tests
-  (package/init-from-package! "hl7.fhir.r4.core")
+  (package/initialize! {:package-names   ["hl7.fhir.r4.core"]})
 
   (golden/as-json
    "docs/examples/fhir-schema/coding.fs.json"
-   (fhir-schema/translate (package/index "http://hl7.org/fhir/StructureDefinition/Coding")))
+   (-> "http://hl7.org/fhir/StructureDefinition/Coding"
+       (package/structure-definition)
+       (fhir-schema/translate)))
 
   (golden/as-json
    "docs/examples/fhir-schema/string.fs.json"
-   (fhir-schema/translate (package/index "http://hl7.org/fhir/StructureDefinition/string")))
+   (-> "http://hl7.org/fhir/StructureDefinition/string"
+       (package/structure-definition)
+       (fhir-schema/translate)))
 
   (golden/as-json
    "test/golden/backbone-element/backbone-element.fs.json"
-   (fhir-schema/translate (package/index "http://hl7.org/fhir/StructureDefinition/BackboneElement")))
+   (-> "http://hl7.org/fhir/StructureDefinition/BackboneElement"
+       (package/structure-definition)
+       (fhir-schema/translate)))
 
   (golden/as-json
    "test/golden/bundle/bundle.fs.json"
-   (fhir-schema/translate (package/index "http://hl7.org/fhir/StructureDefinition/Bundle")))
+   (-> "http://hl7.org/fhir/StructureDefinition/Bundle"
+       (package/structure-definition)
+       (fhir-schema/translate)))
 
   (golden/as-json
    "test/golden/capability-statement/capability-statement.fs.json"
-   (fhir-schema/translate (package/index "http://hl7.org/fhir/StructureDefinition/CapabilityStatement")))
+   (-> "http://hl7.org/fhir/StructureDefinition/CapabilityStatement"
+       (package/structure-definition)
+       (fhir-schema/translate)))
 
   (golden/as-json
    "test/golden/element/element.fs.json"
-   (fhir-schema/translate (package/index "http://hl7.org/fhir/StructureDefinition/Element")))
+   (-> "http://hl7.org/fhir/StructureDefinition/Element"
+       (package/structure-definition)
+       (fhir-schema/translate)))
 
   (golden/as-json
    "test/golden/patient/patient.fs.json"
-   (fhir-schema/translate (package/index "http://hl7.org/fhir/StructureDefinition/Patient")))
+   (-> "http://hl7.org/fhir/StructureDefinition/Patient"
+       (package/structure-definition)
+       (fhir-schema/translate)))
 
   (golden/as-json
    "test/golden/questionnaire/questionnaire.fs.json"
-   (fhir-schema/translate (package/index "http://hl7.org/fhir/StructureDefinition/Questionnaire"))))
+   (-> "http://hl7.org/fhir/StructureDefinition/Questionnaire"
+       (package/structure-definition)
+       (fhir-schema/translate))))
 
 (deftest fhir-schema->type-schema-realworld-golden-test
-  (package/init-from-package! "hl7.fhir.r4.core")
+  (package/initialize! {:package-names   ["hl7.fhir.r4.core"]})
 
   (golden/as-jsons ["test/golden/element/element.ts.json"]
                    (fhir-schema->type-schemas "test/golden/element/element.fs.json"))
