@@ -86,19 +86,19 @@
         (with-open [writer (java.io.BufferedWriter. (java.io.FileWriter. file))]
           (.write writer (json/generate-string item {:pretty true})))))))
 
-(defn process-package [package-name {output-dir :output-dir
-                                     fhir-schemas :fhir-schemas
-                                     verbose :verbose
-                                     separated-files :separated-files
-                                     treeshake  :treeshake
-                                     drop-cache :drop-cache}]
+(defn process-packages [package-names {output-dir :output-dir
+                                       fhir-schemas :fhir-schemas
+                                       verbose :verbose
+                                       separated-files :separated-files
+                                       treeshake  :treeshake
+                                       drop-cache :drop-cache}]
   (when drop-cache
     (when verbose (println "Dropping package cache"))
     (fhir.package/drop-cache))
 
-  (package/initialize! {:package-names   [package-name]
+  (package/initialize! {:package-names   package-names
                         :fhir-schema-fns fhir-schemas
-                        :verbose verbose})
+                        :verbose         verbose})
 
   (let [fhir-schemas (package/fhir-schema)
         type-schemas (concat (->> fhir-schemas
@@ -120,7 +120,9 @@
       output-dir
       (let [output-file (if (str/ends-with? output-dir ".ndjson")
                           output-dir
-                          (str output-dir "/" package-name ".ndjson"))]
+                          (str output-dir "/"
+                               (str/join "-" package-names)
+                               ".ndjson"))]
         (when verbose (println "Saving output to:" output-file))
         (save-as-ndjson type-schemas output-file))
 
@@ -139,7 +141,7 @@
 (defn usage [options-summary]
   (->> ["Type Schema Generator for FHIR packages"
         ""
-        "Usage: type-schema [options] <package-name>"
+        "Usage: type-schema [options] [<package-name>]"
         ""
         "Options:"
         options-summary
@@ -175,9 +177,6 @@
       errors
       {:exit-message (str/join "\n" errors)}
 
-      (and (not= (count arguments) 1) (not (get options :drop-cache)) (not (get options :help)) (not (get options :version)))
-      {:exit-message (str "Error: Exactly one package name is required.\n\n" (usage summary))}
-
       (and (get options :separated-files) (not (get options :output-dir)))
       {:exit-message (str "Error: --separated-files requires -o/--output to be set to a directory.\n\n" (usage summary))}
 
@@ -185,7 +184,7 @@
       {:exit-message (str "Error: --separated-files requires -o/--output to be set to a directory, not a file.\n\n" (usage summary))}
 
       :else
-      {:package-name (first arguments)
+      {:package-name arguments
        :options options
        :drop-cache (get options :drop-cache)})))
 
@@ -198,7 +197,7 @@
 
 (defn -main [& args]
   (let [parsed (validate-args args)
-        package-name (get parsed :package-name)
+        package-names (get parsed :package-name)
         options (get parsed :options)
         exit-message (get parsed :exit-message)
         ok? (get parsed :ok?)]
@@ -207,7 +206,7 @@
       (exit (if ok? 0 1) exit-message)
 
       (and (:drop-cache parsed)
-           (nil? package-name))
+           (nil? package-names))
       (do (when (:verbose options)
             (println "Dropping package cache"))
           (fhir.package/drop-cache)
@@ -215,7 +214,7 @@
 
       :else
       (try
-        (process-package package-name options)
+        (process-packages package-names options)
         (System/exit 0)
         (catch Exception e
           (binding [*out* *err*]
@@ -231,10 +230,10 @@
       (fhir.schema.translate/translate)
       (type-schema/translate-fhir-schema))
 
-  (process-package "hl7.cda.uv.core@2.0.1-sd" "output")
-  (process-package "hl7.fhir.r5.core" "output")
-  (process-package "hl7.fhir.r6.core" "output")
-  (process-package "hl7.fhir.us.core@6.1.0" "output")
+  (process-packages "hl7.cda.uv.core@2.0.1-sd" "output")
+  (process-packages "hl7.fhir.r5.core" "output")
+  (process-packages "hl7.fhir.r6.core" "output")
+  (process-packages "hl7.fhir.us.core@6.1.0" "output")
 
   (fhir.package/pkg-info "hl7.fhir.r4.core@4.0.1")
   (fhir.package/pkg-info "hl7.fhir.us.core@6.1.0"))
