@@ -1,0 +1,11 @@
+# Clojure
+
+- To run tests for specific namespaces, use: `clojure -M:test:kaocha:ui --focus <namespace>`
+- To run tests for all namespaces, use: `make test`
+- After all changes run `make format lint`.
+- If you use destructuring, do it in the following way: `(let [{a :a b :b} m] (+ a b))`. Avoid `(let [{:keys [a b]} m] (+ a b))`
+
+# Markdown
+
+- Use 2 spaces for indentation in Markdown files.
+- Add blank line before and after lists, headings, and code blocks.
