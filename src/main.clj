@@ -10,6 +10,7 @@
    [fhir.package]
    [fhir.schema.translate]
    [type-schema.core :as type-schema]
+   [type-schema.log :as log]
    [type-schema.package-index :as package]
    [type-schema.sanity :as sanity])
   (:gen-class))
@@ -45,7 +46,7 @@
         id-to-schema (into {} (map (fn [schema] [(get-in schema [:identifier :name]) schema]) type-schemas))
         required-types-schemas (filter (fn [schema] (contains? required-types-set (get-in schema [:identifier :name]))) type-schemas)]
 
-    (when verbose (println "Starting treeshaking process for types:" required-types))
+    (log/info verbose "Starting treeshaking process for types:" required-types)
 
     (loop [result {}
            to-process (into #{} (map (fn [schema] (get-in schema [:identifier :name])) required-types-schemas))]
@@ -61,10 +62,10 @@
                              #{})]
           (if (nil? current-schema)
             (do
-              (when verbose (println "Warning: Required type not found:" current-type))
+              (log/warn "Warning: Required type not found:" current-type)
               (recur result (disj to-process current-type)))
             (do
-              (when verbose (println "Including type:" current-type "with" (count dependencies) "dependencies"))
+              (log/info verbose "Including type:" current-type "with" (count dependencies) "dependencies")
               (recur (assoc result current-type current-schema)
                      (set/union (disj to-process current-type) dependencies)))))))))
 
@@ -94,7 +95,7 @@
                          treeshake :treeshake
                          drop-cache :drop-cache}]
   (when drop-cache
-    (when verbose (println "Dropping package cache"))
+    (log/info verbose "Dropping package cache")
     (fhir.package/drop-cache))
 
   (package/initialize! {:package-names   package-names
@@ -110,12 +111,12 @@
                                   (vals)
                                   (map type-schema/translate-value-set)))
         type-schemas (if treeshake
-                       (do (when verbose (println "Treeshaking output based on required types:" treeshake))
+                       (do (log/info verbose "Treeshaking output based on required types:" treeshake)
                            (treeshake-type-schemas type-schemas treeshake verbose))
                        type-schemas)]
     (cond
       (and output-dir separated-files)
-      (do (when verbose (println "Saving each type schema to separate files in:" output-dir))
+      (do (log/info verbose "Saving each type schema to separate files in:" output-dir)
           (save-as-separate-files type-schemas output-dir verbose))
 
       output-dir
@@ -124,7 +125,7 @@
                           (str output-dir "/"
                                (str/join "-" package-names)
                                ".ndjson"))]
-        (when verbose (println "Saving output to:" output-file))
+        (log/info verbose "Saving output to:" output-file)
         (save-as-ndjson type-schemas output-file))
 
       :else
@@ -133,9 +134,9 @@
 
     (let [unresolvable-deps (sanity/find-unresolvable-deps type-schemas)]
       (if (empty? unresolvable-deps)
-        (when verbose (println "Processing completed successfully"))
+        (log/info verbose "Processing completed successfully")
         (doseq [dep unresolvable-deps]
-          (println "Warning: Unresolvable dependency found:" dep))))
+          (log/warn "Unresolvable dependency found:" dep))))
 
     :ok))
 
@@ -208,10 +209,10 @@
 
       (and (:drop-cache parsed)
            (nil? package-names))
-      (do (when (:verbose options)
-            (println "Dropping package cache"))
-          (fhir.package/drop-cache)
-          (System/exit 0))
+      (do
+        (log/info (:verbose options) "Dropping package cache")
+        (fhir.package/drop-cache)
+        (System/exit 0))
 
       :else
       (try
