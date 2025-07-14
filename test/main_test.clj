@@ -8,9 +8,9 @@
    [type-schema.package-index :as package]))
 
 (deftest smoke-test
-  (is (= :ok (main/process-packages ["hl7.fhir.r4.core@4.0.1"] {:output-dir "output"})))
-  (is (= :ok (main/process-packages ["hl7.fhir.r5.core"] {:output-dir "output"})))
-  (is (= :ok (main/process-packages ["hl7.fhir.us.core@6.1.0"] {:output-dir "output"}))))
+  (is (= :ok (main/process-packages {:package-names ["hl7.fhir.r4.core@4.0.1"] :output-dir "output"})))
+  (is (= :ok (main/process-packages {:package-names ["hl7.fhir.r5.core"] :output-dir "output"})))
+  (is (= :ok (main/process-packages {:pacakge-names ["hl7.fhir.us.core@6.1.0"] :output-dir "output"}))))
 
 (deftest fhir-schemas-actual-tests
   (package/initialize! {:package-names   ["hl7.fhir.r4.core"]})

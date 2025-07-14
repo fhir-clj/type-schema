@@ -86,12 +86,13 @@
         (with-open [writer (java.io.BufferedWriter. (java.io.FileWriter. file))]
           (.write writer (json/generate-string item {:pretty true})))))))
 
-(defn process-packages [package-names {output-dir :output-dir
-                                       fhir-schemas :fhir-schemas
-                                       verbose :verbose
-                                       separated-files :separated-files
-                                       treeshake  :treeshake
-                                       drop-cache :drop-cache}]
+(defn process-packages [{package-names :package-names
+                         output-dir :output-dir
+                         fhir-schemas :fhir-schemas
+                         verbose :verbose
+                         separated-files :separated-files
+                         treeshake :treeshake
+                         drop-cache :drop-cache}]
   (when drop-cache
     (when verbose (println "Dropping package cache"))
     (fhir.package/drop-cache))
@@ -214,7 +215,8 @@
 
       :else
       (try
-        (process-packages package-names options)
+        (process-packages (-> options
+                              (assoc :package-names package-names)))
         (System/exit 0)
         (catch Exception e
           (binding [*out* *err*]
@@ -230,10 +232,10 @@
       (fhir.schema.translate/translate)
       (type-schema/translate-fhir-schema))
 
-  (process-packages "hl7.cda.uv.core@2.0.1-sd" "output")
-  (process-packages "hl7.fhir.r5.core" "output")
-  (process-packages "hl7.fhir.r6.core" "output")
-  (process-packages "hl7.fhir.us.core@6.1.0" "output")
+  (process-packages {:package-names ["hl7.cda.uv.core@2.0.1-sd"] :output-dir "output"})
+  (process-packages {:package-names ["hl7.fhir.r5.core"] :output-dir "output"})
+  (process-packages {:package-names ["hl7.fhir.r6.core"] :output-dir "output"})
+  (process-packages {:package-names ["hl7.fhir.us.core@6.1.0"] :output-dir "output"})
 
   (fhir.package/pkg-info "hl7.fhir.r4.core@4.0.1")
   (fhir.package/pkg-info "hl7.fhir.us.core@6.1.0"))
