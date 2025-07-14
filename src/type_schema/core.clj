@@ -4,7 +4,6 @@
    [extract-enum]
    [type-schema.log :as log]
    [type-schema.package-index :as package]
-   [type-schema.primitive-types :as primitive-types]
    [type-schema.value-set :as value-set]))
 
 (defn ensure-url [type-name]
@@ -128,7 +127,7 @@
       (let [value-set-url (:valueSet binding)
             value-set (package/value-set (drop-version-from-url value-set-url))]
         (when (nil? value-set)
-          (log/warn "unknown value set:" value-set-url))
+          (log/warn "Unresolvable value-set:" value-set-url))
         (get-binding-identifier fhir-schema path element)))))
 
 (defn build-reference [element]
@@ -164,12 +163,6 @@
                                       (map keyword)
                                       (into []))))
 
-        ;; HACK: due to single package usage
-        (do (when (and (some? (-> element :type))
-                       (nil? (primitive-types/default-identifier (-> element :type))))
-              (log/warn :no-default-identifier (:name fhir-schema) (-> element :type)))
-            (primitive-types/default-identifier (-> element :type)))
-
         (when (and (nil? (:type element))
                    (some? (:base fhir-schema)))
           (let [bases ((fn collect-bases [fs]
@@ -196,7 +189,8 @@
                    (nil? (:type element))
                    (not (contains? element :choices)))
           (log/warn :force-default-type-for-logic-model (:name fhir-schema) path element)
-          (primitive-types/default-identifier "string")))))
+          (-> (package/fhir-schema "string")
+              (get-identifier))))))
 
 (defn build-field [fhir-schema path element]
   (let [type (build-field-type fhir-schema path element)]

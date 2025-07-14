@@ -136,9 +136,10 @@
     (let [unresolvable-deps (sanity/find-unresolvable-deps type-schemas)]
       (if (empty? unresolvable-deps)
         (log/info verbose "Processing completed successfully")
-        (doseq [dep unresolvable-deps]
+        (doseq [dep unresolvable-deps
+                ;; NOTE: skip value sets because we already have this warning earlier
+                :when (not= "value-set" (get dep :kind))]
           (log/warn "Unresolvable dependency found:" dep))))
-
     :ok))
 
 (defn usage [options-summary]
