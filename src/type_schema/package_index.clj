@@ -35,6 +35,11 @@
   ([curl] (get-in @*index [curl :structure-definition])))
 
 (defn value-set
+  ([] (->> @*index
+           (keep (fn [[curl res]]
+                   (when (:value-set res)
+                     [curl (:value-set res)])))
+           (into {})))
   ([curl] (get-in @*index [curl :value-set])))
 
 (defn- keep-fhir-resource-file [acc file-name read-fn]

@@ -105,8 +105,8 @@
                                   (map (fn [[_url fhir-schema]]
                                          (type-schema/translate-fhir-schema fhir-schema)))
                                   (apply concat))
-                             (->> (package/index) vals
-                                  (filter package/is-value-set?)
+                             (->> (package/value-set)
+                                  (vals)
                                   (map type-schema/translate-value-set)))
         type-schemas (if treeshake
                        (do (when verbose (println "Treeshaking output based on required types:" treeshake))
