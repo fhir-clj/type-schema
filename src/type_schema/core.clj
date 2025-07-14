@@ -187,7 +187,7 @@
                                 (filter #(-> % :e :type)))
                 base-elem (first base-elems)]
             (when (< 1 (count (distinct base-elems)))
-              (log/warn :multiple-base-types (:name fhir-schema) path (distinct base-elems)))
+              (log/warn :multiple-base-types (:name fhir-schema) path (count base-elems)))
 
             (when (some? base-elem)
               (build-field-type (:fs base-elem) path (:e base-elem)))))

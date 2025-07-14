@@ -79,8 +79,9 @@
 
 (defn- save-as-separate-files [data output-dir verbose]
   (doseq [item data]
-    (let [name      (get-in item [:identifier :name])
-          file-path (str output-dir "/" name ".ts.json")]
+    (let [name         (get-in item [:identifier :name])
+          package-name (get-in item [:identifier :package])
+          file-path    (str output-dir "/" package-name "/" name ".ts.json")]
       (when verbose (println "Saving type schema:" name "to" file-path))
       (let [file (java.io.File. file-path)]
         (io/make-parents file-path)
