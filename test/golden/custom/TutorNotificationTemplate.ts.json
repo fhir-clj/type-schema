@@ -24,7 +24,7 @@
         "url": "http://hl7.org/fhir/StructureDefinition/string"
       },
       "array": false,
-      "required": false
+      "required": true
     }
   },
   "dependencies": [

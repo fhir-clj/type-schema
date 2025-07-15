@@ -84,17 +84,23 @@
      :name    (build-nested-name path)
      :url     (build-nested-url fhir-schema path)}))
 
-(defn- is-required? [fhir-schema path element]
-  (contains? (-> (if (= 1 (count path)) fhir-schema element)
-                 :required
-                 (set))
-             (last path)))
+(defn- is-required? [fhir-schema path]
+  (let [required (-> (get-in fhir-schema (->> (drop-last path)
+                                              (map (fn [k] [:elements k]))
+                                              (apply concat)))
+                     :required
+                     (set))
+        elem-name (name (last path))]
+    (contains? required elem-name)))
 
-(defn- is-excluded? [fhir-schema path element]
-  (contains? (-> (if (= 1 (count path)) fhir-schema element)
-                 :excluded
-                 (set))
-             (last path)))
+(defn- is-excluded? [fhir-schema path]
+  (let [required (-> (get-in fhir-schema (->> (drop-last path)
+                                              (map (fn [k] [:elements k]))
+                                              (apply concat)))
+                     :excluded
+                     (set))
+        elem-name (name (last path))]
+    (contains? required elem-name)))
 
 (defn build-enum [element]
   (let [value-set-url (get-in element [:binding :valueSet])
@@ -196,8 +202,8 @@
   (let [type (build-field-type fhir-schema path element)]
     (remove-empty-vals {:type      type
                         :array     (true? (:array element))
-                        :required  (is-required? fhir-schema path element)
-                        :excluded  (is-excluded? fhir-schema path element)
+                        :required  (is-required? fhir-schema path)
+                        :excluded  (is-excluded? fhir-schema path)
 
                         :choices   (:choices element)
                         :choiceOf  (:choiceOf element)
@@ -214,8 +220,8 @@
                     :name    (build-nested-name path)
                     :url     (build-nested-url fhir-schema path)}
              :array    (true? (:array element))
-             :required (is-required? fhir-schema path element)
-             :excluded (is-excluded? fhir-schema path element)})))
+             :required (is-required? fhir-schema path)
+             :excluded (is-excluded? fhir-schema path)})))
 
 (defn is-nested-element? [element]
   (or (= (:type element) "BackboneElement")

@@ -1,7 +1,7 @@
 (ns type-schema.core-test
   (:require
    [cheshire.core :as json]
-   [clojure.test :refer [deftest is]]
+   [clojure.test :refer [deftest is testing]]
    [fhir.schema.translate :as fhir-schema]
    [golden.core :as golden]
    [matcho.core :as matcho]
@@ -59,6 +59,58 @@
      :dependencies [{:kind "primitive-type", :name "code"}
                     {:kind "value-set", :name "administrative-gender"}]}))
 
+(deftest required-and-excluded-test
+  (matcho/match (type-schema/build-field
+                 {:elements {:topString {:type "code"}}
+                  :required ["topString"]}
+                 [:topString]
+                 {:type "code"})
+    {:type {:kind "primitive-type",
+            :name "code"}
+     :required true
+     :excluded false})
+
+  (matcho/match (type-schema/build-field
+                 {:elements {:topString {:type "code"}}
+                  :excluded ["topString"]}
+                 [:topString]
+                 {:type "code"})
+    {:type {:kind "primitive-type",
+            :name "code"}
+     :required false
+     :excluded true})
+
+  (testing "for nested types"
+    (matcho/match (type-schema/build-field
+                   {:elements {:link
+                               {:type "BackboneElement",
+                                :elements {:someString {:type "string"}},
+                                :required ["someString"]}}}
+                   [:link :someString]
+                   {:short "some description",
+                    :type "string",
+                    :isSummary true,
+                    :index 10})
+      {:type {:kind "primitive-type",
+              :name "string"}
+       :required true
+       :excluded false})
+
+    (matcho/match (type-schema/build-field
+                   {:elements {:link
+                               {:type "BackboneElement",
+                                :elements {:someString {:type "string"}},
+                                :excluded ["someString"]}}}
+                   [:link :someString]
+                   {:short "some description",
+                    :type "string",
+                    :isSummary true,
+                    :index 10})
+      {:type {:kind "primitive-type",
+              :name "string"}
+       :required false
+       :excluded true})))
+
 (defn fhir-schema->type-schemas [fhir-schema-file]
   (-> (slurp fhir-schema-file)
       (json/parse-string true)
@@ -86,6 +138,10 @@
 
   (golden/as-json "docs/examples/string.ts.json"
                   (fhir-schema->type-schema "docs/examples/fhir-schema/string.fs.json"))
+
+  ;; TODO: add min-max cardinality to type-schema
+  #_(golden/as-json "docs/examples/with-cardinality.ts.json"
+                    (fhir-schema->type-schema "docs/examples/fhir-schema/with-cardinality.fs.json"))
 
   (golden/as-json "docs/examples/coding.ts.json"
                   (fhir-schema->type-schema "docs/examples/fhir-schema/coding.fs.json"))

@@ -55,7 +55,7 @@
         "name": "BundleType",
         "url": "urn:fhir:binding:BundleType"
       },
-      "required": false
+      "required": true
     },
     "timestamp": {
       "excluded": false,
@@ -250,7 +250,7 @@
             "name": "HTTPVerb",
             "url": "urn:fhir:binding:HTTPVerb"
           },
-          "required": false
+          "required": true
         },
         "url": {
           "excluded": false,
@@ -262,7 +262,7 @@
             "url": "http://hl7.org/fhir/StructureDefinition/uri"
           },
           "array": false,
-          "required": false
+          "required": true
         },
         "ifNoneMatch": {
           "excluded": false,
@@ -340,7 +340,7 @@
             "url": "http://hl7.org/fhir/StructureDefinition/string"
           },
           "array": false,
-          "required": false
+          "required": true
         },
         "location": {
           "excluded": false,
@@ -472,7 +472,7 @@
             "url": "http://hl7.org/fhir/StructureDefinition/string"
           },
           "array": false,
-          "required": false
+          "required": true
         },
         "url": {
           "excluded": false,
@@ -484,7 +484,7 @@
             "url": "http://hl7.org/fhir/StructureDefinition/uri"
           },
           "array": false,
-          "required": false
+          "required": true
         }
       }
     }

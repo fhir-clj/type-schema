@@ -370,7 +370,7 @@
         "name": "PublicationStatus",
         "url": "urn:fhir:binding:PublicationStatus"
       },
-      "required": false
+      "required": true
     },
     "url": {
       "excluded": false,
@@ -526,7 +526,7 @@
             "url": "http://hl7.org/fhir/StructureDefinition/string"
           },
           "array": false,
-          "required": false
+          "required": true
         },
         "repeats": {
           "excluded": false,
@@ -574,7 +574,7 @@
             "name": "QuestionnaireItemType",
             "url": "urn:fhir:binding:QuestionnaireItemType"
           },
-          "required": false
+          "required": true
         },
         "enableWhen": {
           "type": {
@@ -732,7 +732,7 @@
             "valueReference"
           ],
           "array": false,
-          "required": false
+          "required": true
         },
         "valueInteger": {
           "excluded": false,
@@ -745,7 +745,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": false
+          "required": true
         },
         "valueDate": {
           "excluded": false,
@@ -758,7 +758,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": false
+          "required": true
         },
         "valueTime": {
           "excluded": false,
@@ -771,7 +771,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": false
+          "required": true
         },
         "valueString": {
           "excluded": false,
@@ -784,7 +784,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": false
+          "required": true
         },
         "valueCoding": {
           "excluded": false,
@@ -797,7 +797,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": false
+          "required": true
         },
         "valueReference": {
           "excluded": false,
@@ -819,7 +819,7 @@
             }
           ],
           "choiceOf": "value",
-          "required": false
+          "required": true
         },
         "initialSelected": {
           "excluded": false,
@@ -862,7 +862,7 @@
           },
           "array": false,
           "choiceOf": "answer",
-          "required": false
+          "required": true
         },
         "answerDecimal": {
           "excluded": false,
@@ -875,7 +875,7 @@
           },
           "array": false,
           "choiceOf": "answer",
-          "required": false
+          "required": true
         },
         "answerDate": {
           "excluded": false,
@@ -888,7 +888,7 @@
           },
           "array": false,
           "choiceOf": "answer",
-          "required": false
+          "required": true
         },
         "answerReference": {
           "excluded": false,
@@ -910,7 +910,7 @@
             }
           ],
           "choiceOf": "answer",
-          "required": false
+          "required": true
         },
         "answerInteger": {
           "excluded": false,
@@ -923,7 +923,7 @@
           },
           "array": false,
           "choiceOf": "answer",
-          "required": false
+          "required": true
         },
         "question": {
           "excluded": false,
@@ -935,7 +935,7 @@
             "url": "http://hl7.org/fhir/StructureDefinition/string"
           },
           "array": false,
-          "required": false
+          "required": true
         },
         "answerDateTime": {
           "excluded": false,
@@ -948,7 +948,7 @@
           },
           "array": false,
           "choiceOf": "answer",
-          "required": false
+          "required": true
         },
         "answer": {
           "excluded": false,
@@ -965,7 +965,7 @@
             "answerReference"
           ],
           "array": false,
-          "required": false
+          "required": true
         },
         "answerString": {
           "excluded": false,
@@ -978,7 +978,7 @@
           },
           "array": false,
           "choiceOf": "answer",
-          "required": false
+          "required": true
         },
         "operator": {
           "enum": [
@@ -1006,7 +1006,7 @@
             "name": "QuestionnaireItemOperator",
             "url": "urn:fhir:binding:QuestionnaireItemOperator"
           },
-          "required": false
+          "required": true
         },
         "answerBoolean": {
           "excluded": false,
@@ -1019,7 +1019,7 @@
           },
           "array": false,
           "choiceOf": "answer",
-          "required": false
+          "required": true
         },
         "answerCoding": {
           "excluded": false,
@@ -1032,7 +1032,7 @@
           },
           "array": false,
           "choiceOf": "answer",
-          "required": false
+          "required": true
         },
         "answerTime": {
           "excluded": false,
@@ -1045,7 +1045,7 @@
           },
           "array": false,
           "choiceOf": "answer",
-          "required": false
+          "required": true
         }
       }
     },
@@ -1085,7 +1085,7 @@
             }
           ],
           "choiceOf": "value",
-          "required": false
+          "required": true
         },
         "valueUri": {
           "excluded": false,
@@ -1098,7 +1098,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": false
+          "required": true
         },
         "valueTime": {
           "excluded": false,
@@ -1111,7 +1111,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": false
+          "required": true
         },
         "valueDecimal": {
           "excluded": false,
@@ -1124,7 +1124,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": false
+          "required": true
         },
         "valueQuantity": {
           "excluded": false,
@@ -1137,7 +1137,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": false
+          "required": true
         },
         "value": {
           "excluded": false,
@@ -1156,7 +1156,7 @@
             "valueReference"
           ],
           "array": false,
-          "required": false
+          "required": true
         },
         "valueString": {
           "excluded": false,
@@ -1169,7 +1169,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": false
+          "required": true
         },
         "valueBoolean": {
           "excluded": false,
@@ -1182,7 +1182,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": false
+          "required": true
         },
         "valueDateTime": {
           "excluded": false,
@@ -1195,7 +1195,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": false
+          "required": true
         },
         "valueDate": {
           "excluded": false,
@@ -1208,7 +1208,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": false
+          "required": true
         },
         "valueCoding": {
           "excluded": false,
@@ -1221,7 +1221,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": false
+          "required": true
         },
         "valueInteger": {
           "excluded": false,
@@ -1234,7 +1234,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": false
+          "required": true
         },
         "valueAttachment": {
           "excluded": false,
@@ -1247,7 +1247,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": false
+          "required": true
         }
       }
     }

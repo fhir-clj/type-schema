@@ -340,7 +340,7 @@
             "name": "Language",
             "url": "urn:fhir:binding:Language"
           },
-          "required": false
+          "required": true
         },
         "preferred": {
           "excluded": false,
@@ -529,7 +529,7 @@
               "url": "http://hl7.org/fhir/StructureDefinition/RelatedPerson"
             }
           ],
-          "required": false
+          "required": true
         },
         "type": {
           "enum": [
@@ -554,7 +554,7 @@
             "name": "LinkType",
             "url": "urn:fhir:binding:LinkType"
           },
-          "required": false
+          "required": true
         }
       }
     }

@@ -44,7 +44,7 @@
         "name": "MimeType",
         "url": "urn:fhir:binding:MimeType"
       },
-      "required": false
+      "required": true
     },
     "date": {
       "excluded": false,
@@ -56,7 +56,7 @@
         "url": "http://hl7.org/fhir/StructureDefinition/dateTime"
       },
       "array": false,
-      "required": false
+      "required": true
     },
     "publisher": {
       "excluded": false,
@@ -130,7 +130,7 @@
         "name": "FHIRVersion",
         "url": "urn:fhir:binding:FHIRVersion"
       },
-      "required": false
+      "required": true
     },
     "jurisdiction": {
       "excluded": false,
@@ -282,7 +282,7 @@
         "name": "PublicationStatus",
         "url": "urn:fhir:binding:PublicationStatus"
       },
-      "required": false
+      "required": true
     },
     "messaging": {
       "type": {
@@ -318,7 +318,7 @@
         "name": "CapabilityStatementKind",
         "url": "urn:fhir:binding:CapabilityStatementKind"
       },
-      "required": false
+      "required": true
     },
     "implementationGuide": {
       "excluded": false,
@@ -443,7 +443,7 @@
             "name": "DocumentMode",
             "url": "urn:fhir:binding:DocumentMode"
           },
-          "required": false
+          "required": true
         },
         "documentation": {
           "excluded": false,
@@ -467,7 +467,7 @@
             "url": "http://hl7.org/fhir/StructureDefinition/canonical"
           },
           "array": false,
-          "required": false
+          "required": true
         }
       }
     },
@@ -497,7 +497,7 @@
             "url": "http://hl7.org/fhir/StructureDefinition/string"
           },
           "array": false,
-          "required": false
+          "required": true
         },
         "url": {
           "excluded": false,
@@ -633,7 +633,7 @@
             "name": "MessageTransport",
             "url": "urn:fhir:binding:MessageTransport"
           },
-          "required": false
+          "required": true
         },
         "address": {
           "excluded": false,
@@ -645,7 +645,7 @@
             "url": "http://hl7.org/fhir/StructureDefinition/url"
           },
           "array": false,
-          "required": false
+          "required": true
         }
       }
     },
@@ -686,7 +686,7 @@
             "name": "EventCapabilityMode",
             "url": "urn:fhir:binding:EventCapabilityMode"
           },
-          "required": false
+          "required": true
         },
         "definition": {
           "excluded": false,
@@ -698,7 +698,7 @@
             "url": "http://hl7.org/fhir/StructureDefinition/canonical"
           },
           "array": false,
-          "required": false
+          "required": true
         }
       }
     },
@@ -739,7 +739,7 @@
             "name": "RestfulCapabilityMode",
             "url": "urn:fhir:binding:RestfulCapabilityMode"
           },
-          "required": false
+          "required": true
         },
         "documentation": {
           "excluded": false,
@@ -878,7 +878,7 @@
             "name": "SystemRestfulInteraction",
             "url": "urn:fhir:binding:SystemRestfulInteraction"
           },
-          "required": false
+          "required": true
         },
         "documentation": {
           "excluded": false,
@@ -1188,7 +1188,7 @@
             "name": "ResourceType",
             "url": "urn:fhir:binding:ResourceType"
           },
-          "required": false
+          "required": true
         },
         "interaction": {
           "type": {
@@ -1380,7 +1380,7 @@
             "name": "TypeRestfulInteraction",
             "url": "urn:fhir:binding:TypeRestfulInteraction"
           },
-          "required": false
+          "required": true
         },
         "documentation": {
           "excluded": false,
@@ -1422,7 +1422,7 @@
             "url": "http://hl7.org/fhir/StructureDefinition/string"
           },
           "array": false,
-          "required": false
+          "required": true
         },
         "definition": {
           "excluded": false,
@@ -1434,7 +1434,7 @@
             "url": "http://hl7.org/fhir/StructureDefinition/canonical"
           },
           "array": false,
-          "required": false
+          "required": true
         },
         "documentation": {
           "excluded": false,
@@ -1476,7 +1476,7 @@
             "url": "http://hl7.org/fhir/StructureDefinition/string"
           },
           "array": false,
-          "required": false
+          "required": true
         },
         "definition": {
           "excluded": false,
@@ -1518,7 +1518,7 @@
             "name": "SearchParamType",
             "url": "urn:fhir:binding:SearchParamType"
           },
-          "required": false
+          "required": true
         },
         "documentation": {
           "excluded": false,
@@ -1621,7 +1621,7 @@
             "url": "http://hl7.org/fhir/StructureDefinition/string"
           },
           "array": false,
-          "required": false
+          "required": true
         },
         "version": {
           "excluded": false,

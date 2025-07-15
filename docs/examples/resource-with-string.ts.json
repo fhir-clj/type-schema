@@ -16,8 +16,6 @@
   "description": "description",
   "fields": {
     "someString": {
-      "array": false,
-      "required": false,
       "excluded": false,
       "type": {
         "kind": "primitive-type",
@@ -25,7 +23,9 @@
         "version": "4.0.1",
         "name": "string",
         "url": "http://hl7.org/fhir/StructureDefinition/string"
-      }
+      },
+      "array": false,
+      "required": true
     }
   },
   "dependencies": [
