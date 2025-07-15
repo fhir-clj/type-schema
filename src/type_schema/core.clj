@@ -1,6 +1,6 @@
 (ns type-schema.core
   (:require
-   [extract-enum]
+   [type-schema.binding :as binding]
    [type-schema.identifier :as identifier]
    [type-schema.log :as log]
    [type-schema.package-index :as package]
@@ -29,27 +29,6 @@
                      (set))
         elem-name (name (last path))]
     (contains? required elem-name)))
-
-(defn build-enum [element]
-  (let [value-set-url (get-in element [:binding :valueSet])
-        strength      (get-in element [:binding :strength])
-        type          (get-in element [:type])
-        value-set     (package/value-set (identifier/drop-version-from-url value-set-url))
-        concepts      (value-set/value-set->concepts value-set)]
-    (when (and (= strength "required")
-               (= type "code")
-               value-set)
-      (->> concepts
-           (mapv (fn [concept] (:code concept)))))))
-
-(defn build-binding [fhir-schema path element]
-  (let [binding (:binding element)]
-    (when (not (empty? binding))
-      (let [value-set-url (:valueSet binding)
-            value-set (package/value-set (identifier/drop-version-from-url value-set-url))]
-        (when (nil? value-set)
-          (log/warn "Unresolvable value-set:" value-set-url))
-        (identifier/binding-type fhir-schema path element)))))
 
 (defn build-reference [element]
   (when (:refers element)
@@ -126,8 +105,8 @@
                         :choices   (:choices element)
                         :choiceOf  (:choiceOf element)
 
-                        :enum      (build-enum element)
-                        :binding   (build-binding fhir-schema path element)
+                        :enum      (binding/build-enum element)
+                        :binding   (binding/build-binding fhir-schema path element)
                         :reference (build-reference element)})))
 
 (defn build-nested-field [fhir-schema path element]
@@ -149,18 +128,18 @@
                   [key (build-field fhir-schema path element)]))))
        (into {})))
 
-(defn deep-nested-elements [fhir-schema path elements]
+(defn collect-nested-elements [fhir-schema path elements]
   (->> elements
        (map (fn [[key element]]
               (let [path (conj path key)
                     nested (when (is-nested-element? element)
-                             (deep-nested-elements fhir-schema path (:elements element)))]
+                             (collect-nested-elements fhir-schema path (:elements element)))]
                 (cons [path element] nested))))
        (apply concat)
        (into [])))
 
 (defn iterate-over-backbone-element [fhir-schema path elements]
-  (->> (deep-nested-elements fhir-schema path elements)
+  (->> (collect-nested-elements fhir-schema path elements)
        (filter (fn [[_path element]] (is-nested-element? element)))
        (map (fn [[path element]]
               {:identifier (identifier/nested-type fhir-schema path)
@@ -186,19 +165,16 @@
    (when-let [base (get-in (first nested-types) [:base])]
      [base])))
 
-(defn translate-binding [fhir-schema path element]
-  (let [type          (build-field-type fhir-schema path element)
-        value-set-url (get-in element [:binding :valueSet])
-        valueset      (identifier/value-set-type value-set-url)]
-    (remove-empty-vals
-     {:identifier (identifier/binding-type fhir-schema path element)
-      :type type
-      :valueset valueset
-      :strength (get-in element [:binding :strength])
-      :enum (build-enum element)
-      :dependencies (->> (concat (when (some? type) [type])
-                                 [valueset])
-                         (sort-by #(-> % :identifier :name)))})))
+(defn collect-binding-schemas
+  "Collect all binding schemas from a FHIR schema"
+  [fhir-schema deep-nested-elements]
+  (->> (deep-nested-elements fhir-schema [] (:elements fhir-schema))
+       (keep (fn [[path element]]
+               (when (some? (:binding element))
+                 (binding/generate-binding-type fhir-schema path element
+                                                (build-field-type fhir-schema path element)))))
+       (sort-by #(get-in % [:identifier :name]))
+       (distinct)))
 
 (defn translate-fhir-schema [fhir-schema]
   (let [parent      (-> fhir-schema :base (package/fhir-schema))
@@ -215,12 +191,7 @@
                          (sort-by #(-> % :identifier :url)))
 
         binding-type-schemas
-        (->> (deep-nested-elements fhir-schema [] elements)
-             (keep (fn [[path element]]
-                     (when (some? (:binding element))
-                       (translate-binding fhir-schema path element))))
-             (sort-by #(get-in % [:identifier :name]))
-             (distinct))
+        (collect-binding-schemas fhir-schema collect-nested-elements)
 
         depends
         (->> (concat (when base [base])
