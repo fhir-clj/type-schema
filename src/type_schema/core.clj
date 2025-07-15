@@ -177,11 +177,10 @@
        (distinct)))
 
 (defn translate-fhir-schema [fhir-schema]
-  (let [parent      (-> fhir-schema :base (package/fhir-schema))
+  (let [parent      (some-> fhir-schema :base (package/fhir-schema))
 
         identifier  (identifier/schema-type fhir-schema)
-        base        (when parent
-                      (identifier/schema-type parent))
+        base        (some-> parent (identifier/schema-type))
         description (:description fhir-schema)
 
         elements    (:elements fhir-schema)

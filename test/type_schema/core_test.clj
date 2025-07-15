@@ -16,6 +16,21 @@
                                   ["type"]
                                   {}))))
 
+(deftest build-form-type-hierachy-test
+  (package/load-fhir-schema! {:url      "A"
+                              :elements {:foo {:type  "string"
+                                               :array true}}})
+
+  (matcho/match (type-schema/translate-fhir-schema
+                 (package/fhir-schema "A"))
+    [{:identifier   {:url "A"}
+      :fields       {:foo {:excluded false,
+                           :type     {:name "string"}
+                           :array    true
+                           :required false}}
+      :dependencies [{:name "string"}]}
+     nil]))
+
 (deftest required-and-excluded-test
   (matcho/match (type-schema/build-field
                  {:elements {:topString {:type "code"}}
