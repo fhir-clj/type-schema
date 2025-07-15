@@ -120,6 +120,9 @@
                         :required  (is-required? fhir-schema path)
                         :excluded  (is-excluded? fhir-schema path)
 
+                        :min (:min element)
+                        :max (:max element)
+
                         :choices   (:choices element)
                         :choiceOf  (:choiceOf element)
 

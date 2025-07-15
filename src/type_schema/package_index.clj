@@ -6,7 +6,7 @@
    [fhir.schema.translate :as fhir-schema]
    [type-schema.log :as log]))
 
-(def *index (atom nil))
+(defonce *index (atom nil))
 
 (defn index
   ([] @*index)

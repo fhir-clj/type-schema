@@ -1,0 +1,102 @@
+{
+  "identifier": {
+    "kind": "complex-type",
+    "package": "undefined",
+    "version": "undefined",
+    "name": "Cardinality",
+    "url": "http://hl7.org/fhir/StructureDefinition/Cardinality"
+  },
+  "base": {
+    "kind": "complex-type",
+    "package": "hl7.fhir.r4.core",
+    "version": "4.0.1",
+    "name": "Element",
+    "url": "http://hl7.org/fhir/StructureDefinition/Element"
+  },
+  "description": "Base StructureDefinition for Coding Type: A reference to a code defined by a terminology system.",
+  "fields": {
+    "zero_or_one": {
+      "min": 0,
+      "excluded": false,
+      "type": {
+        "kind": "primitive-type",
+        "package": "hl7.fhir.r4.core",
+        "version": "4.0.1",
+        "name": "string",
+        "url": "http://hl7.org/fhir/StructureDefinition/string"
+      },
+      "array": true,
+      "max": 1,
+      "required": false
+    },
+    "one": {
+      "min": 1,
+      "excluded": false,
+      "type": {
+        "kind": "primitive-type",
+        "package": "hl7.fhir.r4.core",
+        "version": "4.0.1",
+        "name": "string",
+        "url": "http://hl7.org/fhir/StructureDefinition/string"
+      },
+      "array": true,
+      "max": 1,
+      "required": false
+    },
+    "many": {
+      "min": 42,
+      "excluded": false,
+      "type": {
+        "kind": "primitive-type",
+        "package": "hl7.fhir.r4.core",
+        "version": "4.0.1",
+        "name": "string",
+        "url": "http://hl7.org/fhir/StructureDefinition/string"
+      },
+      "array": true,
+      "max": 42,
+      "required": false
+    },
+    "one_or_many": {
+      "min": 1,
+      "excluded": false,
+      "type": {
+        "kind": "primitive-type",
+        "package": "hl7.fhir.r4.core",
+        "version": "4.0.1",
+        "name": "string",
+        "url": "http://hl7.org/fhir/StructureDefinition/string"
+      },
+      "array": true,
+      "required": false
+    },
+    "zero_or_many": {
+      "excluded": false,
+      "type": {
+        "kind": "primitive-type",
+        "package": "hl7.fhir.r4.core",
+        "version": "4.0.1",
+        "name": "string",
+        "url": "http://hl7.org/fhir/StructureDefinition/string"
+      },
+      "array": true,
+      "required": false
+    }
+  },
+  "dependencies": [
+    {
+      "kind": "complex-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "Element",
+      "url": "http://hl7.org/fhir/StructureDefinition/Element"
+    },
+    {
+      "kind": "primitive-type",
+      "package": "hl7.fhir.r4.core",
+      "version": "4.0.1",
+      "name": "string",
+      "url": "http://hl7.org/fhir/StructureDefinition/string"
+    }
+  ]
+}

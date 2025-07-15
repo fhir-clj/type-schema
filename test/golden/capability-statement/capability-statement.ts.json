@@ -28,6 +28,7 @@
       "required": false
     },
     "format": {
+      "min": 1,
       "excluded": false,
       "type": {
         "kind": "primitive-type",

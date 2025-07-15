@@ -139,9 +139,8 @@
   (golden/as-json "docs/examples/string.ts.json"
                   (fhir-schema->type-schema "docs/examples/fhir-schema/string.fs.json"))
 
-  ;; TODO: add min-max cardinality to type-schema
-  #_(golden/as-json "docs/examples/with-cardinality.ts.json"
-                    (fhir-schema->type-schema "docs/examples/fhir-schema/with-cardinality.fs.json"))
+  (golden/as-json "docs/examples/with-cardinality.ts.json"
+                  (fhir-schema->type-schema "docs/examples/fhir-schema/with-cardinality.fs.json"))
 
   (golden/as-json "docs/examples/coding.ts.json"
                   (fhir-schema->type-schema "docs/examples/fhir-schema/coding.fs.json"))

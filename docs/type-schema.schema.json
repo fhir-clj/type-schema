@@ -132,6 +132,14 @@
           "type": "array",
           "items": { "type": "string" },
           "description": "For code fields, the set of valid values when bound to a required value set"
+        },
+        "min": {
+          "type": "number",
+          "description": "Minimum limit of items for an array"
+        },
+        "max": {
+          "type": "number",
+          "description": "Maximum limit of items for an array"
         }
       },
       "required": ["type"],
@@ -162,6 +170,14 @@
           "type": "boolean",
           "default": false,
           "description": "Whether the selected choice can contain multiple values"
+        },
+        "min": {
+          "type": "number",
+          "description": "Minimum limit of items for an array"
+        },
+        "max": {
+          "type": "number",
+          "description": "Maximum limit of items for an array"
         }
       },
       "required": ["choices"],
@@ -214,6 +230,14 @@
           "type": "array",
           "items": { "type": "string" },
           "description": "For code fields, the set of valid values when bound to a required value set"
+        },
+        "min": {
+          "type": "number",
+          "description": "Minimum limit of items for an array"
+        },
+        "max": {
+          "type": "number",
+          "description": "Maximum limit of items for an array"
         }
       },
       "required": ["type", "choiceOf"],
