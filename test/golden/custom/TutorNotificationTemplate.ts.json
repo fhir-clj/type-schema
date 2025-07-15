@@ -1,8 +1,8 @@
 {
   "identifier": {
     "kind": "resource",
-    "package": "not-specified",
-    "version": "not-specified",
+    "package": "undefined",
+    "version": "undefined",
     "name": "TutorNotificationTemplate",
     "url": "http://example.com/aidbox-sms-tutor/TutorNotificationTemplate"
   },

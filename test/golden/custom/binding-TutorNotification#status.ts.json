@@ -1,8 +1,8 @@
 {
   "identifier": {
     "kind": "binding",
-    "package": "not-specified",
-    "version": "not-specified",
+    "package": "undefined",
+    "version": "undefined",
     "name": "TutorNotification.status_binding",
     "url": "http://example.com/aidbox-sms-tutor/TutorNotification#status_binding"
   },

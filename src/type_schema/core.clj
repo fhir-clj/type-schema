@@ -23,27 +23,9 @@
     (first (str/split url-with-version #"\|"))
     url-with-version))
 
-;; FIXME: Move it to package-index
-(defn- package-meta-fallback [fhir-schema]
-  (cond
-    (and (some-> fhir-schema :url (str/starts-with? "http://hl7.org/fhir"))
-         (some-> fhir-schema :version (str/starts-with? "4.")))
-    {:name    "hl7.fhir.r4.core"
-     :version (:version fhir-schema)}
-
-    (and (some-> fhir-schema :url (str/starts-with? "http://hl7.org/fhir"))
-         (some-> fhir-schema :version (str/starts-with? "5.")))
-    {:name    "hl7.fhir.r5.core"
-     :version (:version fhir-schema)}
-
-    :else
-    {:name    "not-specified"
-     :version "not-specified"}))
-
 (defn package-meta [fhir-schema]
   (or (:package-meta fhir-schema)
-      (package/package-meta (:url fhir-schema))
-      (package-meta-fallback fhir-schema)))
+      (package/package-meta (:url fhir-schema))))
 
 (defn- build-nested-name [path]
   (->> path

@@ -40,7 +40,7 @@ test-cli: build
 
 update-golden:
 	UPDATE_GOLDEN=true clj -M:test
-	make format-golden-json
+	make format-json
 
 lint:
 	clj -M:lint

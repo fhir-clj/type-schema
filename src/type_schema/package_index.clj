@@ -12,9 +12,6 @@
   ([] @*index)
   ([curl] (get @*index curl)))
 
-(defn package-meta [curl]
-  (get-in @*index [curl :package-meta]))
-
 (defn resource [curl]
   (get-in @*index [curl :resource]))
 
@@ -30,6 +27,12 @@
             (some (fn [[_ res]]
                     (when (= curl-or-name (get-in res [:fhir-schema :name]))
                       (:fhir-schema res))))))))
+
+(defn package-meta [curl]
+  (or (some-> (fhir-schema curl) :package-meta)
+      (get-in @*index [curl :package-meta])
+      {:name    "undefined"
+       :version "undefined"}))
 
 (defn structure-definition
   ([] (->> @*index

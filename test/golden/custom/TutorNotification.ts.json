@@ -1,8 +1,8 @@
 {
   "identifier": {
     "kind": "resource",
-    "package": "not-specified",
-    "version": "not-specified",
+    "package": "undefined",
+    "version": "undefined",
     "name": "TutorNotification",
     "url": "http://example.com/aidbox-sms-tutor/TutorNotification"
   },
@@ -26,8 +26,8 @@
       "array": false,
       "binding": {
         "kind": "binding",
-        "package": "not-specified",
-        "version": "not-specified",
+        "package": "undefined",
+        "version": "undefined",
         "name": "TutorNotification.type_binding",
         "url": "http://example.com/aidbox-sms-tutor/TutorNotification#type_binding"
       },
@@ -45,8 +45,8 @@
       "array": false,
       "binding": {
         "kind": "binding",
-        "package": "not-specified",
-        "version": "not-specified",
+        "package": "undefined",
+        "version": "undefined",
         "name": "TutorNotification.status_binding",
         "url": "http://example.com/aidbox-sms-tutor/TutorNotification#status_binding"
       },
@@ -65,8 +65,8 @@
       "reference": [
         {
           "kind": "resource",
-          "package": "not-specified",
-          "version": "not-specified",
+          "package": "undefined",
+          "version": "undefined",
           "name": "TutorNotificationTemplate",
           "url": "http://example.com/aidbox-sms-tutor/TutorNotificationTemplate"
         }
@@ -136,15 +136,15 @@
     },
     {
       "kind": "binding",
-      "package": "not-specified",
-      "version": "not-specified",
+      "package": "undefined",
+      "version": "undefined",
       "name": "TutorNotification.status_binding",
       "url": "http://example.com/aidbox-sms-tutor/TutorNotification#status_binding"
     },
     {
       "kind": "binding",
-      "package": "not-specified",
-      "version": "not-specified",
+      "package": "undefined",
+      "version": "undefined",
       "name": "TutorNotification.type_binding",
       "url": "http://example.com/aidbox-sms-tutor/TutorNotification#type_binding"
     },
