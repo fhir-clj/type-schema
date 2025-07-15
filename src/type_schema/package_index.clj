@@ -32,7 +32,17 @@
                       (:fhir-schema res))))))))
 
 (defn structure-definition
-  ([curl] (get-in @*index [curl :structure-definition])))
+  ([] (->> @*index
+           (keep (fn [[curl res]]
+                   (when (:structure-definition res)
+                     [curl (:structure-definition res)])))
+           (into {})))
+  ([curl-or-name]
+   (or (get-in @*index [curl-or-name :structure-definition])
+       (->> @*index
+            (some (fn [[_ res]]
+                    (when (= curl-or-name (get-in res [:structure-definition :name]))
+                      (:structure-definition res))))))))
 
 (defn value-set
   ([] (->> @*index
