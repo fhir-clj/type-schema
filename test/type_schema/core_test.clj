@@ -25,9 +25,14 @@
   (package/load-fhir-schema! {:base     "A"
                               :url      "B"
                               :required ["foo"]
-                              :elements {:foo {:min 1
-                                               :max 2}
+                              :elements {:foo {:min 1}
                                          :bar {:type "code"}}})
+
+  (package/load-fhir-schema! {:base     "B"
+                              :url      "C"
+                              :required ["bar" "baz"]
+                              :elements {:foo {:max 2}
+                                         :baz {:type "string"}}})
 
   (matcho/match (type-schema/translate-fhir-schema
                  (package/fhir-schema "A"))
@@ -47,8 +52,7 @@
                            :required true
                            :excluded false
                            :array    true
-                           :min      1
-                           :max      2}
+                           :min      1}
                      :bar {:excluded false,
                            :type     {:name "code"}
                            :array    false
@@ -56,6 +60,34 @@
       :dependencies [{:name "code"}
                      {:name "string"}
                      nil]}
+     nil])
+
+  (matcho/match (type-schema/translate-fhir-schema
+                 (package/fhir-schema "C"))
+    [{:identifier {:url "C"}
+      :base       {:url "B"}
+      :fields     {:foo {:excluded false,
+                         :type     {:name "string"},
+                         :array    true,
+                         :min      1,
+                         :max      2,
+                         :required true}
+                   :baz {:excluded false,
+                         :type     {:name "string"},
+                         :array    false,
+                         :required true}
+
+                   ;; FIXME: we should see it in C because of :required
+                   :bar nil #_{:excluded false,
+                               :type     {:name "code"}
+                               :array    false
+                               :required true}},
+      :dependencies
+      [{:kind    "primitive-type",
+        :package "hl7.fhir.r4.core",
+        :version "4.0.1",
+        :name    "string",
+        :url     "http://hl7.org/fhir/StructureDefinition/string"}]}
      nil]))
 
 (deftest required-and-excluded-test
