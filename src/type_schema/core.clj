@@ -13,23 +13,78 @@
     (or (:url (package/fhir-schema type-name))
         (str "http://hl7.org/fhir/StructureDefinition/" type-name))))
 
-(defn- is-required? [fhir-schema path]
-  (let [required (-> (get-in fhir-schema (->> (drop-last path)
-                                              (map (fn [k] [:elements k]))
-                                              (apply concat)))
-                     :required
-                     (set))
+(defn fhir-schema-hierarchy [fhir-schema]
+  (if (nil? fhir-schema)
+    nil
+    (cons fhir-schema
+          (fhir-schema-hierarchy (some-> fhir-schema
+                                         :base
+                                         (package/fhir-schema))))))
+
+(defn element-hierarchy [fhir-schema path]
+  (->> (fhir-schema-hierarchy fhir-schema)
+       (keep (fn [fs]
+               (get-in fs
+                       (->> path
+                            (map (fn [elem-name] [:elements elem-name]))
+                            (apply concat)))))))
+
+;; TODO: Current way (select last word) to merge elements into snapshor is
+;; incorrects. E.g.:
+;;
+;; (package/load-fhir-schema! {:url      "A"
+;;                             :elements {:foo {:type  "string"
+;;                                              :array true
+;;                                              :min   2}}})
+;; (package/load-fhir-schema! {:base     "A"
+;;                             :url      "B"
+;;                             :required ["foo"]
+;;                             :elements {:foo {:min 1
+;;                                              :max 2}
+;;                                        :bar {:type "code"}}})
+;;
+;; We should select most specific elements props. Two ways to do that:
+;;
+;; - merge snapshots should be very smart
+;; - avoid direct access to elements, prefer to use specific getter like for `is-required?`
+
+(defn element-snapshot [fhir-schema path]
+  (let [whitelist      [:choices :short :index :elements :required :excluded
+                        :binding ;; TODO: check and fixit
+                        :refers :elementReference
+                        :mustSupport
+                            ;; FIXME: Should not be presented in accordance to fhir schema spec
+                        :slices :slicing
+                        :url :extensions]
+        elem-hierarchy (element-hierarchy fhir-schema path)
+        snapshot       (->> elem-hierarchy (reverse) (apply merge))
+        rev-snapshot   (->> elem-hierarchy (apply merge))
+        [a b _ab]      (data/diff (apply dissoc rev-snapshot whitelist)
+                                  (apply dissoc snapshot whitelist))]
+    (when (or (not (empty? a)) (not (empty? b)))
+      (log/warn :duplicate-elements-in-hierarchy
+                (str "Duplicate elements in hierarchy for " (:name fhir-schema) " at path " path
+                     " diff " a b)))
+
+    snapshot))
+
+(defn- is-prop-constrained? [fhir-schema path prop-key]
+  (let [prop-path (conj (->> (drop-last path)
+                             (map (fn [k] [:elements k]))
+                             (apply concat)
+                             (vec))
+                        prop-key)
+        required (->> (fhir-schema-hierarchy fhir-schema)
+                      (mapcat #(get-in % prop-path))
+                      (set))
         elem-name (name (last path))]
     (contains? required elem-name)))
 
+(defn- is-required? [fhir-schema path]
+  (is-prop-constrained? fhir-schema path :required))
+
 (defn- is-excluded? [fhir-schema path]
-  (let [required (-> (get-in fhir-schema (->> (drop-last path)
-                                              (map (fn [k] [:elements k]))
-                                              (apply concat)))
-                     :excluded
-                     (set))
-        elem-name (name (last path))]
-    (contains? required elem-name)))
+  (is-prop-constrained? fhir-schema path :excluded))
 
 (defn build-reference [el-snapshot]
   (when (:refers el-snapshot)
@@ -47,42 +102,6 @@
                  (when (seqable? v)
                    (empty? v))))
        (into {})))
-
-(defn fhir-schema-hierarchy [fhir-schema]
-  (if (nil? fhir-schema)
-    nil
-    (cons fhir-schema
-          (fhir-schema-hierarchy (some-> fhir-schema
-                                         :base
-                                         (package/fhir-schema))))))
-
-(defn element-hierarchy [fhir-schema path]
-  (->> (fhir-schema-hierarchy fhir-schema)
-       (keep (fn [fs]
-               (get-in fs
-                       (->> path
-                            (map (fn [elem-name] [:elements elem-name]))
-                            (apply concat)))))))
-
-(defn element-snapshot [fhir-schema path]
-  (let [whitelist          [:choices :short :index :elements :required :excluded
-                            :binding ;; TODO: check and fixit
-                            :refers :elementReference
-                            :mustSupport
-                            ;; FIXME: Should not be presented in accordance to fhir schema spec
-                            :slices :slicing
-                            :url :extensions]
-        elem-hierarchy     (element-hierarchy fhir-schema path)
-        snapshot           (->> elem-hierarchy (reverse) (apply merge))
-        rev-snapshot       (->> elem-hierarchy (apply merge))
-        [a b _ab] (data/diff (apply dissoc rev-snapshot whitelist)
-                             (apply dissoc snapshot whitelist))]
-    (when (or (not (empty? a)) (not (empty? b)))
-      (log/warn :duplicate-elements-in-hierarchy
-                (str "Duplicate elements in hierarchy for " (:name fhir-schema) " at path " path
-                     " diff " a b)))
-
-    snapshot))
 
 (defn build-field-type [fhir-schema _path el-snapshot]
   (or (some-> (or (some-> el-snapshot :type (ensure-url))
