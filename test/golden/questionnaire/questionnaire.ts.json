@@ -556,7 +556,21 @@
           "enum": [
             "group",
             "display",
-            "question"
+            "question",
+            "boolean",
+            "decimal",
+            "integer",
+            "date",
+            "dateTime",
+            "time",
+            "string",
+            "text",
+            "url",
+            "choice",
+            "open-choice",
+            "attachment",
+            "reference",
+            "quantity"
           ],
           "excluded": false,
           "type": {

@@ -30,19 +30,7 @@
     "history-instance",
     "history-type",
     "create",
-    "search-type",
-    "read",
-    "vread",
-    "update",
-    "patch",
-    "delete",
-    "history",
-    "create",
-    "search",
-    "capabilities",
-    "transaction",
-    "batch",
-    "operation"
+    "search-type"
   ],
   "dependencies": [
     {

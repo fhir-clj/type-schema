@@ -119,6 +119,10 @@
   (swap! *index
          assoc (:url fhir-schema) {:fhir-schema fhir-schema}))
 
+(defn load-resource! [resource]
+  (swap! *index
+         assoc (:url resource) {:resource resource}))
+
 (defn initialize! [{package-names        :package-names
                     fhir-schema-fns      :fhir-schema-fns
                     default-package-meta :default-package-meta

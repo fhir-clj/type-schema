@@ -25,19 +25,7 @@
     "transaction",
     "batch",
     "search-system",
-    "history-system",
-    "read",
-    "vread",
-    "update",
-    "patch",
-    "delete",
-    "history",
-    "create",
-    "search",
-    "capabilities",
-    "transaction",
-    "batch",
-    "operation"
+    "history-system"
   ],
   "dependencies": [
     {
