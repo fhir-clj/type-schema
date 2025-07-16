@@ -2,17 +2,6 @@
   (:require
    [type-schema.package-index :as index]))
 
-(defn- concat-concepts [& results]
-  (cond
-    (empty? results) nil
-
-    (->> results
-         (filter #(= % ::not-expand))
-         first
-         some?) ::not-expand
-
-    :else (apply concat results)))
-
 (defn- extract-inner-concepts [concepts]
   (concat (map #(dissoc % :concept) concepts)
           (mapcat extract-inner-concepts (map :concept concepts))))
@@ -23,19 +12,22 @@
       (->> (:concept code-system)
            extract-inner-concepts
            (map #(assoc % :system system-url)))
-      ::not-expand)))
+      (throw (ex-info "not expanding non-CodeSystem"
+                      {:type ::not-expand :system-url system-url})))))
 
 (declare value-set->concepts-inner)
 
 (defn- process-compose-item [compose-rule]
   (cond
-    (:filter compose-rule) ::not-expand
+    (:filter compose-rule)
+    (throw (ex-info "not expanding complex filter rule"
+                    {:type ::not-expand}))
     (:concept compose-rule)
     (let [system-url (:system compose-rule)]
       (map #(assoc % :system system-url)
            (:concept compose-rule)))
     :else
-    (concat-concepts
+    (concat
      (:concept compose-rule)
      (extract-concepts-from-codesystem (:system compose-rule))
      ;; FIXME: check keyword spell
@@ -45,7 +37,7 @@
   [items]
   (->> items
        (map #(process-compose-item %))
-       (apply concat-concepts)))
+       (apply concat)))
 
 (defn- value-set->concepts-inner
   "Resolve all codes for a ValueSet, handling includes and excludes.
@@ -55,16 +47,16 @@
   (let [compose (:compose value-set)
         included-codes (process-include-exclude (:include compose))
         excluded-codes (process-include-exclude (:exclude compose))]
-    (if (or (= included-codes ::not-expand)
-            (= excluded-codes ::not-expand))
-      ::not-expand
-      (->> included-codes
-           (remove (set excluded-codes))
-           (mapv #(select-keys % [:system :code :display]))))))
+    (->> included-codes
+         (remove (set excluded-codes))
+         (mapv #(select-keys % [:system :code :display])))))
 
 (defn value-set->concepts
   "Resolve all codes for a ValueSet, handling includes and excludes."
   [value-set]
-  (let [concepts (value-set->concepts-inner value-set)]
-    (when-not (= ::not-expand concepts)
-      concepts)))
+  (try
+    (value-set->concepts-inner value-set)
+    (catch Exception e
+      (if (= ::not-expand (:type (ex-data e)))
+        nil
+        (throw e)))))
