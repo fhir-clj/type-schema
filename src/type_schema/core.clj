@@ -1,5 +1,6 @@
 (ns type-schema.core
   (:require
+   [clojure.data :as data]
    [type-schema.binding :as binding]
    [type-schema.identifier :as identifier]
    [type-schema.log :as log]
@@ -30,9 +31,9 @@
         elem-name (name (last path))]
     (contains? required elem-name)))
 
-(defn build-reference [element]
-  (when (:refers element)
-    (let [references (get-in element [:refers])]
+(defn build-reference [el-snapshot]
+  (when (:refers el-snapshot)
+    (let [references (get-in el-snapshot [:refers])]
       (->> references
            (map (fn [refer]
                   (if-let [fhir-schema (package/fhir-schema refer)]
@@ -47,71 +48,86 @@
                    (empty? v))))
        (into {})))
 
-(defn build-field-type [fhir-schema path element]
-  (let [url (some-> element :type (ensure-url))]
-    (or (some-> (or url
-                    (:defaultType element))
-                (package/fhir-schema)
-                (identifier/schema-type))
-        (when-let [fhir-schema-path (:elementReference element)]
-          (identifier/nested-type fhir-schema
-                                  (->> fhir-schema-path
-                                       (drop 1)
-                                       (keep-indexed (fn [i key]
-                                                       (when (odd? i)
-                                                         key)))
-                                       (map keyword)
-                                       (into []))))
+(defn fhir-schema-hierarchy [fhir-schema]
+  (if (nil? fhir-schema)
+    nil
+    (cons fhir-schema
+          (fhir-schema-hierarchy (some-> fhir-schema
+                                         :base
+                                         (package/fhir-schema))))))
 
-        (when (and (nil? (:type element))
-                   (some? (:base fhir-schema)))
-          (let [bases ((fn collect-bases [fs]
-                         (when-let [base (some-> fs
-                                                 :base
-                                                 package/fhir-schema)]
-                           (cons base (collect-bases base))))
-                       fhir-schema)
-                base-elems (->> bases
-                                (keep (fn [base]
-                                        {:fs base
-                                         :e (reduce (fn [st elem-name] (get-in st [:elements elem-name]))
-                                                    base
-                                                    path)}))
-                                (filter #(-> % :e :type)))
-                base-elem (first base-elems)]
-            (when (< 1 (count (distinct base-elems)))
-              (log/warn :multiple-base-types (:name fhir-schema) path (count base-elems)))
+(defn element-hierarchy [fhir-schema path]
+  (->> (fhir-schema-hierarchy fhir-schema)
+       (keep (fn [fs]
+               (get-in fs
+                       (->> path
+                            (map (fn [elem-name] [:elements elem-name]))
+                            (apply concat)))))))
 
-            (when (some? base-elem)
-              (build-field-type (:fs base-elem) path (:e base-elem)))))
+(defn element-snapshot [fhir-schema path]
+  (let [whitelist          [:choices :short :index :elements :required :excluded
+                            :binding ;; TODO: check and fixit
+                            :refers :elementReference
+                            :mustSupport
+                            ;; FIXME: Should not be presented in accordance to fhir schema spec
+                            :slices :slicing
+                            :url :extensions]
+        elem-hierarchy     (element-hierarchy fhir-schema path)
+        snapshot           (->> elem-hierarchy (reverse) (apply merge))
+        rev-snapshot       (->> elem-hierarchy (apply merge))
+        [a b _ab] (data/diff (apply dissoc rev-snapshot whitelist)
+                             (apply dissoc snapshot whitelist))]
+    (when (or (not (empty? a)) (not (empty? b)))
+      (log/warn :duplicate-elements-in-hierarchy
+                (str "Duplicate elements in hierarchy for " (:name fhir-schema) " at path " path
+                     " diff " a b)))
 
-        (when (and (= (:kind fhir-schema) "logical")
+    snapshot))
+
+(defn build-field-type [fhir-schema _path el-snapshot]
+  (or (some-> (or (some-> el-snapshot :type (ensure-url))
+                  (:defaultType el-snapshot))
+              (package/fhir-schema)
+              (identifier/schema-type))
+
+      (when-let [fhir-schema-path (:elementReference el-snapshot)]
+        (identifier/nested-type fhir-schema
+                                (->> fhir-schema-path
+                                     (drop 1)
+                                     (keep-indexed (fn [i key]
+                                                     (when (odd? i)
+                                                       key)))
+
+                                     (map keyword)
+                                     (into []))))
+
+      #_(when (and (= (:kind fhir-schema) "logical")
                    (nil? (:type element))
                    (not (contains? element :choices)))
           (log/warn :force-default-type-for-logic-model (:name fhir-schema) path element)
           (-> (package/fhir-schema "string")
-              (identifier/schema-type))))))
+              (identifier/schema-type)))))
 
-(defn build-field [fhir-schema path element]
-  (let [type (build-field-type fhir-schema path element)]
-    (remove-empty-vals {:type      type
-                        :array     (true? (:array element))
-                        :required  (is-required? fhir-schema path)
-                        :excluded  (is-excluded? fhir-schema path)
+(defn build-field [fhir-schema path el-snapshot]
+  (remove-empty-vals
+   {:type     (build-field-type fhir-schema path el-snapshot)
+    :array    (true? (:array el-snapshot))
+    :required (is-required? fhir-schema path)
+    :excluded (is-excluded? fhir-schema path)
 
-                        :min (:min element)
-                        :max (:max element)
+    :min (:min el-snapshot)
+    :max (:max el-snapshot)
 
-                        :choices   (:choices element)
-                        :choiceOf  (:choiceOf element)
+    :choices  (:choices el-snapshot)
+    :choiceOf (:choiceOf el-snapshot)
 
-                        :enum      (binding/build-enum element)
-                        :binding   (binding/build-binding fhir-schema path element)
-                        :reference (build-reference element)})))
+    :enum      (binding/build-enum el-snapshot)
+    :binding   (binding/build-binding fhir-schema path el-snapshot)
+    :reference (build-reference el-snapshot)}))
 
-(defn build-nested-field [fhir-schema path element]
+(defn build-nested-field [fhir-schema path el-snapshot]
   {:type     (identifier/nested-type fhir-schema path)
-   :array    (true? (:array element))
+   :array    (true? (:array el-snapshot))
    :required (is-required? fhir-schema path)
    :excluded (is-excluded? fhir-schema path)})
 
@@ -122,10 +138,11 @@
 (defn iterate-over-elements [fhir-schema path elements]
   (->> elements
        (map (fn [[key element]]
-              (let [path (conj path key)]
+              (let [path        (conj path key)
+                    el-snapshot (element-snapshot fhir-schema path)]
                 (if (is-nested-element? element)
-                  [key (build-nested-field fhir-schema path element)]
-                  [key (build-field fhir-schema path element)]))))
+                  [key (build-nested-field fhir-schema path el-snapshot)]
+                  [key (build-field fhir-schema path el-snapshot)]))))
        (into {})))
 
 (defn collect-nested-elements [fhir-schema path elements]
@@ -169,10 +186,11 @@
   "Collect all binding schemas from a FHIR schema"
   [fhir-schema deep-nested-elements]
   (->> (deep-nested-elements fhir-schema [] (:elements fhir-schema))
-       (keep (fn [[path element]]
-               (when (some? (:binding element))
-                 (binding/generate-binding-type fhir-schema path element
-                                                (build-field-type fhir-schema path element)))))
+       (keep (fn [[path _element]]
+               (let [el-snapshot (element-snapshot fhir-schema path)]
+                 (when (some? (:binding el-snapshot))
+                   (binding/generate-binding-type fhir-schema path el-snapshot
+                                                  (build-field-type fhir-schema path el-snapshot))))))
        (sort-by #(get-in % [:identifier :name]))
        (distinct)))
 

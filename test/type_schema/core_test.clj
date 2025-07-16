@@ -17,9 +17,17 @@
                                   {}))))
 
 (deftest build-form-type-hierachy-test
+  (package/initialize! {:package-names ["hl7.fhir.r4.core"]})
+
   (package/load-fhir-schema! {:url      "A"
                               :elements {:foo {:type  "string"
                                                :array true}}})
+  (package/load-fhir-schema! {:base     "A"
+                              :url      "B"
+                              :required ["foo"]
+                              :elements {:foo {:min 1
+                                               :max 2}
+                                         :bar {:type "code"}}})
 
   (matcho/match (type-schema/translate-fhir-schema
                  (package/fhir-schema "A"))
@@ -29,6 +37,25 @@
                            :array    true
                            :required false}}
       :dependencies [{:name "string"}]}
+     nil])
+
+  (matcho/match (type-schema/translate-fhir-schema
+                 (package/fhir-schema "B"))
+    [{:identifier   {:url "B"},
+      :base         {:url "A"},
+      :fields       {:foo {:type     {:name "string"}
+                           :required true
+                           :excluded false
+                           :array    true
+                           :min      1
+                           :max      2}
+                     :bar {:excluded false,
+                           :type     {:name "code"}
+                           :array    false
+                           :required false}}
+      :dependencies [{:name "code"}
+                     {:name "string"}
+                     nil]}
      nil]))
 
 (deftest required-and-excluded-test
