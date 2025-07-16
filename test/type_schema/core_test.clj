@@ -16,6 +16,63 @@
                                   ["type"]
                                   {}))))
 
+(deftest choice-type-test
+  (package/initialize! {:package-names ["hl7.fhir.r4.core"]})
+
+  (package/load-fhir-schema!
+   {:url      "OptionalChoice"
+    :kind     "resource"
+    :elements {:deceasedDateTime {:type     "dateTime"
+                                  :choiceOf "deceased"}
+               :deceasedBoolean  {:type "boolean"}
+               :deceased         {:choices ["deceasedBoolean" "deceasedDateTime"]}}})
+
+  (matcho/match (type-schema/translate-fhir-schema
+                 (package/fhir-schema "OptionalChoice"))
+    [{:identifier   {:url "OptionalChoice"}
+      :fields       {:deceasedDateTime {:excluded false,
+                                        :type     {:name "dateTime"},
+                                        :array    false,
+                                        :choiceOf "deceased",
+                                        :required false},
+                     :deceasedBoolean  {:excluded false,
+                                        :type     {:name "boolean"},
+                                        :array    false,
+                                        :required false},
+                     :deceased         {:excluded false,
+                                        :choices  ["deceasedBoolean" "deceasedDateTime"],
+                                        :array    false,
+                                        :required false}},
+      :dependencies [{:name "boolean"}
+                     {:name "dateTime"}]}
+     nil])
+
+  (package/load-fhir-schema!
+   {:url      "RequiredChoice"
+    :kind     "resource"
+    :required ["deceased"]
+    :elements {:deceased         {:choices ["deceasedBoolean" "deceasedDateTime"]}
+               :deceasedDateTime {:type     "dateTime"
+                                  :choiceOf "deceased"}
+               :deceasedBoolean  {:type "boolean"}}})
+
+  (matcho/match (type-schema/translate-fhir-schema
+                 (package/fhir-schema "RequiredChoice"))
+    [{:identifier   {:url "RequiredChoice"}
+      :fields       {:deceased         {:excluded false
+                                        :choices  ["deceasedBoolean" "deceasedDateTime"]
+                                        :required true}
+                     :deceasedDateTime {:choiceOf "deceased"
+                                        :type     {:name "dateTime"}
+                                        :excluded false
+                                        :required false}
+                     :deceasedBoolean  {:type     {:name "boolean"}
+                                        :excluded false
+                                        :required false}}
+      :dependencies [{:name "boolean"}
+                     {:name "dateTime"}]}
+     nil]))
+
 (deftest build-form-type-hierachy-test
   (package/initialize! {:package-names ["hl7.fhir.r4.core"]})
 
