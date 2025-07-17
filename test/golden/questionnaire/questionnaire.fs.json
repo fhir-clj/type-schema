@@ -288,16 +288,6 @@
           "isModifierReason": "If enableWhen is present and the condition evaluates to false, then the Questionnaire behaves as though the elements weren't actually present",
           "required": [
             "answer",
-            "answerBoolean",
-            "answerCoding",
-            "answerDate",
-            "answerDateTime",
-            "answerDecimal",
-            "answerInteger",
-            "answerQuantity",
-            "answerReference",
-            "answerString",
-            "answerTime",
             "operator",
             "question"
           ]
@@ -367,13 +357,7 @@
             }
           },
           "required": [
-            "value",
-            "valueCoding",
-            "valueDate",
-            "valueInteger",
-            "valueReference",
-            "valueString",
-            "valueTime"
+            "value"
           ]
         },
         "prefix": {
@@ -503,19 +487,7 @@
             }
           },
           "required": [
-            "value",
-            "valueAttachment",
-            "valueBoolean",
-            "valueCoding",
-            "valueDate",
-            "valueDateTime",
-            "valueDecimal",
-            "valueInteger",
-            "valueQuantity",
-            "valueReference",
-            "valueString",
-            "valueTime",
-            "valueUri"
+            "value"
           ]
         },
         "maxLength": {

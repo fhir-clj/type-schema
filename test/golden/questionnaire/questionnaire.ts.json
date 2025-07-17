@@ -759,7 +759,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": true
+          "required": false
         },
         "valueDate": {
           "excluded": false,
@@ -772,7 +772,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": true
+          "required": false
         },
         "valueTime": {
           "excluded": false,
@@ -785,7 +785,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": true
+          "required": false
         },
         "valueString": {
           "excluded": false,
@@ -798,7 +798,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": true
+          "required": false
         },
         "valueCoding": {
           "excluded": false,
@@ -811,7 +811,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": true
+          "required": false
         },
         "valueReference": {
           "excluded": false,
@@ -833,7 +833,7 @@
             }
           ],
           "choiceOf": "value",
-          "required": true
+          "required": false
         },
         "initialSelected": {
           "excluded": false,
@@ -876,7 +876,7 @@
           },
           "array": false,
           "choiceOf": "answer",
-          "required": true
+          "required": false
         },
         "answerDecimal": {
           "excluded": false,
@@ -889,7 +889,7 @@
           },
           "array": false,
           "choiceOf": "answer",
-          "required": true
+          "required": false
         },
         "answerDate": {
           "excluded": false,
@@ -902,7 +902,7 @@
           },
           "array": false,
           "choiceOf": "answer",
-          "required": true
+          "required": false
         },
         "answerReference": {
           "excluded": false,
@@ -924,7 +924,7 @@
             }
           ],
           "choiceOf": "answer",
-          "required": true
+          "required": false
         },
         "answerInteger": {
           "excluded": false,
@@ -937,7 +937,7 @@
           },
           "array": false,
           "choiceOf": "answer",
-          "required": true
+          "required": false
         },
         "question": {
           "excluded": false,
@@ -962,7 +962,7 @@
           },
           "array": false,
           "choiceOf": "answer",
-          "required": true
+          "required": false
         },
         "answer": {
           "excluded": false,
@@ -992,7 +992,7 @@
           },
           "array": false,
           "choiceOf": "answer",
-          "required": true
+          "required": false
         },
         "operator": {
           "enum": [
@@ -1033,7 +1033,7 @@
           },
           "array": false,
           "choiceOf": "answer",
-          "required": true
+          "required": false
         },
         "answerCoding": {
           "excluded": false,
@@ -1046,7 +1046,7 @@
           },
           "array": false,
           "choiceOf": "answer",
-          "required": true
+          "required": false
         },
         "answerTime": {
           "excluded": false,
@@ -1059,7 +1059,7 @@
           },
           "array": false,
           "choiceOf": "answer",
-          "required": true
+          "required": false
         }
       }
     },
@@ -1099,7 +1099,7 @@
             }
           ],
           "choiceOf": "value",
-          "required": true
+          "required": false
         },
         "valueUri": {
           "excluded": false,
@@ -1112,7 +1112,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": true
+          "required": false
         },
         "valueTime": {
           "excluded": false,
@@ -1125,7 +1125,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": true
+          "required": false
         },
         "valueDecimal": {
           "excluded": false,
@@ -1138,7 +1138,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": true
+          "required": false
         },
         "valueQuantity": {
           "excluded": false,
@@ -1151,7 +1151,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": true
+          "required": false
         },
         "value": {
           "excluded": false,
@@ -1183,7 +1183,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": true
+          "required": false
         },
         "valueBoolean": {
           "excluded": false,
@@ -1196,7 +1196,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": true
+          "required": false
         },
         "valueDateTime": {
           "excluded": false,
@@ -1209,7 +1209,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": true
+          "required": false
         },
         "valueDate": {
           "excluded": false,
@@ -1222,7 +1222,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": true
+          "required": false
         },
         "valueCoding": {
           "excluded": false,
@@ -1235,7 +1235,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": true
+          "required": false
         },
         "valueInteger": {
           "excluded": false,
@@ -1248,7 +1248,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": true
+          "required": false
         },
         "valueAttachment": {
           "excluded": false,
@@ -1261,7 +1261,7 @@
           },
           "array": false,
           "choiceOf": "value",
-          "required": true
+          "required": false
         }
       }
     }
