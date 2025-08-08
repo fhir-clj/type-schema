@@ -2,112 +2,109 @@
 
 Scope: This document covers only the basic representation of the relationship between profiles and resources. Profile specific constraints are not represented in this document.
 
-## Profiles
+## Profile Example
 
-Profiles in FHIR represent constraints on resources or data types that tailor them for specific use cases. This document describes approaches for representing and working with profiles in the SDK.
+Let's see an example of a profile for `bodyweight` from R4. That profile is defined by the following StructureDefinitions:
 
-Let's see an example of an `Observation` resource and `us-core-blood-pressure` profile in the JSON example:
+1. Constraint: <http://hl7.org/fhir/StructureDefinition/bodyweight>
+2. Constraint: <http://hl7.org/fhir/StructureDefinition/vitalsigns>
+3. Specialization: <http://hl7.org/fhir/StructureDefinition/Observation>
+4. Specialization: <http://hl7.org/fhir/StructureDefinition/DomainResource>
+5. Specialization: <http://hl7.org/fhir/StructureDefinition/Resource>
 
-```json
+[^universal]: Here, **universal** means that the data structure of the last specialization (`Observation`) should be able to represent all "Profiled" resources.
+
+Constraints define:
+- Additional constraints, e.g., `bodyweight` requires that coding should contain `BodyWeightCode`
+- Named *virtual* fields defined by slices to access array elements, e.g., in `Observation` we have an array of `Categories`, in `vitalsigns` we have a `VSCat` slice which should contain a fixed value [^slice-as-interface].
+
+[^slice-as-interface]: For a better example, see the us-core-package and `USCoreBloodPressure` profile, which defines `systolic` and `diastolic` fields.
+
+Example of the resource:
+
+```jsonc
 {
-  "resourceType" : "Observation",
-  "id" : "blood-pressure",
-  "meta" : {
-    "profile" : ["http://hl7.org/fhir/us/core/StructureDefinition/us-core-blood-pressure|8.0.0"]
+  "meta": {
+    "profile": [
+      // implicitly: "http://hl7.org/fhir/StructureDefinition/vitalsigns",
+      "http://hl7.org/fhir/StructureDefinition/bodyweight"
+    ]
   },
-  "status" : "final",
-  "category" : [{
-    "coding" : [{
-      "system" : "http://terminology.hl7.org/CodeSystem/observation-category",
-      "code" : "vital-signs",
-      "display" : "Vital Signs"
-    }],
-    "text" : "Vital Signs"
-  }],
-  "code" : {
-    "coding" : [{
-      "system" : "http://loinc.org",
-      "code" : "85354-9",
-      "display" : "Blood pressure panel with all children optional"
-    }],
-    "text" : "Blood pressure systolic and diastolic"
-  },
-  "subject" : {
-    "reference" : "Patient/example",
-    "display" : "Amy Shaw"
-  },
-  "encounter" : {
-    "display" : "GP Visit"
-  },
-  "effectiveDateTime" : "1999-07-02",
-  "performer" : [{
-    "reference" : "Practitioner/practitioner-1",
-    "display" : "Dr Ronald Bone"
-  }],
-  "component" : [{
-    "code" : {
-      "coding" : [{
-        "system" : "http://loinc.org",
-        "code" : "8480-6",
-        "display" : "Systolic blood pressure"
-      }],
-      "text" : "Systolic blood pressure"
-    },
-    "valueQuantity" : {
-      "value" : 109,
-      "unit" : "mmHg",
-      "system" : "http://unitsofmeasure.org",
-      "code" : "mm[Hg]"
-    }
-  },
-  {
-    "code" : {
-      "coding" : [{
-        "system" : "http://loinc.org",
-        "code" : "8462-4",
-        "display" : "Diastolic blood pressure"
-      }],
-      "text" : "Diastolic blood pressure"
-    },
-    "valueQuantity" : {
-      "value" : 44,
-      "unit" : "mmHg",
-      "system" : "http://unitsofmeasure.org",
-      "code" : "mm[Hg]"
-    }
-  }]
+  "resourceType": "Observation",
+  "id": "example-genetics-1",
+  "effectiveDateTime": "2020-10-10",
+  "status": "final",
+  "category": [
+    {"coding": [{"code": "vital-signs", "system": "http://terminology.hl7.org/CodeSystem/observation-category"}]}
+  ],
+  "code": {"coding": [{"code": "29463-7", "system": "http://loinc.org"}]},
+  "valueCodeableConcept": {"coding": [{"code": "10828004", "system": "http://snomed.info/sct"}]},
+  "subject": {"reference": "Patient/pt-1"}
 }
 ```
 
-## Type Schema & SDK
+## SDK Design Questions
 
-The schema representation should maintain a clear inheritance hierarchy:
+### Interaction between the resource and profiles
 
-```
-DomainResource
-  └── Observation (base resource)
-       └── USCoreBloodPressure (profile)
-            └── [Other more specific blood pressure profiles]
-```
+Problem: resource (`Observation`) and profile (`bodyweight`) can be related to each other by:
 
-This allows for proper type checking and validation while preserving the relationship between profiles and their base resources.
+1. `subclass`: profile is a subclass of resource.
+    - **Advantage**:
+        - full access to the resource and profile interface at same time
+        - polymorphism between profiles and resource.
+    - **Disadvantage**:
+        - inconsistencies between resource and profile can be resolved only at runtime (e.g. forbidden fields)
+        - switching between multiple profiles.
+2. `link`: profile is linked to resource where profile is an adaptor to resource file.
+    - **Advantage**:
+        - fully independent interfaces and separation of concern,
+    - **Disadvantage**:
+        - lack of polymorphism between profiles and resources,
+            - don't need to partly implement resource API in profile type (use only mentioned in profile things)
+        - data inconsistencies (edit profile then resource and break profile).
 
-### Profile related Procedures
+<!-- HAPI use link -->
 
-1. Resource to profile cast
-2. Profile to resource cast
-3. Attaching profile to existing resource
+### Interactions between inheritance profiles
 
-### Multiple Profile Support
+Problem: if we have several levels of profiles on top of the resource how they should be related (e.g. `bodyweight`, `vitalsigns`)?
 
-A FHIR resource can conform to multiple profiles simultaneously. The SDK should:
+- the same arguments as for *Interaction between the resource and profiles* are applicable.
+- plus polymorphism between profiles.
 
-1. Allow attaching multiple profiles to a resource
-2. Support accessing the resource through any of its profiles
-3. Ensure changes made through one profile view are reflected in other profile views
-4. Maintain all profile URLs in the resource's meta.profile array
+### JSON -> object conversion and Profile
 
-### Pseudo-Code Example
+Arbitrary JSON can be converted to:
+
+1. Resource type, independently from the profiles.
+1. Profile type.
+    - Multiple profiles.
+    - `*void` in `GET /Observation/1234`
+
+### Mutable/Immutable Representation
+
+In both cases of *Interaction between the resource and profiles* we need to cast object types/classes between different profiles/resource.
+
+- It can't be represented as a single type because different profiles can overlap each other in a bad way.
+
+## Type Schema Representation
+
+Type Schema representation for profiles. Profiles should have separated `kind = constraint`.
+
+How to represent profile entities:
+
+1. `difference`:
+    - more Type Schema consistency: resource representation more oriented on inheritance.
+    - during codegen we need to traverse the inheritance tree to find the correct profile element.
+1. `snapshot`:
+    - better approach for `link` and code generation (one pass through);
+    - worse for `subtypes`;
+    - Type Schema consistency: resource representation more oriented on inheritance.
+
+Current solution: to collect all profile elements we need to traverse the inheritance tree and collect first find description.
+
+## Snippets
 
 ```python
 class ObservationComponent(Observation): pass
@@ -124,4 +121,68 @@ pressure1 = obs1.profile.UsCoreBloodPressure
 pressure2 = UsCoreBloodPressure(...)
 pressure2.diastolic = Quantity(...)
 obs2 = pressure2.resource
+```
+
+### (`effective`) `Observation` -> `vitalsigns` -> `bodyweight`
+
+```typescript
+export interface Observation extends DomainResource {
+    // "effective" : {
+    //   "excluded" : false,
+    //   "choices" : [ "effectiveDateTime", "effectivePeriod", "effectiveTiming", "effectiveInstant" ],
+    //   "array" : false,
+    //   "required" : false
+    // },
+    // "effectiveDateTime" : {
+    //   "excluded" : false,
+    //   "type" : {
+    //     "kind" : "primitive-type",
+    //     "package" : "hl7.fhir.r4.core",
+    //     "version" : "4.0.1",
+    //     "name" : "dateTime",
+    //     "url" : "http://hl7.org/fhir/StructureDefinition/dateTime"
+    //   },
+    //   "array" : false,
+    //   "choiceOf" : "effective",
+    //   "required" : false
+    // },
+    // ...
+    effectiveDateTime?: string;
+    effectiveInstant?: string;
+    effectivePeriod?: Period;
+    effectiveTiming?: Timing;
+}
+
+export interface ObservationVital extends Profile {
+    // Difference:
+    // 1. `effectiveTiming`, `effectiveInstant` removed
+    // 2. `effective` should be required fields
+    //
+    // "effective" : {
+    //   "excluded" : false,
+    //   "choices" : [ "effectiveDateTime", "effectivePeriod" ],
+    //   "array" : false,
+    //   "required" : true
+    // },
+    // "effectiveDateTime" : {
+    //   "excluded" : false,
+    //   "type" : {
+    //     "kind" : "primitive-type",
+    //     "package" : "hl7.fhir.r4.core",
+    //     "version" : "4.0.1",
+    //     "name" : "dateTime",
+    //     "url" : "http://hl7.org/fhir/StructureDefinition/dateTime"
+    //   },
+    //   "array" : false,
+    //   "choiceOf" : "effective",
+    //   "required" : false
+    // },
+    effectiveDateTime?: string;
+    effectivePeriod?: Period;
+}
+
+export interface Observation_bodyweight extends DomainResource {
+    effectiveDateTime?: string;
+    effectivePeriod?: Period;
+}
 ```

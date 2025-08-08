@@ -78,15 +78,23 @@
         (.newLine writer)))))
 
 (defn- save-as-separate-files [data output-dir verbose]
-  (doseq [item data]
-    (let [name         (get-in item [:identifier :name])
-          package-name (get-in item [:identifier :package])
-          file-path    (str output-dir "/" package-name "/" name ".ts.json")]
-      (when verbose (println "Saving type schema:" name "to" file-path))
-      (let [file (java.io.File. file-path)]
-        (io/make-parents file-path)
-        (with-open [writer (java.io.BufferedWriter. (java.io.FileWriter. file))]
-          (.write writer (json/generate-string item {:pretty true})))))))
+  (let [name-count (atom {})]
+    (doseq [item data]
+      (let [name         (get-in item [:identifier :name])
+            package-name (get-in item [:identifier :package])
+            file-base    (str output-dir "/" package-name "/" name)
+            file-path    (str file-base
+                              (when-let [n (get @name-count (str/lower-case file-base))]
+                                (str "-" n))
+                              ".ts.json")]
+        ;; NOTE: We use a counter to avoid overwriting files with the same name
+        (swap! name-count update (str/lower-case file-base) (fnil inc 1))
+
+        (when verbose (println "Saving type schema:" name "to" file-path))
+        (let [file (java.io.File. file-path)]
+          (io/make-parents file-path)
+          (with-open [writer (java.io.BufferedWriter. (java.io.FileWriter. file))]
+            (.write writer (json/generate-string item {:pretty true}))))))))
 
 (defn process-packages [{package-names :package-names
                          output-dir :output-dir
@@ -235,6 +243,7 @@
       (fhir.schema.translate/translate)
       (type-schema/translate-fhir-schema))
 
+  (process-packages {:package-names ["hl7.fhir.r4.core"] :output-dir "output" :separated-files true})
   (process-packages {:package-names ["hl7.cda.uv.core@2.0.1-sd"] :output-dir "output"})
   (process-packages {:package-names ["hl7.fhir.r5.core"] :output-dir "output"})
   (process-packages {:package-names ["hl7.fhir.r6.core"] :output-dir "output"})
