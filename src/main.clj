@@ -239,11 +239,14 @@
 (comment
   (fhir.package/pkg-info "hl7.fhir.r4.core@4.0.1")
 
-  (-> (package/index "http://hl7.org/cda/stds/core/StructureDefinition/SubstanceAdministration")
+  (-> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/vitalsigns")
       (fhir.schema.translate/translate)
-      (type-schema/translate-fhir-schema))
+      :elements
+      :value
+      #_(type-schema/translate-fhir-schema))
 
   (process-packages {:package-names ["hl7.fhir.r4.core"] :output-dir "output" :separated-files true})
+
   (process-packages {:package-names ["hl7.cda.uv.core@2.0.1-sd"] :output-dir "output"})
   (process-packages {:package-names ["hl7.fhir.r5.core"] :output-dir "output"})
   (process-packages {:package-names ["hl7.fhir.r6.core"] :output-dir "output"})

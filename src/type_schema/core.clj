@@ -264,5 +264,3 @@
                         :concept      concepts
                         :compose      compose
                         :dependencies depends})))
-
-#_(main/process-package "hl7.fhir.r4.core@4.0.1" "output")
