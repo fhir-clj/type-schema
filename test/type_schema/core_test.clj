@@ -65,14 +65,11 @@
       :base         {:kind "resource",
                      :name "a",
                      :url  "A"},
-      :fields       {:foo {:type {:kind "complex-type",
-                                  :name "BackboneElement",
-                                  :url  "http://hl7.org/fhir/StructureDefinition/BackboneElement"}}}
+      :fields       {:foo {:type {:kind "nested",
+                                  :name "foo",
+                                  :url  "A#foo"}}}
       :nested       nil?,
-      :dependencies [{:kind "complex-type",
-                      :name "BackboneElement",
-                      :url "http://hl7.org/fhir/StructureDefinition/BackboneElement"}
-                     {:kind "resource",
+      :dependencies [{:kind "resource",
                       :name "a",
                       :url "A"}
                      {:kind "nested",

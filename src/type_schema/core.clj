@@ -158,7 +158,7 @@
   (->> elements
        (reduce (fn [m [key element]]
                  (let [el-snapshot (element-snapshot fhir-schema (conj path key))
-                       m (update m key merge element)]
+                       m           (update m key merge element)]
                    (reduce (fn [m2 choice-key]
                              (update m2 (keyword choice-key) merge {}))
                            m
@@ -167,9 +167,21 @@
                {})
        (map (fn [[key element]]
               (let [path        (conj path key)
-                    el-snapshot (element-snapshot fhir-schema path)]
-                (if (is-nested-element? element)
+                    el-snapshot (element-snapshot fhir-schema path)
+                    constraint? (identifier/is-constraint? fhir-schema)
+                    nested?     (is-nested-element? el-snapshot)]
+                (cond
+                  (and constraint? nested?)
+                  (let [parent (some-> fhir-schema :base (package/fhir-schema))]
+                    (assert (some? parent)
+                            (str "Constraint must have base to build nested type for "
+                                 (:name fhir-schema) " at path " path))
+                    [key (build-nested-field parent path el-snapshot)])
+
+                  (is-nested-element? element)
                   [key (build-nested-field fhir-schema path el-snapshot)]
+
+                  :else
                   [key (build-field fhir-schema path el-snapshot)]))))
        (into {})))
 
@@ -240,6 +252,13 @@
         binding-type-schemas
         (collect-binding-schemas fhir-schema collect-nested-elements)
 
+        ;; _ (def parent0 parent)
+        ;; _ (def fhir-schema0 fhir-schema)
+        ;; _ (def elements0 elements)
+        ;; _ (def constraint?0 constraint?)
+        ;; _ (def fields0 fields)
+        ;; _ (def nested0 nested)
+
         depends
         (->> (concat (when base [base])
                      (extract-dependencies fields)
@@ -255,6 +274,7 @@
              (remove #(-> % :name (= (:name identifier))))
              (into []))
 
+        ;; _ (def depends0 depends)
         resource-type-schema
         (remove-empty-vals {:identifier identifier
                             :base base
@@ -262,6 +282,7 @@
                             :fields fields
                             :nested nested
                             :dependencies depends})]
+
     (cons resource-type-schema
           binding-type-schemas)))
 
