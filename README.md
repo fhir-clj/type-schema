@@ -105,7 +105,7 @@ Backbone elements are represented as:
 This normalized structure eliminates the complexity of navigating differential and snapshot views in Structure Definitions, making it straightforward to generate strongly-typed code in any programming language.
 
 ### Snippet of the Patient resource from hl7.fhir.r4.core
-You can see the full type-schema structure in [./test/golden/patient.ts.json](./test/golden/patient.ts.json), which demonstrates how a Patient resource is represented in our normalized format.
+You can see the full type-schema structure in [./test/golden/patient/patient.ts.json](./test/golden/patient/patient.ts.json), which demonstrates how a Patient resource is represented in our normalized format.
 
 This structure makes it easy to understand the relationships between FHIR resources and their properties during generation process without having to parse and lookup for the more complex original FHIR definitions.
 
