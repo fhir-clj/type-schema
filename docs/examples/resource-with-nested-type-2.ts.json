@@ -106,20 +106,6 @@
       "url": "http://hl7.org/fhir/StructureDefinition/DomainResource"
     },
     {
-      "kind": "nested",
-      "package": "hl7.fhir.core.r4",
-      "version": "4.0.1",
-      "name": "field",
-      "url": "http://example.io/fhir/Root#field"
-    },
-    {
-      "kind": "nested",
-      "package": "hl7.fhir.core.r4",
-      "version": "4.0.1",
-      "name": "field.subfield",
-      "url": "http://example.io/fhir/Root#field.subfield"
-    },
-    {
       "kind": "primitive-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",

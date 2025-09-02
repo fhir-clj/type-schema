@@ -249,11 +249,13 @@
       ;; (type-schema/translate-fhir-schema)
       )
 
-  (-> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/vitalsigns")
-      (fhir.schema.translate/translate)
-      (type-schema/translate-fhir-schema)
-      ;; first :fields keys sort
-      )
+  (->> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/vitalsigns")
+       (fhir.schema.translate/translate)
+       (type-schema/translate-fhir-schema)
+       first :dependencies (filter #(= "nested" (:kind %)))
+       ;; first :nested (map :identifier)
+       ;; first :fields keys sort
+       )
 
   (-> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/vitalsigns")
       (fhir.schema.translate/translate)

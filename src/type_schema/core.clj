@@ -196,7 +196,7 @@
 
 (defn extract-dependencies [fields]
   (concat (->> fields
-               (remove (fn [[_key element]] (= "nested" (:kind element))))
+               (remove (fn [[_key element]] (= "nested" (get-in element [:type :kind]))))
                (keep (fn [[_key element]] (:type element))))
           (->> fields
                (keep (fn [[_key element]] (get-in element [:binding]))))))

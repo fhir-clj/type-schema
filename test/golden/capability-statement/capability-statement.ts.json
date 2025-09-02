@@ -1832,102 +1832,11 @@
       "url": "http://hl7.org/fhir/StructureDefinition/dateTime"
     },
     {
-      "kind": "nested",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "document",
-      "url": "http://hl7.org/fhir/StructureDefinition/CapabilityStatement#document"
-    },
-    {
-      "kind": "nested",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "implementation",
-      "url": "http://hl7.org/fhir/StructureDefinition/CapabilityStatement#implementation"
-    },
-    {
       "kind": "primitive-type",
       "package": "hl7.fhir.r4.core",
       "version": "4.0.1",
       "name": "markdown",
       "url": "http://hl7.org/fhir/StructureDefinition/markdown"
-    },
-    {
-      "kind": "nested",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "messaging",
-      "url": "http://hl7.org/fhir/StructureDefinition/CapabilityStatement#messaging"
-    },
-    {
-      "kind": "nested",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "messaging.endpoint",
-      "url": "http://hl7.org/fhir/StructureDefinition/CapabilityStatement#messaging.endpoint"
-    },
-    {
-      "kind": "nested",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "messaging.supportedMessage",
-      "url": "http://hl7.org/fhir/StructureDefinition/CapabilityStatement#messaging.supportedMessage"
-    },
-    {
-      "kind": "nested",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "rest",
-      "url": "http://hl7.org/fhir/StructureDefinition/CapabilityStatement#rest"
-    },
-    {
-      "kind": "nested",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "rest.interaction",
-      "url": "http://hl7.org/fhir/StructureDefinition/CapabilityStatement#rest.interaction"
-    },
-    {
-      "kind": "nested",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "rest.resource",
-      "url": "http://hl7.org/fhir/StructureDefinition/CapabilityStatement#rest.resource"
-    },
-    {
-      "kind": "nested",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "rest.resource.interaction",
-      "url": "http://hl7.org/fhir/StructureDefinition/CapabilityStatement#rest.resource.interaction"
-    },
-    {
-      "kind": "nested",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "rest.resource.operation",
-      "url": "http://hl7.org/fhir/StructureDefinition/CapabilityStatement#rest.resource.operation"
-    },
-    {
-      "kind": "nested",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "rest.resource.searchParam",
-      "url": "http://hl7.org/fhir/StructureDefinition/CapabilityStatement#rest.resource.searchParam"
-    },
-    {
-      "kind": "nested",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "rest.security",
-      "url": "http://hl7.org/fhir/StructureDefinition/CapabilityStatement#rest.security"
-    },
-    {
-      "kind": "nested",
-      "package": "hl7.fhir.r4.core",
-      "version": "4.0.1",
-      "name": "software",
-      "url": "http://hl7.org/fhir/StructureDefinition/CapabilityStatement#software"
     },
     {
       "kind": "primitive-type",
