@@ -156,6 +156,15 @@
 
 (defn iterate-over-elements [fhir-schema path elements]
   (->> elements
+       (reduce (fn [m [key element]]
+                 (let [el-snapshot (element-snapshot fhir-schema (conj path key))
+                       m (update m key merge element)]
+                   (reduce (fn [m2 choice-key]
+                             (update m2 (keyword choice-key) merge {}))
+                           m
+                           (:choices el-snapshot))))
+
+               {})
        (map (fn [[key element]]
               (let [path        (conj path key)
                     el-snapshot (element-snapshot fhir-schema path)]

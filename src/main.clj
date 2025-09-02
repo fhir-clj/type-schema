@@ -238,19 +238,28 @@
 
 (comment
   (fhir.package/pkg-info "hl7.fhir.r4.core@4.0.1")
+  (process-packages {:package-names ["hl7.fhir.r4.core"] :output-dir "output" :separated-files true})
+  (process-packages {:package-names ["hl7.cda.uv.core@2.0.1-sd"] :output-dir "output"})
+  (process-packages {:package-names ["hl7.fhir.us.core@6.1.0"] :output-dir "output"})
+
+  (-> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/vitalsigns")
+      (fhir.schema.translate/translate)
+      :elements keys
+      ;; :value
+      ;; (type-schema/translate-fhir-schema)
+      )
+
+  (-> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/vitalsigns")
+      (fhir.schema.translate/translate)
+      (type-schema/translate-fhir-schema)
+      ;; first :fields keys sort
+      )
 
   (-> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/vitalsigns")
       (fhir.schema.translate/translate)
       :elements
+      ;; (keys)
       :value
       #_(type-schema/translate-fhir-schema))
-
-  (process-packages {:package-names ["hl7.fhir.r4.core"] :output-dir "output" :separated-files true})
-
-  (process-packages {:package-names ["hl7.cda.uv.core@2.0.1-sd"] :output-dir "output"})
-  (process-packages {:package-names ["hl7.fhir.r5.core"] :output-dir "output"})
-  (process-packages {:package-names ["hl7.fhir.r6.core"] :output-dir "output"})
-  (process-packages {:package-names ["hl7.fhir.us.core@6.1.0"] :output-dir "output"})
-
-  (fhir.package/pkg-info "hl7.fhir.r4.core@4.0.1")
-  (fhir.package/pkg-info "hl7.fhir.us.core@6.1.0"))
+  ;
+  )

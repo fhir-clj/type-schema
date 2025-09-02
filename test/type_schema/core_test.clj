@@ -71,7 +71,26 @@
                                         :required false}}
       :dependencies [{:name "boolean"}
                      {:name "dateTime"}]}
-     nil]))
+     nil])
+
+  (testing "remove choice options. Base have 2 options, child - 1 option"
+    (package/load-fhir-schema!
+     {:url      "RequiredChoiceLimited"
+      :base     "RequiredChoice"
+      :kind     "resource"
+      :elements {:deceased         {:choices ["deceasedBoolean"]}}})
+
+    (matcho/match (type-schema/translate-fhir-schema
+                   (package/fhir-schema "RequiredChoiceLimited"))
+      [{:identifier   {:url "RequiredChoiceLimited"}
+        :fields       {:deceased         {:excluded false
+                                          :choices  ["deceasedBoolean"]
+                                          :required true}
+                       :deceasedBoolean  {:type     {:name "boolean"}
+                                          :excluded false
+                                          :required false}}
+        :dependencies [{:name "boolean"}]}
+       nil])))
 
 (deftest build-form-type-hierachy-test
   (package/initialize! {:package-names ["hl7.fhir.r4.core"]})
