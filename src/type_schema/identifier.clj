@@ -17,11 +17,14 @@
        (map name)
        (str/join ".")))
 
+(defn is-constraint? [fhir-schema]
+  (= (:derivation fhir-schema) "constraint"))
+
 (defn schema-type
   "to build identifier for primitive-type, complex-type, resource, logic"
   [fhir-schema]
   (let [package-meta (package-meta fhir-schema)]
-    {:kind    (cond (= (:derivation fhir-schema) "constraint") "constraint"
+    {:kind    (cond (is-constraint? fhir-schema) "constraint"
                     (some? (:kind fhir-schema)) (:kind fhir-schema)
                     :else "resource")
      :package (:name package-meta)

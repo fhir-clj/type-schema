@@ -16,6 +16,71 @@
                                   ["type"]
                                   {}))))
 
+(deftest constraint-generation-test
+  (package/initialize! {:package-names ["hl7.fhir.r4.core"]})
+
+  (package/load-fhir-schema! {:url      "A"
+                              :name     "a"
+                              :elements {:foo
+                                         {:type     "BackboneElement",
+                                          :elements {:bar {:type "string"}}}}})
+
+  (package/load-fhir-schema! {:base       "A"
+                              :url        "B"
+                              :name       "b"
+                              :derivation "constraint"
+                              :elements   {:foo {:min 1}}})
+
+  (matcho/match (type-schema/translate-fhir-schema
+                 (package/fhir-schema "A"))
+    [{:identifier   {:kind "resource",
+                     :name "a",
+                     :url  "A"},
+      :fields       {:foo {:type {:kind "nested",
+                                  :name "foo",
+                                  :url  "A#foo"}}},
+      :nested       [{:identifier {:kind "nested",
+                                   :name "foo",
+                                   :url  "A#foo"},
+                      :base       {:kind "complex-type",
+                                   :name "BackboneElement",
+                                   :url  "http://hl7.org/fhir/StructureDefinition/BackboneElement"},
+                      :fields     {:bar {:type {:kind "primitive-type",
+                                                :name "string",
+                                                :url  "http://hl7.org/fhir/StructureDefinition/string"}}}}],
+      :dependencies [{:kind "complex-type",
+                      :name "BackboneElement",
+                      :url  "http://hl7.org/fhir/StructureDefinition/BackboneElement"}
+                     {:kind "primitive-type",
+                      :name "string",
+                      :url  "http://hl7.org/fhir/StructureDefinition/string"}
+                     nil]}
+     nil])
+
+  (matcho/match (type-schema/translate-fhir-schema
+                 (package/fhir-schema "B"))
+    [{:identifier   {:kind "constraint",
+                     :name "b",
+                     :url  "B"},
+      :base         {:kind "resource",
+                     :name "a",
+                     :url  "A"},
+      :fields       {:foo {:type {:kind "complex-type",
+                                  :name "BackboneElement",
+                                  :url  "http://hl7.org/fhir/StructureDefinition/BackboneElement"}}}
+      :nested       nil?,
+      :dependencies [{:kind "complex-type",
+                      :name "BackboneElement",
+                      :url "http://hl7.org/fhir/StructureDefinition/BackboneElement"}
+                     {:kind "resource",
+                      :name "a",
+                      :url "A"}
+                     {:kind "nested",
+                      :name "foo",
+                      :url "A#foo"}
+                     nil]}
+     nil]))
+
 (deftest choice-type-test
   (package/initialize! {:package-names ["hl7.fhir.r4.core"]})
 

@@ -226,14 +226,16 @@
   (let [parent      (some-> fhir-schema :base (package/fhir-schema))
 
         identifier  (identifier/schema-type fhir-schema)
+        constraint? (identifier/is-constraint? fhir-schema)
         base        (some-> parent (identifier/schema-type))
         description (:description fhir-schema)
 
         elements    (:elements fhir-schema)
         fields      (iterate-over-elements fhir-schema [] elements)
 
-        nested      (->> (iterate-over-backbone-element fhir-schema [] elements)
-                         (sort-by #(-> % :identifier :url)))
+        nested      (when-not constraint?
+                      (->> (iterate-over-backbone-element fhir-schema [] elements)
+                           (sort-by #(-> % :identifier :url))))
 
         binding-type-schemas
         (collect-binding-schemas fhir-schema collect-nested-elements)
@@ -241,7 +243,13 @@
         depends
         (->> (concat (when base [base])
                      (extract-dependencies fields)
-                     (extract-dependencies-from-nested nested))
+                     (when-not constraint?
+                       (extract-dependencies-from-nested nested))
+                     (when constraint?
+                       (assert (some? parent) "Constraint must have a base")
+                       (->> (iterate-over-backbone-element parent [] (:elements parent))
+                            (sort-by #(-> % :identifier :url))
+                            (map :identifier))))
              (distinct)
              (sort-by #(get-in % [:name]))
              (remove #(-> % :name (= (:name identifier))))
