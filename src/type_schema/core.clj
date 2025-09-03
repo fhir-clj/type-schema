@@ -175,7 +175,7 @@
                            (:choices el-snapshot))))
 
                {})
-       (map (fn [[key element]]
+       (map (fn [[key _element]]
               (let [path        (conj path key)
                     el-snapshot (element-snapshot fhir-schema path)
                     constraint? (identifier/is-constraint? fhir-schema)
@@ -188,7 +188,7 @@
                                  (:name fhir-schema) " at path " path))
                     [key (build-nested-field parent path el-snapshot)])
 
-                  (is-nested-element? element)
+                  nested?
                   [key (build-nested-field fhir-schema path el-snapshot)]
 
                   :else
