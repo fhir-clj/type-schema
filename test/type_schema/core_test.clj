@@ -20,16 +20,11 @@
   (package/initialize! {:package-names ["hl7.fhir.r4.core"]})
 
   (package/load-fhir-schema! {:url      "A"
+                              :derivation "specialization"
                               :name     "a"
                               :elements {:foo
                                          {:type     "BackboneElement",
                                           :elements {:bar {:type "string"}}}}})
-
-  (package/load-fhir-schema! {:base       "A"
-                              :url        "B"
-                              :name       "b"
-                              :derivation "constraint"
-                              :elements   {:foo {:min 1}}})
 
   (matcho/match (type-schema/translate-fhir-schema
                  (package/fhir-schema "A"))
@@ -57,6 +52,12 @@
                      nil]}
      nil])
 
+  (package/load-fhir-schema! {:base       "A"
+                              :url        "B"
+                              :name       "b"
+                              :derivation "constraint"
+                              :elements   {:foo {:min 1}}})
+
   (matcho/match (type-schema/translate-fhir-schema
                  (package/fhir-schema "B"))
     [{:identifier   {:kind "constraint",
@@ -72,6 +73,33 @@
       :dependencies [{:kind "resource",
                       :name "a",
                       :url "A"}
+                     {:kind "nested",
+                      :name "foo",
+                      :url "A#foo"}
+                     nil]}
+     nil])
+
+  (package/load-fhir-schema! {:base       "B"
+                              :url        "C"
+                              :name       "c"
+                              :derivation "constraint"
+                              :elements   {:foo {:max 1}}})
+
+  (matcho/match (type-schema/translate-fhir-schema
+                 (package/fhir-schema "C"))
+    [{:identifier   {:kind "constraint",
+                     :name "c",
+                     :url  "C"},
+      :base         {:kind "constraint",
+                     :name "b",
+                     :url  "B"},
+      :fields       {:foo {:type {:kind "nested",
+                                  :name "foo",
+                                  :url  "A#foo"}}}
+      :nested       nil?,
+      :dependencies [{:kind "constraint",
+                      :name "b",
+                      :url "B"}
                      {:kind "nested",
                       :name "foo",
                       :url "A#foo"}

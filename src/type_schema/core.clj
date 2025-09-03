@@ -13,6 +13,16 @@
     (or (:url (package/fhir-schema type-name))
         (str "http://hl7.org/fhir/StructureDefinition/" type-name))))
 
+(defn fhir-schema-parent [fhir-schema]
+  (some-> fhir-schema :base (package/fhir-schema)))
+
+(defn fhir-schema-specialization-parent [fhir-schema]
+  (let [p (fhir-schema-parent fhir-schema)]
+    (assert (some? p) "Expect parent with 'specialization' derivation")
+    (if (= "specialization" (:derivation p))
+      p
+      (fhir-schema-specialization-parent p))))
+
 (defn fhir-schema-hierarchy [fhir-schema]
   (if (nil? fhir-schema)
     nil
@@ -172,7 +182,7 @@
                     nested?     (is-nested-element? el-snapshot)]
                 (cond
                   (and constraint? nested?)
-                  (let [parent (some-> fhir-schema :base (package/fhir-schema))]
+                  (let [parent (fhir-schema-specialization-parent fhir-schema)]
                     (assert (some? parent)
                             (str "Constraint must have base to build nested type for "
                                  (:name fhir-schema) " at path " path))
@@ -235,7 +245,7 @@
        (distinct)))
 
 (defn translate-fhir-schema [fhir-schema]
-  (let [parent      (some-> fhir-schema :base (package/fhir-schema))
+  (let [parent      (fhir-schema-parent fhir-schema)
 
         identifier  (identifier/schema-type fhir-schema)
         constraint? (identifier/is-constraint? fhir-schema)
@@ -252,29 +262,21 @@
         binding-type-schemas
         (collect-binding-schemas fhir-schema collect-nested-elements)
 
-        ;; _ (def parent0 parent)
-        ;; _ (def fhir-schema0 fhir-schema)
-        ;; _ (def elements0 elements)
-        ;; _ (def constraint?0 constraint?)
-        ;; _ (def fields0 fields)
-        ;; _ (def nested0 nested)
-
         depends
         (->> (concat (when base [base])
                      (extract-dependencies fields)
                      (when-not constraint?
                        (extract-dependencies-from-nested nested))
                      (when constraint?
-                       (assert (some? parent) "Constraint must have a base")
-                       (->> (iterate-over-backbone-element parent [] (:elements parent))
-                            (sort-by #(-> % :identifier :url))
-                            (map :identifier))))
+                       (let [p (fhir-schema-specialization-parent fhir-schema)]
+                         (->> (iterate-over-backbone-element p [] (:elements p))
+                              (sort-by #(-> % :identifier :url))
+                              (map :identifier)))))
              (distinct)
              (sort-by #(get-in % [:name]))
              (remove #(-> % :name (= (:name identifier))))
              (into []))
 
-        ;; _ (def depends0 depends)
         resource-type-schema
         (remove-empty-vals {:identifier identifier
                             :base base
