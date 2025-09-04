@@ -239,29 +239,66 @@
 (comment
   (fhir.package/pkg-info "hl7.fhir.r4.core@4.0.1")
   (process-packages {:package-names ["hl7.fhir.r4.core"] :output-dir "output" :separated-files true})
-  (process-packages {:package-names ["hl7.cda.uv.core@2.0.1-sd"] :output-dir "output"})
-  (process-packages {:package-names ["hl7.fhir.us.core@6.1.0"] :output-dir "output"})
+
+  ;; StructureDefinition
+  (->> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/Observation")
+       :differential :element
+       ;; (map :id)
+       (filter #(= "Observation.value[x]" (:id %))))
+
+  (->> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/vitalsigns")
+       :differential :element
+       ;; (map :id)
+       (filter #(= "Observation.value[x]" (:id %))))
+
+  (->> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/bodyweight")
+       :differential :element
+       ;; (map :id)
+       (filter #(= "Observation.valueQuantity" (:id %))))
+
+  ;; FHIR Schema
+
+  (-> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/Observation")
+  f     (package/sd->fhir-schema)
+      ;; :elements keys sort
+      :elements :valueQuantity)
 
   (-> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/vitalsigns")
-      (fhir.schema.translate/translate)
-      :elements keys
-      ;; :value
-      ;; (type-schema/translate-fhir-schema)
+      (package/sd->fhir-schema)
+      :elements keys sort
+      ;; :elements :valueQuantity
       )
+
+  (->> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/bodyweight")
+       (package/sd->fhir-schema)
+       ;; :elements keys sort
+       ;; :elements :valueQuantity
+       )
+
+  ;; Type Schema
 
   (->> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/vitalsigns")
        (fhir.schema.translate/translate)
        (type-schema/translate-fhir-schema)
-       first :dependencies (filter #(= "nested" (:kind %)))
+       ;; first :dependencies (filter #(= "nested" (:kind %)))
        ;; first :nested (map :identifier)
        ;; first :fields keys sort
+       first :fields :valueQuantity ; keys sort
        )
 
-  (-> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/vitalsigns")
-      (fhir.schema.translate/translate)
-      :elements
-      ;; (keys)
-      :value
-      #_(type-schema/translate-fhir-schema))
-  ;
+  (->> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/bodyweight")
+       (fhir.schema.translate/translate)
+       (type-schema/translate-fhir-schema)
+       ;; first :dependencies (filter #(= "nested" (:kind %)))
+       ;; first :nested (map :identifier)
+       first :fields :valueQuantity ; keys sort
+       )
+
+  (->> (package/fhir-schema "http://hl7.org/fhir/StructureDefinition/bodyweight")
+       (type-schema/translate-fhir-schema)
+       ;; first :dependencies (filter #(= "nested" (:kind %)))
+       ;; first :nested (map :identifier)
+       first :fields :valueQuantity ; keys sort
+       )
+;
   )

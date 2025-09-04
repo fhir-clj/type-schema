@@ -77,8 +77,21 @@
 (defn is-value-set? [resource]
   (= "ValueSet" (:resourceType resource)))
 
+(defn structure-definition-hierarchy [sd]
+  (let [base (-> sd :baseDefinition (structure-definition))]
+    (if base
+      (cons sd (structure-definition-hierarchy base))
+      [sd])))
+
 ;; NOTE: to avoid multiple calls during tests
 (def pkg-info (memoize fhir.package/pkg-info))
+
+(defn sd->fhir-schema [sd & [package-meta]]
+  (let [hierarchy (structure-definition-hierarchy sd)]
+    (fhir.schema.translate/translate
+     {:package-meta                   package-meta
+      :structure-definition-ancestors hierarchy}
+     sd)))
 
 (defn load-package! [package-name]
   (let [;; NOTE: not a part of SD till 5.2.0-ballot
@@ -98,10 +111,7 @@
                                         :resource     resource}
                                  (is-structure-definition? resource)
                                  (assoc :structure-definition resource
-                                        :fhir-schema
-                                        (fhir-schema/translate {:package-meta package-meta}
-                                                               resource))
-
+                                        :fhir-schema (sd->fhir-schema resource package-meta))
                                  (is-value-set? resource)
                                  (assoc :value-set resource))]))
                    (into {}))]
