@@ -162,7 +162,13 @@
 
 (defn is-nested-element? [element]
   (or (= (:type element) "BackboneElement")
-      (< 0 (count (:elements element)))))
+      ;; TODO: Observation <- vitalsigns <- bodyweight
+      ;; In Observation we have value[x] with choices
+      ;; In bodyweight we have valueQuantity with additional constaraints on it's elements
+      ;; So we need to build nested type from Quantity for here, but don't do that right now.
+      (and (nil? (:choiceOf element))
+           (nil? (:type element))
+           (< 0 (count (:elements element))))))
 
 (defn iterate-over-elements [fhir-schema path elements]
   (->> elements
