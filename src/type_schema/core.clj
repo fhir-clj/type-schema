@@ -162,6 +162,8 @@
 
 (defn is-nested-element? [element]
   (or (= (:type element) "BackboneElement")
+      (and (= (:type element) "Element")
+           (< 0 (count (:elements element))))
       ;; TODO: Observation <- vitalsigns <- bodyweight
       ;; In Observation we have value[x] with choices
       ;; In bodyweight we have valueQuantity with additional constaraints on it's elements

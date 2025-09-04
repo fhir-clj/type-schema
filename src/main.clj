@@ -241,25 +241,24 @@
   (process-packages {:package-names ["hl7.fhir.r4.core"] :output-dir "output" :separated-files true})
 
   ;; StructureDefinition
-  (->> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/bodyweight")
-       :differential :element
-       (map :id)
-       #_(filter #(= "Observation.valueQuantity" (:id %))))
+  (->> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/Dosage")
+       ;; :differential :element (map :id) sort
+       :differential :element (filter #(= "Dosage.doseAndRate" (:id %))) (first))
 
-  ;; FHIR Schema
-  (->> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/bodyweight")
+;; FHIR Schema
+  (->> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/Dosage")
        (package/sd->fhir-schema)
        ;; :elements keys sort
-       :elements)
+       :elements :doseAndRate)
 
-  ;; Type Schema
+;; Type Schema
 
-  (->> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/bodyweight")
+  (->> (package/structure-definition "http://hl7.org/fhir/StructureDefinition/Dosage")
        (package/sd->fhir-schema)
        (type-schema/translate-fhir-schema)
        ;; first :dependencies (filter #(= "nested" (:kind %)))
        ;; first :nested (map :identifier)
-       first :fields :valueQuantity ; keys sort
-       )
+       ;; first :fields keys sort
+       first :fields :doseAndRate)
   ;;
   )
