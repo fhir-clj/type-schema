@@ -18,7 +18,7 @@
 
 (defn fhir-schema-specialization-parent [fhir-schema]
   (let [p (fhir-schema-parent fhir-schema)]
-    (assert (some? p) "Expect parent with 'specialization' derivation")
+    (assert (some? p) (str "Expect parent with 'specialization' derivation: " (:url fhir-schema)))
     (if (= "specialization" (:derivation p))
       p
       (fhir-schema-specialization-parent p))))
