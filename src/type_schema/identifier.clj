@@ -24,7 +24,10 @@
   "to build identifier for primitive-type, complex-type, resource, logic"
   [fhir-schema]
   (let [package-meta (package-meta fhir-schema)]
-    {:kind    (cond (is-constraint? fhir-schema) "constraint"
+    {:kind    (cond (and (is-constraint? fhir-schema)
+                         (= "complex-type"
+                            (:kind (package/fhir-schema (:url fhir-schema))))) "complex-type-constraint"
+                    (is-constraint? fhir-schema) "constraint"
                     (some? (:kind fhir-schema)) (:kind fhir-schema)
                     :else "resource")
      :package (:name package-meta)
