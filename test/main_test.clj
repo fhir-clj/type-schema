@@ -1,9 +1,11 @@
 (ns main-test
   (:require
-   [clojure.test :refer [deftest is]]
+   [cheshire.core :as json]
+   [clojure.test :refer [deftest is testing]]
    [fhir.schema.translate :as fhir-schema]
    [golden.core :as golden]
    [main]
+   [matcho.core :as matcho]
    [type-schema.core-test :refer [fhir-schema->type-schemas]]
    [type-schema.package-index :as package]))
 
@@ -116,3 +118,79 @@
                     "test/golden/questionnaire/binding-QuestionnaireItemType.ts.json"
                     "test/golden/questionnaire/binding-ResourceType.ts.json"]
                    (fhir-schema->type-schemas "test/golden/questionnaire/questionnaire.fs.json")))
+
+;; CLI flag tests
+
+(deftest cli-options-parsing-test
+  (testing "CLI options are correctly parsed"
+    (let [result (main/validate-args ["--include-profile-constraints"
+                                       "--include-field-docs"
+                                       "hl7.fhir.r4.core"])]
+      (is (true? (get-in result [:options :include-profile-constraints?])))
+      (is (true? (get-in result [:options :include-field-docs?])))
+      (is (= ["hl7.fhir.r4.core"] (get result :package-name))))))
+
+(deftest profile-constraints-flag-integration-test
+  (testing "Profile constraints flag works with Norwegian Basis profiles"
+    ;; IMPORTANT: Both packages needed - Norwegian profiles reference base FHIR types
+    (package/initialize! {:package-names ["hl7.fhir.r4.core" "hl7.fhir.no.basis@2.2.2"]})
+
+    ;; Test that the flag is accepted and processes both packages without error
+    (is (= :ok (main/process-packages {:package-names ["hl7.fhir.r4.core" "hl7.fhir.no.basis@2.2.2"]
+                                        :include-profile-constraints? true
+                                        :output-dir "output"})))
+
+    (testing "Flag is accepted in CLI parsing"
+      (let [result (main/validate-args ["--include-profile-constraints"
+                                         "hl7.fhir.r4.core"
+                                         "hl7.fhir.no.basis@2.2.2"])]
+        (is (true? (get-in result [:options :include-profile-constraints?])))))))
+
+(deftest field-docs-flag-integration-test
+  (testing "Field documentation flag produces output with documentation fields"
+    (package/initialize! {:package-names ["hl7.fhir.r4.core"]})
+
+    ;; Capture output with flag enabled
+    (let [output (with-out-str
+                   (main/process-packages {:package-names ["hl7.fhir.r4.core"]
+                                           :include-field-docs? true}))
+          type-schemas (->> (clojure.string/split-lines output)
+                            (filter not-empty)
+                            (map json/parse-string))
+          patient-schema (->> type-schemas
+                              (filter #(= "Patient" (get-in % ["identifier" "name"])))
+                              (first))]
+
+      (testing "Patient schema is found"
+        (is (some? patient-schema)))
+
+      (testing "Patient.gender has documentation fields"
+        (let [gender-field (get-in patient-schema ["fields" "gender"])]
+          (is (some? (get gender-field "short")))
+          (is (= "male | female | other | unknown" (get gender-field "short"))))))))
+
+(deftest both-flags-disabled-by-default-integration-test
+  (testing "Without flags, profile constraints and docs are NOT included (backward compatibility)"
+    (package/initialize! {:package-names ["hl7.fhir.r4.core"]})
+
+    ;; Capture output WITHOUT flags
+    (let [output (with-out-str
+                   (main/process-packages {:package-names ["hl7.fhir.r4.core"]}))
+          type-schemas (->> (clojure.string/split-lines output)
+                            (filter not-empty)
+                            (map json/parse-string))
+          patient-schema (->> type-schemas
+                              (filter #(= "Patient" (get-in % ["identifier" "name"])))
+                              (first))]
+
+      (testing "Patient schema is found"
+        (is (some? patient-schema)))
+
+      (testing "Patient.name has NO profileConstraints by default"
+        (let [name-field (get-in patient-schema ["fields" "name"])]
+          (is (nil? (get name-field "profileConstraints")))))
+
+      (testing "Patient.name has NO documentation fields by default"
+        (let [name-field (get-in patient-schema ["fields" "name"])]
+          (is (nil? (get name-field "short")))
+          (is (nil? (get name-field "definition"))))))))
