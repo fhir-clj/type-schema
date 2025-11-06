@@ -2,7 +2,7 @@
 
 [![.github/workflows/ci.yaml](https://github.com/fhir-clj/type-schema/actions/workflows/ci.yaml/badge.svg)](https://github.com/fhir-clj/type-schema/actions/workflows/ci.yaml)
 
-Status: **Draft**
+Status: **Migration to TypeScript stack [atomic-ehr/codegen](https://github.com/atomic-ehr/codegen) as part of the AtomicEHR project**
 
 This repository contains the Clojure library to generate the Type Schema, an intermediate representation for FHIR SDK generation.
 
