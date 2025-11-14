@@ -124,8 +124,8 @@
 (deftest cli-options-parsing-test
   (testing "CLI options are correctly parsed"
     (let [result (main/validate-args ["--include-profile-constraints"
-                                       "--include-field-docs"
-                                       "hl7.fhir.r4.core"])]
+                                      "--include-field-docs"
+                                      "hl7.fhir.r4.core"])]
       (is (true? (get-in result [:options :include-profile-constraints?])))
       (is (true? (get-in result [:options :include-field-docs?])))
       (is (= ["hl7.fhir.r4.core"] (get result :package-name))))))
@@ -137,13 +137,13 @@
 
     ;; Test that the flag is accepted and processes both packages without error
     (is (= :ok (main/process-packages {:package-names ["hl7.fhir.r4.core" "hl7.fhir.no.basis@2.2.2"]
-                                        :include-profile-constraints? true
-                                        :output-dir "output"})))
+                                       :include-profile-constraints? true
+                                       :output-dir "output"})))
 
     (testing "Flag is accepted in CLI parsing"
       (let [result (main/validate-args ["--include-profile-constraints"
-                                         "hl7.fhir.r4.core"
-                                         "hl7.fhir.no.basis@2.2.2"])]
+                                        "hl7.fhir.r4.core"
+                                        "hl7.fhir.no.basis@2.2.2"])]
         (is (true? (get-in result [:options :include-profile-constraints?])))))))
 
 (deftest field-docs-flag-integration-test
