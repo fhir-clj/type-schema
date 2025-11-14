@@ -1,6 +1,7 @@
 (ns type-schema.core
   (:require
    [clojure.data :as data]
+   [clojure.string]
    [type-schema.binding :as binding]
    [type-schema.identifier :as identifier]
    [type-schema.log :as log]
@@ -137,22 +138,108 @@
           (-> (package/fhir-schema "string")
               (identifier/schema-type)))))
 
-(defn build-field [fhir-schema path el-snapshot]
-  (remove-empty-vals
-   {:type     (build-field-type fhir-schema path el-snapshot)
-    :array    (true? (:array el-snapshot))
-    :required (is-required? fhir-schema path)
-    :excluded (is-excluded? fhir-schema path)
+(defn- path->element-id
+  "Convert a path vector like [:name] to element id like 'Patient.name'"
+  [fhir-schema path]
+  (let [base-type (:type fhir-schema)]
+    (if (empty? path)
+      base-type
+      (str base-type "." (->> path (map name) (clojure.string/join "."))))))
 
-    :min (:min el-snapshot)
-    :max (:max el-snapshot)
+(defn extract-profile-constraints
+  "Extract profile constraints from StructureDefinition for a given path.
+   Returns a vector of profile constraint maps with :url and :name, or nil if none found."
+  [fhir-schema path]
+  (when-let [sd (package/structure-definition (:url fhir-schema))]
+    (let [element-id (path->element-id fhir-schema path)
+          ;; Find matching element in differential
+          matching-element (->> (get-in sd [:differential :element])
+                                (filter #(= (:id %) element-id))
+                                (first))
+          ;; Extract profile URLs from type[].profile
+          profile-urls (->> (:type matching-element)
+                            (mapcat :profile)
+                            (filter some?)
+                            (distinct))]
+      (when (seq profile-urls)
+        (seq (keep (fn [profile-url]
+                     (when-let [profile-schema (package/fhir-schema profile-url)]
+                       (identifier/schema-type profile-schema)))
+                   profile-urls))))))
 
-    :choices  (:choices el-snapshot)
-    :choiceOf (:choiceOf el-snapshot)
+(defn extract-field-documentation
+  "Extract documentation from StructureDefinition for a field.
+   Returns a map with :short, :definition, :comment, :requirements, :alias,
+   :mustSupport, :isModifier, :isModifierReason, :meaningWhenMissing, :example,
+   :bindingInfo or nil."
+  [fhir-schema path]
+  (when-let [sd (package/structure-definition (:url fhir-schema))]
+    (let [element-id (path->element-id fhir-schema path)
+          ;; Find matching element in differential
+          matching-element (->> (get-in sd [:differential :element])
+                                (filter #(= (:id %) element-id))
+                                (first))]
+      (when matching-element
+        (remove-empty-vals
+         {:short              (:short matching-element)
+          :definition         (:definition matching-element)
+          :comment            (:comment matching-element)
+          :requirements       (:requirements matching-element)
+          :alias              (:alias matching-element)
+          :mustSupport        (:mustSupport matching-element)
+          :isModifier         (:isModifier matching-element)
+          :isModifierReason   (:isModifierReason matching-element)
+          :meaningWhenMissing (:meaningWhenMissing matching-element)
+          :example            (when-let [examples (:example matching-element)]
+                                (when (seq examples)
+                                  (let [ex (first examples)
+                                        ;; Find first value[Type] key
+                                        value-key (->> (keys ex)
+                                                       (filter #(clojure.string/starts-with? (name %) "value"))
+                                                       (first))]
+                                    (when value-key
+                                      {:label (:label ex)
+                                       :value (get ex value-key)}))))
+          :bindingInfo        (when-let [bind (:binding matching-element)]
+                                (remove-empty-vals
+                                 {:strength    (:strength bind)
+                                  :description (:description bind)
+                                  :valueSet    (:valueSet bind)}))})))))
 
-    :enum      (binding/build-enum el-snapshot)
-    :binding   (binding/build-binding fhir-schema path el-snapshot)
-    :reference (build-reference el-snapshot)}))
+(defn build-field
+  "Build field schema with optional feature flags.
+   Options:
+   - :include-profile-constraints? - Include profile constraint information (default: false)
+   - :include-field-docs? - Include field documentation (short, definition, etc.) (default: false)"
+  [fhir-schema path el-snapshot & {:keys [include-profile-constraints? include-field-docs?]
+                                   :or   {include-profile-constraints? false
+                                          include-field-docs?          false}}]
+  (let [base-field {:type     (build-field-type fhir-schema path el-snapshot)
+                    :array    (true? (:array el-snapshot))
+                    :required (is-required? fhir-schema path)
+                    :excluded (is-excluded? fhir-schema path)
+
+                    :min (:min el-snapshot)
+                    :max (:max el-snapshot)
+
+                    :choices  (:choices el-snapshot)
+                    :choiceOf (:choiceOf el-snapshot)
+
+                    :enum      (binding/build-enum el-snapshot)
+                    :binding   (binding/build-binding fhir-schema path el-snapshot)
+                    :reference (build-reference el-snapshot)}
+
+        ;; Conditionally add profile constraints
+        with-profiles (if include-profile-constraints?
+                        (assoc base-field :profileConstraints (extract-profile-constraints fhir-schema path))
+                        base-field)
+
+        ;; Conditionally add field documentation
+        with-docs (if include-field-docs?
+                    (merge with-profiles (extract-field-documentation fhir-schema path))
+                    with-profiles)]
+
+    (remove-empty-vals with-docs)))
 
 (defn build-nested-field [fhir-schema path el-snapshot]
   {:type     (identifier/nested-type fhir-schema path)
@@ -172,7 +259,7 @@
            (nil? (:type element))
            (< 0 (count (:elements element))))))
 
-(defn iterate-over-elements [fhir-schema path elements]
+(defn iterate-over-elements [fhir-schema path elements opts]
   (->> elements
        (reduce (fn [m [key element]]
                  (let [el-snapshot (element-snapshot fhir-schema (conj path key))
@@ -200,7 +287,7 @@
                   [key (build-nested-field fhir-schema path el-snapshot)]
 
                   :else
-                  [key (build-field fhir-schema path el-snapshot)]))))
+                  [key (apply build-field fhir-schema path el-snapshot (apply concat opts))]))))
        (into {})))
 
 (defn collect-nested-elements [fhir-schema path elements]
@@ -213,7 +300,7 @@
        (apply concat)
        (into [])))
 
-(defn iterate-over-backbone-element [fhir-schema path elements]
+(defn iterate-over-backbone-element [fhir-schema path elements opts]
   (->> (collect-nested-elements fhir-schema path elements)
        (filter (fn [[_path element]] (is-nested-element? element)))
        (map (fn [[path element]]
@@ -221,7 +308,7 @@
                :base       (some-> (ensure-url "BackboneElement")
                                    (package/fhir-schema)
                                    (identifier/schema-type))
-               :fields     (iterate-over-elements fhir-schema path (:elements element))}))
+               :fields     (iterate-over-elements fhir-schema path (:elements element) opts)}))
        (into [])))
 
 (defn extract-dependencies [fields]
@@ -252,49 +339,56 @@
        (sort-by #(get-in % [:identifier :name]))
        (distinct)))
 
-(defn translate-fhir-schema [fhir-schema]
-  (let [parent      (fhir-schema-parent fhir-schema)
+(defn translate-fhir-schema
+  "Translate FHIR schema to type-schema format.
+   Options:
+   - :include-profile-constraints? - Include profile constraint information (default: false)
+   - :include-field-docs? - Include field documentation (short, definition, etc.) (default: false)"
+  ([fhir-schema]
+   (translate-fhir-schema fhir-schema {}))
+  ([fhir-schema opts]
+   (let [parent      (fhir-schema-parent fhir-schema)
 
-        identifier  (identifier/schema-type fhir-schema)
-        constraint? (identifier/is-constraint? fhir-schema)
-        base        (some-> parent (identifier/schema-type))
-        description (:description fhir-schema)
+         identifier  (identifier/schema-type fhir-schema)
+         constraint? (identifier/is-constraint? fhir-schema)
+         base        (some-> parent (identifier/schema-type))
+         description (:description fhir-schema)
 
-        elements    (:elements fhir-schema)
-        fields      (iterate-over-elements fhir-schema [] elements)
+         elements    (:elements fhir-schema)
+         fields      (iterate-over-elements fhir-schema [] elements opts)
 
-        nested      (when-not constraint?
-                      (->> (iterate-over-backbone-element fhir-schema [] elements)
-                           (sort-by #(-> % :identifier :url))))
+         nested      (when-not constraint?
+                       (->> (iterate-over-backbone-element fhir-schema [] elements opts)
+                            (sort-by #(-> % :identifier :url))))
 
-        binding-type-schemas
-        (collect-binding-schemas fhir-schema collect-nested-elements)
+         binding-type-schemas
+         (collect-binding-schemas fhir-schema collect-nested-elements)
 
-        depends
-        (->> (concat (when base [base])
-                     (extract-dependencies fields)
-                     (when-not constraint?
-                       (extract-dependencies-from-nested nested))
-                     (when constraint?
-                       (let [p (fhir-schema-specialization-parent fhir-schema)]
-                         (->> (iterate-over-backbone-element p [] (:elements p))
-                              (sort-by #(-> % :identifier :url))
-                              (map :identifier)))))
-             (distinct)
-             (sort-by #(get-in % [:name]))
-             (remove #(-> % :name (= (:name identifier))))
-             (into []))
+         depends
+         (->> (concat (when base [base])
+                      (extract-dependencies fields)
+                      (when-not constraint?
+                        (extract-dependencies-from-nested nested))
+                      (when constraint?
+                        (let [p (fhir-schema-specialization-parent fhir-schema)]
+                          (->> (iterate-over-backbone-element p [] (:elements p) opts)
+                               (sort-by #(-> % :identifier :url))
+                               (map :identifier)))))
+              (distinct)
+              (sort-by #(get-in % [:name]))
+              (remove #(-> % :name (= (:name identifier))))
+              (into []))
 
-        resource-type-schema
-        (remove-empty-vals {:identifier identifier
-                            :base base
-                            :description description
-                            :fields fields
-                            :nested nested
-                            :dependencies depends})]
+         resource-type-schema
+         (remove-empty-vals {:identifier identifier
+                             :base base
+                             :description description
+                             :fields fields
+                             :nested nested
+                             :dependencies depends})]
 
-    (cons resource-type-schema
-          binding-type-schemas)))
+     (cons resource-type-schema
+           binding-type-schemas))))
 
 (defn translate-value-set [value-set]
   (let [identifier  (identifier/value-set-type (:url value-set))

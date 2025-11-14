@@ -15,7 +15,7 @@
    [type-schema.sanity :as sanity])
   (:gen-class))
 
-(def version "0.0.15")
+(def version "0.0.17")
 
 (def cli-options
   [["-o" "--output DIR" "Output directory or .ndjson file"
@@ -30,6 +30,10 @@
     :multi true
     :update-fn (fnil conj [])
     :id :fhir-schemas]
+   [nil "--include-profile-constraints" "Include FHIR profile constraints in output (adds profileConstraints field)"
+    :id :include-profile-constraints?]
+   [nil "--include-field-docs" "Include field documentation in output (adds short, definition, comment, etc.)"
+    :id :include-field-docs?]
    [nil "--drop-cache" "Drop all package caches before processing"
     :id :drop-cache]
    ["-v" "--verbose" "Enable verbose output"
@@ -102,7 +106,9 @@
                          verbose :verbose
                          separated-files :separated-files
                          treeshake :treeshake
-                         drop-cache :drop-cache}]
+                         drop-cache :drop-cache
+                         include-profile-constraints? :include-profile-constraints?
+                         include-field-docs? :include-field-docs?}]
   (when drop-cache
     (log/info verbose "Dropping package cache")
     (fhir.package/drop-cache))
@@ -111,10 +117,12 @@
                         :fhir-schema-fns fhir-schemas
                         :verbose         verbose})
 
-  (let [fhir-schemas (package/fhir-schema)
+  (let [translation-opts {:include-profile-constraints? include-profile-constraints?
+                          :include-field-docs?          include-field-docs?}
+        fhir-schemas (package/fhir-schema)
         type-schemas (concat (->> fhir-schemas
                                   (map (fn [[_url fhir-schema]]
-                                         (type-schema/translate-fhir-schema fhir-schema)))
+                                         (type-schema/translate-fhir-schema fhir-schema translation-opts)))
                                   (apply concat))
                              (->> (package/value-set)
                                   (vals)
@@ -159,14 +167,16 @@
         options-summary
         ""
         "Examples:"
-        "  type-schema hl7.fhir.r4.core@4.0.1                           # Output to stdout"
-        "  type-schema -v hl7.fhir.r4.core@4.0.1                        # Verbose mode"
-        "  type-schema -o output hl7.fhir.r4.core@4.0.1                 # Output to directory"
-        "  type-schema -o result.ndjson hl7.fhir.r4.core@4.0.1          # Output to file"
-        "  type-schema -o output --separated-files hl7.fhir.r4.core     # Output each type schema to a separate file"
-        "  type-schema --treeshake Patient,Observation hl7.fhir.r4.core # Only include specified types and dependencies"
-        "  type-schema --drop-cache                                     # Drop all package caches"
-        "  type-schema --version                                        # Show version"]
+        "  type-schema hl7.fhir.r4.core@4.0.1                                  # Output to stdout"
+        "  type-schema -v hl7.fhir.r4.core@4.0.1                               # Verbose mode"
+        "  type-schema -o output hl7.fhir.r4.core@4.0.1                        # Output to directory"
+        "  type-schema -o result.ndjson hl7.fhir.r4.core@4.0.1                 # Output to file"
+        "  type-schema -o output --separated-files hl7.fhir.r4.core            # Output each type schema to a separate file"
+        "  type-schema --treeshake Patient,Observation hl7.fhir.r4.core        # Only include specified types and dependencies"
+        "  type-schema --include-profile-constraints hl7.fhir.no.basis@2.2.2   # Include profile constraint information"
+        "  type-schema --include-field-docs hl7.fhir.r4.core                   # Include field documentation (short, definition, etc.)"
+        "  type-schema --drop-cache                                            # Drop all package caches"
+        "  type-schema --version                                               # Show version"]
        (str/join "\n")))
 
 (defn validate-args [args]
