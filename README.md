@@ -1,3 +1,6 @@
+> [!CAUTION]
+> This project is deprecated and archived. All development has moved to [atomic-ehr/codegen](https://github.com/atomic-ehr/codegen).
+
 # FHIR Type Schema
 
 [![.github/workflows/ci.yaml](https://github.com/fhir-clj/type-schema/actions/workflows/ci.yaml/badge.svg)](https://github.com/fhir-clj/type-schema/actions/workflows/ci.yaml)
