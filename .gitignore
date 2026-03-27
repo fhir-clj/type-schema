@@ -10,3 +10,4 @@
 output
 target
 tmp/
+.claude/
